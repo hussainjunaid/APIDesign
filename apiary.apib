@@ -639,9 +639,13 @@ Customers API allows you to list details of current customer represented at Onli
         }
 
 ## Group UserInfo
+
+Resources related to UserInfo
+
+## UserInfo [/userinfo]
+
 UserInfo resource represents the online profile details of the customer
 
-## UserInfo Collection [/userinfo]
 ### View UserInfo details [GET]
 + Request
 
@@ -652,42 +656,27 @@ UserInfo resource represents the online profile details of the customer
 
 + Response 200 (application/json)
 
-        {
+            {
             "status": "SUCCESS",
             "data": {
-                "customers": [
+                "userinfo": [
                     {
-                        "dateOfBirth": "17/04/1975",
-                        "id": "selvaraj-2.k-2@cognizant.com",
-                        "correspondenceAddress": {
-                            "MPRN": null,
-                            "postalTown": "WALTON-ON-THAMES",
-                            "houseName": null,
-                            "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
-                            "county": "SURREY",
-                            "MPAN": null,
-                            "houseNumber": "53",
-                            "postcode": "KT12 1BA",
-                            "addressLine2": null,
-                            "addressLine1": "Wellington Close",
-                            "flatNumber": null
-                        },
-                    "title": "Mr",
-                    "primaryTelephoneNumber": "",
-                    "primaryTelephoneType": "",
-                    "surname": "Williams",
-                    "workPhoneNumber": "",
-                    "homePhoneNumber": "",
-                    "firstName": "Whispering-Lies Buck",
-                    "profileType": "full",
-                    "mobilePhoneNumber": "",
-                    "brand": "britishgas"
+                        "id": null,
+                        "title": "STAINES-UPON-THAMES",
+                        "firstName": "Linden Place",
+                        "surname": "Flat 10, Linden Place, Fairfield Avenue, STAINES-UPON-THAMES, Middlesex, TW18 4AF, United Kingdom",
+                        "registeredOn": "Middlesex",
+                        "customer": "2000003714247",
+                        "type": null,
+                        "status": "TW18 4AF",
+                        "brand": null,
+                        
                     }
                 ]
             },
             "errors": {},
             "meta": {}
-        }
+        }    
 
 + Response 401 (application/json)
 
@@ -702,10 +691,28 @@ UserInfo resource represents the online profile details of the customer
             ],
             "meta": {}
         }
+        
+### Create a new online profile [POST]
++ Request
+    + Headers
 
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
++ Response 200 (application/json)
 
++ Response 401 (application/json)
 
-
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
 
 ## Group Direct Debits
 Direct Debits API allows you to list / view all the direct debit information of the logged in customer. Currently it supports only fixed monthly direct debit. Responses from this API will be returned in JSON format only.
