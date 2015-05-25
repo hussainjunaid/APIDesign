@@ -1,46 +1,1001 @@
 FORMAT: 1A
+HOST: https://193.67.163.23/api/secure
 
-# Test
-Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+# britishgas
 
-# Group Notes
-Notes related resources of the **Notes API**
+## Group Accounts
+Accounts API allows you to list / view all the accounts of the logged in customer. This includes energy accounts, services accounts, multi premise landlord accounts and sales orders of OAM registered and wafer thin profile customers. Responses from this API will be retuned in JSON format only.
 
-## Notes Collection [/notes]
-### List all Notes [GET]
+## Accounts Collection [/accounts]
+### Retrieve a specific Account [GET /accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 200 (application/json)
 
-        [{
-          "id": 1, "title": "Jogging in park"
-        }, {
-          "id": 2, "title": "Pick-up posters from post-office"
-        }]
+        {
+            "status": "SUCCESS",
+            "data": {
+                "account": {
+                    "id": "850034235409",
+                    "multiPremiseLandlord": false,
+                    "status": "Open",
+                    "subType": "Electricity",
+                    "responsibilityType": "Legal Payer",
+                    "supplyAddress": {
+                        "MPRN": null,
+                        "postalTown": "Salford",
+                        "houseName": "",
+                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                        "county": "LANCASHIRE",
+                        "MPAN": null,
+                        "houseNumber": "53B",
+                        "postcode": "WS3 3ER",
+                        "addressLine2": "",
+                        "addressLine1": "GARSTANG ROAD NORTH",
+                        "flatNumber": null
+                    },
+                    "type": "Energy",
+                    "holderName": "Mr Morita"
+                }
+            },
+            "errors": [],
+            "meta": {}
+        }
 
-### Create a Note [POST]
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "authorize": "access_denied"
+            },
+            "meta": {}
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "accountNumber": "error.client.account.notfound"
+            },
+            "meta": {}
+        }
+
+### Retrieve all Accounts [GET /accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "accounts": [
+                    {
+                        "id": "850034235409",
+                        "multiPremiseLandlord": false,
+                        "status": "Open",
+                        "subType": "Electricity",
+                        "responsibilityType": "Legal Payer",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "type": "Energy",
+                        "holderName": "Mr Morita"
+                    },
+                    {
+                        "id": "850034336151",
+                        "multiPremiseLandlord": false,
+                        "status": "Open",
+                        "subType": "Gas",
+                        "responsibilityType": "Legal Payer",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "type": "Energy",
+                        "holderName": "Mr Morita"
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "authorize": "access_denied"
+            },
+            "meta": {}
+        }
+
+## Group Addresses
+Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
+
+## Addresses Collection [/addresses]
+### Retrieve all addresses [GET /addresses{?postcode,house_no}]
++ Parameters
+
+    + postcode (string) ...A valid UK postcode
+    + house_no (string, optional) ...House number to restrict the search for
+
++ Request (application/json)
+    
+    + Headers
+        
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "addresses": [
+                    {
+                        "MPRN": null,
+                        "postalTown": "STAINES-UPON-THAMES",
+                        "houseName": "Linden Place",
+                        "address": "Flat 10, Linden Place, Fairfield Avenue, STAINES-UPON-THAMES, Middlesex, TW18 4AF, United Kingdom",
+                        "county": "Middlesex",
+                        "MPAN": "2000003714247",
+                        "houseNumber": null,
+                        "postcode": "TW18 4AF",
+                        "addressLine2": null,
+                        "addressLine1": "Fairfield Avenue",
+                        "flatNumber": "Flat 10"
+                    }
+                ]
+            },
+            "errors": {},
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "postcode": "error.client.postcode.invalid"
+            },
+            "meta": {}
+        }
+
+### Annonymous Supply Check  [GET /addresses/supply-check{?flatNumber,houseNumber,houseName,addressLine1,addressLine2,postalTown,county,postCode}]
++ Parameters
+
+    + flatNumber (string, optional) ...flat number of the selected address, if available.
+    + houseNumber (string, optional) ...house number of the selected address, if available.
+    + houseName (string, optional) ...house name of the selected address, if available. Atleast one of flat number, house number and house name need to be available for identifying a premise
+    + addressLine1 (string, optional) ...street of the selected address, if available.
+    + addressLine2 (string, optional) ...locality of the selected address, if available.
+    + postalTown (string) ...town or city of the selected address, if available.
+    + county (string, optional) ...county of the selected address, if available.
+    + postCode (string, optional) ...post code of the selected address, if available.
+
++ Request (application/json)
+    
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "checkavailability",
+                    "message": "error.client.checkavailability.no.supply"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "postalTown": "error.client.postalTown.blank"
+            },
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "checkavailability": "error.client.checkavailability.no.response"
+            },
+            "meta": {}
+        }
+
+# Logged In supply Check [GET /address/supply-check?houseNumber=1&postCode=SL11AB]
+
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "supplyEnergyProducts": true,
+                "supplyElectricityProduct": true,
+                "supplyServiceProducts": true,
+                "supplyGasProduct": true
+            },
+            "errors": {},
+            "meta": {}
+        }
+
+## Group Customers
+Customers API allows you to list details of current customer represented at Online. Responses from this API will be returned in JSON format only. In order to retrieve information about current customer, client should have logged into to online and supply the access token along with the request.
+
+## Customers Collection [/customers]
+
+### Get Customer [GET]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "customers": [
+                    {
+                        "dateOfBirth": "17/04/1975",
+                        "id": "selvaraj-2.k-2@cognizant.com",
+                        "correspondenceAddress": {
+                            "MPRN": null,
+                            "postalTown": "WALTON-ON-THAMES",
+                            "houseName": null,
+                            "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
+                            "county": "SURREY",
+                            "MPAN": null,
+                            "houseNumber": "53",
+                            "postcode": "KT12 1BA",
+                            "addressLine2": null,
+                            "addressLine1": "Wellington Close",
+                            "flatNumber": null
+                        },
+                    "title": "Mr",
+                    "primaryTelephoneNumber": "",
+                    "primaryTelephoneType": "",
+                    "surname": "Williams",
+                    "workPhoneNumber": "",
+                    "homePhoneNumber": "",
+                    "firstName": "Whispering-Lies Buck",
+                    "profileType": "full",
+                    "mobilePhoneNumber": "",
+                    "brand": "britishgas"
+                    }
+                ]
+            },
+            "errors": {},
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+
+### Register Customer [POST]
+
 + Request (application/json)
 
-        { "title": "Buy bread for breakfast." }
+    + Headers
+    
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+            "customer": {
+                "id": "selvaraj-2.k-2@cognizant.com",
+                "title": "mr",
+                "firstName": "john",
+                "surname": "selvara",
+                "dateOfBirth": "30/05/1972",
+                "primaryTelephoneNumber": "01264 673 123",
+                "primaryTelephoneType":"home",
+                "homePhoneNumber": "01264 673 123",
+                "workPhoneNumber": "01772 3432111",
+                "mobilePhoneNumber": "07771223890",
+                "correspondenceAddress": {
+                    "MPRN": null,
+                    "postalTown": "WALTON-ON-THAMES",
+                    "houseName": null,
+                    "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
+                    "county": "SURREY",
+                    "MPAN": null,
+                    "houseNumber": "53",
+                    "postcode": "KT12 1BA",
+                    "addressLine2": null,
+                    "addressLine1": "Wellington Close",
+                    "flatNumber": null
+                },
+                "profileType": "thin",
+                "brand": "britishgas"
+            },
+            "meta": {
+                "password": "password123",
+                "ref": 859924637289,
+                "refType": "customer"
+            }
+            }
+        
 
 + Response 201 (application/json)
 
-        { "id": 3, "title": "Buy bread for breakfast." }
+        {
+            "status": "SUCCESS",
+            "data": {
+                "customer": {
+                    "id": "selvaraj-2.k-2@cognizant.com",
+                    "title": "mr",
+                    "firstName": "john",
+                    "surname": "selvara",
+                    "dateOfBirth": "30/05/1972",
+                    "primaryTelephoneNumber": "01264 673 123",
+                    "primaryTelephoneType":"home",
+                    "homePhoneNumber": "01264 673 123",
+                    "workPhoneNumber": "01772 3432111",
+                    "mobilePhoneNumber": "07771223890",
+                    "correspondenceAddress": {
+                        "MPRN": null,
+                        "postalTown": "WALTON-ON-THAMES",
+                        "houseName": null,
+                        "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
+                        "county": "SURREY",
+                        "MPAN": null,
+                        "houseNumber": "53",
+                        "postcode": "KT12 1BA",
+                        "addressLine2": null,
+                        "addressLine1": "Wellington Close",
+                        "flatNumber": null
+                    },
+                    "profileType": "thin",
+                    "brand": "britishgas"
+                }
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
 
-## Note [/notes/{id}]
-A single Note object with all its details
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "telephoneNumber",
+                    "message": "error.telephoneNumber.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
 
-+ Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {},
+            "meta": {}
+        }
+        
++ Response 409 (application/json)
 
-### Retrieve a Note [GET]
-+ Response 200 (application/json)
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code":"error.id.exists",
+                    "message": "Customer profile registered with given id (email address)."
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 409 (application/json)
 
-    + Header
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code":"error.customer.exists",
+                    "message":"Customer profile already registered."
+                }
+            ],
+            "meta": {}
+        }
 
-            X-My-Header: The Value
++ Request (application/json)
+
+    + Headers
+    
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
+    
+            {
+                "customer": {
+                    "id": "gpradeepkrishnaABC@bgdigitaltest.co.uk",
+                    "title": "Mr",
+                    "firstName": "Pradeep Krishna",
+                    "surname": "Govindaraju",
+                    "dateOfBirth": "01/05/1985",
+                    "primaryTelephoneNumber": "07404174620",
+                    "primaryTelephoneType":"mobile",
+                    "homePhoneNumber": null,
+                    "workPhoneNumber": null,
+                    "mobilePhoneNumber": null,
+                    "correspondenceAddress": null,
+                    "profileType": "thin",
+                    "brand": "britishgas"
+                },
+                "meta": {
+                    "password": "password12",
+                    "ref": "1000164806-NA-NA",
+                    "refType": "onlinesales"
+                }
+            }
+     
++ Response 201 (application/json)
 
-            { "id": 2, "title": "Pick-up posters from post-office" }
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "customer": {
+                        "id": "gpradeepkrishnaABC@bgdigitaltest.co.uk",
+                        "title": "Mr",
+                        "firstName": "Pradeep Krishna",
+                        "surname": "Govindaraju",
+                        "dateOfBirth": "01/05/1985",
+                        "primaryTelephoneNumber": "07404174620",
+                        "primaryTelephoneType": "mobile",
+                        "homePhoneNumber": null,
+                        "workPhoneNumber": null,
+                        "mobilePhoneNumber": null,
+                        "correspondenceAddress": null,
+                        "profileType": "thin",
+                        "brand": "britishgas"
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
 
-### Remove a Note [DELETE]
-+ Response 204
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "telephoneNumber",
+                        "message": "error.telephoneNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 409 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code":"error.id.exists",
+                        "message": "Customer profile registered with given id (email address)."
+                    }
+                ],
+                "meta": {}
+            }
+
+## Customers Match Collection [/customers/match]
+
+### Match Customer [POST]
+
++ Request (application/json)
+    
+    + Headers
+        
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                email:"johnsmith@britishgas.com",
+                refType:"customer",
+                ref:"85345677899",
+                brand:"britishgas",
+                firstName:"john",
+                surname:"smith",
+                title:"Mr"
+            }
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},  
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}, 
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "error.email.exists",
+                    "message": "Customer profile registered with given email address."
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "email",
+                    "message": "error.client.emailAddress.invalid"
+                }
+            ],
+            "meta": {}
+        }
+
+## Group Direct Debits
+Direct Debits API allows you to list / view all the direct debit information of the logged in customer. Currently it supports only fixed monthly direct debit. Responses from this API will be returned in JSON format only.
+
+## Direct Debits collection [/directdebits]
+### Retrieve all direct debits [GET]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "directdebits": [
+                    {
+                        "id": "851001347400",
+                        "account": "851001347400",
+                        "numberOfInstallments": 10,
+                        "numberOfPendingInstallments": 10,
+                        "installments": [
+                            {
+                                "date": "26/05/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/06/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/07/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/08/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/09/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/10/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/11/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/12/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/01/2016",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/02/2016",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            }
+                        ]
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+
+### Retrieve all direct debits for accounts [GET /directdebits{?accountNumber}]
++ Parameters
+
+    + accountNumber (optional, string) ...Multiple account numbers each one a seperate accountNumber= definition
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "directdebits": [
+                    {
+                        "id": "851001347400",
+                        "account": "851001347400",
+                        "numberOfInstallments": 10,
+                        "numberOfPendingInstallments": 10,
+                        "installments": [
+                            {
+                                "date": "26/05/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/06/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/07/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/08/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/09/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/10/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/11/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/12/2015",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/01/2016",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            },
+                            {
+                                "date": "25/02/2016",
+                                "status": "pending",
+                                "gasAmount": 17,
+                                "electricityAmount": 15,
+                                "totalAmount": 32
+                            }
+                        ]
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+        
+
+### Get a specific Direct Debit [GET /directdebits/{directDebitId}]
+
++ Parameters
+
+    + directDebitId (string) ...directDebitId is the account number associated to the contract
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "directdebit": {
+                    "id": "851001347400",
+                    "account": "851001347400",
+                    "numberOfInstallments": 10,
+                    "numberOfPendingInstallments": 10,
+                    "installments": [
+                        {
+                            "date": "26/05/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/06/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/07/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/08/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/09/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/10/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/11/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/12/2015",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/01/2016",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        },
+                        {
+                            "date": "25/02/2016",
+                            "status": "pending",
+                            "gasAmount": 17,
+                            "electricityAmount": 15,
+                            "totalAmount": 32
+                        }
+                    ]
+                }
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "directdebit",
+                    "message": "error.client.directdebit.notfound"
+                }
+            ],
+            "meta": {}
+        }
