@@ -715,11 +715,12 @@ UserInfo resource represents the online profile details of the customer
                         "title": "Mr",
                         "firstName": "Junaid",
                         "surname": "Hussain",
+                        "email": "hussainjunaid@hotmail.com",
                         "registeredOn": "25/05/2015",
                         "customer": "2000003714247",
                         "type": "FULL",
                         "status": "ACTIVE",
-                        "brand": "BG"
+                        "brand": "britishgas"
                         
                     }
                 ]
@@ -752,12 +753,43 @@ UserInfo resource represents the online profile details of the customer
     + Body
     
             {
+                "userinfo":{
                         "title": "Mr",
                         "firstName": "Junaid",
                         "surname": "Hussain",
+                        "brand": "britishgas",
+                        "email": "hussainjunaid@hotmail.com"
+                    },
+                "meta":{
+                    "password": "password123",
+                    "ref": 859924637289,
+                    "refType": "customer"
+                }
             }
         
 + Response 200 (application/json)
+ 
+        {
+            "status": "SUCCESS",
+            "data": {
+                "userinfo": [
+                    {
+                        "id": 1,
+                        "title": "Mr",
+                        "firstName": "Junaid",
+                        "surname": "Hussain",
+                        "registeredOn": "25/05/2015",
+                        "customer": "2000003714247",
+                        "type": "FULL",
+                        "status": "ACTIVE",
+                        "brand": "BG"
+                        
+                    }
+                ]
+            },
+            "errors": {},
+            "meta": {}
+        }
 
 + Response 401 (application/json)
 
@@ -772,6 +804,108 @@ UserInfo resource represents the online profile details of the customer
             ],
             "meta": {}
         }
+
+## UserInfo profile check [/userinfo/profile-check]
+Check if email is available or not
+
+### Profile check [POST]
++ Request
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+            
+            }
+
++ Response 200 (application/json)
+
+## UserInfo by postcode [/userinfo/find-by-postcode]
+Finds userinfo by postcode
+
+### Retrieve userinfo by postcode [POST]
++ Request
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+            
+            }
+
++ Response 200 (application/json)
+
+## Email temporary password [/userinfo/email-temporary-password]
+Creates a profile and triggers an email using a temporary password.
+
+### Email temporary password [POST]
++ Request
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+            
+            }
+
++ Response 200 (application/json)
+
+## Reset password request [/userinfo/reset-password-request]
+Password reset operations
+
+### Send password reset email [POST]
++ Request
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+            
+            }
+
++ Response 200 (application/json)
+
+### Update online profile password [PUT]
++ Request
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+            
+            }
+
++ Response 200 (application/json)
+
+### Retrieve tokeninfo for password reset [GET /userinfo/reset-password-request/tokeninfo]
++ Request
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+            
+            }
+
++ Response 200 (application/json)
 
 ## Group Direct Debits
 Direct Debits API allows you to list / view all the direct debit information of the logged in customer. Currently it supports only fixed monthly direct debit. Responses from this API will be returned in JSON format only.
