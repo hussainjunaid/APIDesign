@@ -643,7 +643,16 @@ Customers API allows you to list details of current customer represented at Onli
 Resources related to UserInfo
 
 ## UserInfo [/userinfo]
-UserInfo resource represents the online profile details of the customer
+UserInfo resource represents the online profile details of the customer. A UserInfo object has the following attributes:
+
++ id - represents email address
++ title
++ firstName
++ surname
++ registeredOn
++ type - thin or full
++ status
++ brand - BG or Sainsburys
 
 ### Retrieve logged in UserInfo details [GET]
 + Request
@@ -665,7 +674,6 @@ UserInfo resource represents the online profile details of the customer
                         "firstName": "Junaid",
                         "surname": "Hussain",
                         "registeredOn": "25/05/2015",
-                        "customer": "2000003714247",
                         "type": "FULL",
                         "status": "ACTIVE",
                         "brand": "BG"
@@ -812,7 +820,8 @@ Check if email is available or not
 + Request
     
     + Headers
-            
+    
+            Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
