@@ -752,7 +752,7 @@ UserInfo resource represents the online profile details of the customer. A UserI
         }
         
 ### Create a new online profile [POST]
-+ Request
++ Request (application/json)
 
     + Headers
         
@@ -766,12 +766,11 @@ UserInfo resource represents the online profile details of the customer. A UserI
                         "firstName": "Junaid",
                         "surname": "Hussain",
                         "brand": "britishgas",
-                        "email": "hussainjunaid@hotmail.com"
+                        "id": "hussainjunaid@hotmail.com"
                     },
                 "meta":{
                     "password": "password123",
-                    "ref": 859924637289,
-                    "refType": "customer"
+                    "matchToken": "8c099369-ae94-53ef-a34b-bc8e01dce302"
                 }
             }
         
@@ -782,32 +781,29 @@ UserInfo resource represents the online profile details of the customer. A UserI
             "data": {
                 "userinfo": [
                     {
-                        "id": 1,
+                        "id": "junaid.hussain@centrica.com",
                         "title": "Mr",
                         "firstName": "Junaid",
                         "surname": "Hussain",
-                        "registeredOn": "25/05/2015",
-                        "customer": "2000003714247",
                         "type": "FULL",
                         "status": "ACTIVE",
                         "brand": "BG"
-                        
                     }
                 ]
             },
-            "errors": {},
+            "errors": [],
             "meta": {}
         }
 
-+ Response 401 (application/json)
++ Response 403 (application/json)
 
         {
             "status": "FAIL",
             "data": {},
             "errors": [
                 {
-                    "code": "authorize",
-                    "message": "access_denied"
+                    "code": "userinfo",
+                    "message": "error.server.userinfo.exists"
                 }
             ],
             "meta": {}
