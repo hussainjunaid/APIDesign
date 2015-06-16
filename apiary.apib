@@ -699,57 +699,7 @@ UserInfo resource represents the online profile details of the customer. A UserI
             "meta": {}
         }
 
-### Retrieve specific UserInfo details [GET /userinfo/{id}]
 
-+ Parameters
-
-    + id (number) ...This is the userinfo id
-
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
-+ Response 200 (application/json)
-
-            {
-            "status": "SUCCESS",
-            "data": {
-                "userinfo": [
-                    {
-                        "id": 1,
-                        "title": "Mr",
-                        "firstName": "Junaid",
-                        "surname": "Hussain",
-                        "email": "hussainjunaid@hotmail.com",
-                        "registeredOn": "25/05/2015",
-                        "customer": "2000003714247",
-                        "type": "FULL",
-                        "status": "ACTIVE",
-                        "brand": "britishgas"
-                        
-                    }
-                ]
-            },
-            "errors": {},
-            "meta": {}
-        }    
-
-+ Response 401 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
         
 ### Create a new online profile [POST]
 + Request (application/json)
@@ -806,6 +756,49 @@ UserInfo resource represents the online profile details of the customer. A UserI
                     "message": "error.server.userinfo.exists"
                 }
             ],
+            "meta": {}
+        }
+        
++ Request (application/json)
+
+    + Headers
+        
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f61234
+
+    + Body
+    
+            {
+                "userinfo":{
+                        "title": "Mr",
+                        "firstName": "J",
+                        "surname": "H",
+                        "brand": "britishgas",
+                        "id": "hussainjunaid@hotmail.com"
+                    },
+                "meta":{
+                    "password": "password123",
+                    "onlineSales": "8c099369-ae94-53ef-a34b-bc8e01dce302"
+                }
+            }
+        
++ Response 200 (application/json)
+ 
+        {
+            "status": "SUCCESS",
+            "data": {
+                "userinfo": [
+                    {
+                        "id": "junaid.hussain@centrica.com",
+                        "title": "Mr",
+                        "firstName": "Junaid",
+                        "surname": "Hussain",
+                        "type": "FULL",
+                        "status": "ACTIVE",
+                        "brand": "BG"
+                    }
+                ]
+            },
+            "errors": [],
             "meta": {}
         }
 
