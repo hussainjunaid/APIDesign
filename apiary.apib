@@ -650,12 +650,12 @@ UserInfo resource represents the online profile details of the customer. A UserI
 + firstName
 + surname
 + registeredOn
-+ type - thin or full
++ type - thin or oam
 + status
 + brand - BG or Sainsburys
 
 ### Retrieve logged in UserInfo details [GET]
-+ Request
++ Request (application/json)
 
     + Headers
 
@@ -669,7 +669,7 @@ UserInfo resource represents the online profile details of the customer. A UserI
             "data": {
                 "userinfo": [
                     {
-                        "id": 1,
+                        "id": "junaid.hussain@centrica.com",
                         "title": "Mr",
                         "firstName": "Junaid",
                         "surname": "Hussain",
