@@ -758,6 +758,21 @@ UserInfo resource represents the online profile details of the customer. A UserI
             ],
             "meta": {}
         }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "userinfo",
+                    "message": "error.client.matchToken.invalid"
+                }
+            ],
+            "meta": {}
+        }        
+
         
 + Request (application/json)
 
