@@ -919,7 +919,7 @@ The request body of this post must be a JSON object with attributes as listed be
             "meta": {}
         } 
 
-## UserInfo by postcode [/userinfo/find-by-reference]
+## UserInfo by reference [/userinfo/find-by-reference]
 This is a controller service which allows to find out whether a user with matching account number, home care number or sales order number, is available in SAP system. The request body of this post must be a JSON object with properties listed below
 
 + title - Mandatory
@@ -1015,11 +1015,17 @@ Creates a profile and triggers an email using a temporary password.
 
 + Response 200 (application/json)
 
-## Reset password request [/userinfo/reset-password-request]
-Password reset operations
+## Reset password request [/userinfo/reset-password-requests]
+Reset password request endpoint allows a client to reset the current password for a customer.
+As a resource, a ResetPasswordRequest represents following attributes.
+
++ email
++ brand
++ password
++ token
 
 ### Send password reset email [POST]
-+ Request
++ Request (application/json)
     
     + Headers
             
@@ -1028,11 +1034,50 @@ Password reset operations
     + Body
                 
             {
-            
+                "resetPasswordRequest": 
+                {
+                    "email" : "pradeepkrishna.govindarajucentrica.com",
+                    "brand" : "britishgas"
+                }
             }
 
 + Response 200 (application/json)
 
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "email",
+                    "message": "error.client.email.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "brand",
+                    "message": "error.client.brand.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
 ### Update online profile password [PUT]
 + Request
     
