@@ -997,11 +997,18 @@ This is a controller service which allows to find out whether a user with matchi
             "meta": {}
         }
         
-## Email temporary password [/userinfo/email-temporary-password]
+## Temporary profiles [/userinfo/temporary-profiles]
 Creates a profile and triggers an email using a temporary password.
+As an entity, following properties define a Temporary profile.
 
-### Email temporary password [POST]
-+ Request
++ id - Optional
++ title - Mandatory
++ firstName - Mandatory
++ surname - Mandatory
++ email - Mandatory
+
+### Create temporary profile [POST]
++ Request (application/json)
     
     + Headers
             
@@ -1010,11 +1017,151 @@ Creates a profile and triggers an email using a temporary password.
     + Body
                 
             {
-            
+                "temporaryProfile": {
+                    "title": "Mr",
+                    "firstName": "M",
+                    "surname": "Street",
+                    "email": "emailAddress@bgdigitaltest.co.uk"
+                },
+                "meta": {
+                    "matchToken": "750319c2-dee6-5113-95f9-a1b501124a64"
+                }
             }
 
 + Response 200 (application/json)
 
+        {
+              "status": "SUCCESS",
+              "data": {
+                "temporaryProfile": {
+                  "id": "5aa6a106-c6d5-52c4-af9d-a3d0b361dffa",
+                  "firstName": "M",
+                  "surname": "Street",
+                  "title": "Mr",
+                  "email": "pradeepkrishna.govindaraju@centrica.com"
+                }
+              },
+              "errors": [],
+              "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "matchToken",
+                  "message": "error.client.matchToken.invalid"
+                }
+              ],
+              "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "firstName",
+                  "message": "error.client.firstName.blank"
+                }
+              ],
+              "meta": {}
+        }
+        
+### Update temporary profile [PUT]
+
++ Request (application/json)
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+                
+            {
+                "temporaryProfile": {
+                  "id": "5aa6a106-c6d5-52c4-af9d-a3d0b361dffa",
+                  "firstName": "M",
+                  "surname": "Street",
+                  "title": "Mr",
+                  "email": "pradeepkrishna.govindaraju@centrica.com"
+                },
+                "meta": {
+                    "password": "password12"
+                }
+            }
+
++ Response 200 (application/json)
+
+        {
+                  "status": "SUCCESS",
+                  "data": {},
+                  "errors": [],
+                  "meta": {}
+               
+        }
+
++ Response 404 (application/json)
+
+        {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "temporaryProfile",
+                  "message": "error.client.temporaryProfile.invalid"
+                }
+              ],
+              "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "userinfo",
+                  "message": "error.server.userinfo.exists"
+                }
+              ],
+              "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "firstName",
+                  "message": "error.client.firstName.blank"
+                }
+              ],
+              "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "password",
+                  "message": "error.client.password.invalid"
+                }
+              ],
+              "meta": {}
+        }
+        
 ## Reset password request [/userinfo/reset-password-requests]
 Reset password request endpoint allows a client to reset the current password for a customer.
 As a resource, a ResetPasswordRequest represents following attributes.
@@ -1078,22 +1225,64 @@ As a resource, a ResetPasswordRequest represents following attributes.
             "meta": {}
         }
         
-### Update online profile password [PUT]
-+ Request
+### Updating a new password [PUT]
+Should you have a valid token to used via an email sent across, use this endpoint to update the new password for that customer.
+
+Note: As soon as the password update is successful, token issued will be invalidated. Token can also be marked invalid if it has expired. Current expiry timelimit is 20 minutes.
++ Request (application/json)
     
     + Headers
             
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-                
+    
             {
-            
+                "resetPasswordRequest": 
+                {
+                    "token" : "f2d779a9-748b-58bc-aacb-8714b1206656",
+                    "password" : "password12"
+                }
             }
 
 + Response 200 (application/json)
 
-### Retrieve tokeninfo for password reset [GET /userinfo/reset-password-request/tokeninfo]
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "payload",
+                    "message": "error.client.token.invalid"
+                }
+            ],
+            "meta": {}
+        }        
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "password",
+                    "message": "error.client.password.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
+### Retrieve tokeninfo for password reset [GET /userinfo/reset-password-requests/token-info]
 + Request
     
     + Headers
