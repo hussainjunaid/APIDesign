@@ -290,9 +290,24 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
 ## Group Customers
 Customers API allows you to list details of current customer represented at Online. Responses from this API will be returned in JSON format only. In order to retrieve information about current customer, client should have logged into to online and supply the access token along with the request.
 
+Customer as a resource identifies current logged in user.
+
++ id - string
++ title - string
++ firstName - string
++ surname - string
++ dateOfBirth - string
++ primaryTelephoneNumber - Telephone number
++ telephoneNumbers - Array of Telephone numbers
++ correspondeceAddress - Address
+
+Telephone Number
++ number - string
++ type - string
+
 ## Customers Collection [/customers]
 
-### Get Customer [GET]
+### Retrieve customers [GET]
 + Request
 
     + Headers
@@ -307,35 +322,30 @@ Customers API allows you to list details of current customer represented at Onli
             "data": {
                 "customers": [
                     {
+                        "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09",
+                        "title": "Mr",
+                        "firstName": "Pentwazz Stavea",
+                        "surname": "Kenj",
                         "dateOfBirth": "17/04/1975",
-                        "id": "selvaraj-2.k-2@cognizant.com",
+                        "primaryTelephoneNumber": null,
+                        "telephoneNumbers": [],
                         "correspondenceAddress": {
-                            "MPRN": null,
-                            "postalTown": "WALTON-ON-THAMES",
+                            "address": "67, Beresford Avenue, Surbiton, Surrey, KT5 9LH",
+                            "houseNumber": "67",
+                            "flatNumber": null,
                             "houseName": null,
-                            "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
-                            "county": "SURREY",
-                            "MPAN": null,
-                            "houseNumber": "53",
-                            "postcode": "KT12 1BA",
+                            "addressLine1": "Beresford Avenue",
                             "addressLine2": null,
-                            "addressLine1": "Wellington Close",
-                            "flatNumber": null
-                        },
-                    "title": "Mr",
-                    "primaryTelephoneNumber": "",
-                    "primaryTelephoneType": "",
-                    "surname": "Williams",
-                    "workPhoneNumber": "",
-                    "homePhoneNumber": "",
-                    "firstName": "Whispering-Lies Buck",
-                    "profileType": "full",
-                    "mobilePhoneNumber": "",
-                    "brand": "britishgas"
+                            "postalTown": "Surbiton",
+                            "county": "SURREY",
+                            "postcode": "KT5 9LH",
+                            "MPAN": null,
+                            "MPRN": null
+                        }
                     }
                 ]
             },
-            "errors": {},
+            "errors": [],
             "meta": {}
         }
 
@@ -353,7 +363,17 @@ Customers API allows you to list details of current customer represented at Onli
             "meta": {}
         }
 
-### Register Customer [POST]
+## Customers Collection [/customers/match-by-account-info]
+This is a controller service which allows to find out whether a customer with matching account number, home care number or sales order number, is available in backend system. The request body of this post must be a JSON object with properties listed below.
+
++ title
++ firstName
++ surname
++ email
++ postcode
++ customerReference
+
+### Customer match by account info [POST]
 
 + Request (application/json)
 
@@ -364,76 +384,27 @@ Customers API allows you to list details of current customer represented at Onli
     + Body
     
             {
-            "customer": {
-                "id": "selvaraj-2.k-2@cognizant.com",
-                "title": "mr",
-                "firstName": "john",
-                "surname": "selvara",
-                "dateOfBirth": "30/05/1972",
-                "primaryTelephoneNumber": "01264 673 123",
-                "primaryTelephoneType":"home",
-                "homePhoneNumber": "01264 673 123",
-                "workPhoneNumber": "01772 3432111",
-                "mobilePhoneNumber": "07771223890",
-                "correspondenceAddress": {
-                    "MPRN": null,
-                    "postalTown": "WALTON-ON-THAMES",
-                    "houseName": null,
-                    "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
-                    "county": "SURREY",
-                    "MPAN": null,
-                    "houseNumber": "53",
-                    "postcode": "KT12 1BA",
-                    "addressLine2": null,
-                    "addressLine1": "Wellington Close",
-                    "flatNumber": null
-                },
-                "profileType": "thin",
-                "brand": "britishgas"
-            },
-            "meta": {
-                "password": "password123",
-                "ref": 859924637289,
-                "refType": "customer"
-            }
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "Kenj",
+                "customerReference": "851001347680",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
             }
         
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "customer": {
-                    "id": "selvaraj-2.k-2@cognizant.com",
-                    "title": "mr",
-                    "firstName": "john",
-                    "surname": "selvara",
-                    "dateOfBirth": "30/05/1972",
-                    "primaryTelephoneNumber": "01264 673 123",
-                    "primaryTelephoneType":"home",
-                    "homePhoneNumber": "01264 673 123",
-                    "workPhoneNumber": "01772 3432111",
-                    "mobilePhoneNumber": "07771223890",
-                    "correspondenceAddress": {
-                        "MPRN": null,
-                        "postalTown": "WALTON-ON-THAMES",
-                        "houseName": null,
-                        "address": "53, Wellington Close, WALTON-ON-THAMES, SURREY, KT12 1BA",
-                        "county": "SURREY",
-                        "MPAN": null,
-                        "houseNumber": "53",
-                        "postcode": "KT12 1BA",
-                        "addressLine2": null,
-                        "addressLine1": "Wellington Close",
-                        "flatNumber": null
-                    },
-                    "profileType": "thin",
-                    "brand": "britishgas"
-                }
-            "errors": [],
-            "meta": {}
-        }
+            {
+                  "status": "SUCCESS",
+                  "data": {
+                    "customerMatch": {
+                      "matchToken": "6e16063a-8a89-5d1a-b9cb-72d14c4c7579",
+                      "status": "0xRM91"
+                    }
+                  },
+                  "errors": [],
+                  "meta": {}
+            }
         
 + Response 400 (application/json)
 
@@ -442,137 +413,26 @@ Customers API allows you to list details of current customer represented at Onli
             "data": {},
             "errors": [
                 {
-                    "code": "telephoneNumber",
-                    "message": "error.telephoneNumber.invalid"
-                }
-            ],
-            "meta": {}
-        }
-        
-+ Response 404 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": {},
-            "meta": {}
-        }
-        
-+ Response 409 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code":"error.id.exists",
-                    "message": "Customer profile registered with given id (email address)."
-                }
-            ],
-            "meta": {}
-        }
-        
-+ Response 409 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code":"error.customer.exists",
-                    "message":"Customer profile already registered."
+                    "code": "surname",
+                    "message": "error.client.surname.blank"
                 }
             ],
             "meta": {}
         }
 
-+ Request (application/json)
 
-    + Headers
-    
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+## Customers Match by bank info [/customers/match-by-bank-info]
 
-    + Body
-    
-            {
-                "customer": {
-                    "id": "gpradeepkrishnaABC@bgdigitaltest.co.uk",
-                    "title": "Mr",
-                    "firstName": "Pradeep Krishna",
-                    "surname": "Govindaraju",
-                    "dateOfBirth": "01/05/1985",
-                    "primaryTelephoneNumber": "07404174620",
-                    "primaryTelephoneType":"mobile",
-                    "homePhoneNumber": null,
-                    "workPhoneNumber": null,
-                    "mobilePhoneNumber": null,
-                    "correspondenceAddress": null,
-                    "profileType": "thin",
-                    "brand": "britishgas"
-                },
-                "meta": {
-                    "password": "password12",
-                    "ref": "1000164806-NA-NA",
-                    "refType": "onlinesales"
-                }
-            }
-     
-+ Response 201 (application/json)
+This is a controller service which allows to find out whether a customer with matching postcode and direct debit bank account number, is available in backend system. The request body of this post must be a JSON object identified with customer. The parameters of the JSON is as follows:
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "customer": {
-                        "id": "gpradeepkrishnaABC@bgdigitaltest.co.uk",
-                        "title": "Mr",
-                        "firstName": "Pradeep Krishna",
-                        "surname": "Govindaraju",
-                        "dateOfBirth": "01/05/1985",
-                        "primaryTelephoneNumber": "07404174620",
-                        "primaryTelephoneType": "mobile",
-                        "homePhoneNumber": null,
-                        "workPhoneNumber": null,
-                        "mobilePhoneNumber": null,
-                        "correspondenceAddress": null,
-                        "profileType": "thin",
-                        "brand": "britishgas"
-                    }
-                },
-                "errors": {},
-                "meta": {}
-            }
-            
-+ Response 400 (application/json)
++ title - string
++ firstName - string
++ surname - string
++ email - string
++ postcode - string
++ directDebitNumber - string
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "telephoneNumber",
-                        "message": "error.telephoneNumber.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-            
-+ Response 409 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code":"error.id.exists",
-                        "message": "Customer profile registered with given id (email address)."
-                    }
-                ],
-                "meta": {}
-            }
-
-## Customers Match Collection [/customers/match]
-
-### Match Customer [POST]
+### Match by bank info [POST]
 
 + Request (application/json)
     
@@ -583,33 +443,42 @@ Customers API allows you to list details of current customer represented at Onli
     + Body
     
             {
-                email:"johnsmith@britishgas.com",
-                refType:"customer",
-                ref:"85345677899",
-                brand:"britishgas",
-                firstName:"john",
-                surname:"smith",
-                title:"Mr"
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "Kenj",
+                "postcode": "TW18 4ND",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk",
+                "directDebitNumber": "1234"
             }
             
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {},  
-            "errors": [],
-            "meta": {}
-        }
+            {
+                  "status": "SUCCESS",
+                  "data": {
+                    "customerMatch": {
+                      "matchToken": null,
+                      "status": "0xTXE0"
+                    }
+                  },
+                  "errors": [],
+                  "meta": {}
+            }
         
-+ Response 404 (application/json)
++ Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {}, 
-            "errors": [],
-            "meta": {}
-        }
-        
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surname",
+                        "message": "error.client.surname.blank"
+                    }
+                ],
+                "meta": {}
+            }
+            
 + Response 404 (application/json)
 
         {
@@ -624,19 +493,109 @@ Customers API allows you to list details of current customer represented at Onli
             "meta": {}
         }
         
+## Customers Match by postcode [/customers/match-by-postcode]
+
+This is a controller service which allows to find out whether a customer with matching postcode and email address, is available in backend system. The request body of this post must be a JSON object identified with customer. The parameters of the JSON is as follows:
+
++ title - string
++ firstName - string
++ surname - string
++ email - string
++ postcode - string
+
+
+### Match by bank info [POST]
+
++ Request (application/json)
+    
+    + Headers
+        
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "Kenj",
+                "postcode": "TW18 4ND",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
+            }
+                    
++ Response 200 (application/json)
+
+            {
+                  "status": "SUCCESS",
+                  "data": {
+                    "customerMatch": {
+                      "matchToken": null,
+                      "status": "0xTXE0"
+                    }
+                  },
+                  "errors": [],
+                  "meta": {}
+            }
+        
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "email",
-                    "message": "error.client.emailAddress.invalid"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surname",
+                        "message": "error.client.surname.blank"
+                    }
+                ],
+                "meta": {}
+            }
+            
+## Customers Account check [/customers/account-check]
+
+This is a controller service allows you to identify what type of accounts customer holds based on the match done previously. As a controller it expects the input in the form of JSON object with an attribute matchToken. Request / response are as follows.
+
+### Account check [POST]
+
++ Request (application/json)
+    
+    + Headers
+        
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "matchToken": "0f35b369-ee56-52d8-911d-16fc6d73e70b"
+            }
+                    
++ Response 200 (application/json)
+
+            {
+                  "status": "SUCCESS",
+                  "data": {
+                    "accountCheck": {
+                      "energyAccountsAvailable": true,
+                      "serviceAccountsAvailable": true
+                    }
+                  },
+                  "errors": [],
+                  "meta": {}
+            }
+        
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "matchToken",
+                        "message": "error.client.matchToken.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
 
 ## Group UserInfo
 
