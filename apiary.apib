@@ -1677,3 +1677,272 @@ Direct Debits API allows you to list / view all the direct debit information of 
             ],
             "meta": {}
         }
+        
+##Group Product-Catalogue
+
+Resources related to the Product-Catalogue in the API. 
+
+## Product-Catalogue [/product-catalogue]
+
+## List all product options for a particlar product [/product-catalogue/{id}]
+
+A Product-Catalogue object has the following attributes:
+
++ id
++ description
++ type
++ isAnnualServiceApplicable
++ applicableExcess
++ applicablePaymentMethods
++ applicableApplianceTypes
++ features
+
++ Parameters
+    + id : (required, string)
+    
+### View a Product-Catalogue for given product [GET]
+    
++ Response 200 (application/json)
+
+        {
+            "status" : "SUCCESS"
+            "data": [
+                {
+                    "product": [
+                        {
+                            "id": "KAC-5",
+                            "description": "Kitchen Appliance Cover for 5 appliances",
+                            "type": "Services",
+                            "isAnnualServiceApplicable": false,
+                            "applicableExcess": ["50", "0"],
+                            "applicablePaymentMethods": [
+                                {
+                                    "type": "MDD",
+                                    "description": "Monthly direct debit"
+                                }, {
+                                    "type": "ADD",
+                                    "description": "Annual direct debit"
+                                }
+                            ]
+                            "applicableApplianceTypes": [
+                                {
+                                    "type": "HOE",
+                                    "description": "Built-in electric hob"
+                                }, {
+                                    "type": "EOB",
+                                    "description": "Built-in electric oven"
+                                }, {
+                                    "type": "HOB",
+                                    "description": "Built-in gas hob"
+                                }, {
+                                    "type": "OVN",
+                                    "description": "Built-in gas oven"
+                                }, {
+                                    "type": "WD",
+                                    "description": "Combined washer dryer"
+                                }, {
+                                    "type": "DW",
+                                    "description": "Dishwasher"
+                                }, {
+                                    "type: "TDE",
+                                    "description": "Electric tumble dryer"
+                                }, {
+                                    "type: "CKE",
+                                    "description": "Free standing electric cooker"
+                                }, {
+                                    "type: "CKR",
+                                    "description": "Free standing gas cooker"
+                                }, {
+                                    "type: "FRI",
+                                    "description": "Fridge"
+                                }, {
+                                    "type: "FZR",
+                                    "description": "Freezer"
+                                }, {
+                                    "type: "FFR", 
+                                    "description": "Fridge-freezer"
+                                }, {
+                                    "type: "TDG",
+                                    "description": "Gas tumble dryer"
+                                }, {
+                                    "type: "MW",
+                                    "description: "Microwave"
+                                }, { 
+                                    "type: "WM",
+                                    "description: "Washing machine"
+                                }
+                            ]
+                            "features": ["NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD"]
+                        }
+                    "features": [
+                        {
+                            "id": "NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD",
+                            "excess": "50",
+                            "annualServiceVisit": false,
+                            "applianceType": "TDE-TDE-TDE-TDE-TDE",
+                            "paymentMethod": "MDD"
+                        }
+                    ]
+                }
+            "errors": []
+            "meta": {}
+        }
+    
++ Response 404 (application/json)
+
+        {
+            "status" : ERROR
+            "data": {}
+            "errors": [
+                {
+                    "code": "products",
+                    "message": "error.client.product.notFound"
+                }
+            ]
+            "meta": {}
+        }
+        
++ Response 500 (application/json)
+
+        {
+            "status" : ERROR
+            "data": {}
+            "errors": [
+                {
+                    "code": "paymentMethods",
+                    "message": "error.client.paymentMethod.notFound"
+                }
+            ]
+            "meta": {}
+        }
+        
+        
+## Group Product-Features
+
+Resources related to  Product-Features in the API.
+
+## Product-Features [/product-features]
+
+## Retrieve the level of service for a specific configuration of a product [/product-features/{?product}]
+
+The Product-Features object has the following attributes
+
++ id
++ excess
++ annualServiceVisit
++ applianceType
++ paymentMethod
+
++ parameters
+    + product : (required, string)
+    + annualServiceVisit : (optional, Boolean)
+    + excess : (optional, string)
+    + applianceType : (optional, string)
+    + paymentMethod : (optional, string)
+    
+### View a Product-Feature for a particular product configuration [GET]
+
++ Response 200 (application / json)
+
+        {
+            "status" : "SUCCESS"
+            "data" : [
+                {
+                    "product-feature" : [
+                        {
+                            "id": "NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD",
+                            "excess": 50,
+                            "annualServiceVisit": false
+                            "applianceType": "TDE-TDE-TDE-TDE-TDE"
+                            "paymentMethod": "MDD"
+                        }
+                    ]
+                }
+            "errors" : {},
+            "meta" :{}
+        }
+        
++ Response 404 (appliance / json)
+
+        {
+            "status": "ERROR"
+            "data": {}
+            "errors": [
+                {
+                    "code" : "product",
+                    "message" : "error.client.product.notFound"
+                }
+            ]
+            "meta": {}
+        }
+        
++ Response 400 (appliance / json)
+
+        {
+            "status": "ERROR"
+            "data": {}
+            "errors": [
+                {
+                    "code" : "excess",
+                    "message" : "error.client.excess.inValid"
+                }
+            ]
+            "meta": {}
+        }
+
+        
+        
+## Group Product-Prices
+
+Resources related to Product-Prices in the API. 
+
+## Product-Prices [/product-prices]
+
+## Retrieve the price for a specific configuration of a product [/product-prices/{?product-feature, jci, postcode}]
+
+The Product-Prices controller has the following attributes:
+
++ id
++ annualGrossPrice
++ annualNetPrice
++ discounts
+
++ parameters
+    + productFeature : (required, string)
+    + jci : (required, boolean)
+    + postcode : (required, string)
+    
+### View a Product-Price for a particular product configuration [GET]
+
++ Response 200 (application / json)
+
+        {
+            "status" : "SUCCESS"
+            "data" : [
+                {
+                    "product-price": [
+                        {
+                            "annualGrossPrice": 42,
+                            "annualNetPrice": 36,
+                            "discounts": [
+                                {
+                                    "type": "paymentMethod",
+                                    "code": "P2SI",
+                                    "value": 6
+                                }, {
+                                    "type": "jci",
+                                    "code": "jci",
+                                    "value": 0
+                                }, {
+                                    "type": "campaign",
+                                    "code": "CDSC",
+                                    "value": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            "errors" : {},
+            "meta": {}
+        }
+
