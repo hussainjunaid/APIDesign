@@ -148,6 +148,29 @@ Accounts API allows you to list / view all the accounts of the logged in custome
             "meta": {}
         }
 
+## Energy Accounts [/energy-accounts]
+Energy Accounts API allows you to list / view all the energy accounts of the logged in customer. Responses from this API will be retuned in JSON format only
+Energy Account as a resource represents following information
+
++ id - (string) - Account number of the account is considered as the unique identifier
++ holderName - (string) - Name of the account holder if available
++ status - (string) - Status of the account if available. Possible values are open, pending, closed, submitted, cancelled, complete, incomplete, locked, deactive, inprogress, new, processed, wafer and unknown
++ type - (string) - Type of the account, this will be always Energy.
++ subType - (string) - Subtype of the account, this will be Electricity, Gas or Dual
++ responsibilityType - (string) - Responsibility type of the account if available.
++ balance - (string)  - Balance of the account if available.
++ balanceType - (string) - Type of account balance if available, it can be either "in credit" or "in debit".
++ tariff - (string) -  Tariff id associated to the account if available.
++ paymentType - (string) -  Payment type description of the account if available.
++ contractEndDate - (string) - End date of contract associated to the account if available, in dd/MM/yyyy format 
++ supplyAddress - (Address) -  Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
++ jointInvoiceDetails - (object) -  Holds details of the merge related information only if the account was merged previously. 
++ registeredPaperlessBillingOn - (string) - Represents the date when Paperless billing was opted in for this account. 
++ paperlessBilling - (boolean) - true if account is opted into paperless billing, false otherwise. 
++ jointInvoiced - (boolean) - true if the account is a Joint Invoiced account. false otherwise.
+
+
+
 ## Group Addresses
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
