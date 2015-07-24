@@ -169,6 +169,109 @@ Energy Account as a resource represents following information
 + paperlessBilling - (boolean) - true if account is opted into paperless billing, false otherwise. 
 + jointInvoiced - (boolean) - true if the account is a Joint Invoiced account. false otherwise.
 
+### Retrieve all energy accounts [GET /energy-accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccounts": [
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034235409",
+                        "contractEndDate": null,
+                        "balance": 111.47,
+                        "subType": "Electricity",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    },
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034336151",
+                        "contractEndDate": null,
+                        "balance": 140.52,
+                        "subType": "Gas",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
+
+### Retrieve a specific Account [GET /accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
 
 
 ## Group Addresses
