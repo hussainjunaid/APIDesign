@@ -256,9 +256,23 @@ Energy Account as a resource represents following information
             "errors": [],
             "meta": {}
         }
+        
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
 
 
-### Retrieve a specific Account [GET /accounts/{accountNumber}]
+### Retrieve a specific Account [GET /energy-accounts{?accountNumber*}]
 + Parameters
 
     + accountNumber (number) ...This is the customers account number
@@ -272,8 +286,591 @@ Energy Account as a resource represents following information
 
 + Response 200 (application/json)
 
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccounts": [
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034235409",
+                        "contractEndDate": null,
+                        "balance": 111.47,
+                        "subType": "Electricity",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    },
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034336151",
+                        "contractEndDate": null,
+                        "balance": 140.52,
+                        "subType": "Gas",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+
+### Modify Energy Account [PUT /energy-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "energyAccount": {
+                    "jointInvoiceDetails": {
+                        "mergeDate": null,
+                        "mergeType": null,
+                        "mergedAccountNumber": null
+                    },
+                    "registeredPaperlessBillingOn": "04/02/2011",
+                    "status": "open",
+                    "paymentType": "Direct Debit",
+                    "responsibilityType": "Legal Payer",
+                    "paperlessBilling": true,
+                    "type": "Energy",
+                    "holderName": "Mr Morita",
+                    "id": "850034235409",
+                    "contractEndDate": null,
+                    "balance": 111.47,
+                    "subType": "Electricity",
+                    "tariff": "fix-and-fall-june-2016",
+                    "supplyAddress": {
+                        "MPRN": null,
+                        "postalTown": "Salford",
+                        "houseName": "",
+                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                        "county": "LANCASHIRE",
+                        "MPAN": null,
+                        "houseNumber": "53B",
+                        "postcode": "WS3 3ER",
+                        "addressLine2": "",
+                        "addressLine1": "GARSTANG ROAD NORTH",
+                        "flatNumber": null
+                    },
+                    "balanceType": "in credit",
+                    "jointInvoiced": true
+                },
+                "meta": {
+                    "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzWkl0YWdOS0pSRTdXR2VscEErOTYxTkx3WFFGZXUwWURhMmhvbW1SaEUvcXQxTUZjbEtLL0JKbAp2VVIvV3k0MFVGNzc4TVdjUmpGREtqeS9nMzZUT0JCQTJPR3E0V05HcGRZZThGSU5EREc2NktNcXBrNnJmWEpUYUgxT2Z5RmVPenVSCmFrUVNoUTdUcVE2WVRTT2hKbUZtNVZwSEtFYjAyTWNHUXpldTFsWmZhUjczZDVLSTFIWFBGUnJNZWpKR1RZY25FZFEwNlpjT1c2OEwKTkRvU3MzYndxRmtiS0F5YjVkQ0krNFhFdnpUaktwTzN1RzJjTU42Q2RubUdlTUlvMXc9PQ"
+                }
+            }
+            
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "orderPayload",
+                    "message": "error.client.orderPayload.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
+        
+### Retrieve a specific Account [GET /energy-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccount": {
+                    "jointInvoiceDetails": {
+                        "mergeDate": null,
+                        "mergeType": null,
+                        "mergedAccountNumber": null
+                    },
+                    "registeredPaperlessBillingOn": "04/02/2011",
+                    "status": "open",
+                    "paymentType": "Direct Debit",
+                    "responsibilityType": "Legal Payer",
+                    "paperlessBilling": true,
+                    "type": "Energy",
+                    "holderName": "Mr Morita",
+                    "id": "850034235409",
+                    "contractEndDate": null,
+                    "balance": 111.47,
+                    "subType": "Electricity",
+                    "tariff": "fix-and-fall-june-2016",
+                    "supplyAddress": {
+                        "MPRN": null,
+                        "postalTown": "Salford",
+                        "houseName": "",
+                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                        "county": "LANCASHIRE",
+                        "MPAN": null,
+                        "houseNumber": "53B",
+                        "postcode": "WS3 3ER",
+                        "addressLine2": "",
+                        "addressLine1": "GARSTANG ROAD NORTH",
+                        "flatNumber": null
+                    },
+                    "balanceType": "in credit",
+                    "jointInvoiced": true
+                }
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
+### Retrieve all energy accounts [GET /energy-accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccounts": [
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034235409",
+                        "contractEndDate": null,
+                        "balance": 111.47,
+                        "subType": "Electricity",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    },
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034336151",
+                        "contractEndDate": null,
+                        "balance": 140.52,
+                        "subType": "Gas",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
 
 
+## Service Accounts [/service-accounts]
+Service Accounts API allows you to list / view all the service accounts of the logged in customer. Responses from this API will be retuned in JSON format only.
+Service Account as a resource represents following information
+
++ id - (string) - `Returned always`. Account number of the account is considered as the unique identifier
++ customerId - (string) - `Returned always`. This is the legacy customer identification applicable for certain accounts.
++ premiseId - (string) - `Returned always`. This is the legacy premise identification applicable for certain accounts.
++ holderName - (string) - `Returned always`. Name of the account holder if available.
++ status - (string) - `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`
++ type - (string) - `Returned always`. Type of the account, this will be always Services.
++ subType - (string) - `Returned always`. Subtype of the account, this will be Home Services or Security.
++ responsibilityType - (string) - `Returned always`. Responsibility type of the account if available.
++ legacyAccountNumber - (string) - `Returned always`. Legacy Account Number of the account if available.
++ contractEndDate - (string) - `Returned always`. End date of contract associated to the account if available, in dd/MM/yyyy format
++ nextServiceDate - (string) - `Returned always`. Next service visit date if available, in dd/MM/yyyy format
++ multiPremiseLandlord- (boolean) - `Returned always`. Indicates the account as a multi premise landlord account, if the value is true
++ bulkAccount - (boolean) - `Returned always`. Indicates the account as a bulk account, if the value is true
++ landlord - (boolean) - `Returned always`. Indicates the account as a landlord account, if the value is true
++ gasSafetyCertificateAvailable - (boolean) - `Returned always`. Indicates that the account holds a valid Gas Safety Certificate, if the value is true
++ eligibleForFirstVisit - (boolean) - `Returned always`. Indicates that first visit can be booked for this account, if the value is true
++ eligibleForInterimBreakdown - (boolean) - `Returned always`. Indicates that interim breakdown visit can be booked for this account, if the value is true
++ eligibleForAnnualServiceVisit - (boolean) - `Returned always`. Indicates that annual service visit can be booked for this account, if the value is true
++ eligibleForUpsell - (boolean) - `Returned always`. Indicates that the account can be upgraded, if the value is true
++ supplyAddress - (Address) - `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
+
+### Retrieve all service accounts [GET /service-accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "serviceAccounts": [
+                        {
+                            "landlord": false,
+                            "legacyAccountNumber": "22208170L277092",
+                            "status": "open",
+                            "eligibleForAnnualServiceVisit": true,
+                            "eligibleForUpsell": true,
+                            "responsibilityType": "Legal Payer",
+                            "type": "Services",
+                            "holderName": "Mr Thomas Red",
+                            "id": "911000155091",
+                            "contractEndDate": "10/12/2015",
+                            "gasSafetyCertificateAvailable": false,
+                            "bulkAccount": false,
+                            "customerId": "22208170",
+                            "multiPremiseLandlord": false,
+                            "subType": "Home Services",
+                            "supplyAddress": {
+                                "MPRN": null,
+                                "postalTown": "Lightwater",
+                                "houseName": null,
+                                "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                                "county": "SURREY",
+                                "MPAN": null,
+                                "houseNumber": "20",
+                                "postcode": "GU18 5XP",
+                                "addressLine2": null,
+                                "addressLine1": "Springfield",
+                                "flatNumber": null
+                            },
+                            "premiseId": "L277092",
+                            "eligibleForInterimBreakdown": true,
+                            "eligibleForFirstVisit": true
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
+### Retrieve a specific service account [GET /service-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "serviceAccount": {
+                        "landlord": false,
+                        "legacyAccountNumber": "22208170L277092",
+                        "status": "open",
+                        "eligibleForAnnualServiceVisit": true,
+                        "eligibleForUpsell": true,
+                        "responsibilityType": "Legal Payer",
+                        "type": "Services",
+                        "holderName": "Mr Thomas Red",
+                        "id": "911000155091",
+                        "contractEndDate": "10/12/2015",
+                        "gasSafetyCertificateAvailable": false,
+                        "bulkAccount": false,
+                        "customerId": "22208170",
+                        "multiPremiseLandlord": false,
+                        "subType": "Home Services",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Lightwater",
+                            "houseName": null,
+                            "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                            "county": "SURREY",
+                            "MPAN": null,
+                            "houseNumber": "20",
+                            "postcode": "GU18 5XP",
+                            "addressLine2": null,
+                            "addressLine1": "Springfield",
+                            "flatNumber": null
+                        },
+                        "premiseId": "L277092",
+                        "eligibleForInterimBreakdown": true,
+                        "eligibleForFirstVisit": true
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.account.notfound"
+                },
+                "meta": {}
+            }
+
+##Group Premises
+Premises resource allow you to retrieve the customer account information based on their premises. In order to retrieve the the account information based on premises, client should have authorization access token
+
+## Premises Collection [/premises]
+### Retrieve all premises [GET /premises]
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "premises": [
+                        {
+                            "id": "NjM4MDE2MTky",
+                            "accounts": [
+                                "851001347259"
+                            ],
+                            "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
+                            "houseNumber": "",
+                            "flatNumber": null,
+                            "houseName": "Uxbridge Court",
+                            "addressLine1": "Uxbridge Road",
+                            "addressLine2": "",
+                            "postalTown": "Kingston upon Thames",
+                            "county": "SURREY",
+                            "postcode": "KT1 2LJ",
+                            "MPAN": "1900034021774",
+                            "MPRN": null
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+            
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+            
+            
 ## Group Addresses
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
@@ -2151,3 +2748,442 @@ The Product-Prices controller has the following attributes:
             "meta": {}
         }
 
+## Group Products
+
+## Product Holdings [/product-holdings]
+Product Holdings API allows you to list / view all the product holdings of the logged in customer. Responses from this API will be retuned in JSON format only.
+
+# Energy Product holding
+
+Energy product holding as a resource represents following information
+
++ id (string) - Combination of account number and product code is considered as the unique identifier.
++ type (string) - Specifies which data model is supported by the resources, it will be EnergyProductHolding.
++ moveInDate (string) - Date when the product is moved to the address, in dd/MM/yyyy format.
++ moveOutDate (string) - Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999
++ productCode (string) - Product code, 1601 for gas and 1602 for electricity.
++ tariffCode (string) - Tariff code for the product, if available.
++ productTypeDescription (string) - Product description of the product, if available.
++ account (string) - Account number to which the product is linked, if available.
++ propositionId (string) - Proposition id for the product.
++ tariffName (String) - Tariff description for the product, if available.
++ isTariffEnergySmart (boolean) - Indicates that the product has energy smart tariff if the value is true.
++ isMonthlyBilling (boolean) - Indicates that the product is monthly billed if the value is true.
++ isSmartMonthlyBilling (boolean) - Indicates that the product is smart monthly billed if the value is true.
++ isSmartMeterProduct (boolean) - Indicates that the product is having a smart meter if the value is true.
++ features (Array of string) - Mentions any specific features of the product
++ monthlyBillingData (Complex type) - All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date.
+
+# Service Product holding
+
+Service product holding as a resource represents following information
+
++ id (string) - Combination of account number and product code is considered as the unique identifier.
++ type (string) - Specifies which data model is supported by the resources, it will be ServicesProductHolding.
++ productCode (string) - Product code of the product.
++ customerId (string) - Customer id associated to the product, if available.
++ productTypeDescription (string) - Product description of the product, if available.
++ productName (string) - Name of the product, if available.
++ account (string) - Account number to which the product is linked, if available.
++ propositionId (string) - Proposition id for the product.
++ premiseId (String) - Premise id associated to the product, if available.
++ isPlumbingAndDrains (boolean) - Indicates that the product has plumbing and drains, if the value is true.
++ isCrossSellProduct (boolean) - Indicates that the product is a cross sell product, if the value is true.
++ features (Array of string) - Mentions any specific features of the product
+
+# Order product holding
+
++ id (string) - Combination of order number and product code is considered as the unique identifier.
++ type (string) - Specifies which data model is supported by the resources, it will be OrderProductHolding.
++ productCode (string) - Product type, Gas for gas and Electricity for electricity.
++ account (string) - Order number to which the product is linked, if available.
+
+### Retrieve Product holdings [GET /product-holdings]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productHoldings": [
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "GSD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        },
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "ESD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        },
+                        {
+                            "productCode": "ZSIS",
+                            "isPlumbingAndDrains": false,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZSIS",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "isCrossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "propositionId": "1",
+                            "premiseId": "L280628",
+                            "productName": "Central Heating"
+                        },
+                        {
+                            "productCode": "ZPDI",
+                            "isPlumbingAndDrains": true,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZPDI",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "isCrossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "Plumbing & drains",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "propositionId": "0",
+                            "premiseId": "L280628",
+                            "productName": "Plumbing & Drains Cover (TM)"
+                        },
+                        {
+                            "id": "2005895634-Gas",
+                            "productCode": "Gas",
+                            "account": "2005895634",
+                            "type": "OrderProductHolding"
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+        
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
+
+### Retrieve a specific Account [GET /energy-accounts{?accountNumber*}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccounts": [
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034235409",
+                        "contractEndDate": null,
+                        "balance": 111.47,
+                        "subType": "Electricity",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    },
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034336151",
+                        "contractEndDate": null,
+                        "balance": 140.52,
+                        "subType": "Gas",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+        
+        
+## Group Loyalties
+Loyalties resource allows you to create a loyalty card for a customer. Responses from this API will be retuned in JSON format only.
+
+## Loyalties Collection [/loyalties]
+
+Loyalty as a resource represents following information. This is equivalent of a nectar card supplied to the customer
+
++ id (string) - Loyalty card number associated to the customer.
++ title (string) - Title of the customer registering for Loyalty card.
++ firstName (string) - First name of the customer registering for Loyalty card.
++ surname (string) - Surname of the customer registering for Loyalty card.
++ telephoneNumber (string) - Telephone number of the customer registering for Loyalty card.
++ flatNumber (string) - Flat number of the address if available
++ houseNumber (string) - House number of the address if available.
++ houseName (string) - House name of the address if available.
++ addressLine1 (string) - Address line 1. Typically contains building name / street etc...
++ addressLine2 (string) - Address line 2. Typically contains street / avenues etc...
++ postalTown (string) - Postal town of the address.
++ county (string) - County to which the address belongs.
++ postcode (string) - Postcode of the address
++ emailAddress (string) - Email address of the customer attempting to register for a Loyalty card.
+
+Loyalties API is not brand agnostic. Each customer attempting to create a new loyalty card is associated with the brand. However this does not restrict the card to the current brand. Possible list of brands are listed below for reference.
+
+britishgas - Brand association with British Gas
+sainsbury - Brand association with Sainsbury's Energy
+mobileenergy - Brand association with Mobile Energy
+This brand information will be derived from CID. So it is not required to pass this information in the request to create a Loyalty card.
+
+### Create loyalty card [POST /loyalties]
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
+    + Body
+                {
+                
+                "loyalty": {
+                    "id": null,
+                    "title": "Mr",
+                    "firstName": "Mark",
+                    "surname": "Blair",
+                    "telephoneNumber": "07404174628",
+                    "flatNumber": "Flat 10",
+                    "houseNumber": null,
+                    "houseName": "Linden place",
+                    "addressLine1": "Meadow Gardens",
+                    "addressLine2": null,
+                    "postalTown": "Staines",
+                    "county": "Middlesex",
+                    "postcode": "TW18 3HE",
+                    "emailAddress": "test@bgdigitaltest.co.uk"
+                }
+            }
+
+    
++ Response 200 (application/json)
+
+            {
+                "loyalty": {
+                    "id": "91270909018",
+                    "title": "Mr",
+                    "firstName": "Mark",
+                    "surname": "Blair",
+                    "telephoneNumber": "07404174628",
+                    "flatNumber": "Flat 10",
+                    "houseNumber": null,
+                    "houseName": "Linden place",
+                    "addressLine1": "Meadow Gardens",
+                    "addressLine2": null,
+                    "postalTown": "Staines",
+                    "county": "Middlesex",
+                    "postcode": "TW18 3HE",
+                    "emailAddress": "test@bgdigitaltest.co.uk"
+                }
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "postcode": "error.client.postcode.invalid"
+                },
+                "meta": {}
+            }
+
+
+## Group API Management
+## Heartbeat
+Heartbeat is a controller resource and allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this API will be returned in JSON format only.
+Heartbeat as a resource represents following information:
+
++ status (string) - It is a concatenated value of CRM status code and ISU status code, separated by a hyphen
+
+Status codes can have the below values:
+
+0-Up and running
+
+1-Cached and served from MIS
+
+2-Down
+
+3-Undefined
+
+### Retrieve heartbeat [GET /heartbeat]
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "heartbeat": {
+                        "status": "0-0"
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "heartbeat": "error.configuration.data.notfound"
+                },
+                "meta": {}
+            }
+            
+            
