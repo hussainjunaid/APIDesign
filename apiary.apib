@@ -2925,7 +2925,7 @@ Service product holding as a resource represents following information
             }
 
 
-### Retrieve a specific Account [GET /energy-accounts{?accountNumber*}]
+### Retrieve specific product holdings [GET /product-holdings{?accountNumber*}]
 + Parameters
 
     + accountNumber (number) ...This is the customers account number
@@ -2939,113 +2939,178 @@ Service product holding as a resource represents following information
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "energyAccounts": [
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productHoldings": [
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "GSD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
                         },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034235409",
-                        "contractEndDate": null,
-                        "balance": 111.47,
-                        "subType": "Electricity",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true
-                    },
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
-                        },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034336151",
-                        "contractEndDate": null,
-                        "balance": 140.52,
-                        "subType": "Gas",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "ESD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
         
-+ Response 404 (application/json)
++ Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                                "accountNumber": "error.client.accountnumber.invalid"
+                },
+                "meta": {}
+            }
+            
+
++ Response 401 (application/json)            
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.accountnumber.invalid"
+                },
+                "meta": {}
+            }
         
+
+### Retrieve product holdings using product id [GET /product-holdings{productId}]
++ Parameters
+
+    + productId (number) ...This is the customers account number
         
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productHolding": {
+                        "productCode": "ZSIS",
+                        "isPlumbingAndDrains": false,
+                        "type": "ServicesProductHolding",
+                        "id": "911000156354-ZSIS",
+                        "customerId": "22212484",
+                        "productTypeDescription": "HomeCare 300(TM)",
+                        "isCrossSellProduct": false,
+                        "features": [
+                            "Boiler & controls",
+                            "First service visit"
+                        ],
+                        "account": "911000156354",
+                        "propositionId": "1",
+                        "premiseId": "L280628",
+                        "productName": "Central Heating"
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "productId": "error.client.productId.invalid"
+                },
+                "meta": {}
+            }
+            
+
++ Response 401 (application/json)            
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "productId": "error.client.product.notfound"
+                },
+                "meta": {}
+            }
+
 ## Group Loyalties
 Loyalties resource allows you to create a loyalty card for a customer. Responses from this API will be retuned in JSON format only.
 
