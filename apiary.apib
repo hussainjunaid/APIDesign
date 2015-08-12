@@ -3111,6 +3111,45 @@ Service product holding as a resource represents following information
                 "meta": {}
             }
 
+## Group Meters
+Meters endpoint allows you to list / view all the meters of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
+
+## Meters Collection [/meters]
+Meter as a resource represents following information:
+
++ id (string) - It is a combination of account number, contract number and encoded serial number of the meter, is considered as the unique identifier. 
++ numberOfRegisters (number) - Indicates the number of registers available for the meter.
++ meterPointId (string) - Meter point identifier number of the meter, if available.
++ assetNumber (string) - Asset number of the meter, if available.
++ serialNumber (string) - Serial number of the meter, if available.
++ meterId (string) - Meter identifier of the meter, if available.
++ meterType (string) - Meter type can be gas, elecsr, elec2r or elecTou.
++ account (string) - Account number to which the meter is linked, if available.
++ contractType (string) - Contract type can be either Gas or Electricity.
++ contractNumber (string) - Contract number to which the meter is linked, if available.
++ complexityCode (string) - Complexity code of the meter, if available.
++ smartMeter (boolean) - Indicates the meter as a smart meter if the value is true.
++ complexMeter (boolean) - Indicates the meter as a complex meter if the value is true.
++ registers (Array of Register) - Registers associated with the meter.
+
+# Registers
+
++ id (string) - Concatenated account number, contract number, meter serial number and register number of the register, separated by '-', is considered as the unique identifier
++ numberOfDials (string) - Indicates the number of dials available for the register.
++ registerNumber (string) - Register number, if available.
++ registerName (string) - Name of the register, if available.
++ usageType (string) - Usage type of the register, if available.
++ readingType (string) - Last reading type code, if available.
++ readingDate (string) - Last reading date in dd/MM/yyyy format, if available.
++ reading (string) - Last reading, if available.
++ meterReadType (string) - Meter reading type description, if available.
++ readingClassification (string) - Meter reading classification description, it mentions whether the reading is "Actual" or "Estimated", if available.
++ nonCyclicToleranceFlag (string) - Non cyclic tolerance flag, if available.
++ validationFailureCode (string) - Validation Failure Code, if available.
+
+
+
+
 ## Group Loyalties
 Loyalties resource allows you to create a loyalty card for a customer. Responses from this API will be retuned in JSON format only.
 
