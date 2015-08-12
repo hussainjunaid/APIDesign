@@ -3791,7 +3791,7 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                 "meta": {}
             }
             
-### Create a lead [POST /leads]
+### Create a lead [POST]
 
 + Request (application/json)
     
@@ -3933,6 +3933,213 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                 "meta": {}
             }
             
++ Response 401 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.accountNumber.invalid"
+                },
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.accountNumber.invalid"
+                },
+                "meta": {}
+            }
+
+### Update a lead [PUT]
+
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
+    + Body
+    
+                {
+                
+                "lead": {
+                    "id": null,
+                    "leadType": "homeMove",
+                    "accountNumbers": "851001347653",
+                    "mobileNumber": "07412312345",
+                    "moveOutDate": "10/03/2015",
+                    "moveOutGasReading": "123",
+                    "moveOutElectricityDayReading": "456",
+                    "moveOutElectricityNightReading": "789",
+                    "moveInDate": "10/03/2015",
+                    "moveInBillResponsible": false,
+                    "optOutReason": null,
+                    "moveInGasReading": "123",
+                    "moveInElectricityDayReading": "234",
+                    "moveInElectricityNightReading": "555",
+                    "moveInGasAccount": true,
+                    "moveInElectricityAccount": false,
+                    "moveInHomeServiceAccount": true,
+                    "serviceProductAvailability": "Available",
+                    "moveInFlatNumber": null,
+                    "moveInHouseNumber": "51",
+                    "moveInHouseName": "Astley Way",
+                    "moveInAddressLine1": "Manor Ash Garden",
+                    "moveInAddressLine2": "Ashby-De-La_Zouch",
+                    "moveInPostalTown": "Ashby-De-La_Zouch",
+                    "moveInCounty": "Leicestershire",
+                    "moveInPostcode": "LE65 1LY",
+                    "moveInMpan": "201234567890",
+                    "moveInMprn": "200987654321",
+                    "selectedProposition": null,
+                    "status": "Complete",
+                    "expiryDate": "27/05/2015",
+                    "moveOutEconomySevenMeter": "true",
+                    "moveInEconomySevenMeter": "true",
+                    "createdDate": "13/05/2015",
+                    "category": "processed",
+                    "gasDirectDebitAmount": 12,
+                    "electricityDirectDebitAmount": 15,
+                    "propertyType": "PROP_FLAT",
+                    "noOfBedrooms": "2",
+                    "noOfPeople": "3",
+                    "electricityUsageType": "USG_EL_MED",
+                    "houseAge": "BUILT_A3",
+                    "roomHeating": "RH_GAS_CENTRAL",
+                    "boilerType": "BOILER_REG",
+                    "waterHeating": "WATER_GS",
+                    "boilerAge": "BOILER_OLD",
+                    "consumptionEstimated": true,
+                    "gasConsumptionValue": 80,
+                    "electricityConsumptionValue": 90,
+                    "gasTariff": "Gas Standard",
+                    "electricityTariff": "Electricity Standard"
+                }
+            }
+            
++ Response 200 (application/json)
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "lead": {
+                        "id": "1000176608",
+                        "leadType": "homeMove",
+                        "accountNumbers": "851001347653",
+                        "mobileNumber": "07412312345",
+                        "moveOutDate": "10/03/2015",
+                        "moveOutGasReading": "123",
+                        "moveOutElectricityDayReading": "456",
+                        "moveOutElectricityNightReading": "789",
+                        "moveInDate": "10/03/2015",
+                        "moveInBillResponsible": false,
+                        "optOutReason": null,
+                        "moveInGasReading": "123",
+                        "moveInElectricityDayReading": "234",
+                        "moveInElectricityNightReading": "555",
+                        "moveInGasAccount": true,
+                        "moveInElectricityAccount": false,
+                        "moveInHomeServiceAccount": true,
+                        "serviceProductAvailability": "Available",
+                        "moveInFlatNumber": null,
+                        "moveInHouseNumber": "51",
+                        "moveInHouseName": "Astley Way",
+                        "moveInAddressLine1": "Manor Ash Garden",
+                        "moveInAddressLine2": "Ashby-De-La_Zouch",
+                        "moveInPostalTown": "Ashby-De-La_Zouch",
+                        "moveInCounty": "Leicestershire",
+                        "moveInPostcode": "LE65 1LY",
+                        "moveInMpan": "201234567890",
+                        "moveInMprn": "200987654321",
+                        "selectedProposition": null,
+                        "status": "Complete",
+                        "expiryDate": "28/07/2015",
+                        "moveOutEconomySevenMeter": "true",
+                        "moveInEconomySevenMeter": "true",
+                        "createdDate": "14/07/2015",
+                        "category": "processed",
+                        "gasDirectDebitAmount": 12,
+                        "electricityDirectDebitAmount": 15,
+                        "propertyType": "PROP_FLAT",
+                        "noOfBedrooms": "2",
+                        "noOfPeople": "3",
+                        "electricityUsageType": "USG_EL_MED",
+                        "houseAge": "BUILT_A3",
+                        "roomHeating": "RH_GAS_CENTRAL",
+                        "boilerType": "BOILER_REG",
+                        "waterHeating": "WATER_GS",
+                        "boilerAge": "BOILER_OLD",
+                        "consumptionEstimated": true,
+                        "gasConsumptionValue": 80,
+                        "electricityConsumptionValue": 90,
+                        "gasTariff": "Gas Standard",
+                        "electricityTariff": "Electricity Standard"
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "postcode": "error.client.postcode.invalid"
+                },
+                "meta": {}
+            }
+            
++ Response 401 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.accountNumber.invalid"
+                },
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.accountNumber.invalid"
+                },
+                "meta": {}
+            }
 
 
 ## Group Loyalties
