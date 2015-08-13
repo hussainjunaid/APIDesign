@@ -875,12 +875,13 @@ Premises resource allow you to retrieve the customer account information based o
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
 ## Addresses Collection [/addresses]
-### Retrieve all addresses [GET /addresses{?postcode,house_no}]
+### Retrieve all addresses [GET /addresses{?postcode,house_no, validateServiceArea}]
 + Parameters
 
     + postcode (string) ...A valid UK postcode
     + house_no (string, optional) ...House number to restrict the search for
-
+    + validateServiceArea (Boolean, optional)
+    
 + Request (application/json)
     
     + Headers
@@ -912,16 +913,19 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
             "meta": {}
         }
 
+        
 + Response 400 (application/json)
 
         {
-            "status": "FAIL",
+            "status": "ERROR",
             "data": {},
             "errors": {
-                "postcode": "error.client.postcode.invalid"
+                "code": "system",
+                "message": "error.postcode.notInBGArea"
             },
             "meta": {}
         }
+
 
 ### Annonymous Supply Check  [GET /addresses/supply-check{?flatNumber,houseNumber,houseName,addressLine1,addressLine2,postalTown,county,postCode}]
 + Parameters
@@ -946,10 +950,72 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
 
         {
             "status": "SUCCESS",
-            "data": {},
+            "data": {
+                        "supplyCheckCode": "00"
+                    },
             "errors": [],
             "meta": {}
         }
+
+<!-- A supplyCheckCode of "00" indicates the premise was not found in SAP
+in this case the client should set jci flag to false and fulfilment method to uddingston -->
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "01"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
+<!-- A supplyCheckCode of "01" indicates an energy agreement at the premise
+in this case the client should set jci flag to true and fulfilment method to SAP -->
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "02"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
+<!-- A supplyCheckCode of "02" indicates a services agreement at the premise
+in this case the client should set jci flag to false and fulfilment method to uddingston -->
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "03"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
+<!-- A supplyCheckCode of "03" indicates an energy sales order at the premise
+in this case the client should set jci flag to true and fulfilment method to uddingston -->
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "04"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
+<!-- A supplyCheckCode of "04" indicates both an energy and services agreement at the premise
+in this case the client should set jci flag to false and fulfilment method to uddingston -->
+
 
 + Response 404 (application/json)
 
@@ -2480,29 +2546,261 @@ Direct Debits API allows you to list / view all the direct debit information of 
             "meta": {}
         }
         
-##Group Product-Catalogue
+## Group Product Bundles
+Product Bundles API allows you to view the base information about a product bundle, understand how the product bundle and its 
+constituent products can be configured and establish the relationship between a product bundle and its constituent products.
 
-Resources related to the Product-Catalogue in the API. 
 
-## Product-Catalogue [/product-catalogue]
+## Product Bundles collection [/product-bundles]
 
-## List all product options for a particlar product [/product-catalogue/{id}]
+### Retrieve Product Bundle Information Based on an ID [GET /product-bundles{id}] 
 
-A Product-Catalogue object has the following attributes:
+A Product Bundles object has the following attributes:
 
-+ id
-+ description
-+ type
-+ isAnnualServiceApplicable
-+ applicableExcess
-+ applicablePaymentMethods
-+ applicableApplianceTypes
-+ features
++ id - string
++ description - string
++ type - string
++ applicableExcessForBundle - array
++ applicablePaymentMethodsForBundle - array
++ products - array of products
++ productFeatures - array of product-features
 
 + Parameters
-    + id : (required, string)
+
+    + id (required, string) 
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "productBundle": [
+                    {
+                        "id": "HC400",
+                        "description": "Homecare 400",
+                        "type": "Services",
+                        "applicableExcessForBundle": [0, 50, 99],
+                        "applicablePaymentMethodsForBundle": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "products": [
+                            "HC400-CH",
+                            "HC400-PD",
+                            "HC400-HEC"
+                        ]
+                    },
+                "products": [
+                    {
+                        "id": "HC400-CH",
+                        "description": "Central Heating",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": true,
+                        "isAnnualServiceMandatory": true,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 50, 99],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "BBC",
+                                "description": "Back Boiler Circulator"
+                            },
+                            {
+                                "type": "BBF",
+                                "description": "Back Boiler Fire"
+                            },
+                            {
+                                "type": "CHB",
+                                "description": "Central Heating Boiler"
+                            },
+                            {
+                                "type": "WAU",
+                                "description": "Warm Air Unit"
+                            },
+                            {
+                                "type": "WAW",
+                                "description": "Warm Air With Water Heater"
+                            }
+                        ],
+                        "productFeature": "HC400|HC400-CH|3FI1|BBC|MDD"
+                    },
+                    {
+                        "id": "HC400-PD",
+                        "description": "Plumbing & drains",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": false,
+                        "isAnnualServiceMandatory": false,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 50],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "PLDR",
+                                "description": "Plumbing and drains"
+                            }
+                        ],
+                        "productFeature": "HC400|HC400-PD|2PFI|PLDR|MDD"
+                    },
+                    {
+                        "id": "HC400-HEC",
+                        "description": "Home Electrics",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": false,
+                        "isAnnualServiceMandatory": false,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 50],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "EWR",
+                                "description": "Electrical wiring"
+                            }
+                        ],
+                        "productFeature": "HC400|HC400-HEC|HEFI|EWR|MDD"
+                    }
+                ],
+                "productFeatures": [
+                    {
+                        "id": "HC400|HC400-CH|3FI1|BBC|MDD",
+                        "excess": 99,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "BBC",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3FI1"
+                    },
+                    {
+                        "id": "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "excess": 50,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "PLDR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2PFI"
+                    },
+                    {
+                        "id": "HC400|HC400-HEC|HEFI|EWR|MDD",
+                        "excess": 50,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "EWR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "HEFI"
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": [
+                {
+                    "code": "bundle",
+                    "message": "error.client.bundle.notFound"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 500 (application/json)
+
+        {
+            "status" : ERROR
+            "data": {}
+            "errors": [
+                {
+                    "code": "bundlePaymentMethods",
+                    "message": "error.client.bundle.paymentMethod.notFound"
+                }
+            ]
+            "meta": {}
+        }
+        
+##Group Products
+
+Resources related to Product in the API. 
+
+## Products [/products]
+
+### List all product options for a particlar product [GET /products/{id}]
+
+A Product object has the following attributes:
+
++ id - string
++ description - string
++ type - string
++ isAnnualServiceApplicable - Boolean
++ isAnnualServiceMandatory - Boolean
++ applicableExcess - array
++ applicablePaymentMethods - array
++ applicableApplianceTypes - array
++ productFeatures - array of product-features
+
++ Parameters
+    + id (required, string) 
     
-### View a Product-Catalogue for given product [GET]
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
     
 + Response 200 (application/json)
 
@@ -2516,6 +2814,7 @@ A Product-Catalogue object has the following attributes:
                             "description": "Kitchen Appliance Cover for 5 appliances",
                             "type": "Services",
                             "isAnnualServiceApplicable": false,
+                            "isAnnualServiceMandatory": false,
                             "applicableExcess": ["50", "0"],
                             "applicablePaymentMethods": [
                                 {
@@ -2574,15 +2873,15 @@ A Product-Catalogue object has the following attributes:
                                     "description: "Washing machine"
                                 }
                             ]
-                            "features": ["NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD"]
+                            "productFeatures": ["NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD"]
                         }
-                    "features": [
+                    "productFeatures": [
                         {
                             "id": "NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD",
                             "excess": "50",
-                            "annualServiceVisit": false,
+                            "annualServiceVisitSelected": false,
                             "applianceType": "TDE-TDE-TDE-TDE-TDE",
-                            "paymentMethod": "MDD"
+                            "levelOfService": "2F5I"
                         }
                     ]
                 }
@@ -2619,32 +2918,36 @@ A Product-Catalogue object has the following attributes:
         }
         
         
-## Group Product-Features
+##Group Product-Features
 
-Resources related to  Product-Features in the API.
+Resources related to Product-Features in the API. 
 
 ## Product-Features [/product-features]
 
-## Retrieve the level of service for a specific configuration of a product [/product-features/{?product}]
+### Retrieve the level of service for a specific configuration of a product [GET /product-features/{?productId, productBundleId}]
 
-The Product-Features object has the following attributes
+A Product-Feature object has the following attributes:
 
-+ id
-+ excess
-+ annualServiceVisit
-+ applianceType
-+ paymentMethod
++ productId - string
++ productBundleId - string
++ excess - string
++ annualServiceVisitSelected - Boolean
++ applianceType - string
++ paymentMethod - string
++ levelOfService - string
 
-+ parameters
-    + product : (required, string)
-    + annualServiceVisit : (optional, Boolean)
-    + excess : (optional, string)
-    + applianceType : (optional, string)
-    + paymentMethod : (optional, string)
+
++ Parameters
+
+    + productId (optional, string)
+    + productBundleId (optional, string)
     
-### View a Product-Feature for a particular product configuration [GET]
++ Request
 
-+ Response 200 (application / json)
+    + Headers
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
 
         {
             "status" : "SUCCESS"
@@ -2654,9 +2957,11 @@ The Product-Features object has the following attributes
                         {
                             "id": "NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD",
                             "excess": 50,
-                            "annualServiceVisit": false
-                            "applianceType": "TDE-TDE-TDE-TDE-TDE"
-                            "paymentMethod": "MDD"
+                            "annualServiceVisitSelected": false,
+                            "applianceType": "TDE-TDE-TDE-TDE-TDE",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "2F5I"
+
                         }
                     ]
                 }
@@ -2665,89 +2970,364 @@ The Product-Features object has the following attributes
         }
         
 + Response 404 (appliance / json)
+        {
+            "status": "SUCCESS",
+            "data": [
+                {
+                    "productFeatures": [
+                        {
+                            "id": "HC400|HC400-CH|3FI1|BBC|MDD",
+                            "excess": "99",
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "BBC",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "3FI1"
+                        }
+                    ]
+                },
+            "errors": [],
+            "meta": {}
+        }
+        
+
++ Response 404 (appliance / json)
 
         {
-            "status": "ERROR"
+            "status" : ERROR
             "data": {}
             "errors": [
                 {
-                    "code" : "product",
-                    "message" : "error.client.product.notFound"
+                    "code": "product",
+                    "message": "error.client.product.notFound"
                 }
             ]
             "meta": {}
         }
         
-+ Response 400 (appliance / json)
++ Response 404 (appliance / json)
 
         {
-            "status": "ERROR"
+            "status" : ERROR
             "data": {}
             "errors": [
                 {
-                    "code" : "excess",
-                    "message" : "error.client.excess.inValid"
+                    "code": "bundle",
+                    "message": "error.client.bundle.notFound"
                 }
             ]
             "meta": {}
         }
 
++ Response 400 (application/json)
+
+        {
+            "status" : FAIL
+            "data": {}
+            "errors": [
+                {
+                    "code": "excess",
+                    "message": "error.client.excess.invalid"
+                }
+            ]
+            "meta": {}
+        }
         
         
-## Group Product-Prices
+## Group Prices
 
-Resources related to Product-Prices in the API. 
+Resources related to Prices in the API. 
 
-## Product-Prices [/product-prices]
+## Prices [/prices]
 
-## Retrieve the price for a specific configuration of a product [/product-prices/{?product-feature, jci, postcode}]
+### Retrieve the price for a specific configuration of a product [GET /prices/{?productFeatureId, jci, postcode}]
 
-The Product-Prices controller has the following attributes:
+A Product-Price object has the following attributes:
 
-+ id
-+ annualGrossPrice
-+ annualNetPrice
-+ discounts
++ productFeatureId - string
++ totalGrossPrice - BigDecimal
++ totalNetPrice - BigDecimal
++ totalDiscounts - array
++ produtFeatureId.annualGrossPrice - BigDecimal
++ productFeatureId.annualNetPrice - BigDecimal
++ productFeatureId.discounts - array
 
-+ parameters
-    + productFeature : (required, string)
-    + jci : (required, boolean)
-    + postcode : (required, string)
++ Parameters
+
+    + productFeatureId (required, string)
+    + jci (required, string)
+   
     
-### View a Product-Price for a particular product configuration [GET]
++ Request
 
-+ Response 200 (application / json)
+    + Headers
+    
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
 
         {
             "status" : "SUCCESS"
             "data" : [
                 {
-                    "product-price": [
-                        {
-                            "annualGrossPrice": 42,
-                            "annualNetPrice": 36,
-                            "discounts": [
-                                {
-                                    "type": "paymentMethod",
-                                    "code": "P2SI",
-                                    "value": 6
-                                }, {
-                                    "type": "jci",
-                                    "code": "jci",
-                                    "value": 0
-                                }, {
-                                    "type": "campaign",
-                                    "code": "CDSC",
-                                    "value": 0
-                                }
-                            ]
-                        }
-                    ]
+                                    "price": [
+                    {
+                        "totalGrossPrice": 260,
+                        "totalNetPrice": 130,
+                        "totalDiscounts": [
+                            {
+                                "type": "CAMPAIGN",
+                                "description": "Online Summer Sales 2015",
+                                "code": "CDSC",
+                                "value": 25
+                            },
+                            {
+                                "type": "PAYMENT_TYPE",
+                                "description": "Direct debit discount",
+                                "code": "P2SI",
+                                "value": 25
+                            },
+                            {
+                                "type": "JCI",
+                                "description": "Energy Customer discount",
+                                "code": "JCI",
+                                "value": 12
+                            }
+                        ]
+                    },
+                ]
+                "productFeaturePrices": [
+                    {
+                        "featureId": "HC400|HC400-CH|3FI1|BBC|MDD",
+                        "annualGrossPrice": 120,
+                        "annualNetPrice": 100,
+                        "discounts": [
+                            {
+                                "type": "CAMPAIGN",
+                                "description": "Online Summer Sales 2015",
+                                "code": "CDSC",
+                                "value": 25
+                            }
+                        ]
+                    },
+                    {
+                        "featureId": "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "annualGrossPrice": 260,
+                        "annualNetPrice": 243,
+                        "discounts": [
+                            {
+                                "type": "PAYMENT_TYPE",
+                                "description": "Direct debit discount",
+                                "code": "P2SI",
+                                "value": 25
+                            },
+                            {
+                                "type": "JCI",
+                                "description": "Energy Customer discount",
+                                "code": "JCI",
+                                "value": 12
+                            }
+                        ]
+                    },
+                    {
+                        "featureId": "HC400|HC400-HEC|HEFI|EWR|MDD",
+                        "annualGrossPrice": 280,
+                        "annualNetPrice": 243,
+                        "discounts": []
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+                            
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                                "code": "productfeature",
+                    "message": "error.client.postcode.blank"
                 }
-            "errors" : {},
+                ],
+            "meta": {}
+        } 
+
+## Group Services-Quotes
+
+The Services-Quote resource is designed to send customer, address and product information
+to the backend to create a quote object. 
+
+A Services-Quote object has the following attributes:
+
++ id - string
++ title - string
++ firstName - string
++ lastName - string
++ emailAddress - string
++ emailAddressType - string
++ telephoneNumber - string
++ telephoneNumberType - string
++ premiseId - string
++ bothAddressSame - Boolean
++ supplyAddress.flatNumber - string
++ supplyAddress.houseNumber - string
++ supplyAddress.houseName - string
++ supplyAddress.addressLine1 - string
++ supplyAddress.addressLine2 - string
++ supplyAddress.postalTown - string
++ supplyAddress.county - string
++ supplyAddress.postcode - string
++ supplyAddress.country - string
++ billingAddress.flatNumber - string
++ billingAddress.houseNumber - string
++ billingAddress.houseName - string
++ billingAddress.addressLine1 - string
++ billingAddress.addressLine2 - string
++ billingAddress.postalTown - string
++ billingAddress.county - string
++ billingAddress.postcode - string
++ billingAddress.country - string
++ paymentType - string
++ jci - Boolean
++ productFeatures - array
+
+### Post a services quote to the backend systems [POST /services-quote]
+
++ Parameters
+
+    + title - (required, string)
+    + firstName - (required, string)
+    + lastName - (required, string)
+    + telephoneNumber - (required, string)
+    + premiseId - (optional, string)
+    + bothAddressSame - (required, Boolean)
+    + supplyAddress.flatNumber - (optional, string)
+    + supplyAddress.houseNumber - (optional, string)
+    + supplyAddress.houseName - (optional, string)
+    + supplyAddress.addressLine1 - (optional, string)
+    + supplyAddress.addressLine2 - (optional, string)
+    + supplyAddress.postalTown - (optional, string)
+    + supplyAddress.county - (optional, string)
+    + supplyAddress.postcode - (optional, string)
+    + supplyAddress.country - (optional, string)
+    + billingAddress.flatNumber - (optional, string)
+    + billingAddress.houseNumber - (optional, string)
+    + billingAddress.houseName - (optional, string)
+    + billingAddress.addressLine1 - (optional, string)
+    + billingAddress.addressLine2 - (optional, string)
+    + billingAddress.postalTown - (optional, string)
+    + billingAddress.county - (optional, string)
+    + billingAddress.postcode - (optional, string)
+    + billingAddress.country - (optional, string)
+    + paymentType - (required, string)
+    + jci - (required, Boolean)
+    + productFeatures - (required, array)
+    
++ Request
+
+        {  
+            "servicesQuote":[  
+                {  
+                    "id": 356,
+                    "title": "Mr",
+                    "firstName": "Ravi",
+                    "lastName": "Kumar",
+                    "emailAddress": "ravi.kumar@britfss.co.uk",
+                    "emailAddressType": null,
+                    "telephoneNumber" : "07738998190",
+                    "telephoneNumberType": null,
+                    "premiseID": null,
+                    "bothAddressSame": false,
+                    "supplyAddress": [
+                        {
+                            "flatNumber": 14,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null
+                        }
+                    ],
+                    "billingAddress": [
+                        {
+                            "flatNumber": 17,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null
+                        }
+                    ],
+                    "paymentType": "MDD",
+                    "jci": false,
+                    "productFeatures": [
+                        "HC400|HC400-CH|3FI1|BBC|MDD",
+                        "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "HC400|HC400-HEC|HEFI|EWR|MDD"
+                    ]
+            }
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "id": null,
+                        "title": "Mr",
+                        "firstName": "Ravi",
+                        "lastName": "Kumar",
+                        "emailAddress": "ravi.kumar@britfss.co.uk",
+                        "emailAddressType": null,
+                        "telephoneNumber" : "07738998190",
+                        "telephoneNumberType": null,
+                        "premiseID": null,
+                        "bothAddressSame": false,
+                        "supplyAddress": [
+                            {
+                                "flatNumber": 14,
+                                "houseNumber": null,
+                                "houseName": "The Rushes",
+                                "addressLine1": "Wapshott road",
+                                "addressLine2": null,
+                                "postalTown": "Staines",
+                                "county": "Middlesex",
+                                "postcode": "TW183EZ",
+                                "country": null
+                            }
+                        ],
+                        "billingAddress": [
+                            {
+                                "flatNumber": 17,
+                                "houseNumber": null,
+                                "houseName": "The Rushes",
+                                "addressLine1": "Wapshott road",
+                                "addressLine2": null,
+                                "postalTown": "Staines",
+                                "county": "Middlesex",
+                                "postcode": "TW183EZ",
+                                "country": null
+                            }
+                        ],
+                        "paymentType": "MDD",
+                        "jci": false,
+                        "productFeatures": [
+                            "HC400|HC400-CH|3FI1|BBC|MDD",
+                            "HC400|HC400-PD|2PFI|PLDR|MDD",
+                            "HC400|HC400-HEC|HEFI|EWR|MDD"
+                        ]
+                    },
+            "errors": [],
             "meta": {}
         }
 
+
+            
 ## Group Products
 
 ## Product Holdings [/product-holdings]
@@ -4140,6 +4720,150 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                 },
                 "meta": {}
             }
+
+        
+##Group Services-Lead
+
+Resources related to the Services-Lead in the API.
+
+## Services-Lead Collection [/services-lead]
+### Post services sales data to Uddingston [POST /services-lead]
+
+A Services-Lead object has the following attributes:
+
++ id
++ title
++ firstName
++ lastName
++ emailAddress
++ telephoneNumber
++ telephoneNumberType
++ bothAddressSame
++ supplyAddress
++ billingAddress
++ directDebitDetails
++ marketingConsentDetails
++ jciStatus
++ bundleCode
++ bundleDescription
++ bundleAnnualPrice
++ bundleMonthlyPrice
++ products
+
++ Request (application/json)
+
+        {  
+            "servicesLead":[  
+                {  
+                    "id":null,
+                    "title":"Mr",
+                    "firstName":"Ravi",
+                    "lastName":"Kumar",
+                    "emailAddress":"ravi.kumar@britfss.co.uk",
+                    "telephoneNumber":"07738998190",
+                    "telephoneNumberType":null,
+                    "bothAddressSame":"false",
+                    "supplyAddress":[  
+                        {  
+                            "flatNumber":14,
+                            "houseNumber":null,
+                            "houseName":"The Rushes",
+                            "addressLine1":"Wapshott Road",
+                            "addressLine2":null,
+                            "postalTown":"Staines",
+                            "county":"Middlesex",
+                            "postcode":"TW183EZ",
+                            "country":null
+                        }
+                    ],
+                    "billingAddress":[  
+                        {  
+                            "flatNumber":17,
+                            "houseNumber":null,
+                            "houseName":"The Rushes",
+                            "addressLine1":"Wapshott Road",
+                            "addressLine2":null,
+                            "postalTown":"Staines",
+                            "county":"Middlesex",
+                            "postcode":"TW183EZ",
+                            "country":null
+                        }
+                    ],
+                    "directDebitDetails":[  
+                        {  
+                            "paymentMethod":"MDD",
+                            "bankAccountNumber":"93536377",
+                            "sortCode":"208122",
+                            "accountHolderName":"MR R KUMAR",
+                            "preferredPaymentDay":15
+                        }
+                    ],
+                    "marketingConsentDetails":[  
+                        {  
+                            "letterOpted":false,
+                            "emailOpted":true,
+                            "landlineOpted":true,
+                            "mobileOpted":true,
+                            "smsMmsOpted":true,
+                            "faceToFaceOpted":null,
+                            "ivmOpted":null
+                        }
+                    ],
+                    "jciStatus":true,
+                    "bundleCode":null,
+                    "bundleDescription":null,
+                    "bundleAnnualPrice":null,
+                    "bundleMonthlyPrice":null,
+                    "products":[  
+                        {  
+                            "productName":"Kitchen Appliance Cover for 3 appliance",
+                            "productCode":"KAC-3",
+                            "excess":50,
+                            "productAnnualPrice":72,
+                            "productMonthlyPrice":6,
+                            "levelOfService":"2F31",
+                            "appliances":[  
+                                {  
+                                    "type":"HOE",
+                                    "description":"Built-in electric hob"
+                                },
+                                {  
+                                    "type":"OVN",
+                                    "description":"Built-in gas oven"
+                                },
+                                {  
+                                    "type":"FFR",
+                                    "description":"Fridge-freezer"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": {},
+            "meta": {}
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "price",
+                    "message": "error.client.price.mismatch"
+                }
+            ],
+            "meta": {}
+        }
 
 
 ## Group Loyalties
