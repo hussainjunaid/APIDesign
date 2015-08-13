@@ -957,9 +957,6 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
             "meta": {}
         }
 
-<!-- A supplyCheckCode of "00" indicates the premise was not found in SAP
-in this case the client should set jci flag to false and fulfilment method to uddingston -->
-
 + Response 200 (application/json)
 
         {
@@ -970,9 +967,6 @@ in this case the client should set jci flag to false and fulfilment method to ud
             "errors": [],
             "meta": {}
         }
-
-<!-- A supplyCheckCode of "01" indicates an energy agreement at the premise
-in this case the client should set jci flag to true and fulfilment method to SAP -->
 
 + Response 200 (application/json)
 
@@ -985,9 +979,6 @@ in this case the client should set jci flag to true and fulfilment method to SAP
             "meta": {}
         }
 
-<!-- A supplyCheckCode of "02" indicates a services agreement at the premise
-in this case the client should set jci flag to false and fulfilment method to uddingston -->
-
 + Response 200 (application/json)
 
         {
@@ -999,9 +990,6 @@ in this case the client should set jci flag to false and fulfilment method to ud
             "meta": {}
         }
 
-<!-- A supplyCheckCode of "03" indicates an energy sales order at the premise
-in this case the client should set jci flag to true and fulfilment method to uddingston -->
-
 + Response 200 (application/json)
 
         {
@@ -1012,10 +1000,6 @@ in this case the client should set jci flag to true and fulfilment method to udd
             "errors": [],
             "meta": {}
         }
-
-<!-- A supplyCheckCode of "04" indicates both an energy and services agreement at the premise
-in this case the client should set jci flag to false and fulfilment method to uddingston -->
-
 
 + Response 404 (application/json)
 
@@ -3326,6 +3310,282 @@ A Services-Quote object has the following attributes:
             "meta": {}
         }
 
+        
+### Retrieve the status of a services quote from the backend systems [GET /services-quotes/{id}/status]
+
++ Parameters
+
+    + id (required, string)
+    
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "transactionId": "23431234",
+                "status": "Checked-out",
+                "servicesAccountNumber": "911000626630"
+            },
+            "errors": {},
+            "meta": {}
+        }
+        
+## Group Services-Contract
+
+Resources related to Services-Contract in the API. 
+
+### Send marketing consent details and payment details to the backend to create services contract [POST /services-contract]
+
+A Services-Contract object has the following attributes:
+
++ id - string
++ title - string
++ firstName - string
++ lastName - string
++ emailAddress - string
++ emailAddressType - string
++ telephoneNumber - string
++ telephoneNumberType - string
++ premiseId - string
++ bothAddressSame - Boolean
++ supplyAddress.flatNumber - string
++ supplyAddress.houseNumber - string
++ supplyAddress.houseName - string
++ supplyAddress.addressLine1 - string
++ supplyAddress.addressLine2 - string
++ supplyAddress.postalTown - string
++ supplyAddress.county - string
++ supplyAddress.postcode - string
++ supplyAddress.country - string
++ billingAddress.flatNumber - string
++ billingAddress.houseNumber - string
++ billingAddress.houseName - string
++ billingAddress.addressLine1 - string
++ billingAddress.addressLine2 - string
++ billingAddress.postalTown - string
++ billingAddress.county - string
++ billingAddress.postcode - string
++ billingAddress.country - string
++ paymentMethod - string
++ bankAccountNumber - string
++ sortCode - string
++ accountHolderName - string
++ preferredPaymentDay - int
++ letterOpted - Boolean
++ emailOpted - Boolean
++ landlineOpted - Boolean
++ mobileOpted - Boolean
++ smsMmsOpted - Boolean
++ faceToFaceOpted - Boolean
++ ivmOpted - Boolean
++ jci - Boolean
++ productFeatures - array
++ transactionId - string
++ status - string
++ servicesAccountNumber - string
++ legacyAccountNumber - string
+
+
++ Parameters
+
+    + transactionId - (required, string)
+    + title - (required, string)
+    + firstName - (required, string)
+    + lastName - (required, string)
+    + telephoneNumber - (required, string)
+    + emailAddress (required, string)
+    + premiseId - (optional, string)
+    + bothAddressSame - (required, Boolean)
+    + supplyAddress.flatNumber - (optional, string)
+    + supplyAddress.houseNumber - (optional, string)
+    + supplyAddress.houseName - (optional, string)
+    + supplyAddress.addressLine1 - (optional, string)
+    + supplyAddress.addressLine2 - (optional, string)
+    + supplyAddress.postalTown - (optional, string)
+    + supplyAddress.county - (optional, string)
+    + supplyAddress.postcode - (optional, string)
+    + supplyAddress.country - (optional, string)
+    + billingAddress.flatNumber - (optional, string)
+    + billingAddress.houseNumber - (optional, string)
+    + billingAddress.houseName - (optional, string)
+    + billingAddress.addressLine1 - (optional, string)
+    + billingAddress.addressLine2 - (optional, string)
+    + billingAddress.postalTown - (optional, string)
+    + billingAddress.county - (optional, string)
+    + billingAddress.postcode - (optional, string)
+    + billingAddress.country - (optional, string)
+    + paymentMethod - string
+    + bankAccountNumber - string
+    + sortCode - string
+    + accountHolderName - string
+    + preferredPaymentDay - int
+    + letterOpted - Boolean
+    + emailOpted - Boolean
+    + landlineOpted - Boolean
+    + mobileOpted - Boolean
+    + smsMmsOpted - Boolean
+    + faceToFaceOpted - Boolean
+    + ivmOpted - Boolean
+    + jci - (required, Boolean)
+    + productFeatures - (required, array)
+    
++ Request
+
+        {
+            "servicesContract": [
+                {
+                    "id": null,
+                    "transactionId": "12341123",
+                    "legacyAccountNumber": null,
+                    "title": "Mr",
+                    "firstName": "Ravi",
+                    "lastName": "Kumar",
+                    "emailAddress": "ravi.kumar@britfss.co.uk",
+                    "emailAddressType": null,
+                    "telephoneNumber": "07738998190",
+                    "telephoneNumberType": null,
+                    "bothAddressSame": false,
+                    "supplyAddress": [
+                        {
+                            "flatNumber": 14,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null
+                        }
+                    ],
+                    "billingAddress": [
+                        {
+                            "flatNumber": 17,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null
+                        }
+                    ],
+                    "directDebitDetails": [
+                        {
+                            "paymentMethod": "MDD",
+                            "bankAccountNumber": "93536377",
+                            "sortCode": "208122",
+                            "accountHolderName": "Deepak",
+                            "preferredPaymentDay": 5
+                        }
+                    ],
+                    "marketingConsentDetails": [
+                        {
+                            "letterOpted": false,
+                            "emailOpted": true,
+                            "landlineOpted": false,
+                            "mobileOpted": false,
+                            "smsMmsOpted": false,
+                            "facetoFaceOpted": false,
+                            "ivmOpted": false
+                        }
+                    ],
+                    "jci": false,
+                    "productFeatures": [
+                        "HC400|HC400-CH|3FI1|BBC|MDD",
+                        "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "HC400|HC400-HEC|HEFI|EWR|MDD"
+                    ]
+                }
+            ]
+        }
+    
++ Response 201 (application/json)
+
+        {
+            "servicesContract": [
+                {
+                    "id": "687899732",
+                    "transactionId": "12341123",
+                    "legacyAccountNumber": null,
+                    "title": "Mr",
+                    "firstName": "Ravi",
+                    "lastName": "Kumar",
+                    "emailAddress": "ravi.kumar@britfss.co.uk",
+                    "emailAddressType": null,
+                    "telephoneNumber": "07738998190",
+                    "telephoneNumberType": null,
+                    "bothAddressSame": false,
+                    "supplyAddress": [
+                        {
+                            "flatNumber": 14,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null
+                        }
+                    ],
+                    "billingAddress": [
+                        {
+                            "flatNumber": 17,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null
+                        }
+                    ],
+                    "directDebitDetails": [
+                        {
+                            "paymentMethod": "MDD",
+                            "bankAccountNumber": "93536377",
+                            "sortCode": "208122",
+                            "accountHolderName": "Deepak",
+                            "preferredPaymentDay": 5
+                        }
+                    ],
+                    "marketingConsentDetails": [
+                        {
+                            "letterOpted": false,
+                            "emailOpted": true,
+                            "landlineOpted": false,
+                            "mobileOpted": false,
+                            "smsMmsOpted": false,
+                            "facetoFaceOpted": false,
+                            "ivmOpted": false
+                        }
+                    ],
+                    "jci": false,
+                    "productFeatures": [
+                        "HC400|HC400-CH|3FI1|BBC|MDD",
+                        "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "HC400|HC400-HEC|HEFI|EWR|MDD"
+                    ]
+                }
+            ]
+        }
 
             
 ## Group Products
@@ -4956,6 +5216,157 @@ This brand information will be derived from CID. So it is not required to pass t
                 },
                 "meta": {}
             }
+
+
+## Group Service Order
+
+Service Order allows the client to create and modify an appointment for a smart meter exchange 
+
+### create a service order [POST /service-orders]
+
++ id - string
++ startDate - string
++ startTime - string
++ endTime - string
++ userStatusCode - string
++ accountNumbers - array
++ address.flatNumber - string
++ address.houseNumber - string
++ address.houseName - string
++ address.addressLine1 - string
++ address.addressLine2 - string
++ address.postalTown - string
++ address.county - string
++ address.postcode - string
++ address.country - string
++ meta.propspectToken - string A valid prospect token that was created earlier
++ fuelType - string gas, electricity, dual
++ bestContactNumber - string
++ specialInstruction - string
++ meterType - string
+
++ Parameters
+
+    + id - (optional, string)
+    + startDate - (optional, string)
+    + endDate - (optional, string)
+    + startTime - (optional, string)
+    + endTime - (optional, string)
+    + statusCode - (optional, string) ...to identify service order is new, rescheduled, or site ineligible
+    + accountNumbers - (optional, string array)
+    + address.flatNumber - (required, string)
+    + address.houseNumber - (required, string)
+    + address.houseName - (required, string)
+    + address.addressLine1 - (required, string)
+    + address.addressLine2 - (required, string)
+    + address.postalTown - (required, string)
+    + address.county - (required, string)
+    + address.postcode - (required, string)
+    + address.country - (required, string)
+    + address.MPAN - (required, string)
+    + address.MPRN - (required, string)
+    + meta.propspectToken - (required, string) ...A valid prospect token that was created earlier
+    + fuelType - (optional, string) ... gas, electricity, dual
+    + bestContactNumber - (optional, string)
+    + specialInstruction - (optional, string)
+    + meterType - (optional, string) ...SM for Smart Meter installation
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
+    + Body
+    
+        {
+            "serviceOrder": 
+                {
+                    "id": null,
+                    "startDate": null,
+                    "endDate": null,
+                    "startTime": null,
+                    "endTime": null,
+                    "statusCode": null,
+                    "accounts": null,
+                    "address":
+                        {
+                            "flatNumber": 14,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "country": null,
+                            "MPRN": null,
+                            "MPAN": null,
+                        }
+                    "fuelType": "dual",
+                    "contactNumber": null,
+                    "specialInstruction": null,
+                    "meterType": "SM",
+                },
+            "meta":
+                {
+                    "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
+                }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": 
+                {
+                    "serviceOrder": 
+                        {
+                            "id": "RjNiQjNYYlRYbnRtaHpyOG5XWWdmdz09",
+                            "startDate": null,
+                            "startTime": null,
+                            "endDate": null,
+                            "endTime": null,
+                            "statusCode": null,
+                            "accounts": null,
+                            "address":
+                                {
+                                    "flatNumber": 14,
+                                    "houseNumber": null,
+                                    "houseName": "The Rushes",
+                                    "addressLine1": "Wapshott road",
+                                    "addressLine2": null,
+                                    "postalTown": "Staines",
+                                    "county": "Middlesex",
+                                    "postcode": "TW183EZ",
+                                    "country": null,
+                                    "MPRN": null,
+                                    "MPAN": null,
+                                },
+                            "fuelType": "dual",
+                            "contactNumber": "",
+                            "specialInstruction": "",
+                            "meterType": "SM",
+                        }
+                },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "tbd",
+                    "message": "tbd"
+                }
+            ],
+            "meta": {}
+        }
+
 
 
 ## Group API Management
