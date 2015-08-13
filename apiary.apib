@@ -2929,6 +2929,7 @@ A Product-Feature object has the following attributes:
 + Request
 
     + Headers
+    
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
     
 + Response 200 (application/json)
@@ -2954,6 +2955,7 @@ A Product-Feature object has the following attributes:
         }
         
 + Response 404 (appliance / json)
+
         {
             "status": "SUCCESS",
             "data": [
@@ -3588,7 +3590,7 @@ A Services-Contract object has the following attributes:
         }
 
             
-## Group Products
+## Group Products Holdings
 
 ## Product Holdings [/product-holdings]
 Product Holdings API allows you to list / view all the product holdings of the logged in customer. Responses from this API will be retuned in JSON format only.
@@ -4214,7 +4216,7 @@ Meter as a resource represents following information:
                 "meta": {}
             }
             
-### Validate Meter read [GET /meters/{meterIdentifier}/reading/validation{?registerNumber&reading}]
+### Validate Meter read [GET /meters/{meterIdentifier}/reading/validation{?registerNumber,reading}]
 
 + Parameters
 
@@ -4631,7 +4633,7 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                 "meta": {}
             }
             
-### Create a lead [POST]
+### Create a lead [POST /leads]
 
 + Request (application/json)
     
@@ -4806,7 +4808,7 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                 "meta": {}
             }
 
-### Update a lead [PUT]
+### Update a lead [PUT /leads/{leadId}]
 
 + Request (application/json)
     
@@ -5164,6 +5166,7 @@ This brand information will be derived from CID. So it is not required to pass t
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
     
     + Body
+    
                 {
                 
                 "loyalty": {
@@ -5279,79 +5282,79 @@ Service Order allows the client to create and modify an appointment for a smart 
     
     + Body
     
-        {
-            "serviceOrder": 
-                {
-                    "id": null,
-                    "startDate": null,
-                    "endDate": null,
-                    "startTime": null,
-                    "endTime": null,
-                    "statusCode": null,
-                    "accounts": null,
-                    "address":
-                        {
-                            "flatNumber": 14,
-                            "houseNumber": null,
-                            "houseName": "The Rushes",
-                            "addressLine1": "Wapshott road",
-                            "addressLine2": null,
-                            "postalTown": "Staines",
-                            "county": "Middlesex",
-                            "postcode": "TW183EZ",
-                            "country": null,
-                            "MPRN": null,
-                            "MPAN": null,
-                        }
-                    "fuelType": "dual",
-                    "contactNumber": null,
-                    "specialInstruction": null,
-                    "meterType": "SM",
-                },
-            "meta":
-                {
-                    "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
-                }
-        }
-
+            {
+                "serviceOrder": 
+                    {
+                        "id": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "startTime": null,
+                        "endTime": null,
+                        "statusCode": null,
+                        "accounts": null,
+                        "address":
+                            {
+                                "flatNumber": 14,
+                                "houseNumber": null,
+                                "houseName": "The Rushes",
+                                "addressLine1": "Wapshott road",
+                                "addressLine2": null,
+                                "postalTown": "Staines",
+                                "county": "Middlesex",
+                                "postcode": "TW183EZ",
+                                "country": null,
+                                "MPRN": null,
+                                "MPAN": null,
+                            }
+                        "fuelType": "dual",
+                        "contactNumber": null,
+                        "specialInstruction": null,
+                        "meterType": "SM",
+                    },
+                "meta":
+                    {
+                        "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
+                    }
+            }
+    
 + Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": 
-                {
-                    "serviceOrder": 
-                        {
-                            "id": "RjNiQjNYYlRYbnRtaHpyOG5XWWdmdz09",
-                            "startDate": null,
-                            "startTime": null,
-                            "endDate": null,
-                            "endTime": null,
-                            "statusCode": null,
-                            "accounts": null,
-                            "address":
-                                {
-                                    "flatNumber": 14,
-                                    "houseNumber": null,
-                                    "houseName": "The Rushes",
-                                    "addressLine1": "Wapshott road",
-                                    "addressLine2": null,
-                                    "postalTown": "Staines",
-                                    "county": "Middlesex",
-                                    "postcode": "TW183EZ",
-                                    "country": null,
-                                    "MPRN": null,
-                                    "MPAN": null,
-                                },
-                            "fuelType": "dual",
-                            "contactNumber": "",
-                            "specialInstruction": "",
-                            "meterType": "SM",
-                        }
-                },
-            "errors": [],
-            "meta": {}
-        }
+    
+            {
+                "status": "SUCCESS",
+                "data": 
+                    {
+                        "serviceOrder": 
+                            {
+                                "id": "RjNiQjNYYlRYbnRtaHpyOG5XWWdmdz09",
+                                "startDate": null,
+                                "startTime": null,
+                                "endDate": null,
+                                "endTime": null,
+                                "statusCode": null,
+                                "accounts": null,
+                                "address":
+                                    {
+                                        "flatNumber": 14,
+                                        "houseNumber": null,
+                                        "houseName": "The Rushes",
+                                        "addressLine1": "Wapshott road",
+                                        "addressLine2": null,
+                                        "postalTown": "Staines",
+                                        "county": "Middlesex",
+                                        "postcode": "TW183EZ",
+                                        "country": null,
+                                        "MPRN": null,
+                                        "MPAN": null,
+                                    },
+                                "fuelType": "dual",
+                                "contactNumber": "",
+                                "specialInstruction": "",
+                                "meterType": "SM",
+                            }
+                    },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 403 (application/json)
 
