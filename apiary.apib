@@ -11,7 +11,7 @@ Accounts API allows you to list / view all the accounts of the logged in custome
 + Parameters
 
     + accountNumber (number) ...This is the customers account number
-        
+
 + Request
 
     + Headers
@@ -147,7 +147,6 @@ Accounts API allows you to list / view all the accounts of the logged in custome
             },
             "meta": {}
         }
-
 ## Energy Accounts [/energy-accounts]
 Energy Accounts API allows you to list / view all the energy accounts of the logged in customer. Responses from this API will be retuned in JSON format only
 Energy Account as a resource represents following information
@@ -800,77 +799,6 @@ Service Account as a resource represents following information
                 "meta": {}
             }
 
-##Group Premises
-Premises resource allow you to retrieve the customer account information based on their premises. In order to retrieve the the account information based on premises, client should have authorization access token
-
-## Premises Collection [/premises]
-### Retrieve all premises [GET /premises]
-+ Request (application/json)
-    
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-+ Response 200 (application/json)
-
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "premises": [
-                        {
-                            "id": "NjM4MDE2MTky",
-                            "accounts": [
-                                "851001347259"
-                            ],
-                            "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
-                            "houseNumber": "",
-                            "flatNumber": null,
-                            "houseName": "Uxbridge Court",
-                            "addressLine1": "Uxbridge Road",
-                            "addressLine2": "",
-                            "postalTown": "Kingston upon Thames",
-                            "county": "SURREY",
-                            "postcode": "KT1 2LJ",
-                            "MPAN": "1900034021774",
-                            "MPRN": null
-                        }
-                    ]
-                },
-                "errors": [],
-                "meta": {}
-            }
-
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "authorize",
-                        "message": "access_denied"
-                    }
-                ],
-                "meta": {}
-            }
-            
-            
-+ Response 500 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "server.error.internal",
-                        "message": "An internal error while processing request."
-                    }
-                ],
-                "meta": {}
-            }
-            
-            
 ## Group Addresses
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
@@ -881,11 +809,11 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
     + postcode (string) ...A valid UK postcode
     + house_no (string, optional) ...House number to restrict the search for
     + validateServiceArea (Boolean, optional)
-    
+
 + Request (application/json)
-    
+
     + Headers
-        
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -913,7 +841,17 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
             "meta": {}
         }
 
-        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "postcode": "error.client.postcode.invalid"
+            },
+            "meta": {}
+        }
+
 + Response 400 (application/json)
 
         {
@@ -925,7 +863,6 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
             },
             "meta": {}
         }
-
 
 ### Annonymous Supply Check  [GET /addresses/supply-check{?flatNumber,houseNumber,houseName,addressLine1,addressLine2,postalTown,county,postCode}]
 + Parameters
@@ -940,7 +877,7 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
     + postCode (string, optional) ...post code of the selected address, if available.
 
 + Request (application/json)
-    
+
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
@@ -1040,7 +977,7 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
 # Logged In supply Check [GET /address/supply-check?houseNumber=1&postCode=SL11AB]
 
 + Request (application/json)
-    
+
     + Headers
 
             Authorization: Bearer accesstoken
@@ -1135,9 +1072,8 @@ Telephone Number
             ],
             "meta": {}
         }
-        
 
-## Customers match by account info [/customers/match-by-account-info]
+## Customers Match by account info [/customers/match-by-account-info]
 This is a controller service which allows to find out whether a customer with matching account number, home care number or sales order number, is available in backend system. The request body of this post must be a JSON object with properties listed below.
 
 + title
@@ -1152,11 +1088,11 @@ This is a controller service which allows to find out whether a customer with ma
 + Request (application/json)
 
     + Headers
-    
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "title": "Mr",
                 "firstName": "Pentwazz Stavea",
@@ -1164,7 +1100,7 @@ This is a controller service which allows to find out whether a customer with ma
                 "customerReference": "851001347680",
                 "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
             }
-        
+
 
 + Response 200 (application/json)
 
@@ -1179,7 +1115,7 @@ This is a controller service which allows to find out whether a customer with ma
                   "errors": [],
                   "meta": {}
             }
-        
+
 + Response 400 (application/json)
 
         {
@@ -1209,13 +1145,13 @@ This is a controller service which allows to find out whether a customer with ma
 ### Match by bank info [POST]
 
 + Request (application/json)
-    
+
     + Headers
-        
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "title": "Mr",
                 "firstName": "Pentwazz Stavea",
@@ -1224,7 +1160,7 @@ This is a controller service which allows to find out whether a customer with ma
                 "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk",
                 "directDebitNumber": "1234"
             }
-            
+
 + Response 200 (application/json)
 
             {
@@ -1238,7 +1174,7 @@ This is a controller service which allows to find out whether a customer with ma
                   "errors": [],
                   "meta": {}
             }
-        
+
 + Response 400 (application/json)
 
             {
@@ -1252,7 +1188,7 @@ This is a controller service which allows to find out whether a customer with ma
                 ],
                 "meta": {}
             }
-            
+
 + Response 404 (application/json)
 
         {
@@ -1266,7 +1202,7 @@ This is a controller service which allows to find out whether a customer with ma
             ],
             "meta": {}
         }
-        
+
 ## Customers Match by postcode [/customers/match-by-postcode]
 
 This is a controller service which allows to find out whether a customer with matching postcode and email address, is available in backend system. The request body of this post must be a JSON object identified with customer. The parameters of the JSON is as follows:
@@ -1281,13 +1217,13 @@ This is a controller service which allows to find out whether a customer with ma
 ### Match by bank info [POST]
 
 + Request (application/json)
-    
+
     + Headers
-        
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "title": "Mr",
                 "firstName": "Pentwazz Stavea",
@@ -1295,7 +1231,7 @@ This is a controller service which allows to find out whether a customer with ma
                 "postcode": "TW18 4ND",
                 "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
             }
-                    
+
 + Response 200 (application/json)
 
             {
@@ -1309,7 +1245,7 @@ This is a controller service which allows to find out whether a customer with ma
                   "errors": [],
                   "meta": {}
             }
-        
+
 + Response 400 (application/json)
 
             {
@@ -1323,7 +1259,7 @@ This is a controller service which allows to find out whether a customer with ma
                 ],
                 "meta": {}
             }
-            
+
 ## Customers Account check [/customers/account-check]
 
 This is a controller service allows you to identify what type of accounts customer holds based on the match done previously. As a controller it expects the input in the form of JSON object with an attribute matchToken. Request / response are as follows.
@@ -1331,17 +1267,17 @@ This is a controller service allows you to identify what type of accounts custom
 ### Account check [POST]
 
 + Request (application/json)
-    
+
     + Headers
-        
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "matchToken": "0f35b369-ee56-52d8-911d-16fc6d73e70b"
             }
-                    
+
 + Response 200 (application/json)
 
             {
@@ -1355,7 +1291,7 @@ This is a controller service allows you to identify what type of accounts custom
                   "errors": [],
                   "meta": {}
             }
-        
+
 + Response 403 (application/json)
 
             {
@@ -1370,84 +1306,6 @@ This is a controller service allows you to identify what type of accounts custom
                 "meta": {}
             }
 
-## Group Emails
-Email API allows you to send an email. Responses from this API will be retuned in JSON format only.
-
-+ payload - (string, mandatory) - Email payload derived from source API
-+ timestamp - (string, mandatory) - Encrypted payload derived from source API
-+ checksum - (string, mandatory) - Checksum derived from source API
-+ to - (string, mandatory) - To email address derived from source API
-+ additionalInformation - (string, optional) - Additional information derived from source API
-+ apikey - (string, required) - Key that identifies client to API
-
-## Email Collection [/email]
-
-### Send Email [POST]
-
-+ Request (application/x-www-form-urlencoded)
-    
-    + Headers
-            
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
-    + Body
-    
-            {
-                "payload":"",
-                "timestamp":"",
-                "checksum":"",
-                "to":"",
-                "additionalInformation":"",
-                "apikey":""
-            }
-
-+ Response 200 (application/json)
-        
-            {
-                   "status": "SUCCESS",
-                   "data":
-                       {
-                       },
-                   "errors":
-                       {
-                       },
-                   "meta":
-                       {           
-                       }
-            }
-
-+ Response 400 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": {
-                    "timestamp": "error.client.timestamp.expired"
-                },
-            "meta": {}
-        }
-        
-+ Response 400 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors":
-                {
-                    "timestamp": "error.client.checksum.expired"
-                },
-            "meta": {}
-        }
-+ Response 500 (application/json)
-
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors":{
-                "server.error.internal": "An internal error occurred while processing request."
-            },
-            "meta": {}
-        }
 
 ## Group UserInfo
 
@@ -1488,13 +1346,13 @@ UserInfo resource represents the online profile details of the customer. A UserI
                         "type": "FULL",
                         "status": "ACTIVE",
                         "brand": "BG"
-                        
+
                     }
                 ]
             },
             "errors": {},
             "meta": {}
-        }    
+        }
 
 + Response 401 (application/json)
 
@@ -1511,16 +1369,16 @@ UserInfo resource represents the online profile details of the customer. A UserI
         }
 
 
-        
+
 ### Create a new online profile [POST]
 + Request (application/json)
 
     + Headers
-        
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "userinfo":{
                         "title": "Mr",
@@ -1534,9 +1392,9 @@ UserInfo resource represents the online profile details of the customer. A UserI
                     "matchToken": "8c099369-ae94-53ef-a34b-bc8e01dce302"
                 }
             }
-        
+
 + Response 200 (application/json)
- 
+
         {
             "status": "SUCCESS",
             "data": {
@@ -1582,7 +1440,7 @@ UserInfo resource represents the online profile details of the customer. A UserI
                 }
             ],
             "meta": {}
-        }        
+        }
 
 + Response 400 (application/json)
 
@@ -1596,16 +1454,16 @@ UserInfo resource represents the online profile details of the customer. A UserI
                 }
             ],
             "meta": {}
-        } 
-        
+        }
+
 + Request (application/json)
 
     + Headers
-        
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f61234
 
     + Body
-    
+
             {
                 "userinfo":{
                         "title": "Mr",
@@ -1619,9 +1477,9 @@ UserInfo resource represents the online profile details of the customer. A UserI
                     "onlineSales": "8c099369-ae94-53ef-a34b-bc8e01dce302"
                 }
             }
-        
+
 + Response 200 (application/json)
- 
+
         {
             "status": "SUCCESS",
             "data": {
@@ -1653,8 +1511,8 @@ UserInfo resource represents the online profile details of the customer. A UserI
                 }
             ],
             "meta": {}
-        } 
-        
+        }
+
 + Response 404 (application/json)
 
         {
@@ -1667,7 +1525,7 @@ UserInfo resource represents the online profile details of the customer. A UserI
                 }
             ],
             "meta": {}
-        } 
+        }
 
 + Response 400 (application/json)
 
@@ -1681,26 +1539,26 @@ UserInfo resource represents the online profile details of the customer. A UserI
                 }
             ],
             "meta": {}
-        } 
-        
+        }
+
 ## UserInfo profile check [/userinfo/profile-check]
-This endpoint allows you to check if a given user profile is registered at online or not. 
+This endpoint allows you to check if a given user profile is registered at online or not.
 The request body of this post must be a JSON object with attributes as listed below.
 
 ### Profile check [POST]
 + Request (application/json)
-    
+
     + Headers
-    
+
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-                
+
             {
                 "email" : "Gnanasakthivel.Ramanathan@britishgas.co.uk",
                 "brand" : "britishgas"
-            
+
             }
 
 + Response 200 (application/json)
@@ -1715,7 +1573,7 @@ The request body of this post must be a JSON object with attributes as listed be
             "errors": [],
             "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -1728,7 +1586,7 @@ The request body of this post must be a JSON object with attributes as listed be
                 }
             ],
             "meta": {}
-        } 
+        }
 
 ## UserInfo by reference [/userinfo/find-by-reference]
 This is a controller service which allows to find out whether a user with matching account number, home care number or sales order number, is available in SAP system. The request body of this post must be a JSON object with properties listed below
@@ -1740,23 +1598,23 @@ This is a controller service which allows to find out whether a user with matchi
 
 ### Retrieve userinfo by reference [POST]
 + Request (application/json)
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-                
+
             {
                 "title": "Mr",
                 "firstName": "Pentwazz Stavea",
                 "surname": "Kenj",
                 "customerReference": "851001347680
-            
+
             }
 
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -1778,7 +1636,7 @@ This is a controller service which allows to find out whether a user with matchi
                 }
             ],
             "meta": {}
-        } 
+        }
 
 + Response 403 (application/json)
 
@@ -1792,8 +1650,8 @@ This is a controller service which allows to find out whether a user with matchi
                 }
             ],
             "meta": {}
-        } 
-        
+        }
+
 + Response 403 (application/json)
 
         {
@@ -1807,7 +1665,7 @@ This is a controller service which allows to find out whether a user with matchi
             ],
             "meta": {}
         }
-        
+
 ## Temporary profiles [/userinfo/temporary-profiles]
 Creates a profile and triggers an email using a temporary password.
 As an entity, following properties define a Temporary profile.
@@ -1820,13 +1678,13 @@ As an entity, following properties define a Temporary profile.
 
 ### Create temporary profile [POST]
 + Request (application/json)
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-                
+
             {
                 "temporaryProfile": {
                     "title": "Mr",
@@ -1869,7 +1727,7 @@ As an entity, following properties define a Temporary profile.
               ],
               "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -1883,17 +1741,17 @@ As an entity, following properties define a Temporary profile.
               ],
               "meta": {}
         }
-        
+
 ### Update temporary profile [PUT]
 
 + Request (application/json)
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-                
+
             {
                 "temporaryProfile": {
                   "id": "5aa6a106-c6d5-52c4-af9d-a3d0b361dffa",
@@ -1914,7 +1772,7 @@ As an entity, following properties define a Temporary profile.
                   "data": {},
                   "errors": [],
                   "meta": {}
-               
+
         }
 
 + Response 404 (application/json)
@@ -1930,7 +1788,7 @@ As an entity, following properties define a Temporary profile.
               ],
               "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -1944,7 +1802,7 @@ As an entity, following properties define a Temporary profile.
               ],
               "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -1958,7 +1816,7 @@ As an entity, following properties define a Temporary profile.
               ],
               "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -1972,22 +1830,22 @@ As an entity, following properties define a Temporary profile.
               ],
               "meta": {}
         }
-        
+
 ## Temporary Profile tokeninfo [/userinfo/temporary-profiles/token-info{?token}]
 
 + Parameters
 
     + token: 5aa6a106-c6d5-52c4-af9d-a3d0b361dffa (mandatory, string)
-    
+
 ### Retrieve tokeninfo for password reset [GET]
 + Request
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
-        
+
         {
               "title": "Mr",
               "email": "pradeepkrishna.govindaraju@centrica.com",
@@ -2009,7 +1867,7 @@ As an entity, following properties define a Temporary profile.
             ],
             "meta": {}
         }
-        
+
 ## Reset password request [/userinfo/reset-password-requests]
 Reset password request endpoint allows a client to reset the current password for a customer.
 As a resource, a ResetPasswordRequest represents following attributes.
@@ -2021,15 +1879,15 @@ As a resource, a ResetPasswordRequest represents following attributes.
 
 ### Send password reset email [POST]
 + Request (application/json)
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-                
+
             {
-                "resetPasswordRequest": 
+                "resetPasswordRequest":
                 {
                     "email" : "pradeepkrishna.govindarajucentrica.com",
                     "brand" : "britishgas"
@@ -2058,7 +1916,7 @@ As a resource, a ResetPasswordRequest represents following attributes.
             ],
             "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -2072,21 +1930,21 @@ As a resource, a ResetPasswordRequest represents following attributes.
             ],
             "meta": {}
         }
-        
+
 ### Updating a new password [PUT]
 Should you have a valid token to used via an email sent across, use this endpoint to update the new password for that customer.
 
 Note: As soon as the password update is successful, token issued will be invalidated. Token can also be marked invalid if it has expired. Current expiry timelimit is 20 minutes.
 + Request (application/json)
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
-                "resetPasswordRequest": 
+                "resetPasswordRequest":
                 {
                     "token" : "f2d779a9-748b-58bc-aacb-8714b1206656",
                     "password" : "password12"
@@ -2101,7 +1959,7 @@ Note: As soon as the password update is successful, token issued will be invalid
             "errors": [],
             "meta": {}
         }
-        
+
 + Response 400 (application/json)
 
         {
@@ -2114,7 +1972,7 @@ Note: As soon as the password update is successful, token issued will be invalid
                 }
             ],
             "meta": {}
-        }        
+        }
 
 + Response 400 (application/json)
 
@@ -2129,22 +1987,22 @@ Note: As soon as the password update is successful, token issued will be invalid
             ],
             "meta": {}
         }
-        
+
 ## Reset password request tokeninfo [/userinfo/reset-password-requests/token-info{?token}]
 
 + Parameters
 
     + token: 5aa6a106-c6d5-52c4-af9d-a3d0b361dffa (mandatory, string)
-    
+
 ### Retrieve tokeninfo for password reset [GET]
 + Request
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
-        
+
         {
               "title": "Mr",
               "email": "pradeepkrishna.govindaraju@centrica.com",
@@ -2179,7 +2037,7 @@ Direct Debits API allows you to list / view all the direct debit information of 
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
         {
@@ -2269,7 +2127,7 @@ Direct Debits API allows you to list / view all the direct debit information of 
             "errors": [],
             "meta": {}
         }
-        
+
 + Response 401 (application/json)
 
         {
@@ -2295,7 +2153,7 @@ Direct Debits API allows you to list / view all the direct debit information of 
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
         {
@@ -2385,7 +2243,7 @@ Direct Debits API allows you to list / view all the direct debit information of 
             "errors": [],
             "meta": {}
         }
-        
+
 + Response 401 (application/json)
 
         {
@@ -2399,14 +2257,14 @@ Direct Debits API allows you to list / view all the direct debit information of 
             ],
             "meta": {}
         }
-        
+
 
 ### Get a specific Direct Debit [GET /directdebits/{directDebitId}]
 
 + Parameters
 
     + directDebitId (string) ...directDebitId is the account number associated to the contract
-    
+
 + Request
 
     + Headers
@@ -2501,7 +2359,7 @@ Direct Debits API allows you to list / view all the direct debit information of 
             "errors": [],
             "meta": {}
         }
-        
+
 + Response 401 (application/json)
 
         {
@@ -2529,15 +2387,376 @@ Direct Debits API allows you to list / view all the direct debit information of 
             ],
             "meta": {}
         }
-        
+
+## Group Products Holdings
+
+## Product Holdings [/product-holdings]
+Product Holdings API allows you to list / view all the product holdings of the logged in customer. Responses from this API will be retuned in JSON format only.
+
+# Energy Product holding
+
+Energy product holding as a resource represents following information
+
++ id (string) - Combination of account number and product code is considered as the unique identifier.
++ type (string) - Specifies which data model is supported by the resources, it will be EnergyProductHolding.
++ moveInDate (string) - Date when the product is moved to the address, in dd/MM/yyyy format.
++ moveOutDate (string) - Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999
++ productCode (string) - Product code, 1601 for gas and 1602 for electricity.
++ tariffCode (string) - Tariff code for the product, if available.
++ productTypeDescription (string) - Product description of the product, if available.
++ account (string) - Account number to which the product is linked, if available.
++ propositionId (string) - Proposition id for the product.
++ tariffName (String) - Tariff description for the product, if available.
++ isTariffEnergySmart (boolean) - Indicates that the product has energy smart tariff if the value is true.
++ isMonthlyBilling (boolean) - Indicates that the product is monthly billed if the value is true.
++ isSmartMonthlyBilling (boolean) - Indicates that the product is smart monthly billed if the value is true.
++ isSmartMeterProduct (boolean) - Indicates that the product is having a smart meter if the value is true.
++ features (Array of string) - Mentions any specific features of the product
++ monthlyBillingData (Complex type) - All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date.
+
+# Service Product holding
+
+Service product holding as a resource represents following information
+
++ id (string) - Combination of account number and product code is considered as the unique identifier.
++ type (string) - Specifies which data model is supported by the resources, it will be ServicesProductHolding.
++ productCode (string) - Product code of the product.
++ customerId (string) - Customer id associated to the product, if available.
++ productTypeDescription (string) - Product description of the product, if available.
++ productName (string) - Name of the product, if available.
++ account (string) - Account number to which the product is linked, if available.
++ propositionId (string) - Proposition id for the product.
++ premiseId (String) - Premise id associated to the product, if available.
++ isPlumbingAndDrains (boolean) - Indicates that the product has plumbing and drains, if the value is true.
++ isCrossSellProduct (boolean) - Indicates that the product is a cross sell product, if the value is true.
++ features (Array of string) - Mentions any specific features of the product
+
+# Order product holding
+
++ id (string) - Combination of order number and product code is considered as the unique identifier.
++ type (string) - Specifies which data model is supported by the resources, it will be OrderProductHolding.
++ productCode (string) - Product type, Gas for gas and Electricity for electricity.
++ account (string) - Order number to which the product is linked, if available.
+
+### Retrieve Product holdings [GET /product-holdings]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productHoldings": [
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "GSD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        },
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "ESD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        },
+                        {
+                            "productCode": "ZSIS",
+                            "isPlumbingAndDrains": false,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZSIS",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "isCrossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "propositionId": "1",
+                            "premiseId": "L280628",
+                            "productName": "Central Heating"
+                        },
+                        {
+                            "productCode": "ZPDI",
+                            "isPlumbingAndDrains": true,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZPDI",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "isCrossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "Plumbing & drains",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "propositionId": "0",
+                            "premiseId": "L280628",
+                            "productName": "Plumbing & Drains Cover (TM)"
+                        },
+                        {
+                            "id": "2005895634-Gas",
+                            "productCode": "Gas",
+                            "account": "2005895634",
+                            "type": "OrderProductHolding"
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
+
+### Retrieve specific product holdings using account number [GET /product-holdings{?accountNumber*}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productHoldings": [
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "GSD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        },
+                        {
+                            "isSmartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariffCode": "ESD",
+                            "isMonthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "isTariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "propositionId": "00",
+                            "tariffName": "Standard",
+                            "isSmartMeterProduct": false
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                                "accountNumber": "error.client.accountnumber.invalid"
+                },
+                "meta": {}
+            }
+
+
++ Response 401 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "accountNumber": "error.client.accountnumber.invalid"
+                },
+                "meta": {}
+            }
+
+
+### Retrieve product holdings using product id [GET /product-holdings{productId}]
++ Parameters
+
+    + productId (number) ...This is the customers account number
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productHolding": {
+                        "productCode": "ZSIS",
+                        "isPlumbingAndDrains": false,
+                        "type": "ServicesProductHolding",
+                        "id": "911000156354-ZSIS",
+                        "customerId": "22212484",
+                        "productTypeDescription": "HomeCare 300(TM)",
+                        "isCrossSellProduct": false,
+                        "features": [
+                            "Boiler & controls",
+                            "First service visit"
+                        ],
+                        "account": "911000156354",
+                        "propositionId": "1",
+                        "premiseId": "L280628",
+                        "productName": "Central Heating"
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "productId": "error.client.productId.invalid"
+                },
+                "meta": {}
+            }
+
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "productId": "error.client.product.notfound"
+                },
+                "meta": {}
+            }
+
+
 ## Group Product Bundles
-Product Bundles API allows you to view the base information about a product bundle, understand how the product bundle and its 
+Product Bundles API allows you to view the base information about a product bundle, understand how the product bundle and its
 constituent products can be configured and establish the relationship between a product bundle and its constituent products.
 
-
 ## Product Bundles collection [/product-bundles]
-
-### Retrieve Product Bundle Information Based on an ID [GET /product-bundles{id}] 
 
 A Product Bundles object has the following attributes:
 
@@ -2549,9 +2768,7 @@ A Product Bundles object has the following attributes:
 + products - array of products
 + productFeatures - array of product-features
 
-+ Parameters
-
-    + id (required, string) 
+### Retrieve Product Bundle Information for all HomeCare bundles [GET /product-bundles]
 
 + Request
 
@@ -2559,6 +2776,516 @@ A Product Bundles object has the following attributes:
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
             
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+            "productBundle":[
+                {
+                    "id": "HC100",
+                    "description": "Homecare 100",
+                    "type": "Services",
+                    "applicableExcessForBundle": [0, 60],
+                    "applicablePaymentMethodsForBundle": [
+                        {
+                            "type": "MDD",
+                            "description": "Monthly Direct Debit"
+                        },
+                        {
+                            "type": "ADD",
+                            "description": "Annual Direct Debit"
+                        },
+                        {
+                            "type": "CC",
+                            "description": "Annual Credit or Debit Card"
+                        }
+                    ],
+                    "products": ["HC100-BC"]
+                },
+                {
+                    "id": "HC200",
+                    "description": "Homecare 200",
+                    "type": "Services",
+                    "applicableExcessForBundle": [0, 60],
+                    "applicablePaymentMethodsForBundle": [
+                        {
+                            "type": "MDD",
+                            "description": "Monthly Direct Debit"
+                        },
+                        {
+                            "type": "ADD",
+                            "description": "Annual Direct Debit"
+                        },
+                        {
+                            "type": "CC",
+                            "description": "Annual Credit or Debit Card"
+                        }
+                    ],
+                    "products": ["HC200-CH"]
+                },
+                {
+                    "id": "HC300",
+                    "description": "Homecare 200",
+                    "type": "Services",
+                    "applicableExcessForBundle": [0, 60],
+                    "applicablePaymentMethodsForBundle": [
+                        {
+                            "type": "MDD",
+                            "description": "Monthly Direct Debit"
+                        },
+                        {
+                            "type": "ADD",
+                            "description": "Annual Direct Debit"
+                        },
+                        {
+                            "type": "CC",
+                            "description": "Annual Credit or Debit Card"
+                        }
+                    ],
+                    "products": ["HC300-CH", "HC300-PD"]
+                },
+                {
+                    "id": "HC400",
+                    "description": "Homecare 400",
+                    "type": "Services",
+                    "applicableExcessForBundle": [0, 60],
+                    "applicablePaymentMethodsForBundle": [
+                        {
+                            "type": "MDD",
+                            "description": "Monthly Direct Debit"
+                        },
+                        {
+                            "type": "ADD",
+                            "description": "Annual Direct Debit"
+                        },
+                        {
+                            "type": "CC",
+                            "description": "Annual Credit or Debit Card"
+                        }
+                    ],
+                    "products": ["HC400-CH", "HC400-PD", "HC400-HEC"]
+                }
+            ],
+                "products": [
+                    {
+                        "id": "HC100-BC",
+                        "description": "Boilers & controls",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": true,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "BBC",
+                                "description": "Back Boiler Circulator"
+                            },
+                            {
+                                "type": "BBF",
+                                "description": "Back Boiler Fire"
+                            },
+                            {
+                                "type": "CHB",
+                                "description": "Central Heating Boiler"
+                            },
+                            {
+                                "type": "WAU",
+                                "description": "Warm Air Unit"
+                            },
+                            {
+                                "type": "WAW",
+                                "description": "Warm Air With Water Heater"
+                            }
+                        ],
+                        "isAnnualServiceMandatory": true,
+                        "productFeatures": ["HC100|HC100-BC|2SIS|CHB|MDD", "HC100|HC100-BC|2FIS|CHB|MDD"]
+                    },
+                    {
+                        "id": "HC200-CH",
+                        "description": "Central Heating",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": true,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "BBC",
+                                "description": "Back Boiler Circulator"
+                            },
+                            {
+                                "type": "BBF",
+                                "description": "Back Boiler Fire"
+                            },
+                            {
+                                "type": "CHB",
+                                "description": "Central Heating Boiler"
+                            },
+                            {
+                                "type": "WAU",
+                                "description": "Warm Air Unit"
+                            },
+                            {
+                                "type": "WAW",
+                                "description": "Warm Air With Water Heater"
+                            }
+                        ],
+                        "isAnnualServiceMandatory": true,
+                        "productFeatures": ["HC200|HC200-CH|3SIS|CHB|MDD", "HC200|HC200-CH|3FIS|CHB|MDD"]
+                    },
+                    {
+                        "id": "HC300-CH",
+                        "description": "Central Heating",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": true,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "BBC",
+                                "description": "Back Boiler Circulator"
+                            },
+                            {
+                                "type": "BBF",
+                                "description": "Back Boiler Fire"
+                            },
+                            {
+                                "type": "CHB",
+                                "description": "Central Heating Boiler"
+                            },
+                            {
+                                "type": "WAU",
+                                "description": "Warm Air Unit"
+                            },
+                            {
+                                "type": "WAW",
+                                "description": "Warm Air With Water Heater"
+                            }   
+                        ],
+                        "isAnnualServiceMandatory": true,
+                        "productFeatures": ["HC300|HC300-CH|3SIS|CHB|MDD", "HC300|HC300-CH|3FIS|CHB|MDD"]
+                    },
+                    {
+                        "id": "HC300-PD",
+                        "description": "Plumbing and drains",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": false,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "PLDR",
+                                "description": "Plumbing and drains"
+                            }
+                        ],
+                        "isAnnualServiceMandatory": false,
+                        "productFeatures": ["HC300|HC300-PD|2PDI|PLDR|MDD", "HC300|HC300-PD|2PFI|PLDR|MDD"]
+                    },
+                    {
+                        "id": "HC400-CH",
+                        "description": "Central Heating",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": true,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "BBC",
+                                "description": "Back Boiler Circulator"
+                            },
+                            {
+                                "type": "BBF",
+                                "description": "Back Boiler Fire"
+                            },
+                            {
+                                "type": "CHB",
+                                "description": "Central Heating Boiler"
+                            },
+                            {
+                                "type": "WAU",
+                                "description": "Warm Air Unit"
+                            },
+                            {
+                                "type": "WAW",
+                                "description": "Warm Air With Water Heater"
+                            }
+                        ],
+                        "isAnnualServiceMandatory": true,
+                        "productFeatures": ["HC400|HC400-CH|3SIS|CHB|MDD", "HC400|HC400-CH|3FIS|CHB|MDD"]
+                    },
+                    {
+                        "id": "HC400-PD",
+                        "description": "Plumbing and drains",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": false,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "PLDR",
+                                "description": "Plumbing and drains"
+                            }
+                        ],
+                        "isAnnualServiceMandatory": false,
+                        "productFeatures": ["HC400|HC400-PD|2PDI|PLDR|MDD", "HC400|HC400-PD|2PFI|PLDR|MDD"]
+                    },
+                    {
+                        "id": "HC400-HEC",
+                        "description": "Home Electrics",
+                        "type": "Services",
+                        "isAnnualServiceApplicable": false,
+                        "numberOfAppliances": 1,
+                        "applicableExcess": [0, 60],
+                        "applicablePaymentMethods": [
+                            {
+                                "type": "MDD",
+                                "description": "Monthly Direct Debit"
+                            },
+                            {
+                                "type": "ADD",
+                                "description": "Annual Direct Debit"
+                            },
+                            {
+                                "type": "CC",
+                                "description": "Annual Credit or Debit Card"
+                            }
+                        ],
+                        "applicableApplianceTypes": [
+                            {
+                                "type": "EWR",
+                                "description": "Electrical wiring"
+                            }
+                        ],
+                        "isAnnualServiceMandatory": false,
+                        "productFeatures": ["HC400|HC400-HEC|HEWI|EWR|MDD", "HC400|HC400-HEC|HEFI|EWR|MDD"]
+                    }
+                ],
+                "productFeatures": [
+                    {
+                        "id": "HC100|HC100-BC|2SIS|CHB|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2SIS"
+                    },
+                    {
+                        "id": "HC100|HC100-BC|2FIS|CHB|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2FIS"
+                    },
+                    {
+                        "id": "HC200|HC200-CH|3SIS|CHB|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3SIS"
+                    },
+                    {
+                        "id": "HC200|HC200-CH|3FIS|CHB|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3FIS"
+                    },
+                    {
+                        "id": "HC300|HC300-CH|3SIS|CHB|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3SIS"
+                    },
+                    {
+                        "id": "HC300|HC300-CH|3FIS|CHB|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3FIS"
+                    },
+                    {
+                        "id": "HC300|HC300-PD|2PDI|PLDR|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "PLDR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2PDI"
+                    },
+                    {
+                        "id": "HC300|HC300-PD|2PFI|PLDR|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "PLDR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2PFI"
+                    },
+                    {
+                        "id": "HC400|HC400-CH|3SIS|CHB|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3SIS"
+                    },
+                    {
+                        "id": "HC400|HC400-CH|3FIS|CHB|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": true,
+                        "applianceType": "CHB",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "3FIS"
+                    },
+                    {
+                        "id": "HC400|HC400-PD|2PDI|PLDR|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "PLDR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2PDI"
+                    },
+                    {
+                        "id": "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "PLDR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2PFI"
+                    },
+                    {
+                        "id": "HC400|HC400-HEC|HEWI|EWR|MDD",
+                        "excess": 0,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "EWR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "HEWI"
+                    },
+                    {
+                        "id": "HC400|HC400-HEC|HEFI|EWR|MDD",
+                        "excess": 60,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "EWR",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "HEFI"
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": [
+                {
+                    "code": "products",
+                    "message": "error.client.products.notFound"
+                }
+            ],
+            "meta": {}
+        }
+
+### Retrieve Product Bundle Information Based on an ID [GET /product-bundles{id}]
+
++ Parameters
+
+    + id (required, string)
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 200 (application/json)
 
         {
@@ -2728,7 +3455,7 @@ A Product Bundles object has the following attributes:
             "errors": [],
             "meta": {}
         }
-        
+
 + Response 404 (application/json)
 
         {
@@ -2742,7 +3469,7 @@ A Product Bundles object has the following attributes:
             ],
             "meta": {}
         }
-        
+
 + Response 500 (application/json)
 
         {
@@ -2756,10 +3483,10 @@ A Product Bundles object has the following attributes:
             ]
             "meta": {}
         }
-        
+
 ##Group Products
 
-Resources related to Product in the API. 
+Resources related to Product in the API.
 
 ## Products [/products]
 
@@ -2778,14 +3505,15 @@ A Product object has the following attributes:
 + productFeatures - array of product-features
 
 + Parameters
-    + id (required, string) 
-    
+
+    + id (required, string)
+
 + Request
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
         {
@@ -2844,7 +3572,7 @@ A Product object has the following attributes:
                                     "type: "FZR",
                                     "description": "Freezer"
                                 }, {
-                                    "type: "FFR", 
+                                    "type: "FFR",
                                     "description": "Fridge-freezer"
                                 }, {
                                     "type: "TDG",
@@ -2852,7 +3580,7 @@ A Product object has the following attributes:
                                 }, {
                                     "type: "MW",
                                     "description: "Microwave"
-                                }, { 
+                                }, {
                                     "type: "WM",
                                     "description: "Washing machine"
                                 }
@@ -2865,6 +3593,7 @@ A Product object has the following attributes:
                             "excess": "50",
                             "annualServiceVisitSelected": false,
                             "applianceType": "TDE-TDE-TDE-TDE-TDE",
+                            "paymentMethod": "MDD"
                             "levelOfService": "2F5I"
                         }
                     ]
@@ -2872,7 +3601,7 @@ A Product object has the following attributes:
             "errors": []
             "meta": {}
         }
-    
+
 + Response 404 (application/json)
 
         {
@@ -2886,7 +3615,7 @@ A Product object has the following attributes:
             ]
             "meta": {}
         }
-        
+
 + Response 500 (application/json)
 
         {
@@ -2900,11 +3629,11 @@ A Product object has the following attributes:
             ]
             "meta": {}
         }
-        
-        
+
+
 ##Group Product-Features
 
-Resources related to Product-Features in the API. 
+Resources related to Product-Features in the API.
 
 ## Product-Features [/product-features]
 
@@ -2925,13 +3654,13 @@ A Product-Feature object has the following attributes:
 
     + productId (optional, string)
     + productBundleId (optional, string)
-    
+
 + Request
 
     + Headers
-    
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
         {
@@ -2946,15 +3675,12 @@ A Product-Feature object has the following attributes:
                             "applianceType": "TDE-TDE-TDE-TDE-TDE",
                             "paymentMethod": "MDD",
                             "levelOfService": "2F5I"
-
                         }
                     ]
                 }
             "errors" : {},
             "meta" :{}
         }
-        
-+ Response 404 (appliance / json)
 
         {
             "status": "SUCCESS",
@@ -2974,9 +3700,8 @@ A Product-Feature object has the following attributes:
             "errors": [],
             "meta": {}
         }
-        
 
-+ Response 404 (appliance / json)
++ Response 404 (application/json)
 
         {
             "status" : ERROR
@@ -2989,8 +3714,8 @@ A Product-Feature object has the following attributes:
             ]
             "meta": {}
         }
-        
-+ Response 404 (appliance / json)
+
++ Response 404 (application/json)
 
         {
             "status" : ERROR
@@ -3017,11 +3742,10 @@ A Product-Feature object has the following attributes:
             ]
             "meta": {}
         }
-        
-        
+
 ## Group Prices
 
-Resources related to Prices in the API. 
+Resources related to Prices in the API.
 
 ## Prices [/prices]
 
@@ -3041,21 +3765,20 @@ A Product-Price object has the following attributes:
 
     + productFeatureId (required, string)
     + jci (required, string)
-   
-    
+    + postcode (required, string)
+
 + Request
 
     + Headers
-    
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
         {
-            "status" : "SUCCESS"
-            "data" : [
-                {
-                                    "price": [
+            "status": "SUCCESS",
+            "data": {
+                "price": [
                     {
                         "totalGrossPrice": 260,
                         "totalNetPrice": 130,
@@ -3125,22 +3848,166 @@ A Product-Price object has the following attributes:
             "errors": [],
             "meta": {}
         }
-                            
+
         {
             "status": "FAIL",
             "data": {},
             "errors": [
-                                "code": "productfeature",
+                {
+                    "code": "productfeature",
                     "message": "error.client.postcode.blank"
                 }
-                ],
+            ],
             "meta": {}
-        } 
+        }
+
+##Group Services-Lead
+
+Resources related to the Services-Lead in the API.
+
+## Services-Lead Collection [/services-lead]
+### Post services sales data to Uddingston [POST /services-lead]
+
+A Services-Lead object has the following attributes:
+
++ id
++ title
++ firstName
++ lastName
++ emailAddress
++ telephoneNumber
++ telephoneNumberType
++ bothAddressSame
++ supplyAddress
++ billingAddress
++ directDebitDetails
++ marketingConsentDetails
++ jciStatus
++ bundleCode
++ bundleDescription
++ bundleAnnualPrice
++ bundleMonthlyPrice
++ products
+
++ Request (application/json)
+
+        {
+            "servicesLead":[
+                {
+                    "id":null,
+                    "title":"Mr",
+                    "firstName":"Ravi",
+                    "lastName":"Kumar",
+                    "emailAddress":"ravi.kumar@britfss.co.uk",
+                    "telephoneNumber":"07738998190",
+                    "telephoneNumberType":null,
+                    "bothAddressSame":"false",
+                    "supplyAddress":[
+                        {
+                            "flatNumber":14,
+                            "houseNumber":null,
+                            "houseName":"The Rushes",
+                            "addressLine1":"Wapshott Road",
+                            "addressLine2":null,
+                            "postalTown":"Staines",
+                            "county":"Middlesex",
+                            "postcode":"TW183EZ",
+                            "country":null
+                        }
+                    ],
+                    "billingAddress":[
+                        {
+                            "flatNumber":17,
+                            "houseNumber":null,
+                            "houseName":"The Rushes",
+                            "addressLine1":"Wapshott Road",
+                            "addressLine2":null,
+                            "postalTown":"Staines",
+                            "county":"Middlesex",
+                            "postcode":"TW183EZ",
+                            "country":null
+                        }
+                    ],
+                    "directDebitDetails":[
+                        {
+                            "paymentMethod":"MDD",
+                            "bankAccountNumber":"93536377",
+                            "sortCode":"208122",
+                            "accountHolderName":"MR R KUMAR",
+                            "preferredPaymentDay":15
+                        }
+                    ],
+                    "marketingConsentDetails":[
+                        {
+                            "letterOpted":false,
+                            "emailOpted":true,
+                            "landlineOpted":true,
+                            "mobileOpted":true,
+                            "smsMmsOpted":true,
+                            "faceToFaceOpted":null,
+                            "ivmOpted":null
+                        }
+                    ],
+                    "jciStatus":true,
+                    "bundleCode":null,
+                    "bundleDescription":null,
+                    "bundleAnnualPrice":null,
+                    "bundleMonthlyPrice":null,
+                    "products":[
+                        {
+                            "productName":"Kitchen Appliance Cover for 3 appliance",
+                            "productCode":"KAC-3",
+                            "excess":50,
+                            "productAnnualPrice":72,
+                            "productMonthlyPrice":6,
+                            "levelOfService":"2F31",
+                            "appliances":[
+                                {
+                                    "type":"HOE",
+                                    "description":"Built-in electric hob"
+                                },
+                                {
+                                    "type":"OVN",
+                                    "description":"Built-in gas oven"
+                                },
+                                {
+                                    "type":"FFR",
+                                    "description":"Fridge-freezer"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": {},
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "price",
+                    "message": "error.client.price.mismatch"
+                }
+            ],
+            "meta": {}
+        }
 
 ## Group Services-Quotes
 
 The Services-Quote resource is designed to send customer, address and product information
-to the backend to create a quote object. 
+to the backend to create a quote object.
 
 A Services-Quote object has the following attributes:
 
@@ -3207,12 +4074,12 @@ A Services-Quote object has the following attributes:
     + paymentType - (required, string)
     + jci - (required, Boolean)
     + productFeatures - (required, array)
-    
+
 + Request
 
-        {  
-            "servicesQuote":[  
-                {  
+        {
+            "servicesQuote":[
+                {
                     "id": 356,
                     "title": "Mr",
                     "firstName": "Ravi",
@@ -3312,19 +4179,18 @@ A Services-Quote object has the following attributes:
             "meta": {}
         }
 
-        
 ### Retrieve the status of a services quote from the backend systems [GET /services-quotes/{id}/status]
 
 + Parameters
 
     + id (required, string)
-    
+
 + Request
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
 + Request
@@ -3332,7 +4198,7 @@ A Services-Quote object has the following attributes:
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
         {
@@ -3345,10 +4211,10 @@ A Services-Quote object has the following attributes:
             "errors": {},
             "meta": {}
         }
-        
+
 ## Group Services-Contract
 
-Resources related to Services-Contract in the API. 
+Resources related to Services-Contract in the API.
 
 ### Send marketing consent details and payment details to the backend to create services contract [POST /services-contract]
 
@@ -3444,7 +4310,7 @@ A Services-Contract object has the following attributes:
     + ivmOpted - Boolean
     + jci - (required, Boolean)
     + productFeatures - (required, array)
-    
+
 + Request
 
         {
@@ -3516,7 +4382,7 @@ A Services-Contract object has the following attributes:
                 }
             ]
         }
-    
+
 + Response 201 (application/json)
 
         {
@@ -3589,369 +4455,141 @@ A Services-Contract object has the following attributes:
             ]
         }
 
-            
-## Group Products Holdings
+## Group API Management
+## Heartbeat
+Heartbeat is a controller resource and allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this API will be returned in JSON format only.
+Heartbeat as a resource represents following information:
 
-## Product Holdings [/product-holdings]
-Product Holdings API allows you to list / view all the product holdings of the logged in customer. Responses from this API will be retuned in JSON format only.
++ status (string) - It is a concatenated value of CRM status code and ISU status code, separated by a hyphen
 
-# Energy Product holding
+Status codes can have the below values:
 
-Energy product holding as a resource represents following information
+0-Up and running
 
-+ id (string) - Combination of account number and product code is considered as the unique identifier.
-+ type (string) - Specifies which data model is supported by the resources, it will be EnergyProductHolding.
-+ moveInDate (string) - Date when the product is moved to the address, in dd/MM/yyyy format.
-+ moveOutDate (string) - Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999
-+ productCode (string) - Product code, 1601 for gas and 1602 for electricity.
-+ tariffCode (string) - Tariff code for the product, if available.
-+ productTypeDescription (string) - Product description of the product, if available.
-+ account (string) - Account number to which the product is linked, if available.
-+ propositionId (string) - Proposition id for the product.
-+ tariffName (String) - Tariff description for the product, if available.
-+ isTariffEnergySmart (boolean) - Indicates that the product has energy smart tariff if the value is true.
-+ isMonthlyBilling (boolean) - Indicates that the product is monthly billed if the value is true.
-+ isSmartMonthlyBilling (boolean) - Indicates that the product is smart monthly billed if the value is true.
-+ isSmartMeterProduct (boolean) - Indicates that the product is having a smart meter if the value is true.
-+ features (Array of string) - Mentions any specific features of the product
-+ monthlyBillingData (Complex type) - All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date.
+1-Cached and served from MIS
 
-# Service Product holding
+2-Down
 
-Service product holding as a resource represents following information
+3-Undefined
 
-+ id (string) - Combination of account number and product code is considered as the unique identifier.
-+ type (string) - Specifies which data model is supported by the resources, it will be ServicesProductHolding.
-+ productCode (string) - Product code of the product.
-+ customerId (string) - Customer id associated to the product, if available.
-+ productTypeDescription (string) - Product description of the product, if available.
-+ productName (string) - Name of the product, if available.
-+ account (string) - Account number to which the product is linked, if available.
-+ propositionId (string) - Proposition id for the product.
-+ premiseId (String) - Premise id associated to the product, if available.
-+ isPlumbingAndDrains (boolean) - Indicates that the product has plumbing and drains, if the value is true.
-+ isCrossSellProduct (boolean) - Indicates that the product is a cross sell product, if the value is true.
-+ features (Array of string) - Mentions any specific features of the product
-
-# Order product holding
-
-+ id (string) - Combination of order number and product code is considered as the unique identifier.
-+ type (string) - Specifies which data model is supported by the resources, it will be OrderProductHolding.
-+ productCode (string) - Product type, Gas for gas and Electricity for electricity.
-+ account (string) - Order number to which the product is linked, if available.
-
-### Retrieve Product holdings [GET /product-holdings]
+### Retrieve heartbeat [GET /heartbeat]
 + Request
 
-    + Headers
+  + Headers
 
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-+ Response 200 (application/json)
-
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "productHoldings": [
-                        {
-                            "isSmartMonthlyBilling": false,
-                            "moveInDate": "01/01/2014",
-                            "moveOutDate": "31/12/9999",
-                            "productCode": "1601",
-                            "monthlyBillingData": {
-                                "currentBillDay": "0",
-                                "estimatedReadCounter": "0",
-                                "installmentDate": null,
-                                "signUpDate": null,
-                                "currentPropositionId": "00",
-                                "nextBillDate": null
-                            },
-                            "tariffCode": "GSD",
-                            "isMonthlyBilling": false,
-                            "type": "EnergyProductHolding",
-                            "id": "851002262167-1601",
-                            "isTariffEnergySmart": false,
-                            "productTypeDescription": "Gas",
-                            "features": [
-                                "Standard"
-                            ],
-                            "account": "851002262167",
-                            "propositionId": "00",
-                            "tariffName": "Standard",
-                            "isSmartMeterProduct": false
-                        },
-                        {
-                            "isSmartMonthlyBilling": false,
-                            "moveInDate": "01/01/2014",
-                            "moveOutDate": "31/12/9999",
-                            "productCode": "1602",
-                            "monthlyBillingData": {
-                                "currentBillDay": "0",
-                                "estimatedReadCounter": "0",
-                                "installmentDate": null,
-                                "signUpDate": null,
-                                "currentPropositionId": "00",
-                                "nextBillDate": null
-                            },
-                            "tariffCode": "ESD",
-                            "isMonthlyBilling": false,
-                            "type": "EnergyProductHolding",
-                            "id": "851002262167-1602",
-                            "isTariffEnergySmart": false,
-                            "productTypeDescription": "Electricity",
-                            "features": [
-                                "Standard"
-                            ],
-                            "account": "851002262167",
-                            "propositionId": "00",
-                            "tariffName": "Standard",
-                            "isSmartMeterProduct": false
-                        },
-                        {
-                            "productCode": "ZSIS",
-                            "isPlumbingAndDrains": false,
-                            "type": "ServicesProductHolding",
-                            "id": "911000156354-ZSIS",
-                            "customerId": "22212484",
-                            "productTypeDescription": "HomeCare 300(TM)",
-                            "isCrossSellProduct": false,
-                            "features": [
-                                "Boiler & controls",
-                                "First service visit"
-                            ],
-                            "account": "911000156354",
-                            "propositionId": "1",
-                            "premiseId": "L280628",
-                            "productName": "Central Heating"
-                        },
-                        {
-                            "productCode": "ZPDI",
-                            "isPlumbingAndDrains": true,
-                            "type": "ServicesProductHolding",
-                            "id": "911000156354-ZPDI",
-                            "customerId": "22212484",
-                            "productTypeDescription": "HomeCare 300(TM)",
-                            "isCrossSellProduct": false,
-                            "features": [
-                                "Boiler & controls",
-                                "Plumbing & drains",
-                                "First service visit"
-                            ],
-                            "account": "911000156354",
-                            "propositionId": "0",
-                            "premiseId": "L280628",
-                            "productName": "Plumbing & Drains Cover (TM)"
-                        },
-                        {
-                            "id": "2005895634-Gas",
-                            "productCode": "Gas",
-                            "account": "2005895634",
-                            "type": "OrderProductHolding"
-                        }
-                    ]
-                },
-                "errors": {},
-                "meta": {}
-            }
-        
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
-                "meta": {}
-            }
-
-
-### Retrieve specific product holdings using account number [GET /product-holdings{?accountNumber*}]
-+ Parameters
-
-    + accountNumber (number) ...This is the customers account number
-        
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "productHoldings": [
-                        {
-                            "isSmartMonthlyBilling": false,
-                            "moveInDate": "01/01/2014",
-                            "moveOutDate": "31/12/9999",
-                            "productCode": "1601",
-                            "monthlyBillingData": {
-                                "currentBillDay": "0",
-                                "estimatedReadCounter": "0",
-                                "installmentDate": null,
-                                "signUpDate": null,
-                                "currentPropositionId": "00",
-                                "nextBillDate": null
-                            },
-                            "tariffCode": "GSD",
-                            "isMonthlyBilling": false,
-                            "type": "EnergyProductHolding",
-                            "id": "851002262167-1601",
-                            "isTariffEnergySmart": false,
-                            "productTypeDescription": "Gas",
-                            "features": [
-                                "Standard"
-                            ],
-                            "account": "851002262167",
-                            "propositionId": "00",
-                            "tariffName": "Standard",
-                            "isSmartMeterProduct": false
-                        },
-                        {
-                            "isSmartMonthlyBilling": false,
-                            "moveInDate": "01/01/2014",
-                            "moveOutDate": "31/12/9999",
-                            "productCode": "1602",
-                            "monthlyBillingData": {
-                                "currentBillDay": "0",
-                                "estimatedReadCounter": "0",
-                                "installmentDate": null,
-                                "signUpDate": null,
-                                "currentPropositionId": "00",
-                                "nextBillDate": null
-                            },
-                            "tariffCode": "ESD",
-                            "isMonthlyBilling": false,
-                            "type": "EnergyProductHolding",
-                            "id": "851002262167-1602",
-                            "isTariffEnergySmart": false,
-                            "productTypeDescription": "Electricity",
-                            "features": [
-                                "Standard"
-                            ],
-                            "account": "851002262167",
-                            "propositionId": "00",
-                            "tariffName": "Standard",
-                            "isSmartMeterProduct": false
-                        }
-                    ]
-                },
-                "errors": {},
-                "meta": {}
-            }
-
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
-                "meta": {}
-            }
-        
-+ Response 400 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                                "accountNumber": "error.client.accountnumber.invalid"
-                },
-                "meta": {}
-            }
-            
-
-+ Response 401 (application/json)            
-            
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "accountNumber": "error.client.accountnumber.invalid"
-                },
-                "meta": {}
-            }
-        
-
-### Retrieve product holdings using product id [GET /product-holdings{productId}]
-+ Parameters
-
-    + productId (number) ...This is the customers account number
-        
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
-+ Response 200 (application/json)
-
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "productHolding": {
-                        "productCode": "ZSIS",
-                        "isPlumbingAndDrains": false,
-                        "type": "ServicesProductHolding",
-                        "id": "911000156354-ZSIS",
-                        "customerId": "22212484",
-                        "productTypeDescription": "HomeCare 300(TM)",
-                        "isCrossSellProduct": false,
-                        "features": [
-                            "Boiler & controls",
-                            "First service visit"
-                        ],
-                        "account": "911000156354",
-                        "propositionId": "1",
-                        "premiseId": "L280628",
-                        "productName": "Central Heating"
-                    }
-                },
-                "errors": {},
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "productId": "error.client.productId.invalid"
-                },
-                "meta": {}
-            }
-            
-
-+ Response 401 (application/json)            
-            
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
-                "meta": {}
-            }
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "heartbeat": {
+                      "status": "0-0"
+                  }
+              },
+              "errors": [],
+              "meta": {}
+          }
 
 + Response 404 (application/json)
-            
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "productId": "error.client.product.notfound"
-                },
-                "meta": {}
-            }
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "heartbeat": "error.configuration.data.notfound"
+              },
+              "meta": {}
+          }
+
+
+
+##Group Premises
+Premises resource allow you to retrieve the customer account information based on their premises. In order to retrieve the the account information based on premises, client should have authorization access token
+
+## Premises Collection [/premises]
+### Retrieve all premises [GET /premises]
++ Request (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "premises": [
+                      {
+                          "id": "NjM4MDE2MTky",
+                          "accounts": [
+                              "851001347259"
+                          ],
+                          "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
+                          "houseNumber": "",
+                          "flatNumber": null,
+                          "houseName": "Uxbridge Court",
+                          "addressLine1": "Uxbridge Road",
+                          "addressLine2": "",
+                          "postalTown": "Kingston upon Thames",
+                          "county": "SURREY",
+                          "postcode": "KT1 2LJ",
+                          "MPAN": "1900034021774",
+                          "MPRN": null,
+                          "smartUpgradeEligibile": true
+                          "smartMeterEligibility": [
+                            {
+                                "accountNumber": "851001347259",
+                                "qualificationStatusID": "1",
+                                "targetability": "",
+                                "sectorAvailability": "ON",
+                                "inEligibleReasons": [
+                                    {
+                                        "reasonCode": "7",
+                                        "reasonDescription": "Customer has an IGT Gas Meter"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "access_denied"
+                  }
+              ],
+              "meta": {}
+          }
+
+
++ Response 500 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "server.error.internal",
+                      "message": "An internal error while processing request."
+                  }
+              ],
+              "meta": {}
+          }
+
 
 ## Group Meters
 Meters endpoint allows you to list / view all the meters of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
@@ -3959,7 +4597,7 @@ Meters endpoint allows you to list / view all the meters of the logged in custom
 ## Meters Collection
 Meter as a resource represents following information:
 
-+ id (string) - It is a combination of account number, contract number and encoded serial number of the meter, is considered as the unique identifier. 
++ id (string) - It is a combination of account number, contract number and encoded serial number of the meter, is considered as the unique identifier.
 + numberOfRegisters (number) - Indicates the number of registers available for the meter.
 + meterPointId (string) - Meter point identifier number of the meter, if available.
 + assetNumber (string) - Asset number of the meter, if available.
@@ -3993,391 +4631,391 @@ Meter as a resource represents following information:
 
 + Parameters
 
-    + accountNumber (number) ...This is the customers account number
-        
+  + accountNumber (number) ...This is the customers account number
+
 + Request
 
-    + Headers
+  + Headers
 
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+          Authorization: Bearer accesstoken
+          cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "meters": [
-                        {
-                            "numberOfRegisters": 1,
-                            "meterPointId": "1343152901",
-                            "assetNumber": "000000000010376382",
-                            "serialNumber": "G4A02208680401",
-                            "meterType": "gas",
-                            "smartMeter": false,
-                            "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
-                            "meterId": "3550020532",
-                            "complexMeter": false,
-                            "registers": [
-                                {
-                                    "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
-                                    "numberOfDials": 5,
-                                    "readingClassification": "Actual",
-                                    "reading": "03287",
-                                    "readingDate": "19/11/2013",
-                                    "meterReadType": "DayRead",
-                                    "nonCyclicToleranceFlag": "",
-                                    "validationFailureCode": "",
-                                    "usageType": "single",
-                                    "readingType": "1801",
-                                    "registerName": "Day",
-                                    "registerNumber": "001"
-                                }
-                            ],
-                            "contractType": "Gas",
-                            "account": "850000367878",
-                            "complexityCode": "0",
-                            "contractNumber": "0550013531"
-                        },
-                        {
-                            "numberOfRegisters": 1,
-                            "meterPointId": "1591031295962",
-                            "assetNumber": "000000000011291701",
-                            "serialNumber": "C62L06322",
-                            "meterType": "elecsr",
-                            "smartMeter": false,
-                            "id": "850000367878-2076700195-QzYyTDA2MzIy",
-                            "meterId": "3655023137",
-                            "complexMeter": false,
-                            "registers": [
-                                {
-                                    "id": "850000367878-2076700195-QzYyTDA2MzIy-001",
-                                    "numberOfDials": 5,
-                                    "readingClassification": "Actual",
-                                    "reading": "21768",
-                                    "readingDate": "19/11/2013",
-                                    "meterReadType": "DayRead",
-                                    "nonCyclicToleranceFlag": "",
-                                    "validationFailureCode": "",
-                                    "usageType": "single",
-                                    "readingType": "1801",
-                                    "registerName": "Standard",
-                                    "registerNumber": "001"
-                                }
-                            ],
-                            "contractType": "Electricity",
-                            "account": "850000367878",
-                            "complexityCode": "0",
-                            "contractNumber": "2076700195"
-                        }
-                    ]
-                },
-                "errors": {},
-                "meta": {}
-            }
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "meters": [
+                      {
+                          "numberOfRegisters": 1,
+                          "meterPointId": "1343152901",
+                          "assetNumber": "000000000010376382",
+                          "serialNumber": "G4A02208680401",
+                          "meterType": "gas",
+                          "smartMeter": false,
+                          "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
+                          "meterId": "3550020532",
+                          "complexMeter": false,
+                          "registers": [
+                              {
+                                  "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
+                                  "numberOfDials": 5,
+                                  "readingClassification": "Actual",
+                                  "reading": "03287",
+                                  "readingDate": "19/11/2013",
+                                  "meterReadType": "DayRead",
+                                  "nonCyclicToleranceFlag": "",
+                                  "validationFailureCode": "",
+                                  "usageType": "single",
+                                  "readingType": "1801",
+                                  "registerName": "Day",
+                                  "registerNumber": "001"
+                              }
+                          ],
+                          "contractType": "Gas",
+                          "account": "850000367878",
+                          "complexityCode": "0",
+                          "contractNumber": "0550013531"
+                      },
+                      {
+                          "numberOfRegisters": 1,
+                          "meterPointId": "1591031295962",
+                          "assetNumber": "000000000011291701",
+                          "serialNumber": "C62L06322",
+                          "meterType": "elecsr",
+                          "smartMeter": false,
+                          "id": "850000367878-2076700195-QzYyTDA2MzIy",
+                          "meterId": "3655023137",
+                          "complexMeter": false,
+                          "registers": [
+                              {
+                                  "id": "850000367878-2076700195-QzYyTDA2MzIy-001",
+                                  "numberOfDials": 5,
+                                  "readingClassification": "Actual",
+                                  "reading": "21768",
+                                  "readingDate": "19/11/2013",
+                                  "meterReadType": "DayRead",
+                                  "nonCyclicToleranceFlag": "",
+                                  "validationFailureCode": "",
+                                  "usageType": "single",
+                                  "readingType": "1801",
+                                  "registerName": "Standard",
+                                  "registerNumber": "001"
+                              }
+                          ],
+                          "contractType": "Electricity",
+                          "account": "850000367878",
+                          "complexityCode": "0",
+                          "contractNumber": "2076700195"
+                      }
+                  ]
+              },
+              "errors": {},
+              "meta": {}
+          }
 
 + Response 401 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "authorize",
-                        "message": "access_denied"
-                    }
-                ],
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "access_denied"
+                  }
+              ],
+              "meta": {}
+          }
 
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
-                    }
-                ],
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "accountNumber",
+                      "message": "error.client.accountNumber.invalid"
+                  }
+              ],
+              "meta": {}
+          }
 
 + Response 401 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                         "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                       "code": "accountNumber",
+                      "message": "error.client.accountNumber.invalid"
 
-                    }
-                ],
-                "meta": {}
-            }
+                  }
+              ],
+              "meta": {}
+          }
 
 ### Retrieve meter using meter identifier [GET /meters/{meterIdentifier}]
 
 + Parameters
 
-    + meterIdentifier (number) ...This is the customers account number
-    
+  + meterIdentifier (number) ...This is the customers account number
+
 + Request (application/json)
 
-    + Headers
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "meter": {
-                        "numberOfRegisters": 1,
-                        "meterPointId": "1343152901",
-                        "assetNumber": "000000000010376382",
-                        "serialNumber": "G4A02208680401",
-                        "meterType": "gas",
-                        "smartMeter": false,
-                        "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
-                        "meterId": "3550020532",
-                        "complexMeter": false,
-                        "registers": [
-                            {
-                                "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
-                                "numberOfDials": 5,
-                                "readingClassification": "Actual",
-                                "reading": "03287",
-                                "readingDate": "19/11/2013",
-                                "meterReadType": "DayRead",
-                                "nonCyclicToleranceFlag": "",
-                                "validationFailureCode": "",
-                                "usageType": "single",
-                                "readingType": "1801",
-                                "registerName": "Day",
-                                "registerNumber": "001"
-                            }
-                        ],
-                        "contractType": "Gas",
-                        "account": "850000367878",
-                        "complexityCode": "0",
-                        "contractNumber": "0550013531"
-                    }
-                },
-                "errors": {},
-                "meta": {}
-            }
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "meter": {
+                      "numberOfRegisters": 1,
+                      "meterPointId": "1343152901",
+                      "assetNumber": "000000000010376382",
+                      "serialNumber": "G4A02208680401",
+                      "meterType": "gas",
+                      "smartMeter": false,
+                      "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
+                      "meterId": "3550020532",
+                      "complexMeter": false,
+                      "registers": [
+                          {
+                              "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
+                              "numberOfDials": 5,
+                              "readingClassification": "Actual",
+                              "reading": "03287",
+                              "readingDate": "19/11/2013",
+                              "meterReadType": "DayRead",
+                              "nonCyclicToleranceFlag": "",
+                              "validationFailureCode": "",
+                              "usageType": "single",
+                              "readingType": "1801",
+                              "registerName": "Day",
+                              "registerNumber": "001"
+                          }
+                      ],
+                      "contractType": "Gas",
+                      "account": "850000367878",
+                      "complexityCode": "0",
+                      "contractNumber": "0550013531"
+                  }
+              },
+              "errors": {},
+              "meta": {}
+          }
 
 + Response 401 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "authorize",
-                        "message": "access_denied"
-                    }
-                ],
-                "meta": {}
-            }
-            
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "access_denied"
+                  }
+              ],
+              "meta": {}
+          }
+
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "meterIdentifier",
-                        "message": "error.client.meterIdentifier.invalid"
-                    }
-                ],
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meterIdentifier",
+                      "message": "error.client.meterIdentifier.invalid"
+                  }
+              ],
+              "meta": {}
+          }
 
 + Response 404 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "serialNumber",
-                        "message": "error.meter.notFound"
-                    }
-                ],
-                "meta": {}
-            }
-            
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "serialNumber",
+                      "message": "error.meter.notFound"
+                  }
+              ],
+              "meta": {}
+          }
+
 ### Validate Meter read [GET /meters/{meterIdentifier}/reading/validation{?registerNumber,reading}]
 
 + Parameters
 
-    + meterIdentifier (string) ...Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
-    + registerNumber (string) ...Register number for which the reading is taken, Should not be null or empty
-    + reading (string) ...Should not be null or empty. Should be number and max 6 digits
-    
+  + meterIdentifier (string) ...Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
+  + registerNumber (string) ...Register number for which the reading is taken, Should not be null or empty
+  + reading (string) ...Should not be null or empty. Should be number and max 6 digits
+
 + Request (application/json)
 
-    + Headers
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "isValidationFailure": false,
-                    "isOutOfTolerantReading": false
-                },
-                "errors": [],
-                "meta": {}
-            }
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "isValidationFailure": false,
+                  "isOutOfTolerantReading": false
+              },
+              "errors": [],
+              "meta": {}
+          }
 
 + Response 401 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "authorize",
-                        "message": "access_denied"
-                    }
-                ],
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "access_denied"
+                  }
+              ],
+              "meta": {}
+          }
 
 + Response 401 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-            
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "accountNumber",
+                      "message": "error.client.accountNumber.invalid"
+                  }
+              ],
+              "meta": {}
+          }
+
 + Response 404 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "register",
-                        "message": "error.register.notFound"
-                    }
-                ],
-                "meta": {}
-            }
-            
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "register",
+                      "message": "error.register.notFound"
+                  }
+              ],
+              "meta": {}
+          }
+
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "registerNumber",
-                        "message": "error.client.registerNumber.blank"
-                    }
-                ],
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "registerNumber",
+                      "message": "error.client.registerNumber.blank"
+                  }
+              ],
+              "meta": {}
+          }
 
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "isValidationFailure": true,
-                    "isOutOfTolerantReading": false
-                },
-                "errors": [],
-                "meta": {}
-            }
-            
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "isValidationFailure": true,
+                  "isOutOfTolerantReading": false
+              },
+              "errors": [],
+              "meta": {}
+          }
+
 ### Check Meter ownership [POST /meters/ownership-check]
 
 + Request (application/json)
 
-    + Headers
+  + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
-    + Body
-    
+
+  + Body
+
             {
                 "mpxn": "201234567890"
             }
-            
+
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "bgOwned": true,
-                    "PodExtUi": "201234567890"
-                },
-                "errors": {},
-                "meta": {}
-            }
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "bgOwned": true,
+                  "PodExtUi": "201234567890"
+              },
+              "errors": {},
+              "meta": {}
+          }
 
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "mpxn",
-                        "message": "error.client.mpxn.blank"
-                    }
-                ],
-                "meta": {}
-            }
-            
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "mpxn",
+                      "message": "error.client.mpxn.blank"
+                  }
+              ],
+              "meta": {}
+          }
+
 + Response 404 (application/json)
 
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "meter",
-                        "message": "error.meter.notFound"
-                    }
-                ],
-                "meta": {}
-            }
-            
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meter",
+                      "message": "error.meter.notFound"
+                  }
+              ],
+              "meta": {}
+          }
+
 + Response 404 (application/json)
 
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "meter",
-                        "message": "error.meter.notFound"
-                    }
-                ],
-                "meta": {}
-            }
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meter",
+                      "message": "error.meter.notFound"
+                  }
+              ],
+              "meta": {}
+          }
 
 ## Group Leads
 Leads resource allows you to retrieve, create and update lead, as of now it supports "Home Move" leads only. Responses from this API will be returned in JSON format only.
@@ -4438,214 +5076,213 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
 
 ### Retrieve Leads for an account [GET /leads{?accountNumber*}]
 + Request (application/json)
-    
-    + Headers
+
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "leads": [
-                        {
-                            "id": "1000176612",
-                            "leadType": "homeMove",
-                            "accountNumbers": "851001347653",
-                            "mobileNumber": "07412312345",
-                            "moveOutDate": "10/03/2015",
-                            "moveOutGasReading": "123",
-                            "moveOutElectricityDayReading": "456",
-                            "moveOutElectricityNightReading": "789",
-                            "moveInDate": "10/03/2015",
-                            "moveInBillResponsible": false,
-                            "optOutReason": null,
-                            "moveInGasReading": "123",
-                            "moveInElectricityDayReading": "234",
-                            "moveInElectricityNightReading": "555",
-                            "moveInGasAccount": true,
-                            "moveInElectricityAccount": false,
-                            "moveInHomeServiceAccount": true,
-                            "serviceProductAvailability": "Available",
-                            "moveInFlatNumber": null,
-                            "moveInHouseNumber": "51",
-                            "moveInHouseName": "Astley Way",
-                            "moveInAddressLine1": "Manor Ash Garden",
-                            "moveInAddressLine2": "Ashby-De-La_Zouch",
-                            "moveInPostalTown": "Ashby-De-La_Zouch",
-                            "moveInCounty": "Leicestershire",
-                            "moveInPostcode": "LE65 1LY",
-                            "moveInMpan": "201234567890",
-                            "moveInMprn": null,
-                            "selectedProposition": null,
-                            "status": "Complete",
-                            "expiryDate": "28/07/2015",
-                            "moveOutEconomySevenMeter": "true",
-                            "moveInEconomySevenMeter": "true",
-                            "createdDate": "14/07/2015",
-                            "category": "processed",
-                            "gasDirectDebitAmount": 12,
-                            "electricityDirectDebitAmount": 15,
-                            "propertyType": "PROP_FLAT",
-                            "noOfBedrooms": "2",
-                            "noOfPeople": "3",
-                            "electricityUsageType": "USG_EL_MED",
-                            "houseAge": "BUILT_A3",
-                            "roomHeating": "RH_GAS_CENTRAL",
-                            "boilerType": "BOILER_REG",
-                            "waterHeating": "WATER_GS",
-                            "boilerAge": "BOILER_OLD",
-                            "consumptionEstimated": true,
-                            "gasConsumptionValue": 80,
-                            "electricityConsumptionValue": 90,
-                            "gasTariff": "Gas Standard",
-                            "electricityTariff": null
-                        },
-                        {
-                            "id": "1000176608",
-                            "leadType": "homeMove",
-                            "accountNumbers": "851001347653",
-                            "mobileNumber": "07412312345",
-                            "moveOutDate": "10/03/2015",
-                            "moveOutGasReading": "123",
-                            "moveOutElectricityDayReading": "456",
-                            "moveOutElectricityNightReading": "789",
-                            "moveInDate": "10/03/2015",
-                            "moveInBillResponsible": false,
-                            "optOutReason": null,
-                            "moveInGasReading": "123",
-                            "moveInElectricityDayReading": "234",
-                            "moveInElectricityNightReading": "555",
-                            "moveInGasAccount": true,
-                            "moveInElectricityAccount": false,
-                            "moveInHomeServiceAccount": true,
-                            "serviceProductAvailability": "Available",
-                            "moveInFlatNumber": null,
-                            "moveInHouseNumber": "51",
-                            "moveInHouseName": "Astley Way",
-                            "moveInAddressLine1": "Manor Ash Garden",
-                            "moveInAddressLine2": "Ashby-De-La_Zouch",
-                            "moveInPostalTown": "Ashby-De-La_Zouch",
-                            "moveInCounty": "Leicestershire",
-                            "moveInPostcode": "LE65 1LY",
-                            "moveInMpan": "201234567890",
-                            "moveInMprn": "200987654321",
-                            "selectedProposition": null,
-                            "status": "Complete",
-                            "expiryDate": "28/07/2015",
-                            "moveOutEconomySevenMeter": "true",
-                            "moveInEconomySevenMeter": "true",
-                            "createdDate": "14/07/2015",
-                            "category": "processed",
-                            "gasDirectDebitAmount": 12,
-                            "electricityDirectDebitAmount": 15,
-                            "propertyType": "PROP_FLAT",
-                            "noOfBedrooms": "2",
-                            "noOfPeople": "3",
-                            "electricityUsageType": "USG_EL_MED",
-                            "houseAge": "BUILT_A3",
-                            "roomHeating": "RH_GAS_CENTRAL",
-                            "boilerType": "BOILER_REG",
-                            "waterHeating": "WATER_GS",
-                            "boilerAge": "BOILER_OLD",
-                            "consumptionEstimated": true,
-                            "gasConsumptionValue": 80,
-                            "electricityConsumptionValue": 90,
-                            "gasTariff": "Gas Standard",
-                            "electricityTariff": "Electricity Standard"
-                        }
-                    ]
-                },
-                "errors": [],
-                "meta": {}
-            }
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "leads": [
+                      {
+                          "id": "1000176612",
+                          "leadType": "homeMove",
+                          "accountNumbers": "851001347653",
+                          "mobileNumber": "07412312345",
+                          "moveOutDate": "10/03/2015",
+                          "moveOutGasReading": "123",
+                          "moveOutElectricityDayReading": "456",
+                          "moveOutElectricityNightReading": "789",
+                          "moveInDate": "10/03/2015",
+                          "moveInBillResponsible": false,
+                          "optOutReason": null,
+                          "moveInGasReading": "123",
+                          "moveInElectricityDayReading": "234",
+                          "moveInElectricityNightReading": "555",
+                          "moveInGasAccount": true,
+                          "moveInElectricityAccount": false,
+                          "moveInHomeServiceAccount": true,
+                          "serviceProductAvailability": "Available",
+                          "moveInFlatNumber": null,
+                          "moveInHouseNumber": "51",
+                          "moveInHouseName": "Astley Way",
+                          "moveInAddressLine1": "Manor Ash Garden",
+                          "moveInAddressLine2": "Ashby-De-La_Zouch",
+                          "moveInPostalTown": "Ashby-De-La_Zouch",
+                          "moveInCounty": "Leicestershire",
+                          "moveInPostcode": "LE65 1LY",
+                          "moveInMpan": "201234567890",
+                          "moveInMprn": null,
+                          "selectedProposition": null,
+                          "status": "Complete",
+                          "expiryDate": "28/07/2015",
+                          "moveOutEconomySevenMeter": "true",
+                          "moveInEconomySevenMeter": "true",
+                          "createdDate": "14/07/2015",
+                          "category": "processed",
+                          "gasDirectDebitAmount": 12,
+                          "electricityDirectDebitAmount": 15,
+                          "propertyType": "PROP_FLAT",
+                          "noOfBedrooms": "2",
+                          "noOfPeople": "3",
+                          "electricityUsageType": "USG_EL_MED",
+                          "houseAge": "BUILT_A3",
+                          "roomHeating": "RH_GAS_CENTRAL",
+                          "boilerType": "BOILER_REG",
+                          "waterHeating": "WATER_GS",
+                          "boilerAge": "BOILER_OLD",
+                          "consumptionEstimated": true,
+                          "gasConsumptionValue": 80,
+                          "electricityConsumptionValue": 90,
+                          "gasTariff": "Gas Standard",
+                          "electricityTariff": null
+                      },
+                      {
+                          "id": "1000176608",
+                          "leadType": "homeMove",
+                          "accountNumbers": "851001347653",
+                          "mobileNumber": "07412312345",
+                          "moveOutDate": "10/03/2015",
+                          "moveOutGasReading": "123",
+                          "moveOutElectricityDayReading": "456",
+                          "moveOutElectricityNightReading": "789",
+                          "moveInDate": "10/03/2015",
+                          "moveInBillResponsible": false,
+                          "optOutReason": null,
+                          "moveInGasReading": "123",
+                          "moveInElectricityDayReading": "234",
+                          "moveInElectricityNightReading": "555",
+                          "moveInGasAccount": true,
+                          "moveInElectricityAccount": false,
+                          "moveInHomeServiceAccount": true,
+                          "serviceProductAvailability": "Available",
+                          "moveInFlatNumber": null,
+                          "moveInHouseNumber": "51",
+                          "moveInHouseName": "Astley Way",
+                          "moveInAddressLine1": "Manor Ash Garden",
+                          "moveInAddressLine2": "Ashby-De-La_Zouch",
+                          "moveInPostalTown": "Ashby-De-La_Zouch",
+                          "moveInCounty": "Leicestershire",
+                          "moveInPostcode": "LE65 1LY",
+                          "moveInMpan": "201234567890",
+                          "moveInMprn": "200987654321",
+                          "selectedProposition": null,
+                          "status": "Complete",
+                          "expiryDate": "28/07/2015",
+                          "moveOutEconomySevenMeter": "true",
+                          "moveInEconomySevenMeter": "true",
+                          "createdDate": "14/07/2015",
+                          "category": "processed",
+                          "gasDirectDebitAmount": 12,
+                          "electricityDirectDebitAmount": 15,
+                          "propertyType": "PROP_FLAT",
+                          "noOfBedrooms": "2",
+                          "noOfPeople": "3",
+                          "electricityUsageType": "USG_EL_MED",
+                          "houseAge": "BUILT_A3",
+                          "roomHeating": "RH_GAS_CENTRAL",
+                          "boilerType": "BOILER_REG",
+                          "waterHeating": "WATER_GS",
+                          "boilerAge": "BOILER_OLD",
+                          "consumptionEstimated": true,
+                          "gasConsumptionValue": 80,
+                          "electricityConsumptionValue": 90,
+                          "gasTariff": "Gas Standard",
+                          "electricityTariff": "Electricity Standard"
+                      }
+                  ]
+              },
+              "errors": [],
+              "meta": {}
+          }
 
 ### Retrieve lead [GET /leads/{leadId}]
 + Request (application/json)
-    
-    + Headers
+
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "lead": {
-                        "id": "1000176608",
-                        "leadType": "homeMove",
-                        "accountNumbers": "851001347653",
-                        "mobileNumber": "07412312345",
-                        "moveOutDate": "10/03/2015",
-                        "moveOutGasReading": "123",
-                        "moveOutElectricityDayReading": "456",
-                        "moveOutElectricityNightReading": "789",
-                        "moveInDate": "10/03/2015",
-                        "moveInBillResponsible": false,
-                        "optOutReason": null,
-                        "moveInGasReading": "123",
-                        "moveInElectricityDayReading": "234",
-                        "moveInElectricityNightReading": "555",
-                        "moveInGasAccount": true,
-                        "moveInElectricityAccount": false,
-                        "moveInHomeServiceAccount": true,
-                        "serviceProductAvailability": "Available",
-                        "moveInFlatNumber": null,
-                        "moveInHouseNumber": "51",
-                        "moveInHouseName": "Astley Way",
-                        "moveInAddressLine1": "Manor Ash Garden",
-                        "moveInAddressLine2": "Ashby-De-La_Zouch",
-                        "moveInPostalTown": "Ashby-De-La_Zouch",
-                        "moveInCounty": "Leicestershire",
-                        "moveInPostcode": "LE65 1LY",
-                        "moveInMpan": "201234567890",
-                        "moveInMprn": "200987654321",
-                        "selectedProposition": null,
-                        "status": "Complete",
-                        "expiryDate": "28/07/2015",
-                        "moveOutEconomySevenMeter": "true",
-                        "moveInEconomySevenMeter": "true",
-                        "createdDate": "14/07/2015",
-                        "category": "processed",
-                        "gasDirectDebitAmount": 12,
-                        "electricityDirectDebitAmount": 15,
-                        "propertyType": "PROP_FLAT",
-                        "noOfBedrooms": "2",
-                        "noOfPeople": "3",
-                        "electricityUsageType": "USG_EL_MED",
-                        "houseAge": "BUILT_A3",
-                        "roomHeating": "RH_GAS_CENTRAL",
-                        "boilerType": "BOILER_REG",
-                        "waterHeating": "WATER_GS",
-                        "boilerAge": "BOILER_OLD",
-                        "consumptionEstimated": true,
-                        "gasConsumptionValue": 80,
-                        "electricityConsumptionValue": 90,
-                        "gasTariff": "Gas Standard",
-                        "electricityTariff": "Electricity Standard"
-                    }
-                },
-                "errors": [],
-                "meta": {}
-            }
-            
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "lead": {
+                      "id": "1000176608",
+                      "leadType": "homeMove",
+                      "accountNumbers": "851001347653",
+                      "mobileNumber": "07412312345",
+                      "moveOutDate": "10/03/2015",
+                      "moveOutGasReading": "123",
+                      "moveOutElectricityDayReading": "456",
+                      "moveOutElectricityNightReading": "789",
+                      "moveInDate": "10/03/2015",
+                      "moveInBillResponsible": false,
+                      "optOutReason": null,
+                      "moveInGasReading": "123",
+                      "moveInElectricityDayReading": "234",
+                      "moveInElectricityNightReading": "555",
+                      "moveInGasAccount": true,
+                      "moveInElectricityAccount": false,
+                      "moveInHomeServiceAccount": true,
+                      "serviceProductAvailability": "Available",
+                      "moveInFlatNumber": null,
+                      "moveInHouseNumber": "51",
+                      "moveInHouseName": "Astley Way",
+                      "moveInAddressLine1": "Manor Ash Garden",
+                      "moveInAddressLine2": "Ashby-De-La_Zouch",
+                      "moveInPostalTown": "Ashby-De-La_Zouch",
+                      "moveInCounty": "Leicestershire",
+                      "moveInPostcode": "LE65 1LY",
+                      "moveInMpan": "201234567890",
+                      "moveInMprn": "200987654321",
+                      "selectedProposition": null,
+                      "status": "Complete",
+                      "expiryDate": "28/07/2015",
+                      "moveOutEconomySevenMeter": "true",
+                      "moveInEconomySevenMeter": "true",
+                      "createdDate": "14/07/2015",
+                      "category": "processed",
+                      "gasDirectDebitAmount": 12,
+                      "electricityDirectDebitAmount": 15,
+                      "propertyType": "PROP_FLAT",
+                      "noOfBedrooms": "2",
+                      "noOfPeople": "3",
+                      "electricityUsageType": "USG_EL_MED",
+                      "houseAge": "BUILT_A3",
+                      "roomHeating": "RH_GAS_CENTRAL",
+                      "boilerType": "BOILER_REG",
+                      "waterHeating": "WATER_GS",
+                      "boilerAge": "BOILER_OLD",
+                      "consumptionEstimated": true,
+                      "gasConsumptionValue": 80,
+                      "electricityConsumptionValue": 90,
+                      "gasTariff": "Gas Standard",
+                      "electricityTariff": "Electricity Standard"
+                  }
+              },
+              "errors": [],
+              "meta": {}
+          }
+
 ### Create a lead [POST /leads]
 
 + Request (application/json)
-    
-    + Headers
+
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-    + Body
-    
-                {
-                
+
+  + Body
+
+            {
                 "lead": {
                     "id": null,
                     "leadType": "homeMove",
@@ -4700,105 +5337,105 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                     "electricityTariff": "Electricity Standard"
                 }
             }
-            
+
 + Response 200 (application/json)
-            
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "lead": {
-                        "id": "1000176608",
-                        "leadType": "homeMove",
-                        "accountNumbers": "851001347653",
-                        "mobileNumber": "07412312345",
-                        "moveOutDate": "10/03/2015",
-                        "moveOutGasReading": "123",
-                        "moveOutElectricityDayReading": "456",
-                        "moveOutElectricityNightReading": "789",
-                        "moveInDate": "10/03/2015",
-                        "moveInBillResponsible": false,
-                        "optOutReason": null,
-                        "moveInGasReading": "123",
-                        "moveInElectricityDayReading": "234",
-                        "moveInElectricityNightReading": "555",
-                        "moveInGasAccount": true,
-                        "moveInElectricityAccount": false,
-                        "moveInHomeServiceAccount": true,
-                        "serviceProductAvailability": "Available",
-                        "moveInFlatNumber": null,
-                        "moveInHouseNumber": "51",
-                        "moveInHouseName": "Astley Way",
-                        "moveInAddressLine1": "Manor Ash Garden",
-                        "moveInAddressLine2": "Ashby-De-La_Zouch",
-                        "moveInPostalTown": "Ashby-De-La_Zouch",
-                        "moveInCounty": "Leicestershire",
-                        "moveInPostcode": "LE65 1LY",
-                        "moveInMpan": "201234567890",
-                        "moveInMprn": "200987654321",
-                        "selectedProposition": null,
-                        "status": "Complete",
-                        "expiryDate": "28/07/2015",
-                        "moveOutEconomySevenMeter": "true",
-                        "moveInEconomySevenMeter": "true",
-                        "createdDate": "14/07/2015",
-                        "category": "processed",
-                        "gasDirectDebitAmount": 12,
-                        "electricityDirectDebitAmount": 15,
-                        "propertyType": "PROP_FLAT",
-                        "noOfBedrooms": "2",
-                        "noOfPeople": "3",
-                        "electricityUsageType": "USG_EL_MED",
-                        "houseAge": "BUILT_A3",
-                        "roomHeating": "RH_GAS_CENTRAL",
-                        "boilerType": "BOILER_REG",
-                        "waterHeating": "WATER_GS",
-                        "boilerAge": "BOILER_OLD",
-                        "consumptionEstimated": true,
-                        "gasConsumptionValue": 80,
-                        "electricityConsumptionValue": 90,
-                        "gasTariff": "Gas Standard",
-                        "electricityTariff": "Electricity Standard"
-                    }
-                },
-                "errors": [],
-                "meta": {}
-            }
+
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "lead": {
+                      "id": "1000176608",
+                      "leadType": "homeMove",
+                      "accountNumbers": "851001347653",
+                      "mobileNumber": "07412312345",
+                      "moveOutDate": "10/03/2015",
+                      "moveOutGasReading": "123",
+                      "moveOutElectricityDayReading": "456",
+                      "moveOutElectricityNightReading": "789",
+                      "moveInDate": "10/03/2015",
+                      "moveInBillResponsible": false,
+                      "optOutReason": null,
+                      "moveInGasReading": "123",
+                      "moveInElectricityDayReading": "234",
+                      "moveInElectricityNightReading": "555",
+                      "moveInGasAccount": true,
+                      "moveInElectricityAccount": false,
+                      "moveInHomeServiceAccount": true,
+                      "serviceProductAvailability": "Available",
+                      "moveInFlatNumber": null,
+                      "moveInHouseNumber": "51",
+                      "moveInHouseName": "Astley Way",
+                      "moveInAddressLine1": "Manor Ash Garden",
+                      "moveInAddressLine2": "Ashby-De-La_Zouch",
+                      "moveInPostalTown": "Ashby-De-La_Zouch",
+                      "moveInCounty": "Leicestershire",
+                      "moveInPostcode": "LE65 1LY",
+                      "moveInMpan": "201234567890",
+                      "moveInMprn": "200987654321",
+                      "selectedProposition": null,
+                      "status": "Complete",
+                      "expiryDate": "28/07/2015",
+                      "moveOutEconomySevenMeter": "true",
+                      "moveInEconomySevenMeter": "true",
+                      "createdDate": "14/07/2015",
+                      "category": "processed",
+                      "gasDirectDebitAmount": 12,
+                      "electricityDirectDebitAmount": 15,
+                      "propertyType": "PROP_FLAT",
+                      "noOfBedrooms": "2",
+                      "noOfPeople": "3",
+                      "electricityUsageType": "USG_EL_MED",
+                      "houseAge": "BUILT_A3",
+                      "roomHeating": "RH_GAS_CENTRAL",
+                      "boilerType": "BOILER_REG",
+                      "waterHeating": "WATER_GS",
+                      "boilerAge": "BOILER_OLD",
+                      "consumptionEstimated": true,
+                      "gasConsumptionValue": 80,
+                      "electricityConsumptionValue": 90,
+                      "gasTariff": "Gas Standard",
+                      "electricityTariff": "Electricity Standard"
+                  }
+              },
+              "errors": [],
+              "meta": {}
+          }
 
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "postcode": "error.client.postcode.invalid"
-                },
-                "meta": {}
-            }
-            
-+ Response 401 (application/json)
-            
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "postcode": "error.client.postcode.invalid"
+              },
+              "meta": {}
+          }
 
 + Response 401 (application/json)
-            
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "accountNumber": "error.client.accountNumber.invalid"
-                },
-                "meta": {}
-            }
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "authorize": "invalid_request"
+              },
+              "meta": {}
+          }
 
 + Response 401 (application/json)
-            
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": {
+                  "accountNumber": "error.client.accountNumber.invalid"
+              },
+              "meta": {}
+          }
+
++ Response 401 (application/json)
+
             {
                 "status": "ERROR",
                 "data": {},
@@ -4811,16 +5448,15 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
 ### Update a lead [PUT /leads/{leadId}]
 
 + Request (application/json)
-    
-    + Headers
+
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-    + Body
-    
-                {
-                
+
+  + Body
+
+            {
                 "lead": {
                     "id": null,
                     "leadType": "homeMove",
@@ -4875,257 +5511,113 @@ Leads resource allows you to retrieve, create and update lead, as of now it supp
                     "electricityTariff": "Electricity Standard"
                 }
             }
-            
+
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
                     "lead": {
-                        "id": "1000176608",
-                        "leadType": "homeMove",
-                        "accountNumbers": "851001347653",
-                        "mobileNumber": "07412312345",
-                        "moveOutDate": "10/03/2015",
-                        "moveOutGasReading": "123",
-                        "moveOutElectricityDayReading": "456",
-                        "moveOutElectricityNightReading": "789",
-                        "moveInDate": "10/03/2015",
-                        "moveInBillResponsible": false,
-                        "optOutReason": null,
-                        "moveInGasReading": "123",
-                        "moveInElectricityDayReading": "234",
-                        "moveInElectricityNightReading": "555",
-                        "moveInGasAccount": true,
-                        "moveInElectricityAccount": false,
-                        "moveInHomeServiceAccount": true,
-                        "serviceProductAvailability": "Available",
-                        "moveInFlatNumber": null,
-                        "moveInHouseNumber": "51",
-                        "moveInHouseName": "Astley Way",
-                        "moveInAddressLine1": "Manor Ash Garden",
-                        "moveInAddressLine2": "Ashby-De-La_Zouch",
-                        "moveInPostalTown": "Ashby-De-La_Zouch",
-                        "moveInCounty": "Leicestershire",
-                        "moveInPostcode": "LE65 1LY",
-                        "moveInMpan": "201234567890",
-                        "moveInMprn": "200987654321",
-                        "selectedProposition": null,
-                        "status": "Complete",
-                        "expiryDate": "28/07/2015",
-                        "moveOutEconomySevenMeter": "true",
-                        "moveInEconomySevenMeter": "true",
-                        "createdDate": "14/07/2015",
-                        "category": "processed",
-                        "gasDirectDebitAmount": 12,
-                        "electricityDirectDebitAmount": 15,
-                        "propertyType": "PROP_FLAT",
-                        "noOfBedrooms": "2",
-                        "noOfPeople": "3",
-                        "electricityUsageType": "USG_EL_MED",
-                        "houseAge": "BUILT_A3",
-                        "roomHeating": "RH_GAS_CENTRAL",
-                        "boilerType": "BOILER_REG",
-                        "waterHeating": "WATER_GS",
-                        "boilerAge": "BOILER_OLD",
-                        "consumptionEstimated": true,
-                        "gasConsumptionValue": 80,
-                        "electricityConsumptionValue": 90,
-                        "gasTariff": "Gas Standard",
-                        "electricityTariff": "Electricity Standard"
-                    }
-                },
-                "errors": [],
-                "meta": {}
+                      "id": "1000176608",
+                      "leadType": "homeMove",
+                      "accountNumbers": "851001347653",
+                      "mobileNumber": "07412312345",
+                      "moveOutDate": "10/03/2015",
+                      "moveOutGasReading": "123",
+                      "moveOutElectricityDayReading": "456",
+                      "moveOutElectricityNightReading": "789",
+                      "moveInDate": "10/03/2015",
+                      "moveInBillResponsible": false,
+                      "optOutReason": null,
+                      "moveInGasReading": "123",
+                      "moveInElectricityDayReading": "234",
+                      "moveInElectricityNightReading": "555",
+                      "moveInGasAccount": true,
+                      "moveInElectricityAccount": false,
+                      "moveInHomeServiceAccount": true,
+                      "serviceProductAvailability": "Available",
+                      "moveInFlatNumber": null,
+                      "moveInHouseNumber": "51",
+                      "moveInHouseName": "Astley Way",
+                      "moveInAddressLine1": "Manor Ash Garden",
+                      "moveInAddressLine2": "Ashby-De-La_Zouch",
+                      "moveInPostalTown": "Ashby-De-La_Zouch",
+                      "moveInCounty": "Leicestershire",
+                      "moveInPostcode": "LE65 1LY",
+                      "moveInMpan": "201234567890",
+                      "moveInMprn": "200987654321",
+                      "selectedProposition": null,
+                      "status": "Complete",
+                      "expiryDate": "28/07/2015",
+                      "moveOutEconomySevenMeter": "true",
+                      "moveInEconomySevenMeter": "true",
+                      "createdDate": "14/07/2015",
+                      "category": "processed",
+                      "gasDirectDebitAmount": 12,
+                      "electricityDirectDebitAmount": 15,
+                      "propertyType": "PROP_FLAT",
+                      "noOfBedrooms": "2",
+                      "noOfPeople": "3",
+                      "electricityUsageType": "USG_EL_MED",
+                      "houseAge": "BUILT_A3",
+                      "roomHeating": "RH_GAS_CENTRAL",
+                      "boilerType": "BOILER_REG",
+                      "waterHeating": "WATER_GS",
+                      "boilerAge": "BOILER_OLD",
+                      "consumptionEstimated": true,
+                      "gasConsumptionValue": 80,
+                      "electricityConsumptionValue": 90,
+                      "gasTariff": "Gas Standard",
+                      "electricityTariff": "Electricity Standard"
+                  }
+              },
+              "errors": [],
+              "meta": {}
             }
 
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "postcode": "error.client.postcode.invalid"
-                },
-                "meta": {}
-            }
-            
-+ Response 401 (application/json)
-            
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
-                "meta": {}
-            }
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "postcode": "error.client.postcode.invalid"
+              },
+              "meta": {}
+          }
 
 + Response 401 (application/json)
-            
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "accountNumber": "error.client.accountNumber.invalid"
-                },
-                "meta": {}
-            }
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "authorize": "invalid_request"
+              },
+              "meta": {}
+          }
 
 + Response 401 (application/json)
-            
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "accountNumber": "error.client.accountNumber.invalid"
-                },
-                "meta": {}
-            }
 
-        
-##Group Services-Lead
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": {
+                  "accountNumber": "error.client.accountNumber.invalid"
+              },
+              "meta": {}
+          }
 
-Resources related to the Services-Lead in the API.
++ Response 401 (application/json)
 
-## Services-Lead Collection [/services-lead]
-### Post services sales data to Uddingston [POST /services-lead]
-
-A Services-Lead object has the following attributes:
-
-+ id
-+ title
-+ firstName
-+ lastName
-+ emailAddress
-+ telephoneNumber
-+ telephoneNumberType
-+ bothAddressSame
-+ supplyAddress
-+ billingAddress
-+ directDebitDetails
-+ marketingConsentDetails
-+ jciStatus
-+ bundleCode
-+ bundleDescription
-+ bundleAnnualPrice
-+ bundleMonthlyPrice
-+ products
-
-+ Request (application/json)
-
-        {  
-            "servicesLead":[  
-                {  
-                    "id":null,
-                    "title":"Mr",
-                    "firstName":"Ravi",
-                    "lastName":"Kumar",
-                    "emailAddress":"ravi.kumar@britfss.co.uk",
-                    "telephoneNumber":"07738998190",
-                    "telephoneNumberType":null,
-                    "bothAddressSame":"false",
-                    "supplyAddress":[  
-                        {  
-                            "flatNumber":14,
-                            "houseNumber":null,
-                            "houseName":"The Rushes",
-                            "addressLine1":"Wapshott Road",
-                            "addressLine2":null,
-                            "postalTown":"Staines",
-                            "county":"Middlesex",
-                            "postcode":"TW183EZ",
-                            "country":null
-                        }
-                    ],
-                    "billingAddress":[  
-                        {  
-                            "flatNumber":17,
-                            "houseNumber":null,
-                            "houseName":"The Rushes",
-                            "addressLine1":"Wapshott Road",
-                            "addressLine2":null,
-                            "postalTown":"Staines",
-                            "county":"Middlesex",
-                            "postcode":"TW183EZ",
-                            "country":null
-                        }
-                    ],
-                    "directDebitDetails":[  
-                        {  
-                            "paymentMethod":"MDD",
-                            "bankAccountNumber":"93536377",
-                            "sortCode":"208122",
-                            "accountHolderName":"MR R KUMAR",
-                            "preferredPaymentDay":15
-                        }
-                    ],
-                    "marketingConsentDetails":[  
-                        {  
-                            "letterOpted":false,
-                            "emailOpted":true,
-                            "landlineOpted":true,
-                            "mobileOpted":true,
-                            "smsMmsOpted":true,
-                            "faceToFaceOpted":null,
-                            "ivmOpted":null
-                        }
-                    ],
-                    "jciStatus":true,
-                    "bundleCode":null,
-                    "bundleDescription":null,
-                    "bundleAnnualPrice":null,
-                    "bundleMonthlyPrice":null,
-                    "products":[  
-                        {  
-                            "productName":"Kitchen Appliance Cover for 3 appliance",
-                            "productCode":"KAC-3",
-                            "excess":50,
-                            "productAnnualPrice":72,
-                            "productMonthlyPrice":6,
-                            "levelOfService":"2F31",
-                            "appliances":[  
-                                {  
-                                    "type":"HOE",
-                                    "description":"Built-in electric hob"
-                                },
-                                {  
-                                    "type":"OVN",
-                                    "description":"Built-in gas oven"
-                                },
-                                {  
-                                    "type":"FFR",
-                                    "description":"Fridge-freezer"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-        
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {},
-            "errors": {},
-            "meta": {}
-        }
-        
-+ Response 403 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {}
-            "errors": [
-                {
-                    "code": "price",
-                    "message": "error.client.price.mismatch"
-                }
-            ],
-            "meta": {}
-        }
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": {
+                  "accountNumber": "error.client.accountNumber.invalid"
+              },
+              "meta": {}
+          }
 
 
 ## Group Loyalties
@@ -5159,71 +5651,70 @@ This brand information will be derived from CID. So it is not required to pass t
 
 ### Create loyalty card [POST /loyalties]
 + Request (application/json)
-    
-    + Headers
+
+  + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
-    + Body
-    
-                {
-                
-                "loyalty": {
-                    "id": null,
-                    "title": "Mr",
-                    "firstName": "Mark",
-                    "surname": "Blair",
-                    "telephoneNumber": "07404174628",
-                    "flatNumber": "Flat 10",
-                    "houseNumber": null,
-                    "houseName": "Linden place",
-                    "addressLine1": "Meadow Gardens",
-                    "addressLine2": null,
-                    "postalTown": "Staines",
-                    "county": "Middlesex",
-                    "postcode": "TW18 3HE",
-                    "emailAddress": "test@bgdigitaltest.co.uk"
-                }
+
+  + Body
+
+              {
+
+              "loyalty": {
+                  "id": null,
+                  "title": "Mr",
+                  "firstName": "Mark",
+                  "surname": "Blair",
+                  "telephoneNumber": "07404174628",
+                  "flatNumber": "Flat 10",
+                  "houseNumber": null,
+                  "houseName": "Linden place",
+                  "addressLine1": "Meadow Gardens",
+                  "addressLine2": null,
+                  "postalTown": "Staines",
+                  "county": "Middlesex",
+                  "postcode": "TW18 3HE",
+                  "emailAddress": "test@bgdigitaltest.co.uk"
+              }
             }
 
-    
+
 + Response 200 (application/json)
 
-            {
-                "loyalty": {
-                    "id": "91270909018",
-                    "title": "Mr",
-                    "firstName": "Mark",
-                    "surname": "Blair",
-                    "telephoneNumber": "07404174628",
-                    "flatNumber": "Flat 10",
-                    "houseNumber": null,
-                    "houseName": "Linden place",
-                    "addressLine1": "Meadow Gardens",
-                    "addressLine2": null,
-                    "postalTown": "Staines",
-                    "county": "Middlesex",
-                    "postcode": "TW18 3HE",
-                    "emailAddress": "test@bgdigitaltest.co.uk"
-                }
-            }
-            
+          {
+              "loyalty": {
+                  "id": "91270909018",
+                  "title": "Mr",
+                  "firstName": "Mark",
+                  "surname": "Blair",
+                  "telephoneNumber": "07404174628",
+                  "flatNumber": "Flat 10",
+                  "houseNumber": null,
+                  "houseName": "Linden place",
+                  "addressLine1": "Meadow Gardens",
+                  "addressLine2": null,
+                  "postalTown": "Staines",
+                  "county": "Middlesex",
+                  "postcode": "TW18 3HE",
+                  "emailAddress": "test@bgdigitaltest.co.uk"
+              }
+          }
+
 + Response 400 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "postcode": "error.client.postcode.invalid"
-                },
-                "meta": {}
-            }
-
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "postcode": "error.client.postcode.invalid"
+              },
+              "meta": {}
+          }
 
 ## Group Service Order
 
-Service Order allows the client to create and modify an appointment for a smart meter exchange 
+Service Order allows the client to create and modify an appointment for a smart meter exchange
 
 ### create a service order [POST /service-orders]
 
@@ -5232,7 +5723,7 @@ Service Order allows the client to create and modify an appointment for a smart 
 + startTime - string
 + endTime - string
 + userStatusCode - string
-+ accountNumbers - array
++ accounts - array
 + address.flatNumber - string
 + address.houseNumber - string
 + address.houseName - string
@@ -5244,9 +5735,9 @@ Service Order allows the client to create and modify an appointment for a smart 
 + address.country - string
 + meta.propspectToken - string A valid prospect token that was created earlier
 + fuelType - string gas, electricity, dual
-+ bestContactNumber - string
++ contactNumber - string
 + specialInstruction - string
-+ meterType - string
++ meterType - string, prepay or credit dependant on the tarrif 
 
 + Parameters
 
@@ -5256,7 +5747,8 @@ Service Order allows the client to create and modify an appointment for a smart 
     + startTime - (optional, string)
     + endTime - (optional, string)
     + statusCode - (optional, string) ...to identify service order is new, rescheduled, or site ineligible
-    + accountNumbers - (optional, string array)
+    + accounts - (optional, string array)
+    + address.address - (required, string)
     + address.flatNumber - (required, string)
     + address.houseNumber - (required, string)
     + address.houseName - (required, string)
@@ -5270,91 +5762,91 @@ Service Order allows the client to create and modify an appointment for a smart 
     + address.MPRN - (required, string)
     + meta.propspectToken - (required, string) ...A valid prospect token that was created earlier
     + fuelType - (optional, string) ... gas, electricity, dual
-    + bestContactNumber - (optional, string)
+    + contactNumber - (optional, string)
     + specialInstruction - (optional, string)
-    + meterType - (optional, string) ...SM for Smart Meter installation
+    + meterType - (optional, string) ...prepay or credit
 
 + Request
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
     + Body
-    
+
             {
-                "serviceOrder": 
-                    {
-                        "id": null,
-                        "startDate": null,
-                        "endDate": null,
-                        "startTime": null,
-                        "endTime": null,
-                        "statusCode": null,
-                        "accounts": null,
-                        "address":
-                            {
-                                "flatNumber": 14,
-                                "houseNumber": null,
-                                "houseName": "The Rushes",
-                                "addressLine1": "Wapshott road",
-                                "addressLine2": null,
-                                "postalTown": "Staines",
-                                "county": "Middlesex",
-                                "postcode": "TW183EZ",
-                                "country": null,
-                                "MPRN": null,
-                                "MPAN": null,
-                            }
-                        "fuelType": "dual",
-                        "contactNumber": null,
-                        "specialInstruction": null,
-                        "meterType": "SM",
-                    },
-                "meta":
-                    {
-                        "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
-                    }
+            "serviceOrder":
+                {
+                    "id": null,
+                    "startDate": null,
+                    "endDate": null,
+                    "startTime": null,
+                    "endTime": null,
+                    "statusCode": null,
+                    "accounts": null,
+                    "address":
+                        {
+                            "address": null,
+                            "flatNumber": 14,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "MPRN": null,
+                            "MPAN": null,
+                        }
+                    "fuelType": "dual",
+                    "contactNumber": null,
+                    "specialInstruction": null,
+                    "meterType": "prepay",
+                },
+            "meta":
+                {
+                    "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
+                }
             }
-    
+
 + Response 200 (application/json)
-    
-            {
-                "status": "SUCCESS",
-                "data": 
-                    {
-                        "serviceOrder": 
-                            {
-                                "id": "RjNiQjNYYlRYbnRtaHpyOG5XWWdmdz09",
-                                "startDate": null,
-                                "startTime": null,
-                                "endDate": null,
-                                "endTime": null,
-                                "statusCode": null,
-                                "accounts": null,
-                                "address":
-                                    {
-                                        "flatNumber": 14,
-                                        "houseNumber": null,
-                                        "houseName": "The Rushes",
-                                        "addressLine1": "Wapshott road",
-                                        "addressLine2": null,
-                                        "postalTown": "Staines",
-                                        "county": "Middlesex",
-                                        "postcode": "TW183EZ",
-                                        "country": null,
-                                        "MPRN": null,
-                                        "MPAN": null,
-                                    },
-                                "fuelType": "dual",
-                                "contactNumber": "",
-                                "specialInstruction": "",
-                                "meterType": "SM",
-                            }
-                    },
-                "errors": [],
-                "meta": {}
-            }
+
+        {
+            "status": "SUCCESS",
+            "data":
+                {
+                    "serviceOrder":
+                        {
+                            "id": "RjNiQjNYYlRYbnRtaHpyOG5XWWdmdz09",
+                            "startDate": null,
+                            "startTime": null,
+                            "endDate": null,
+                            "endTime": null,
+                            "statusCode": null,
+                            "accounts": null,
+                            "address":
+                                {
+                                    "address": null,
+                                    "flatNumber": 14,
+                                    "houseNumber": null,
+                                    "houseName": "The Rushes",
+                                    "addressLine1": "Wapshott road",
+                                    "addressLine2": null,
+                                    "postalTown": "Staines",
+                                    "county": "Middlesex",
+                                    "postcode": "TW183EZ",
+                                    "MPRN": null,
+                                    "MPAN": null,
+                                },
+                            "fuelType": "dual",
+                            "contactNumber": "",
+                            "specialInstruction": "",
+                            "meterType": "prepay",
+                        }
+                },
+            "errors": [],
+            "meta": {}
+        }
 
 + Response 403 (application/json)
 
@@ -5370,54 +5862,544 @@ Service Order allows the client to create and modify an appointment for a smart 
             "meta": {}
         }
 
+### add appointment to a service order [PUT /service-orders/{serviceOrderId}]
 
++ Parameters
 
-## Group API Management
-## Heartbeat
-Heartbeat is a controller resource and allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this API will be returned in JSON format only.
-Heartbeat as a resource represents following information:
+    + serviceOrderId - (required, string) ...the service order being altered
+    + statusCode - (optional, string) ...to identify service order is new, rescheduled, or site ineligible
+    + smartMeterAppointmentSlotId - (required, string) ...the slot discovered in the appointment slot call
+    + cancelAppointment - (optional, boolean)
 
-+ status (string) - It is a concatenated value of CRM status code and ISU status code, separated by a hyphen
-
-Status codes can have the below values:
-
-0-Up and running
-
-1-Cached and served from MIS
-
-2-Down
-
-3-Undefined
-
-### Retrieve heartbeat [GET /heartbeat]
 + Request
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-+ Response 200 (application/json)
-            
+    + Body
+
             {
-                "status": "SUCCESS",
-                "data": {
-                    "heartbeat": {
-                        "status": "0-0"
-                    }
-                },
+                "serviceOrder": 
+                {
+                    "smartMeterAppointmentSlotId" : "2015-09-28T07:00:00+00:00_1:00pm_5:00pm",
+                    "statusCode" : "CANCEL",
+                    "cancelAppointment" : "true"
+                }
+            } 
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceorder",
+                    "message": "error.server.serviceorder.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }
+
+## Group Smart Appointment
+
+Appointments resource endpoint will allow the retrieval of available and/or unavailable appointment slots for a specific service order  
+
+## appointments collection [ /smart-meter-appointment-slots ]
+### get appointments [GET /smart-meter-appointment-slots{?serviceOrderId,startDate,range,isUnavailableRequired}]
++ serviceOrderId - (required, string) ... The service order id
++ startDate - (required, string) ... The number of days from now to start appointment search
++ range - (required, string) ... The number of days to search for appointments in
++ isUnavailableRequired - (required, string) ... false if you only want to retrieve available slots
+
++ Parameters
+
+    + serviceOrderId - (required, string) ... The service order id
+    + startDate - (required, number) ...The number of days from now to start appointment search
+    + range - (required, number) ...The number of days to search for appointments in
+    + isUnavailableRequired - (required, string) ...false if you only want to retrieve available slots
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "smartMeterAppointmentSlots": [
+                    {
+                        "date": "2015-09-28T07:00:00+00:00",
+                        "id": "2015-09-28T07:00:00+00:00_8:00am_12:00pm",
+                        "variant": "4",
+                        "startTime": "8:00am",
+                        "endTime": "12:00pm",
+                        "available": true,
+                        "preferredSlot": false
+                    },
+                    {
+                        "date": "2015-09-28T07:00:00+00:00",
+                        "id": "2015-09-28T07:00:00+00:00_10:00am_2:00pm",
+                        "variant": "4",
+                        "startTime": "10:00am",
+                        "endTime": "2:00pm",
+                        "available": true,
+                        "preferredSlot": false
+                    },
+                    {
+                        "date": "2015-09-28T07:00:00+00:00",
+                        "id": "2015-09-28T07:00:00+00:00_1:00pm_5:00pm",
+                        "variant": "4",
+                        "startTime": "1:00pm",
+                        "endTime": "5:00pm",
+                        "available": true,
+                        "preferredSlot": false
+                    },
+                    {
+                        "date": "2015-09-29T07:00:00+00:00",
+                        "id": "2015-09-29T07:00:00+00:00_8:00am_12:00pm",
+                        "variant": "4",
+                        "startTime": "8:00am",
+                        "endTime": "12:00pm",
+                        "available": false,
+                        "preferredSlot": false
+                    } 
+                ],
                 "errors": [],
                 "meta": {}
             }
+        }
 
-+ Response 404 (application/json)
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceorder",
+                    "message": "error.server.serviceorder.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }
+        
+
+## Group Service Appointment Slots
+
+Slot endpoints will allow the retrieve of a set of appointment slots for a specific service account  
+
+## slots collection [ /slots ]
+### retrieve slots [GET /slots{?serviceAccount,type,fault} ]
++ serviceAccount - (required, string) ... The service account id
++ reason - (required, string) ... the type of appointment - ASV, IB, BOTH
++ fault - (optional, string) ... fault code required for an IB booking
+
++ Parameters
+
+    + serviceAccount - (required, string) ... The service account id
+    + reason - (required, string) ... the type of appointment - ASV, IB, BOTH
+    + fault - (optional, string) ... fault code required for an IB booking
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "slots": [
+                    {
+                        "id": "919918239012-567891011",
+                        "date": "2015-09-29T07:00:00+00:00",
+                        "startTime": "08:00",
+                        "endTime": "10:00",
+                        "available": true,
+                        "preferredSlot": false,
+                    },
+                    {
+                        "id": "919918239012-567891012",
+                        "date": "2015-09-29T07:00:00+00:00",
+                        "startTime": "14:00",
+                        "endTime": "16:00",
+                        "available": false,
+                        "preferredSlot": false,
+                    },
+                    {
+                        "id": "919918239013-567891013",
+                        "date": "2015-09-29T07:00:00+00:00",
+                        "startTime": "14:00",
+                        "endTime": "16:00",
+                        "available": true,
+                        "preferredSlot": false,
+                    }
+                ],
+            }
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceaccount",
+                    "message": "error.server.serviceaccount.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }
+
+## Group Service Appointments
+
+Appointments and endpoints will allow the retrieve, cancel or set an appointment for a specific service account  
+
+## appointments collection [ /appointments ]
+### get appointments [GET /appointments{?serviceAccount} ]
++ serviceAccount - (required, string) ... The service account id
+
++ Parameters
+
+    + serviceAccount - (required, string) ... The service account id
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "appointments": [
+                    {
+                        "id": "567891011",
+                        "account": "919918239012",
+                        "status": "booked",
+                        "reason": "asv",
+                        "showTracking": true,
+                        "reschedulable": true,
+                        "cancellable": true,
+                        "slot": "919918239012-567891011"
+                    }
+                ],
+                "slots": [
+                    {
+                        "id": "919918239012-567891011",
+                        "date": "2015-09-29T07:00:00+00:00",
+                        "startTime": "08:00",
+                        "endTime": "10:00",
+                        "available": false,
+                        "preferredSlot": false,
+                        "appointment": "567891011"
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceaccount",
+                    "message": "error.server.serviceaccount.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }
+        
+### post appointments [POST /appointments ]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
 
             {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "heartbeat": "error.configuration.data.notfound"
-                },
-                "meta": {}
+                "appointment": 
+                {
+                    "account" : "919918239012",
+                    "slot" : "919918239012-567891011"
+                }
+            } 
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "appointments": [
+                    {
+                        "id": "567891011",
+                        "account": "919918239012",
+                        "status": "booked",
+                        "reason": "asv",
+                        "showTracking": true,
+                        "reschedulable": true,
+                        "cancellable": true,
+                        "slot": "919918239012-567891011"
+                    }
+                ],
+                "slots": [
+                    {
+                        "id": "919918239012-567891011",
+                        "date": "2015-09-29T07:00:00+00:00",
+                        "startTime": "08:00",
+                        "endTime": "10:00",
+                        "available": false,
+                        "preferredSlot": false,
+                        "appointment": "567891011"
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceaccount",
+                    "message": "error.server.serviceaccount.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }
+        
+
+### delete appointment [DELETE /appointments/{appointment} ]
++ appointment - (required, string) ... The appointment id that you want to cancel
+
++ Parameters
+
+    + appointment - (required, string) ... The appointment id that you want to cancel
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "invalidappointment",
+                    "message": "error.server.appointment.invalid"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }
+# Group Emails
+Email API allows you to send an email. Responses from this API will be retuned in JSON format only.
+
++ payload - (string, mandatory) - Email payload derived from source API
++ timestamp - (string, mandatory) - Encrypted payload derived from source API
++ checksum - (string, mandatory) - Checksum derived from source API
++ to - (string, mandatory) - To email address derived from source API
++ additionalInformation - (string, optional) - Additional information derived from source API
++ apikey - (string, required) - Key that identifies client to API
+
+## Email Collection [/email]
+
+### Send Email [POST]
+
++ Request (application/x-www-form-urlencoded)
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "payload":"",
+                "timestamp":"",
+                "checksum":"",
+                "to":"",
+                "additionalInformation":"",
+                "apikey":""
             }
-            
-            
+
++ Response 200 (application/json)
+        
+            {
+                   "status": "SUCCESS",
+                   "data":
+                       {
+                       },
+                   "errors":
+                       {
+                       },
+                   "meta":
+                       {           
+                       }
+            }
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                    "timestamp": "error.client.timestamp.expired"
+                },
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors":
+                {
+                    "timestamp": "error.client.checksum.expired"
+                },
+            "meta": {}
+        }
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors":{
+                "server.error.internal": "An internal error occurred while processing request."
+            },
+            "meta": {}
+        }
+        
