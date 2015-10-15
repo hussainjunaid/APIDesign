@@ -4855,6 +4855,88 @@ Meter as a resource represents following information:
               "meta": {}
           }
 
+### Retrieve meters using MPXN [GET /meters{?meterPointId}]
+
+Retrieve meter for a meter reference number (MPRN or MPAN)
+
++ Request
+
+  + Headers
+
+          Authorization: Bearer accesstoken
+          cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+          
++ Response 200 (application/json)
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "meters": [
+                        {
+                            "numberOfRegisters": 1,
+                            "meterPointId": "1343152901",
+                            "assetNumber": "000000000010376382",
+                            "serialNumber": "G4A02208680401",
+                            "meterType": "gas",
+                            "smartMeter": false,
+                            "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
+                            "meterId": "3550020532",
+                            "complexMeter": false,
+                            "registers": [
+                                {
+                                    "id": "001",
+                                    "numberOfDials": 5,
+                                    "readingClassification": "Actual",
+                                    "reading": "03287",
+                                    "readingDate": "19/11/2013",
+                                    "meterReadType": "DayRead",
+                                    "nonCyclicToleranceFlag": "",
+                                    "validationFailureCode": "",
+                                    "usageType": "single",
+                                    "readingType": "1801",
+                                    "registerName": "Day"
+                                }
+                            ],
+                            "contractType": "Gas",
+                            "account": "850000367878",
+                            "complexityCode": "0",
+                            "contractNumber": "0550013531"
+                        }
+                    ]
+                 },
+                "errors": {},
+                 "meta": {}
+             }
+
++ Response 401 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "invalid_request"
+                  }
+              ],
+              "meta": {}
+          }
+
++ Response 404 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                       "code": "meter",
+                      "message": "error.meter.notFound"
+
+                  }
+              ],
+              "meta": {}
+          }
+
 ### Retrieve meter using meter identifier [GET /meters/{meterIdentifier}]
 
 + Parameters
@@ -4917,7 +4999,7 @@ Meter as a resource represents following information:
               "errors": [
                   {
                       "code": "authorize",
-                      "message": "access_denied"
+                      "message": "invalid_request"
                   }
               ],
               "meta": {}
@@ -4945,7 +5027,7 @@ Meter as a resource represents following information:
               "errors": [
                   {
                       "code": "serialNumber",
-                      "message": "error.meter.notFound"
+                      "message": "error.client.meter.notfound"
                   }
               ],
               "meta": {}
@@ -4986,7 +5068,7 @@ Meter as a resource represents following information:
               "errors": [
                   {
                       "code": "authorize",
-                      "message": "access_denied"
+                      "message": "invalid_request"
                   }
               ],
               "meta": {}
@@ -5014,7 +5096,7 @@ Meter as a resource represents following information:
               "errors": [
                   {
                       "code": "register",
-                      "message": "error.register.notFound"
+                      "message": "error.client.register.notfound"
                   }
               ],
               "meta": {}
@@ -5034,15 +5116,17 @@ Meter as a resource represents following information:
               "meta": {}
           }
 
-+ Response 200 (application/json)
++ Response 500 (application/json)
 
           {
-              "status": "SUCCESS",
-              "data": {
-                  "isValidationFailure": true,
-                  "isOutOfTolerantReading": false
-              },
-              "errors": [],
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "validatemeter",
+                      "message": "error.client.validatemeter.no.response"
+                  }
+              ],
               "meta": {}
           }
 
