@@ -5141,7 +5141,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
   + Body
 
             {
-                "mpxn": "201234567890"
+                "meterPointId": "201234567890"
             }
 
 + Response 200 (application/json)
@@ -5163,8 +5163,8 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "data": {},
               "errors": [
                   {
-                      "code": "mpxn",
-                      "message": "error.client.mpxn.blank"
+                      "code": "meterPointId",
+                      "message": "error.client.meterPointId.blank"
                   }
               ],
               "meta": {}
