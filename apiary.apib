@@ -167,9 +167,7 @@ Energy Account as a resource represents following information
 + registeredPaperlessBillingOn - (string) - Represents the date when Paperless billing was opted in for this account. 
 + paperlessBilling - (boolean) - true if account is opted into paperless billing, false otherwise. 
 + jointInvoiced - (boolean) - true if the account is a Joint Invoiced account. false otherwise.
-+ nextBillDate - (string) - Returned always  - Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed.
-+ numberOfEstimatedBills - (int) - Returned always - The total number of estimated bills so far for the account when the meter read window is open, else it will be zero.
- 
+
 ### Retrieve all energy accounts [GET /energy-accounts]
 + Request
 
@@ -216,10 +214,7 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        "myEnergyEligible": false,
-                        "nextBillDate": "2015-10-12T00:00:00+0100",
-                        "numberOfEstimatedBills": 1
+                        "jointInvoiced": true
                     },
                     {
                         "jointInvoiceDetails": {
@@ -253,10 +248,7 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        "myEnergyEligible": false,
-                        "nextBillDate": null,
-                        "numberOfEstimatedBills": 0
+                        "jointInvoiced": true
                     }
                 ]
             },
@@ -329,10 +321,7 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        "myEnergyEligible": false,
-                        "nextBillDate": "2015-10-12T00:00:00+0100",
-                        "numberOfEstimatedBills": 1
+                        "jointInvoiced": true
                     },
                     {
                         "jointInvoiceDetails": {
@@ -366,8 +355,7 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        
+                        "jointInvoiced": true
                     }
                 ]
             },
@@ -450,10 +438,7 @@ Energy Account as a resource represents following information
                         "flatNumber": null
                     },
                     "balanceType": "in credit",
-                    "jointInvoiced": true,
-                    "myEnergyEligible": true,
-                    "nextBillDate": "2015-10-12T00:00:00+0100",
-                    "numberOfEstimatedBills": 1
+                    "jointInvoiced": true
                 },
                 "meta": {
                     "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzWkl0YWdOS0pSRTdXR2VscEErOTYxTkx3WFFGZXUwWURhMmhvbW1SaEUvcXQxTUZjbEtLL0JKbAp2VVIvV3k0MFVGNzc4TVdjUmpGREtqeS9nMzZUT0JCQTJPR3E0V05HcGRZZThGSU5EREc2NktNcXBrNnJmWEpUYUgxT2Z5RmVPenVSCmFrUVNoUTdUcVE2WVRTT2hKbUZtNVZwSEtFYjAyTWNHUXpldTFsWmZhUjczZDVLSTFIWFBGUnJNZWpKR1RZY25FZFEwNlpjT1c2OEwKTkRvU3MzYndxRmtiS0F5YjVkQ0krNFhFdnpUaktwTzN1RzJjTU42Q2RubUdlTUlvMXc9PQ"
@@ -487,6 +472,166 @@ Energy Account as a resource represents following information
             ],
             "meta": {}
         }
+        
+        
+### Retrieve a specific Account [GET /energy-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccount": {
+                    "jointInvoiceDetails": {
+                        "mergeDate": null,
+                        "mergeType": null,
+                        "mergedAccountNumber": null
+                    },
+                    "registeredPaperlessBillingOn": "04/02/2011",
+                    "status": "open",
+                    "paymentType": "Direct Debit",
+                    "responsibilityType": "Legal Payer",
+                    "paperlessBilling": true,
+                    "type": "Energy",
+                    "holderName": "Mr Morita",
+                    "id": "850034235409",
+                    "contractEndDate": null,
+                    "balance": 111.47,
+                    "subType": "Electricity",
+                    "tariff": "fix-and-fall-june-2016",
+                    "supplyAddress": {
+                        "MPRN": null,
+                        "postalTown": "Salford",
+                        "houseName": "",
+                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                        "county": "LANCASHIRE",
+                        "MPAN": null,
+                        "houseNumber": "53B",
+                        "postcode": "WS3 3ER",
+                        "addressLine2": "",
+                        "addressLine1": "GARSTANG ROAD NORTH",
+                        "flatNumber": null
+                    },
+                    "balanceType": "in credit",
+                    "jointInvoiced": true
+                }
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
+### Retrieve all energy accounts [GET /energy-accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "energyAccounts": [
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034235409",
+                        "contractEndDate": null,
+                        "balance": 111.47,
+                        "subType": "Electricity",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    },
+                    {
+                        "jointInvoiceDetails": {
+                            "mergeDate": null,
+                            "mergeType": null,
+                            "mergedAccountNumber": null
+                        },
+                        "registeredPaperlessBillingOn": "04/02/2011",
+                        "status": "open",
+                        "paymentType": "Direct Debit",
+                        "responsibilityType": "Legal Payer",
+                        "paperlessBilling": true,
+                        "type": "Energy",
+                        "holderName": "Mr Morita",
+                        "id": "850034336151",
+                        "contractEndDate": null,
+                        "balance": 140.52,
+                        "subType": "Gas",
+                        "tariff": "fix-and-fall-june-2016",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "balanceType": "in credit",
+                        "jointInvoiced": true
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "authorize",
+                    "message": "access_denied"
+                }
+            ],
+            "meta": {}
+        }
+
 
 ## Service Accounts [/service-accounts]
 Service Accounts API allows you to list / view all the service accounts of the logged in customer. Responses from this API will be retuned in JSON format only.
@@ -2260,6 +2405,7 @@ Energy product holding as a resource represents following information
 + tariffCode (string) - Tariff code for the product, if available.
 + productTypeDescription (string) - Product description of the product, if available.
 + account (string) - Account number to which the product is linked, if available.
++ energyAccount - (string) - Returned always. Energy account number to which the product is linked, if available.
 + propositionId (string) - Proposition id for the product.
 + tariffName (String) - Tariff description for the product, if available.
 + isTariffEnergySmart (boolean) - Indicates that the product has energy smart tariff if the value is true.
@@ -2280,6 +2426,7 @@ Service product holding as a resource represents following information
 + productTypeDescription (string) - Product description of the product, if available.
 + productName (string) - Name of the product, if available.
 + account (string) - Account number to which the product is linked, if available.
++ serviceAccount -(string) - Returned always. Service account number to which the product is linked, if available
 + propositionId (string) - Proposition id for the product.
 + premiseId (String) - Premise id associated to the product, if available.
 + isPlumbingAndDrains (boolean) - Indicates that the product has plumbing and drains, if the value is true.
@@ -2330,6 +2477,7 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
+                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2357,6 +2505,7 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
+                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2374,6 +2523,7 @@ Service product holding as a resource represents following information
                                 "First service visit"
                             ],
                             "account": "911000156354",
+                            "serviceAccount": "911000156354",
                             "propositionId": "1",
                             "premiseId": "L280628",
                             "productName": "Central Heating"
@@ -2392,6 +2542,7 @@ Service product holding as a resource represents following information
                                 "First service visit"
                             ],
                             "account": "911000156354",
+                            "serviceAccount": "911000156354",
                             "propositionId": "0",
                             "premiseId": "L280628",
                             "productName": "Plumbing & Drains Cover (TM)"
@@ -2461,6 +2612,7 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
+                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2488,6 +2640,7 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
+                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2563,6 +2716,7 @@ Service product holding as a resource represents following information
                             "First service visit"
                         ],
                         "account": "911000156354",
+                        "serviceAccount": "911000156354",
                         "propositionId": "1",
                         "premiseId": "L280628",
                         "productName": "Central Heating"
