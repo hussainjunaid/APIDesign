@@ -641,7 +641,7 @@ Service Account as a resource represents following information
 + customerId - (string) - `Returned always`. This is the legacy customer identification applicable for certain accounts.
 + premiseId - (string) - `Returned always`. This is the legacy premise identification applicable for certain accounts.
 + holderName - (string) - `Returned always`. Name of the account holder if available.
-+ status - (string) - `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed` and `unknown`
++ status - (string) - `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`
 + type - (string) - `Returned always`. Type of the account, this will be always Services.
 + subType - (string) - `Returned always`. Subtype of the account, this will be Home Services or Security.
 + responsibilityType - (string) - `Returned always`. Responsibility type of the account if available.
@@ -657,10 +657,6 @@ Service Account as a resource represents following information
 + eligibleForAnnualServiceVisit - (boolean) - `Returned always`. Indicates that annual service visit can be booked for this account, if the value is true
 + eligibleForUpsell - (boolean) - `Returned always`. Indicates that the account can be upgraded, if the value is true
 + supplyAddress - (Address) - `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
-+ contractRenewalDate - (string) - `Returned always`. Renewal date for the contract associated to the account if contract end date is available, in dd/MM/yyyy format
-+ contractStatus - (string) - `Returned always`. Status of the contract associated to the account if available. Possible values are `cancelled`, `prospect`, `ondemand`, `active`, `withdrawing`, `inactive`, `lapsed`, `waiting`, `renewal` and `unknown`.
-+ paperlessCommunication - (Boolean) - `Returned always`. Indicates that the account holds paperless communication, if the value is true, otherwise false. If SAP is down, the value will be null
-+ productHoldings - (array of string) - `Returned always`. All the product holdings associated to the account.
 
 ### Retrieve all service accounts [GET /service-accounts]
 + Request
@@ -707,14 +703,7 @@ Service Account as a resource represents following information
                             },
                             "premiseId": "L277092",
                             "eligibleForInterimBreakdown": true,
-                            "eligibleForFirstVisit": true,
-                            "contractRenewalDate": "11/12/2015",
-                            "contractStatus": "active",
-                            "paperlessCommunication":true,
-                            "productHoldings": [
-                                "911000155091-ZSIS",
-                                "911000155091-ZPDI"
-                            ]
+                            "eligibleForFirstVisit": true
                         }
                     ]
                 },
@@ -728,20 +717,7 @@ Service Account as a resource represents following information
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "code": "authorize",
-                    "message": "access_denied"
-                },
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "code": "serviceAccounts",
-                    "message": "error.accounts.notFound"
+                    "authorize": "invalid_request"
                 },
                 "meta": {}
             }
@@ -794,14 +770,7 @@ Service Account as a resource represents following information
                         },
                         "premiseId": "L277092",
                         "eligibleForInterimBreakdown": true,
-                        "eligibleForFirstVisit": true,
-                        "contractRenewalDate": "11/12/2015",
-                            "contractStatus": "active",
-                            "paperlessCommunication":true,
-                            "productHoldings": [
-                                "911000155091-ZSIS",
-                                "911000155091-ZPDI"
-                            ]
+                        "eligibleForFirstVisit": true
                     }
                 },
                 "errors": [],
@@ -814,8 +783,7 @@ Service Account as a resource represents following information
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "code": "authorize",
-                    "message": "access_denied"
+                    "authorize": "invalid_request"
                 },
                 "meta": {}
             }
@@ -826,175 +794,11 @@ Service Account as a resource represents following information
                 "status": "ERROR",
                 "data": {},
                 "errors": {
-                    "code": "accountNumber",
-                    "message": "error.account.notFound"
+                    "accountNumber": "error.client.account.notfound"
                 },
                 "meta": {}
             }
 
-### Modify a service account [PUT /service-accounts/{accountNumber}]
-+ Parameters
-
-    + accountNumber (number) ...This is the customers account number
-        
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-    + Body
-            
-            {
-                 "serviceAccount": {
-                     "landlord": false,
-                     "legacyAccountNumber": "22208170L277092",
-                     "status": "open",
-                     "eligibleForAnnualServiceVisit": true,
-                     "eligibleForUpsell": true,
-                     "responsibilityType": "Legal Payer",
-                     "type": "Services",
-                     "holderName": "Mr Thomas Red",
-                     "id": "911000155091",
-                     "contractEndDate": "10/12/2015",
-                     "gasSafetyCertificateAvailable": false,
-                     "bulkAccount": false,
-                     "customerId": "22208170",
-                     "multiPremiseLandlord": false,
-                     "subType": "Home Services",
-                     "supplyAddress": {
-                         "MPRN": null,
-                         "postalTown": "Lightwater",
-                         "houseName": null,
-                         "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
-                         "county": "SURREY",
-                         "MPAN": null,
-                         "houseNumber": "20",
-                         "postcode": "GU18 5XP",
-                         "addressLine2": null,
-                         "addressLine1": "Springfield",
-                         "flatNumber": null
-                     },
-                     "premiseId": "L277092",
-                     "eligibleForInterimBreakdown": true,
-                     "eligibleForFirstVisit": true,
-                     "paperlessCommunication": false,
-                     "productHoldings": [
-                         "911000155091-ZSIS",
-                         "911000155091-ZPDI"
-                     ]
-                 }
-            }
-
-+ Response 200 (application/json)
-
-            {
-                 "status": "SUCCESS",
-                 "data": {
-                     "serviceAccount": {
-                         "landlord": false,
-                         "legacyAccountNumber": "22208170L277092",
-                         "status": "open",
-                         "eligibleForAnnualServiceVisit": true,
-                         "eligibleForUpsell": true,
-                         "responsibilityType": "Legal Payer",
-                         "type": "Services",
-                         "holderName": "Mr Thomas Red",
-                         "id": "911000155091",
-                         "contractEndDate": "10/12/2015",
-                         "gasSafetyCertificateAvailable": false,
-                         "bulkAccount": false,
-                         "customerId": "22208170",
-                         "multiPremiseLandlord": false,
-                         "subType": "Home Services",
-                         "supplyAddress": {
-                             "MPRN": null,
-                             "postalTown": "Lightwater",
-                             "houseName": null,
-                             "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
-                             "county": "SURREY",
-                             "MPAN": null,
-                             "houseNumber": "20",
-                             "postcode": "GU18 5XP",
-                             "addressLine2": null,
-                             "addressLine1": "Springfield",
-                             "flatNumber": null
-                         },
-                         "premiseId": "L277092",
-                         "eligibleForInterimBreakdown": true,
-                         "eligibleForFirstVisit": true,
-                         "paperlessCommunication": false,
-                         "productHoldings": [
-                             "911000155091-ZSIS",
-                             "911000155091-ZPDI"
-                         ]
-                     }
-                 },
-                 "errors": [],
-                 "meta": {}
-             }
-             
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "code": "authorize",
-                    "message": "access_denied"
-                },
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "code": "authorize",
-                    "message": "access_denied"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "code": "correspondence",
-                    "message": "error.client.corespondence.notModified"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "code": "correspondence",
-                    "message": "error.client.corespondence.changeNotSupported"
-                },
-                "meta": {}
-            }
-            
-+ Response 404 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "code": "correspondence",
-                    "message": "error.client.correspondenceUpdate.failed"
-                },
-                "meta": {}
-            }
-            
 ## Group Addresses
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
@@ -5213,6 +5017,215 @@ Meter as a resource represents following information:
               "meta": {}
           }
 
+### Submit Meter reads [POST /meter-reads/submit]
+Meter reads endpoint allows you to submit meter reads for single/dual/joint invoice accounts. Responses from this API will be returned in JSON format only
+Meter read as a resource represents following information
+
++ id - (string) - `Returned always`. It is a concatenated value of meter read and date(time), separated by (-). 
++ reading - (string) - `Returned always`. Reading taken from the meter. 
++ classification - (string) - `Returned always`. Classification description, it mentions whether the reading is "Actual" or "Estimated", if available. 
++ register - (string) - `Returned always`. Register identifier, concatenated value of account number, contract number, meter serial number and register number separated by '-'. 
++ date - (string) - `Returned always`. Date on which the reading is taken, in dd/MM/yyyy format. 
++ status - (string) - `Returned always`. It will return any one of the following status `failed`, `stored`, `stored for next bill`, `implausible read`, `cancel rebill`, `sap down` or `unknown`.
+
++ Request (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+             Authorization: Bearer access-token
+
+  + Body
+
+            {
+                 "meterReads": [
+                     {
+                         "reading": "01170",
+                         "date": "16/08/2015",
+                         "register": "851001347816-1501675080-QTEwWDg4MjE4OA-001"
+                     }
+                 ],
+                 "meta": {
+                     "outOfToleranceOverride": true
+                 }
+             }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "meterReads": [
+                        {
+                            "id": "01170-20150816",
+                            "reading": "01170",
+                            "classification": "Actual",
+                            "register": "851001347816-1501675080-QTEwWDg4MjE4OA-001",
+                            "date": "16/08/2015",
+                            "status": "stored"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {
+                    "storeAndForward": false
+                }
+            }
+
++ Response 401 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "access_denied"
+                  }
+              ],
+              "meta": {}
+          }
+
++ Response 400 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meterReads",
+                      "message": "error.client.meterReads.null"
+                  }
+              ],
+              "meta": {}
+          }
+
++ Response 400 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "reading",
+                      "message": "error.client.reading.invalid"
+                  }
+              ],
+              "meta": {}
+          }
+
++ Response 400 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "accountNumber",
+                      "message": "error.client.accountNumber.invalid"
+                  }
+              ],
+              "meta": {}
+          }
+
++ Response 401 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "accountNumber",
+                      "message": "error.client.accountNumber.invalid"
+                  }
+              ],
+              "meta": {}
+          }
+          
++ Response 404 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meter",
+                      "message": "error.meter.notFound"
+                  }
+              ],
+              "meta": {}
+          }
+
++ Response 404 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "register",
+                      "message": "error.register.notFound"
+                  }
+              ],
+              "meta": {}
+          }
+ 
++ Response 400 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meterReads",
+                      "message": "error.meterRead.outOfTolerance"
+                  }
+              ],
+              "meta": {}
+          }
+          
++ Response 400 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meter",
+                      "message": "error.client.mererReadCount.exceeded"
+                  }
+              ],
+              "meta": {}
+          }
+          
++ Response 400 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "meterReads",
+                      "message": "error.client.meterReads.incomplete"
+                  }
+              ],
+              "meta": {}
+          }
+          
++ Response 500 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "system",
+                      "message": "error.system.unexpected.error"
+                  }
+              ],
+              "meta": {}
+          }
+         
 ## Group Leads
 Leads resource allows you to retrieve, create and update lead, as of now it supports "Home Move" leads only. Responses from this API will be returned in JSON format only.
 
