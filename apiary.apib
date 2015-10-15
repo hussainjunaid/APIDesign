@@ -641,7 +641,7 @@ Service Account as a resource represents following information
 + customerId - (string) - `Returned always`. This is the legacy customer identification applicable for certain accounts.
 + premiseId - (string) - `Returned always`. This is the legacy premise identification applicable for certain accounts.
 + holderName - (string) - `Returned always`. Name of the account holder if available.
-+ status - (string) - `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`
++ status - (string) - `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed` and `unknown`
 + type - (string) - `Returned always`. Type of the account, this will be always Services.
 + subType - (string) - `Returned always`. Subtype of the account, this will be Home Services or Security.
 + responsibilityType - (string) - `Returned always`. Responsibility type of the account if available.
@@ -657,6 +657,10 @@ Service Account as a resource represents following information
 + eligibleForAnnualServiceVisit - (boolean) - `Returned always`. Indicates that annual service visit can be booked for this account, if the value is true
 + eligibleForUpsell - (boolean) - `Returned always`. Indicates that the account can be upgraded, if the value is true
 + supplyAddress - (Address) - `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
++ contractRenewalDate - (string) - `Returned always`. Renewal date for the contract associated to the account if contract end date is available, in dd/MM/yyyy format
++ contractStatus - (string) - `Returned always`. Status of the contract associated to the account if available. Possible values are `cancelled`, `prospect`, `ondemand`, `active`, `withdrawing`, `inactive`, `lapsed`, `waiting`, `renewal` and `unknown`.
++ paperlessCommunication - (Boolean) - `Returned always`. Indicates that the account holds paperless communication, if the value is true, otherwise false. If SAP is down, the value will be null
++ productHoldings - (array of string) - `Returned always`. All the product holdings associated to the account.
 
 ### Retrieve all service accounts [GET /service-accounts]
 + Request
@@ -703,7 +707,14 @@ Service Account as a resource represents following information
                             },
                             "premiseId": "L277092",
                             "eligibleForInterimBreakdown": true,
-                            "eligibleForFirstVisit": true
+                            "eligibleForFirstVisit": true,
+                            "contractRenewalDate": "11/12/2015",
+                            "contractStatus": "active",
+                            "paperlessCommunication":true,
+                            "productHoldings": [
+                                "911000155091-ZSIS",
+                                "911000155091-ZPDI"
+                            ]
                         }
                     ]
                 },
@@ -717,7 +728,20 @@ Service Account as a resource represents following information
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "authorize": "invalid_request"
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "serviceAccounts",
+                    "message": "error.accounts.notFound"
                 },
                 "meta": {}
             }
@@ -770,7 +794,14 @@ Service Account as a resource represents following information
                         },
                         "premiseId": "L277092",
                         "eligibleForInterimBreakdown": true,
-                        "eligibleForFirstVisit": true
+                        "eligibleForFirstVisit": true,
+                        "contractRenewalDate": "11/12/2015",
+                            "contractStatus": "active",
+                            "paperlessCommunication":true,
+                            "productHoldings": [
+                                "911000155091-ZSIS",
+                                "911000155091-ZPDI"
+                            ]
                     }
                 },
                 "errors": [],
@@ -783,7 +814,8 @@ Service Account as a resource represents following information
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "authorize": "invalid_request"
+                    "code": "authorize",
+                    "message": "access_denied"
                 },
                 "meta": {}
             }
@@ -794,11 +826,175 @@ Service Account as a resource represents following information
                 "status": "ERROR",
                 "data": {},
                 "errors": {
-                    "accountNumber": "error.client.account.notfound"
+                    "code": "accountNumber",
+                    "message": "error.account.notFound"
                 },
                 "meta": {}
             }
 
+### Modify a service account [PUT /service-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
+    + Body
+            
+            {
+                 "serviceAccount": {
+                     "landlord": false,
+                     "legacyAccountNumber": "22208170L277092",
+                     "status": "open",
+                     "eligibleForAnnualServiceVisit": true,
+                     "eligibleForUpsell": true,
+                     "responsibilityType": "Legal Payer",
+                     "type": "Services",
+                     "holderName": "Mr Thomas Red",
+                     "id": "911000155091",
+                     "contractEndDate": "10/12/2015",
+                     "gasSafetyCertificateAvailable": false,
+                     "bulkAccount": false,
+                     "customerId": "22208170",
+                     "multiPremiseLandlord": false,
+                     "subType": "Home Services",
+                     "supplyAddress": {
+                         "MPRN": null,
+                         "postalTown": "Lightwater",
+                         "houseName": null,
+                         "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                         "county": "SURREY",
+                         "MPAN": null,
+                         "houseNumber": "20",
+                         "postcode": "GU18 5XP",
+                         "addressLine2": null,
+                         "addressLine1": "Springfield",
+                         "flatNumber": null
+                     },
+                     "premiseId": "L277092",
+                     "eligibleForInterimBreakdown": true,
+                     "eligibleForFirstVisit": true,
+                     "paperlessCommunication": false,
+                     "productHoldings": [
+                         "911000155091-ZSIS",
+                         "911000155091-ZPDI"
+                     ]
+                 }
+            }
+
++ Response 200 (application/json)
+
+            {
+                 "status": "SUCCESS",
+                 "data": {
+                     "serviceAccount": {
+                         "landlord": false,
+                         "legacyAccountNumber": "22208170L277092",
+                         "status": "open",
+                         "eligibleForAnnualServiceVisit": true,
+                         "eligibleForUpsell": true,
+                         "responsibilityType": "Legal Payer",
+                         "type": "Services",
+                         "holderName": "Mr Thomas Red",
+                         "id": "911000155091",
+                         "contractEndDate": "10/12/2015",
+                         "gasSafetyCertificateAvailable": false,
+                         "bulkAccount": false,
+                         "customerId": "22208170",
+                         "multiPremiseLandlord": false,
+                         "subType": "Home Services",
+                         "supplyAddress": {
+                             "MPRN": null,
+                             "postalTown": "Lightwater",
+                             "houseName": null,
+                             "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                             "county": "SURREY",
+                             "MPAN": null,
+                             "houseNumber": "20",
+                             "postcode": "GU18 5XP",
+                             "addressLine2": null,
+                             "addressLine1": "Springfield",
+                             "flatNumber": null
+                         },
+                         "premiseId": "L277092",
+                         "eligibleForInterimBreakdown": true,
+                         "eligibleForFirstVisit": true,
+                         "paperlessCommunication": false,
+                         "productHoldings": [
+                             "911000155091-ZSIS",
+                             "911000155091-ZPDI"
+                         ]
+                     }
+                 },
+                 "errors": [],
+                 "meta": {}
+             }
+             
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.corespondence.notModified"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.corespondence.changeNotSupported"
+                },
+                "meta": {}
+            }
+            
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.correspondenceUpdate.failed"
+                },
+                "meta": {}
+            }
+            
 ## Group Addresses
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
@@ -4627,103 +4823,6 @@ Meter as a resource represents following information:
 + nonCyclicToleranceFlag (string) - Non cyclic tolerance flag, if available.
 + validationFailureCode (string) - Validation Failure Code, if available.
 
-### Retrieve All meters [GET /meters]
-
-+ Request
-
-  + Headers
-
-          Authorization: Bearer accesstoken
-          cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-          
-+ Response 200 (application/json)
-
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "meters": [
-                        {
-                            "numberOfRegisters": 1,
-                            "meterPointId": "1343152901",
-                            "assetNumber": "000000000010376382",
-                            "serialNumber": "G4A02208680401",
-                            "meterType": "gas",
-                            "smartMeter": false,
-                            "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
-                            "meterId": "3550020532",
-                            "complexMeter": false,
-                            "registers": [
-                                {
-                                    "id": "001",
-                                    "numberOfDials": 5,
-                                    "readingClassification": "Actual",
-                                    "reading": "03287",
-                                    "readingDate": "19/11/2013",
-                                    "meterReadType": "DayRead",
-                                    "nonCyclicToleranceFlag": "",
-                                    "validationFailureCode": "",
-                                    "usageType": "single",
-                                    "readingType": "1801",
-                                    "registerName": "Day"
-                                }
-                            ],
-                            "contractType": "Gas",
-                            "account": "850000367878",
-                            "complexityCode": "0",
-                            "contractNumber": "0550013531"
-                        },
-                        {
-                            "numberOfRegisters": 1,
-                            "meterPointId": "1591031295962",
-                            "assetNumber": "000000000011291701",
-                            "serialNumber": "C62L06322",
-                            "meterType": "elecsr",
-                            "smartMeter": false,
-                            "id": "850000367878-2076700195-QzYyTDA2MzIy",
-                            "meterId": "3655023137",
-                            "complexMeter": false,
-                            "registers": [
-                                {
-                                    "id": "001",
-                                    "numberOfDials": 5,
-                                    "readingClassification": "Actual",
-                                    "reading": "21768",
-                                    "readingDate": "19/11/2013",
-                                    "meterReadType": "DayRead",
-                                    "nonCyclicToleranceFlag": "",
-                                    "validationFailureCode": "",
-                                    "usageType": "single",
-                                    "readingType": "1801",
-                                    "registerName": "Standard"
-                                }
-                            ],
-                            "contractType": "Electricity",
-                            "account": "850000367878",
-                            "complexityCode": "0",
-                            "contractNumber": "2076700195"
-                        }
-                    ]
-                },
-                "errors": {},
-                "meta": {}
-            }
-            
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "authorize",
-                        "message": "invalid_request"
-                    }
-                ],
-                "meta": {}
-            }
-
-
-
 ### Retrieve meter for specific account(s) [GET /meters{?accountNumber*}]
 
 + Parameters
@@ -4734,8 +4833,8 @@ Meter as a resource represents following information:
 
   + Headers
 
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+          Authorization: Bearer accesstoken
+          cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
@@ -4855,88 +4954,6 @@ Meter as a resource represents following information:
               "meta": {}
           }
 
-### Retrieve meters using MPXN [GET /meters{?meterPointId}]
-
-Retrieve meter for a meter reference number (MPRN or MPAN)
-
-+ Request
-
-  + Headers
-
-          Authorization: Bearer accesstoken
-          cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-          
-+ Response 200 (application/json)
-            
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "meters": [
-                        {
-                            "numberOfRegisters": 1,
-                            "meterPointId": "1343152901",
-                            "assetNumber": "000000000010376382",
-                            "serialNumber": "G4A02208680401",
-                            "meterType": "gas",
-                            "smartMeter": false,
-                            "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
-                            "meterId": "3550020532",
-                            "complexMeter": false,
-                            "registers": [
-                                {
-                                    "id": "001",
-                                    "numberOfDials": 5,
-                                    "readingClassification": "Actual",
-                                    "reading": "03287",
-                                    "readingDate": "19/11/2013",
-                                    "meterReadType": "DayRead",
-                                    "nonCyclicToleranceFlag": "",
-                                    "validationFailureCode": "",
-                                    "usageType": "single",
-                                    "readingType": "1801",
-                                    "registerName": "Day"
-                                }
-                            ],
-                            "contractType": "Gas",
-                            "account": "850000367878",
-                            "complexityCode": "0",
-                            "contractNumber": "0550013531"
-                        }
-                    ]
-                 },
-                "errors": {},
-                 "meta": {}
-             }
-
-+ Response 401 (application/json)
-
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "authorize",
-                      "message": "invalid_request"
-                  }
-              ],
-              "meta": {}
-          }
-
-+ Response 404 (application/json)
-
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                  {
-                       "code": "meter",
-                      "message": "error.meter.notFound"
-
-                  }
-              ],
-              "meta": {}
-          }
-
 ### Retrieve meter using meter identifier [GET /meters/{meterIdentifier}]
 
 + Parameters
@@ -4999,7 +5016,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "errors": [
                   {
                       "code": "authorize",
-                      "message": "invalid_request"
+                      "message": "access_denied"
                   }
               ],
               "meta": {}
@@ -5027,7 +5044,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "errors": [
                   {
                       "code": "serialNumber",
-                      "message": "error.client.meter.notfound"
+                      "message": "error.meter.notFound"
                   }
               ],
               "meta": {}
@@ -5068,7 +5085,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "errors": [
                   {
                       "code": "authorize",
-                      "message": "invalid_request"
+                      "message": "access_denied"
                   }
               ],
               "meta": {}
@@ -5096,7 +5113,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "errors": [
                   {
                       "code": "register",
-                      "message": "error.client.register.notfound"
+                      "message": "error.register.notFound"
                   }
               ],
               "meta": {}
@@ -5116,17 +5133,15 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "meta": {}
           }
 
-+ Response 500 (application/json)
++ Response 200 (application/json)
 
           {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "validatemeter",
-                      "message": "error.client.validatemeter.no.response"
-                  }
-              ],
+              "status": "SUCCESS",
+              "data": {
+                  "isValidationFailure": true,
+                  "isOutOfTolerantReading": false
+              },
+              "errors": [],
               "meta": {}
           }
 
@@ -5141,7 +5156,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
   + Body
 
             {
-                "meterPointId": "201234567890"
+                "mpxn": "201234567890"
             }
 
 + Response 200 (application/json)
@@ -5163,8 +5178,8 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               "data": {},
               "errors": [
                   {
-                      "code": "meterPointId",
-                      "message": "error.client.meterPointId.blank"
+                      "code": "mpxn",
+                      "message": "error.client.mpxn.blank"
                   }
               ],
               "meta": {}
