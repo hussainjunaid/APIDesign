@@ -657,6 +657,9 @@ Service Account as a resource represents following information
 + eligibleForAnnualServiceVisit - (boolean) - `Returned always`. Indicates that annual service visit can be booked for this account, if the value is true
 + eligibleForUpsell - (boolean) - `Returned always`. Indicates that the account can be upgraded, if the value is true
 + supplyAddress - (Address) - `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
++ paperlessCommunication - (Boolean) - Returned always. Indicates that the account holds paperless communication, if the value is true, otherwise false. If SAP is down, the value will be null 
++ productHoldings - (array of string) - Returned always. All the product holdings associated to the account. |
+
 
 ### Retrieve all service accounts [GET /service-accounts]
 + Request
@@ -703,7 +706,12 @@ Service Account as a resource represents following information
                             },
                             "premiseId": "L277092",
                             "eligibleForInterimBreakdown": true,
-                            "eligibleForFirstVisit": true
+                            "eligibleForFirstVisit": true,
+                            "paperlessCommunication":true,
+                            "productHoldings": [
+                                "911000155091-ZSIS",
+                                "911000155091-ZPDI"
+                            ]
                         }
                     ]
                 },
@@ -717,7 +725,20 @@ Service Account as a resource represents following information
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "authorize": "invalid_request"
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+            
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "serviceAccounts",
+                    "message": "error.accounts.notFound"
                 },
                 "meta": {}
             }
@@ -770,7 +791,12 @@ Service Account as a resource represents following information
                         },
                         "premiseId": "L277092",
                         "eligibleForInterimBreakdown": true,
-                        "eligibleForFirstVisit": true
+                        "eligibleForFirstVisit": true,
+                        "paperlessCommunication":true,
+                        "productHoldings": [
+                            "911000155091-ZSIS",
+                            "911000155091-ZPDI"
+                        ]
                     }
                 },
                 "errors": [],
@@ -783,7 +809,8 @@ Service Account as a resource represents following information
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "authorize": "invalid_request"
+                    "code": "authorize",
+                    "message": "access_denied"
                 },
                 "meta": {}
             }
@@ -794,11 +821,174 @@ Service Account as a resource represents following information
                 "status": "ERROR",
                 "data": {},
                 "errors": {
-                    "accountNumber": "error.client.account.notfound"
+                    "code": "accountNumber",
+                    "message": "error.account.notFound"
+                },
+                "meta": {}
+            }
+            
+### Modify a specific service account [PUT /service-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
+    + Body
+    
+             {
+                 "serviceAccount": {
+                     "landlord": false,
+                     "legacyAccountNumber": "22208170L277092",
+                     "status": "open",
+                     "eligibleForAnnualServiceVisit": true,
+                     "eligibleForUpsell": true,
+                     "responsibilityType": "Legal Payer",
+                     "type": "Services",
+                     "holderName": "Mr Thomas Red",
+                     "id": "911000155091",
+                     "contractEndDate": "10/12/2015",
+                     "gasSafetyCertificateAvailable": false,
+                     "bulkAccount": false,
+                     "customerId": "22208170",
+                     "multiPremiseLandlord": false,
+                     "subType": "Home Services",
+                     "supplyAddress": {
+                         "MPRN": null,
+                         "postalTown": "Lightwater",
+                         "houseName": null,
+                         "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                         "county": "SURREY",
+                         "MPAN": null,
+                         "houseNumber": "20",
+                         "postcode": "GU18 5XP",
+                         "addressLine2": null,
+                         "addressLine1": "Springfield",
+                         "flatNumber": null
+                     },
+                     "premiseId": "L277092",
+                     "eligibleForInterimBreakdown": true,
+                     "eligibleForFirstVisit": true,
+                     "paperlessCommunication": false,
+                     "productHoldings": [
+                         "911000155091-ZSIS",
+                         "911000155091-ZPDI"
+                     ]
+                 }
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "serviceAccount": {
+                        "landlord": false,
+                        "legacyAccountNumber": "22208170L277092",
+                        "status": "open",
+                        "eligibleForAnnualServiceVisit": true,
+                        "eligibleForUpsell": true,
+                        "responsibilityType": "Legal Payer",
+                        "type": "Services",
+                        "holderName": "Mr Thomas Red",
+                        "id": "911000155091",
+                        "contractEndDate": "10/12/2015",
+                        "gasSafetyCertificateAvailable": false,
+                        "bulkAccount": false,
+                        "customerId": "22208170",
+                        "multiPremiseLandlord": false,
+                        "subType": "Home Services",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Lightwater",
+                            "houseName": null,
+                            "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                            "county": "SURREY",
+                            "MPAN": null,
+                            "houseNumber": "20",
+                            "postcode": "GU18 5XP",
+                            "addressLine2": null,
+                            "addressLine1": "Springfield",
+                            "flatNumber": null
+                        },
+                        "premiseId": "L277092",
+                        "eligibleForInterimBreakdown": true,
+                        "eligibleForFirstVisit": true,
+                        "paperlessCommunication":true,
+                        "productHoldings": [
+                            "911000155091-ZSIS",
+                            "911000155091-ZPDI"
+                        ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
                 },
                 "meta": {}
             }
 
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.corespondence.notModified"
+                },
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                     "code": "correspondence",
+                    "message": "error.client.corespondence.changeNotSupported"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                     "code": "correspondence",
+                    "message": "error.client.correspondenceUpdate.failed"                },
+                "meta": {}
+            }
+            
 ## Group Addresses
 Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
 
@@ -2405,7 +2595,6 @@ Energy product holding as a resource represents following information
 + tariffCode (string) - Tariff code for the product, if available.
 + productTypeDescription (string) - Product description of the product, if available.
 + account (string) - Account number to which the product is linked, if available.
-+ energyAccount - (string) - Returned always. Energy account number to which the product is linked, if available.
 + propositionId (string) - Proposition id for the product.
 + tariffName (String) - Tariff description for the product, if available.
 + isTariffEnergySmart (boolean) - Indicates that the product has energy smart tariff if the value is true.
@@ -2426,7 +2615,6 @@ Service product holding as a resource represents following information
 + productTypeDescription (string) - Product description of the product, if available.
 + productName (string) - Name of the product, if available.
 + account (string) - Account number to which the product is linked, if available.
-+ serviceAccount -(string) - Returned always. Service account number to which the product is linked, if available
 + propositionId (string) - Proposition id for the product.
 + premiseId (String) - Premise id associated to the product, if available.
 + isPlumbingAndDrains (boolean) - Indicates that the product has plumbing and drains, if the value is true.
@@ -2477,7 +2665,6 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
-                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2505,7 +2692,6 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
-                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2523,7 +2709,6 @@ Service product holding as a resource represents following information
                                 "First service visit"
                             ],
                             "account": "911000156354",
-                            "serviceAccount": "911000156354",
                             "propositionId": "1",
                             "premiseId": "L280628",
                             "productName": "Central Heating"
@@ -2542,7 +2727,6 @@ Service product holding as a resource represents following information
                                 "First service visit"
                             ],
                             "account": "911000156354",
-                            "serviceAccount": "911000156354",
                             "propositionId": "0",
                             "premiseId": "L280628",
                             "productName": "Plumbing & Drains Cover (TM)"
@@ -2612,7 +2796,6 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
-                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2640,7 +2823,6 @@ Service product holding as a resource represents following information
                                 "Standard"
                             ],
                             "account": "851002262167",
-                            "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
                             "isSmartMeterProduct": false
@@ -2716,7 +2898,6 @@ Service product holding as a resource represents following information
                             "First service visit"
                         ],
                         "account": "911000156354",
-                        "serviceAccount": "911000156354",
                         "propositionId": "1",
                         "premiseId": "L280628",
                         "productName": "Central Heating"
