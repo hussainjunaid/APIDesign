@@ -167,7 +167,9 @@ Energy Account as a resource represents following information
 + registeredPaperlessBillingOn - (string) - Represents the date when Paperless billing was opted in for this account. 
 + paperlessBilling - (boolean) - true if account is opted into paperless billing, false otherwise. 
 + jointInvoiced - (boolean) - true if the account is a Joint Invoiced account. false otherwise.
-
++ nextBillDate - (string) - Returned always  - Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed.
++ numberOfEstimatedBills - (int) - Returned always - The total number of estimated bills so far for the account when the meter read window is open, else it will be zero.
+ 
 ### Retrieve all energy accounts [GET /energy-accounts]
 + Request
 
@@ -214,7 +216,10 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true
+                        "jointInvoiced": true,
+                        "myEnergyEligible": false,
+                        "nextBillDate": "2015-10-12T00:00:00+0100",
+                        "numberOfEstimatedBills": 1
                     },
                     {
                         "jointInvoiceDetails": {
@@ -248,7 +253,10 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true
+                        "jointInvoiced": true,
+                        "myEnergyEligible": false,
+                        "nextBillDate": null,
+                        "numberOfEstimatedBills": 0
                     }
                 ]
             },
@@ -321,7 +329,10 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true
+                        "jointInvoiced": true,
+                        "myEnergyEligible": false,
+                        "nextBillDate": "2015-10-12T00:00:00+0100",
+                        "numberOfEstimatedBills": 1
                     },
                     {
                         "jointInvoiceDetails": {
@@ -355,7 +366,8 @@ Energy Account as a resource represents following information
                             "flatNumber": null
                         },
                         "balanceType": "in credit",
-                        "jointInvoiced": true
+                        "jointInvoiced": true,
+                        
                     }
                 ]
             },
@@ -438,7 +450,10 @@ Energy Account as a resource represents following information
                         "flatNumber": null
                     },
                     "balanceType": "in credit",
-                    "jointInvoiced": true
+                    "jointInvoiced": true,
+                    "myEnergyEligible": true,
+                    "nextBillDate": "2015-10-12T00:00:00+0100",
+                    "numberOfEstimatedBills": 1
                 },
                 "meta": {
                     "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzWkl0YWdOS0pSRTdXR2VscEErOTYxTkx3WFFGZXUwWURhMmhvbW1SaEUvcXQxTUZjbEtLL0JKbAp2VVIvV3k0MFVGNzc4TVdjUmpGREtqeS9nMzZUT0JCQTJPR3E0V05HcGRZZThGSU5EREc2NktNcXBrNnJmWEpUYUgxT2Z5RmVPenVSCmFrUVNoUTdUcVE2WVRTT2hKbUZtNVZwSEtFYjAyTWNHUXpldTFsWmZhUjczZDVLSTFIWFBGUnJNZWpKR1RZY25FZFEwNlpjT1c2OEwKTkRvU3MzYndxRmtiS0F5YjVkQ0krNFhFdnpUaktwTzN1RzJjTU42Q2RubUdlTUlvMXc9PQ"
@@ -472,166 +487,6 @@ Energy Account as a resource represents following information
             ],
             "meta": {}
         }
-        
-        
-### Retrieve a specific Account [GET /energy-accounts/{accountNumber}]
-+ Parameters
-
-    + accountNumber (number) ...This is the customers account number
-        
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                "energyAccount": {
-                    "jointInvoiceDetails": {
-                        "mergeDate": null,
-                        "mergeType": null,
-                        "mergedAccountNumber": null
-                    },
-                    "registeredPaperlessBillingOn": "04/02/2011",
-                    "status": "open",
-                    "paymentType": "Direct Debit",
-                    "responsibilityType": "Legal Payer",
-                    "paperlessBilling": true,
-                    "type": "Energy",
-                    "holderName": "Mr Morita",
-                    "id": "850034235409",
-                    "contractEndDate": null,
-                    "balance": 111.47,
-                    "subType": "Electricity",
-                    "tariff": "fix-and-fall-june-2016",
-                    "supplyAddress": {
-                        "MPRN": null,
-                        "postalTown": "Salford",
-                        "houseName": "",
-                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                        "county": "LANCASHIRE",
-                        "MPAN": null,
-                        "houseNumber": "53B",
-                        "postcode": "WS3 3ER",
-                        "addressLine2": "",
-                        "addressLine1": "GARSTANG ROAD NORTH",
-                        "flatNumber": null
-                    },
-                    "balanceType": "in credit",
-                    "jointInvoiced": true
-                }
-            },
-            "errors": [],
-            "meta": {}
-        }
-        
-### Retrieve all energy accounts [GET /energy-accounts]
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                "energyAccounts": [
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
-                        },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034235409",
-                        "contractEndDate": null,
-                        "balance": 111.47,
-                        "subType": "Electricity",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true
-                    },
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
-                        },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034336151",
-                        "contractEndDate": null,
-                        "balance": 140.52,
-                        "subType": "Gas",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
-        
-+ Response 401 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
-
 
 ## Service Accounts [/service-accounts]
 Service Accounts API allows you to list / view all the service accounts of the logged in customer. Responses from this API will be retuned in JSON format only.
@@ -5017,215 +4872,6 @@ Meter as a resource represents following information:
               "meta": {}
           }
 
-### Submit Meter reads [POST /meter-reads/submit]
-Meter reads endpoint allows you to submit meter reads for single/dual/joint invoice accounts. Responses from this API will be returned in JSON format only
-Meter read as a resource represents following information
-
-+ id - (string) - `Returned always`. It is a concatenated value of meter read and date(time), separated by (-). 
-+ reading - (string) - `Returned always`. Reading taken from the meter. 
-+ classification - (string) - `Returned always`. Classification description, it mentions whether the reading is "Actual" or "Estimated", if available. 
-+ register - (string) - `Returned always`. Register identifier, concatenated value of account number, contract number, meter serial number and register number separated by '-'. 
-+ date - (string) - `Returned always`. Date on which the reading is taken, in dd/MM/yyyy format. 
-+ status - (string) - `Returned always`. It will return any one of the following status `failed`, `stored`, `stored for next bill`, `implausible read`, `cancel rebill`, `sap down` or `unknown`.
-
-+ Request (application/json)
-
-  + Headers
-
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-             Authorization: Bearer access-token
-
-  + Body
-
-            {
-                 "meterReads": [
-                     {
-                         "reading": "01170",
-                         "date": "16/08/2015",
-                         "register": "851001347816-1501675080-QTEwWDg4MjE4OA-001"
-                     }
-                 ],
-                 "meta": {
-                     "outOfToleranceOverride": true
-                 }
-             }
-
-+ Response 200 (application/json)
-
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "meterReads": [
-                        {
-                            "id": "01170-20150816",
-                            "reading": "01170",
-                            "classification": "Actual",
-                            "register": "851001347816-1501675080-QTEwWDg4MjE4OA-001",
-                            "date": "16/08/2015",
-                            "status": "stored"
-                        }
-                    ]
-                },
-                "errors": [],
-                "meta": {
-                    "storeAndForward": false
-                }
-            }
-
-+ Response 401 (application/json)
-
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "authorize",
-                      "message": "access_denied"
-                  }
-              ],
-              "meta": {}
-          }
-
-+ Response 400 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "meterReads",
-                      "message": "error.client.meterReads.null"
-                  }
-              ],
-              "meta": {}
-          }
-
-+ Response 400 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "reading",
-                      "message": "error.client.reading.invalid"
-                  }
-              ],
-              "meta": {}
-          }
-
-+ Response 400 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "accountNumber",
-                      "message": "error.client.accountNumber.invalid"
-                  }
-              ],
-              "meta": {}
-          }
-
-+ Response 401 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "accountNumber",
-                      "message": "error.client.accountNumber.invalid"
-                  }
-              ],
-              "meta": {}
-          }
-          
-+ Response 404 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "meter",
-                      "message": "error.meter.notFound"
-                  }
-              ],
-              "meta": {}
-          }
-
-+ Response 404 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "register",
-                      "message": "error.register.notFound"
-                  }
-              ],
-              "meta": {}
-          }
- 
-+ Response 400 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "meterReads",
-                      "message": "error.meterRead.outOfTolerance"
-                  }
-              ],
-              "meta": {}
-          }
-          
-+ Response 400 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "meter",
-                      "message": "error.client.mererReadCount.exceeded"
-                  }
-              ],
-              "meta": {}
-          }
-          
-+ Response 400 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "meterReads",
-                      "message": "error.client.meterReads.incomplete"
-                  }
-              ],
-              "meta": {}
-          }
-          
-+ Response 500 (application/json)
-
-          {
-              "status": "ERROR",
-              "data": {},
-              "errors": [
-                  {
-                      "code": "system",
-                      "message": "error.system.unexpected.error"
-                  }
-              ],
-              "meta": {}
-          }
-         
 ## Group Leads
 Leads resource allows you to retrieve, create and update lead, as of now it supports "Home Move" leads only. Responses from this API will be returned in JSON format only.
 
