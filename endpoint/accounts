@@ -1,0 +1,146 @@
+## Group Accounts
+Accounts API allows you to list / view all the accounts of the logged in customer. This includes energy accounts, services accounts, multi premise landlord accounts and sales orders of OAM registered and wafer thin profile customers. Responses from this API will be retuned in JSON format only.
+
+## Accounts Collection [/accounts]
+### Retrieve a specific Account [GET /accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "account": {
+                    "id": "850034235409",
+                    "multiPremiseLandlord": false,
+                    "status": "Open",
+                    "subType": "Electricity",
+                    "responsibilityType": "Legal Payer",
+                    "supplyAddress": {
+                        "MPRN": null,
+                        "postalTown": "Salford",
+                        "houseName": "",
+                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                        "county": "LANCASHIRE",
+                        "MPAN": null,
+                        "houseNumber": "53B",
+                        "postcode": "WS3 3ER",
+                        "addressLine2": "",
+                        "addressLine1": "GARSTANG ROAD NORTH",
+                        "flatNumber": null
+                    },
+                    "type": "Energy",
+                    "holderName": "Mr Morita"
+                }
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "authorize": "access_denied"
+            },
+            "meta": {}
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "accountNumber": "error.client.account.notfound"
+            },
+            "meta": {}
+        }
+
+### Retrieve all Accounts [GET /accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "accounts": [
+                    {
+                        "id": "850034235409",
+                        "multiPremiseLandlord": false,
+                        "status": "Open",
+                        "subType": "Electricity",
+                        "responsibilityType": "Legal Payer",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "type": "Energy",
+                        "holderName": "Mr Morita"
+                    },
+                    {
+                        "id": "850034336151",
+                        "multiPremiseLandlord": false,
+                        "status": "Open",
+                        "subType": "Gas",
+                        "responsibilityType": "Legal Payer",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Salford",
+                            "houseName": "",
+                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                            "county": "LANCASHIRE",
+                            "MPAN": null,
+                            "houseNumber": "53B",
+                            "postcode": "WS3 3ER",
+                            "addressLine2": "",
+                            "addressLine1": "GARSTANG ROAD NORTH",
+                            "flatNumber": null
+                        },
+                        "type": "Energy",
+                        "holderName": "Mr Morita"
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "authorize": "access_denied"
+            },
+            "meta": {}
+        }
+		
+ 
