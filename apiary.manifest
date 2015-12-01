@@ -11,3 +11,5 @@ blueprints/loyalties
 blueprints/meter-reads-submit
 blueprints/orders
 blueprints/premises
+blueprints/product-bundles
+blueprints/product-features
