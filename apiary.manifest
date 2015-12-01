@@ -5,3 +5,4 @@ blueprints/appliances
 blueprints/appointments
 blueprints/customers
 blueprints/direct-debits
+blueprints/heartbeat
