@@ -7,3 +7,5 @@ blueprints/customers
 blueprints/direct-debits
 blueprints/direct-debit-summaries
 blueprints/email
+blueprints/energy-accounts
+blueprints/energyestimate
