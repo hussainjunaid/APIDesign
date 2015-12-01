@@ -1,0 +1,47 @@
+## Group API Management
+## Heartbeat
+Heartbeat is a controller resource and allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this API will be returned in JSON format only.
+Heartbeat as a resource represents following information:
+
++ status (string) - It is a concatenated value of CRM status code and ISU status code, separated by a hyphen
+
+Status codes can have the below values:
+
+0-Up and running
+
+1-Cached and served from MIS
+
+2-Down
+
+3-Undefined
+
+### Retrieve heartbeat [GET /heartbeat]
++ Request
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "heartbeat": {
+                      "status": "0-0"
+                  }
+              },
+              "errors": [],
+              "meta": {}
+          }
+
++ Response 404 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "heartbeat": "error.configuration.data.notfound"
+              },
+              "meta": {}
+          }

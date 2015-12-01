@@ -1,0 +1,212 @@
+## Group Service Order
+
+Service Order allows the client to create and modify an appointment for a smart meter exchange
+
+### create a service order [POST /service-orders]
+
++ id - string
++ startDate - string
++ startTime - string
++ endTime - string
++ userStatusCode - string
++ accounts - array
++ address.flatNumber - string
++ address.houseNumber - string
++ address.houseName - string
++ address.addressLine1 - string
++ address.addressLine2 - string
++ address.postalTown - string
++ address.county - string
++ address.postcode - string
++ address.country - string
++ meta.propspectToken - string A valid prospect token that was created earlier
++ fuelType - string gas, electricity, dual
++ contactNumber - string
++ specialInstruction - string
++ meterType - string, prepay or credit dependant on the tarrif 
+
++ Parameters
+
+    + id - (optional, string)
+    + startDate - (optional, string)
+    + endDate - (optional, string)
+    + startTime - (optional, string)
+    + endTime - (optional, string)
+    + statusCode - (optional, string) ...to identify service order is new, rescheduled, or site ineligible
+    + accounts - (optional, string array)
+    + address.address - (required, string)
+    + address.flatNumber - (required, string)
+    + address.houseNumber - (required, string)
+    + address.houseName - (required, string)
+    + address.addressLine1 - (required, string)
+    + address.addressLine2 - (required, string)
+    + address.postalTown - (required, string)
+    + address.county - (required, string)
+    + address.postcode - (required, string)
+    + address.country - (required, string)
+    + address.MPAN - (required, string)
+    + address.MPRN - (required, string)
+    + meta.propspectToken - (required, string) ...A valid prospect token that was created earlier
+    + fuelType - (optional, string) ... gas, electricity, dual
+    + contactNumber - (optional, string)
+    + specialInstruction - (optional, string)
+    + meterType - (optional, string) ...prepay or credit
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+            "serviceOrder":
+                {
+                    "id": null,
+                    "startDate": null,
+                    "endDate": null,
+                    "startTime": null,
+                    "endTime": null,
+                    "statusCode": null,
+                    "accounts": null,
+                    "address":
+                        {
+                            "address": null,
+                            "flatNumber": 14,
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ",
+                            "MPRN": null,
+                            "MPAN": null,
+                        }
+                    "fuelType": "dual",
+                    "contactNumber": null,
+                    "specialInstruction": null,
+                    "meterType": "prepay",
+                },
+            "meta":
+                {
+                    "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
+                }
+            }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data":
+                {
+                    "serviceOrder":
+                        {
+                            "id": "RjNiQjNYYlRYbnRtaHpyOG5XWWdmdz09",
+                            "startDate": null,
+                            "startTime": null,
+                            "endDate": null,
+                            "endTime": null,
+                            "statusCode": null,
+                            "accounts": null,
+                            "address":
+                                {
+                                    "address": null,
+                                    "flatNumber": 14,
+                                    "houseNumber": null,
+                                    "houseName": "The Rushes",
+                                    "addressLine1": "Wapshott road",
+                                    "addressLine2": null,
+                                    "postalTown": "Staines",
+                                    "county": "Middlesex",
+                                    "postcode": "TW183EZ",
+                                    "MPRN": null,
+                                    "MPAN": null,
+                                },
+                            "fuelType": "dual",
+                            "contactNumber": "",
+                            "specialInstruction": "",
+                            "meterType": "prepay",
+                        }
+                },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "tbd",
+                    "message": "tbd"
+                }
+            ],
+            "meta": {}
+        }
+
+### add appointment to a service order [PUT /service-orders/{serviceOrderId}]
+
++ Parameters
+
+    + serviceOrderId - (required, string) ...the service order being altered
+    + statusCode - (optional, string) ...to identify service order is new, rescheduled, or site ineligible
+    + smartMeterAppointmentSlotId - (required, string) ...the slot discovered in the appointment slot call
+    + cancelAppointment - (optional, boolean)
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "serviceOrder": 
+                {
+                    "smartMeterAppointmentSlotId" : "2015-09-28T07:00:00+00:00_1:00pm_5:00pm",
+                    "statusCode" : "CANCEL",
+                    "cancelAppointment" : "true"
+                }
+            } 
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {},
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceorder",
+                    "message": "error.server.serviceorder.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {}
+            "errors": [
+                {
+                    "code": "server.error.internal",
+                    "message": "An internal error while processing request."
+                }
+            ],
+            "meta": {}
+        }

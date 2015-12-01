@@ -1,0 +1,91 @@
+## Group Loyalties
+Loyalties resource allows you to create a loyalty card for a customer. Responses from this API will be retuned in JSON format only.
+
+## Loyalties Collection [/loyalties]
+
+Loyalty as a resource represents following information. This is equivalent of a nectar card supplied to the customer
+
++ id (string) - Loyalty card number associated to the customer.
++ title (string) - Title of the customer registering for Loyalty card.
++ firstName (string) - First name of the customer registering for Loyalty card.
++ surname (string) - Surname of the customer registering for Loyalty card.
++ telephoneNumber (string) - Telephone number of the customer registering for Loyalty card.
++ flatNumber (string) - Flat number of the address if available
++ houseNumber (string) - House number of the address if available.
++ houseName (string) - House name of the address if available.
++ addressLine1 (string) - Address line 1. Typically contains building name / street etc...
++ addressLine2 (string) - Address line 2. Typically contains street / avenues etc...
++ postalTown (string) - Postal town of the address.
++ county (string) - County to which the address belongs.
++ postcode (string) - Postcode of the address
++ emailAddress (string) - Email address of the customer attempting to register for a Loyalty card.
+
+Loyalties API is not brand agnostic. Each customer attempting to create a new loyalty card is associated with the brand. However this does not restrict the card to the current brand. Possible list of brands are listed below for reference.
+
+britishgas - Brand association with British Gas
+sainsbury - Brand association with Sainsbury's Energy
+mobileenergy - Brand association with Mobile Energy
+This brand information will be derived from CID. So it is not required to pass this information in the request to create a Loyalty card.
+
+### Create loyalty card [POST /loyalties]
++ Request (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+  + Body
+
+              {
+
+              "loyalty": {
+                  "id": null,
+                  "title": "Mr",
+                  "firstName": "Mark",
+                  "surname": "Blair",
+                  "telephoneNumber": "07404174628",
+                  "flatNumber": "Flat 10",
+                  "houseNumber": null,
+                  "houseName": "Linden place",
+                  "addressLine1": "Meadow Gardens",
+                  "addressLine2": null,
+                  "postalTown": "Staines",
+                  "county": "Middlesex",
+                  "postcode": "TW18 3HE",
+                  "emailAddress": "test@bgdigitaltest.co.uk"
+              }
+            }
+
+
++ Response 200 (application/json)
+
+          {
+              "loyalty": {
+                  "id": "91270909018",
+                  "title": "Mr",
+                  "firstName": "Mark",
+                  "surname": "Blair",
+                  "telephoneNumber": "07404174628",
+                  "flatNumber": "Flat 10",
+                  "houseNumber": null,
+                  "houseName": "Linden place",
+                  "addressLine1": "Meadow Gardens",
+                  "addressLine2": null,
+                  "postalTown": "Staines",
+                  "county": "Middlesex",
+                  "postcode": "TW18 3HE",
+                  "emailAddress": "test@bgdigitaltest.co.uk"
+              }
+          }
+
++ Response 400 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": {
+                  "postcode": "error.client.postcode.invalid"
+              },
+              "meta": {}
+          }

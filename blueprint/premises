@@ -1,0 +1,84 @@
+##Group Premises
+Premises resource allow you to retrieve the customer account information based on their premises. In order to retrieve the the account information based on premises, client should have authorization access token
+
+## Premises Collection [/premises]
+### Retrieve all premises [GET /premises]
++ Request (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+          {
+              "status": "SUCCESS",
+              "data": {
+                  "premises": [
+                      {
+                          "id": "NjM4MDE2MTky",
+                          "accounts": [
+                              "851001347259"
+                          ],
+                          "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
+                          "houseNumber": "",
+                          "flatNumber": null,
+                          "houseName": "Uxbridge Court",
+                          "addressLine1": "Uxbridge Road",
+                          "addressLine2": "",
+                          "postalTown": "Kingston upon Thames",
+                          "county": "SURREY",
+                          "postcode": "KT1 2LJ",
+                          "MPAN": "1900034021774",
+                          "MPRN": null,
+                          "smartUpgradeEligibile": true
+                          "smartMeterEligibility": [
+                            {
+                                "accountNumber": "851001347259",
+                                "qualificationStatusID": "1",
+                                "targetability": "",
+                                "sectorAvailability": "ON",
+                                "inEligibleReasons": [
+                                    {
+                                        "reasonCode": "7",
+                                        "reasonDescription": "Customer has an IGT Gas Meter"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 401 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "access_denied"
+                  }
+              ],
+              "meta": {}
+          }
+
+
++ Response 500 (application/json)
+
+          {
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "server.error.internal",
+                      "message": "An internal error while processing request."
+                  }
+              ],
+              "meta": {}
+          }

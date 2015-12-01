@@ -1,0 +1,166 @@
+## Group Services-Contracts
+
+Resources related to Services-Contract in the API. 
+
+## Services-Contracts Collection [/services-contracts]
+
+### Send marketing consent details and payment details to the backend to create services contract [POST /services-contracts]
+
+A Services-Contract object has the following attributes:
+
++ id (optional, string) - This is the services contract account number. It will be available in the response to the services-contracts API.
++ title (required, string) - Represents title of the customer doing services sales journey.
++ firstName (required, string) - Represents first name of the customer doing services sales journey.
++ lastName (required, string) - Represents last name of the customer doing services sales journey.
++ emailAddress (required, string) - Represents email address of the customer doing services sales journey. 
++ telephoneNumber (required, string) - Represents telephone number of the customer doing services sales journey.
++ bothAddressSame (optional, string) - Should be true if both billing address & supply address are same.
++ supplyAddress (required, Address) - Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.
++ billingAddress (optional, Address) - Should be passed if billing address & supply address are different.
++ directDebitDetails (required, Direct Debit) - Captures specifics of direct debit payment method.
++ marketingConsentDetails (optional, Marketing Consent) - Captures specifics of marketing preferences from customer.
++ jci (optional, Boolean) - Status based on whether JCI discount was applied to transaction.
++ legacyAccountNumber (optional, string) - Value will be populated based on the legacy account number returned from the service contract response.
++ transactionId (required, string) - should be the value which we received in the Create Quote API response for transaction id tag 
++ productFeatures (required, Array of string) - List of product features corresponding to the quote given to the customer.
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
+    + Body
+
+            {
+                "servicesContract": {
+                    "id": null,
+                    "transactionId": "12341123",        
+                    "title": "Mr",
+                    "firstName": "Ravi",
+                    "lastName": "Kumar",
+                    "emailAddress": "ravi.kumar@britfss.co.uk",        
+                    "telephoneNumber": "07738998190",        
+                    "bothAddressSame": false,   
+                    "supplyAddress": {
+                        "flatNumber": 14,
+                        "houseNumber": null,
+                        "houseName": "The Rushes",
+                        "addressLine1": "Wapshott road",
+                        "addressLine2": null,
+                        "postalTown": "Staines",
+                        "county": "Middlesex",
+                        "postcode": "TW183EZ"
+                    },
+                    "billingAddress": {
+                        "flatNumber": 17,
+                        "houseNumber": null,
+                        "houseName": "The Rushes",
+                        "addressLine1": "Wapshott road",
+                        "addressLine2": null,
+                        "postalTown": "Staines",
+                        "county": "Middlesex",
+                        "postcode": "TW183EZ"           
+                    },
+                    "directDebitDetails": {
+                        "paymentMethod": "MDD",
+                        "bankAccountNumber": "93536377",
+                        "sortCode": "208122",
+                        "accountHolderName": "Deepak",
+                        "preferredPaymentDay": 5
+                    },
+                    "marketingConsentDetails": {
+                        "letterOpted": false,
+                        "emailOpted": true,
+                        "landlineOpted": false,
+                        "mobileOpted": false,
+                        "smsMmsOpted": false,
+                        "facetoFaceOpted": false,
+                        "ivmOpted": false
+                    },
+                    "jci": false,
+                    "legacyAccountNumber":null,
+                    "productFeatures": [
+                        "HC400|HC400-CH|3FI1|BBC|MDD",
+                        "HC400|HC400-PD|2PFI|PLDR|MDD",
+                        "HC400|HC400-HEC|HEFI|EWR|MDD"
+                    ]
+                }
+            }
+    
++ Response 201 (application/json)
+
+        {
+            "servicesContract": {
+                "id": "2153545",
+                "transactionId": "12341123",        
+                "title": "Mr",
+                "firstName": "Ravi",
+                "lastName": "Kumar",
+                "emailAddress": "ravi.kumar@britfss.co.uk",        
+                "telephoneNumber": "07738998190",        
+                "bothAddressSame": false,   
+                "supplyAddress": {
+                    "flatNumber": 14,
+                    "houseNumber": null,
+                    "houseName": "The Rushes",
+                    "addressLine1": "Wapshott road",
+                    "addressLine2": null,
+                    "postalTown": "Staines",
+                    "county": "Middlesex",
+                    "postcode": "TW183EZ"
+                },
+                "billingAddress": {
+                    "flatNumber": 17,
+                    "houseNumber": null,
+                    "houseName": "The Rushes",
+                    "addressLine1": "Wapshott road",
+                    "addressLine2": null,
+                    "postalTown": "Staines",
+                    "county": "Middlesex",
+                    "postcode": "TW183EZ"           
+                },
+                "directDebitDetails": {
+                    "paymentMethod": "MDD",
+                    "bankAccountNumber": "93536377",
+                    "sortCode": "208122",
+                    "accountHolderName": "Deepak",
+                    "preferredPaymentDay": 5
+                },
+                "marketingConsentDetails": {
+                    "letterOpted": false,
+                    "emailOpted": true,
+                    "landlineOpted": false,
+                    "mobileOpted": false,
+                    "smsMmsOpted": false,
+                    "facetoFaceOpted": false,
+                    "ivmOpted": false
+                },
+                "jci": false,
+                "legacyAccountNumber":"1654645",
+                "productFeatures": [
+                    "HC400|HC400-CH|3FI1|BBC|MDD",
+                    "HC400|HC400-PD|2PFI|PLDR|MDD",
+                    "HC400|HC400-HEC|HEFI|EWR|MDD"
+                ]
+            }
+        }
+        
++ Response 400 (application/json)
+        
+        {
+               "status": "FAIL",
+               "data":
+               {
+               },
+               "errors":
+               [
+                   {
+                       "code": "productfeature",
+                       "message": "error.client.feature.invalid"
+                   }
+               ],
+               "meta":
+               {
+               }
+        }

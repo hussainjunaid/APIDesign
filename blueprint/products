@@ -1,0 +1,228 @@
+##Group Products
+
+Resources related to Product in the API.
+
+## Products [/products]
+
+A Product object has the following attributes:
+
++ id (required, string) - Product code is considered as the unique identifier.
++ description (required, string) - Product description is the name of the product.
++ type (required, string) - Indicates the product type like Services.
++ annualServiceApplicable (required, Boolean) - Indicates the product's annual service visit eligibility.
++ annualServiceMandatory (required, Boolean) - Indicates whether ASV is mandatory.
++ excesses (required, Array of int) - All applicable levels of excess.  
++ paymentMethods (required, Array of string) - All applicable payment methods.
++ appliances (required, Array of string) - All applicable appliances.
++ productFeature (required, string) - Indicates the base/default feature of the product.
+
+### List all product options for a particlar product [GET /products/{id}]
+
++ Parameters
+
+    + id (required, string)
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "productFeatures": [
+                    {
+                        "id": "NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD",
+                        "excess": 50,
+                        "annualServiceVisitSelected": false,
+                        "applianceType": "TDE-TDE-TDE-TDE-TDE",
+                        "paymentMethod": "MDD",
+                        "levelOfService": "2F5I"
+                    }
+                ],
+                "appliances": [
+                    {
+                        "id": "HOE",
+                        "description": "Built-in electric hob",
+                        "links": {
+                            "makes": "/appliances/HOE/makes"
+                        }
+                    },
+                    {
+                        "id": "EOB",
+                        "description": "Built-in electric oven",
+                        "links": {
+                            "makes": "/appliances/EOB/makes"
+                        }
+                    },
+                    {
+                        "id": "HOB",
+                        "description": "Built-in gas hob",
+                        "links": {
+                            "makes": "/appliances/HOB/makes"
+                        }
+                    },
+                    {
+                        "id": "OVN",
+                        "description": "Built-in gas oven",
+                        "links": {
+                            "makes": "/appliances/OVN/makes"
+                        }
+                    },
+                    {
+                        "id": "WD",
+                        "description": "Combined washer dryer",
+                        "links": {
+                            "makes": "/appliances/WD/makes"
+                        }
+                    },
+                    {
+                        "id": "DW",
+                        "description": "Dishwasher",
+                        "links": {
+                            "makes": "/appliances/DW/makes"
+                        }
+                    },
+                    {
+                        "id": "TDE",
+                        "description": "Electric tumble dryer",
+                        "links": {
+                            "makes": "/appliances/TDE/makes"
+                        }
+                    },
+                    {
+                        "id": "CKE",
+                        "description": "Free standing electric cooker",
+                        "links": {
+                            "makes": "/appliances/CKE/makes"
+                        }
+                    },
+                    {
+                        "id": "CKR",
+                        "description": "Free standing gas cooker",
+                        "links": {
+                            "makes": "/appliances/CKR/makes"
+                        }
+                    },
+                    {
+                        "id": "FRI",
+                        "description": "Fridge",
+                        "links": {
+                            "makes": "/appliances/FRI/makes"
+                        }
+                    },
+                    {
+                        "id": "FZR",
+                        "description": "Freezer",
+                        "links": {
+                            "makes": "/appliances/FZR/makes"
+                        }
+                    },
+                    {
+                        "id": "FFR",
+                        "description": "Fridge-freezer",
+                        "links": {
+                            "makes": "/appliances/FFR/makes"
+                        }
+                    },
+                    {
+                        "id": "TDG",
+                        "description": "Gas tumble dryer",
+                        "links": {
+                            "makes": "/appliances/TDG/makes"
+                        }
+                    },
+                    {
+                        "id": "MW",
+                        "description": "Microwave",
+                        "links": {
+                            "makes": "/appliances/MW/makes"
+                        }
+                    },
+                    {
+                        "id": "WM",
+                        "description": "Washing machine",
+                        "links": {
+                            "makes": "/appliances/WM/makes"
+                        }
+                    }
+                ],
+                "product": {
+                    "id": "KAC-5",
+                    "description": "Kitchen Appliance Cover for 5 appliances",
+                    "type": "Services",
+                    "annualServiceApplicable": false,
+                    "numberOfAppliances": 5,
+                    "excesses": [
+                        0,
+                        50
+                    ],
+                "paymentMethods": [
+                        {
+                            "id": "MDD",
+                            "description": "Monthly Direct Debit"
+                        },
+                        {
+                            "id": "ADD",
+                            "description": "Annual Direct Debit"
+                        },
+                        {
+                            "id": "CC",
+                            "description": "Annual Credit or Debit Card"
+                        }
+                    ],
+                "appliances": [
+                        "HOE",
+                        "EOB",
+                        "HOB",
+                        "OVN",
+                        "WD",
+                        "DW",
+                        "TDE",
+                        "CKE",
+                        "CKR",
+                        "FRI",
+                        "FZR",
+                        "FFR",
+                        "TDG",
+                        "MW",
+                        "WM"
+                    ],
+                "annualServiceMandatory": false,
+                "productFeature": "NA|KAC-5|2F5I|TDE-TDE-TDE-TDE-TDE|MDD"
+                }
+            },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status" : ERROR
+            "data": {}
+            "errors": [
+                {
+                    "code": "product",
+                    "message": "error.client.product.notFound"
+                }
+            ]
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status" : ERROR
+            "data": {}
+            "errors": [
+                {
+                    "code": "paymentMethods",
+                    "message": "error.client.paymentMethods.notFound"
+                }
+            ]
+            "meta": {}
+        }

@@ -1,0 +1,363 @@
+## Group Accounts
+## Service Accounts [/service-accounts]
+Service Accounts API allows you to list / view all the service accounts of the logged in customer. Responses from this API will be retuned in JSON format only.
+Service Account as a resource represents following information
+
++ id - (string) - `Returned always`. Account number of the account is considered as the unique identifier
++ customerId - (string) - `Returned always`. This is the legacy customer identification applicable for certain accounts.
++ premiseId - (string) - `Returned always`. This is the legacy premise identification applicable for certain accounts.
++ holderName - (string) - `Returned always`. Name of the account holder if available.
++ status - (string) - `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed` and `unknown`
++ type - (string) - `Returned always`. Type of the account, this will be always Services.
++ subType - (string) - `Returned always`. Subtype of the account, this will be Home Services or Security.
++ responsibilityType - (string) - `Returned always`. Responsibility type of the account if available.
++ legacyAccountNumber - (string) - `Returned always`. Legacy Account Number of the account if available.
++ contractEndDate - (string) - `Returned always`. End date of contract associated to the account if available, in dd/MM/yyyy format
++ nextServiceDate - (string) - `Returned always`. Next service visit date if available, in dd/MM/yyyy format
++ multiPremiseLandlord- (boolean) - `Returned always`. Indicates the account as a multi premise landlord account, if the value is true
++ bulkAccount - (boolean) - `Returned always`. Indicates the account as a bulk account, if the value is true
++ landlord - (boolean) - `Returned always`. Indicates the account as a landlord account, if the value is true
++ gasSafetyCertificateAvailable - (boolean) - `Returned always`. Indicates that the account holds a valid Gas Safety Certificate, if the value is true
++ eligibleForFirstVisit - (boolean) - `Returned always`. Indicates that first visit can be booked for this account, if the value is true
++ eligibleForInterimBreakdown - (boolean) - `Returned always`. Indicates that interim breakdown visit can be booked for this account, if the value is true
++ eligibleForAnnualServiceVisit - (boolean) - `Returned always`. Indicates that annual service visit can be booked for this account, if the value is true
++ eligibleForUpsell - (boolean) - `Returned always`. Indicates that the account can be upgraded, if the value is true
++ supplyAddress - (Address) - `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
++ contractRenewalDate - (string) - `Returned always`. Renewal date for the contract associated to the account if contract end date is available, in dd/MM/yyyy format
++ contractStatus - (string) - `Returned always`. Status of the contract associated to the account if available. Possible values are `cancelled`, `prospect`, `ondemand`, `active`, `withdrawing`, `inactive`, `lapsed`, `waiting`, `renewal` and `unknown`.
++ paperlessCommunication - (Boolean) - `Returned always`. Indicates that the account holds paperless communication, if the value is true, otherwise false. If SAP is down, the value will be null
++ productHoldings - (array of string) - `Returned always`. All the product holdings associated to the account.
+
+### Retrieve all service accounts [GET /service-accounts]
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "serviceAccounts": [
+                        {
+                            "landlord": false,
+                            "legacyAccountNumber": "22208170L277092",
+                            "status": "open",
+                            "eligibleForAnnualServiceVisit": true,
+                            "eligibleForUpsell": true,
+                            "responsibilityType": "Legal Payer",
+                            "type": "Services",
+                            "holderName": "Mr Thomas Red",
+                            "id": "911000155091",
+                            "contractEndDate": "10/12/2015",
+                            "gasSafetyCertificateAvailable": false,
+                            "bulkAccount": false,
+                            "customerId": "22208170",
+                            "multiPremiseLandlord": false,
+                            "subType": "Home Services",
+                            "supplyAddress": {
+                                "MPRN": null,
+                                "postalTown": "Lightwater",
+                                "houseName": null,
+                                "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                                "county": "SURREY",
+                                "MPAN": null,
+                                "houseNumber": "20",
+                                "postcode": "GU18 5XP",
+                                "addressLine2": null,
+                                "addressLine1": "Springfield",
+                                "flatNumber": null
+                            },
+                            "premiseId": "L277092",
+                            "eligibleForInterimBreakdown": true,
+                            "eligibleForFirstVisit": true,
+                            "contractRenewalDate": "11/12/2015",
+                            "contractStatus": "active",
+                            "paperlessCommunication":true,
+                            "productHoldings": [
+                                "911000155091-ZSIS",
+                                "911000155091-ZPDI"
+                            ]
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "serviceAccounts",
+                    "message": "error.accounts.notFound"
+                },
+                "meta": {}
+            }
+
+### Retrieve a specific service account [GET /service-accounts/{accountNumber}]
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "serviceAccount": {
+                        "landlord": false,
+                        "legacyAccountNumber": "22208170L277092",
+                        "status": "open",
+                        "eligibleForAnnualServiceVisit": true,
+                        "eligibleForUpsell": true,
+                        "responsibilityType": "Legal Payer",
+                        "type": "Services",
+                        "holderName": "Mr Thomas Red",
+                        "id": "911000155091",
+                        "contractEndDate": "10/12/2015",
+                        "gasSafetyCertificateAvailable": false,
+                        "bulkAccount": false,
+                        "customerId": "22208170",
+                        "multiPremiseLandlord": false,
+                        "subType": "Home Services",
+                        "supplyAddress": {
+                            "MPRN": null,
+                            "postalTown": "Lightwater",
+                            "houseName": null,
+                            "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                            "county": "SURREY",
+                            "MPAN": null,
+                            "houseNumber": "20",
+                            "postcode": "GU18 5XP",
+                            "addressLine2": null,
+                            "addressLine1": "Springfield",
+                            "flatNumber": null
+                        },
+                        "premiseId": "L277092",
+                        "eligibleForInterimBreakdown": true,
+                        "eligibleForFirstVisit": true,
+                        "contractRenewalDate": "11/12/2015",
+                            "contractStatus": "active",
+                            "paperlessCommunication":true,
+                            "productHoldings": [
+                                "911000155091-ZSIS",
+                                "911000155091-ZPDI"
+                            ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "accountNumber",
+                    "message": "error.account.notFound"
+                },
+                "meta": {}
+            }
+            
+### Modify a specific service account [PUT /service-accounts/{accountNumber}]
+
++ Parameters
+
+    + accountNumber (number) ...This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
+    + Body
+  
+            {
+                 "serviceAccount": {
+                     "landlord": false,
+                     "legacyAccountNumber": "22208170L277092",
+                     "status": "open",
+                     "eligibleForAnnualServiceVisit": true,
+                     "eligibleForUpsell": true,
+                     "responsibilityType": "Legal Payer",
+                     "type": "Services",
+                     "holderName": "Mr Thomas Red",
+                     "id": "911000155091",
+                     "contractEndDate": "10/12/2015",
+                     "gasSafetyCertificateAvailable": false,
+                     "bulkAccount": false,
+                     "customerId": "22208170",
+                     "multiPremiseLandlord": false,
+                     "subType": "Home Services",
+                     "supplyAddress": {
+                         "MPRN": null,
+                         "postalTown": "Lightwater",
+                         "houseName": null,
+                         "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                         "county": "SURREY",
+                         "MPAN": null,
+                         "houseNumber": "20",
+                         "postcode": "GU18 5XP",
+                         "addressLine2": null,
+                         "addressLine1": "Springfield",
+                         "flatNumber": null
+                     },
+                     "premiseId": "L277092",
+                     "eligibleForInterimBreakdown": true,
+                     "eligibleForFirstVisit": true,
+                     "paperlessCommunication": false,
+                     "productHoldings": [
+                         "911000155091-ZSIS",
+                         "911000155091-ZPDI"
+                     ]
+                 }
+            }
+
++ Response 200 (application/json)
+
+            {
+                 "status": "SUCCESS",
+                 "data": {
+                     "serviceAccount": {
+                         "landlord": false,
+                         "legacyAccountNumber": "22208170L277092",
+                         "status": "open",
+                         "eligibleForAnnualServiceVisit": true,
+                         "eligibleForUpsell": true,
+                         "responsibilityType": "Legal Payer",
+                         "type": "Services",
+                         "holderName": "Mr Thomas Red",
+                         "id": "911000155091",
+                         "contractEndDate": "10/12/2015",
+                         "gasSafetyCertificateAvailable": false,
+                         "bulkAccount": false,
+                         "customerId": "22208170",
+                         "multiPremiseLandlord": false,
+                         "subType": "Home Services",
+                         "supplyAddress": {
+                             "MPRN": null,
+                             "postalTown": "Lightwater",
+                             "houseName": null,
+                             "address": "20, Springfield, Lightwater, Surrey, GU18 5XP",
+                             "county": "SURREY",
+                             "MPAN": null,
+                             "houseNumber": "20",
+                             "postcode": "GU18 5XP",
+                             "addressLine2": null,
+                             "addressLine1": "Springfield",
+                             "flatNumber": null
+                         },
+                         "premiseId": "L277092",
+                         "eligibleForInterimBreakdown": true,
+                         "eligibleForFirstVisit": true,
+                         "paperlessCommunication": false,
+                         "productHoldings": [
+                             "911000155091-ZSIS",
+                             "911000155091-ZPDI"
+                         ]
+                     }
+                 },
+                 "errors": [],
+                 "meta": {}
+             }
+             
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "authorize",
+                    "message": "access_denied"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.corespondence.notModified"
+                },
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.corespondence.changeNotSupported"
+                },
+                "meta": {}
+            }
+            
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": {
+                    "code": "correspondence",
+                    "message": "error.client.correspondenceUpdate.failed"
+                },
+                "meta": {}
+            }
