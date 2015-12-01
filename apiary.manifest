@@ -5,6 +5,4 @@ blueprints/appliances
 blueprints/appointments
 blueprints/customers
 blueprints/direct-debits
-blueprints/direct-debit-summaries
-blueprints/energy-accounts
-blueprints/energyestimate
+
