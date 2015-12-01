@@ -22,5 +22,4 @@ blueprints/services-accounts
 blueprints/services-contracts
 blueprints/services-leads
 blueprints/services-quotes
-blueprints/simulated-bills
-blueprints/smart-cards
+blueprints/smart-meter-appointment-slots
