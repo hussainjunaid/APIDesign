@@ -3,24 +3,24 @@
 Energy Accounts API allows you to list / view all the energy accounts of the logged in customer. Responses from this API will be retuned in JSON format only
 Energy Account as a resource represents following information
 
-+ id - (string) - Account number of the account is considered as the unique identifier
-+ holderName - (string) - Name of the account holder if available
-+ status - (string) - Status of the account if available. Possible values are open, pending, closed, submitted, cancelled, complete, incomplete, locked, deactive, inprogress, new, processed, wafer and unknown
-+ type - (string) - Type of the account, this will be always Energy.
-+ subType - (string) - Subtype of the account, this will be Electricity, Gas or Dual
-+ responsibilityType - (string) - Responsibility type of the account if available.
-+ balance - (string)  - Balance of the account if available.
-+ balanceType - (string) - Type of account balance if available, it can be either "in credit" or "in debit".
-+ tariff - (string) -  Tariff id associated to the account if available.
-+ paymentType - (string) -  Payment type description of the account if available.
-+ contractEndDate - (string) - End date of contract associated to the account if available, in dd/MM/yyyy format 
-+ supplyAddress - (Address) -  Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
-+ jointInvoiceDetails - (object) -  Holds details of the merge related information only if the account was merged previously. 
-+ registeredPaperlessBillingOn - (string) - Represents the date when Paperless billing was opted in for this account. 
-+ paperlessBilling - (boolean) - true if account is opted into paperless billing, false otherwise. 
-+ jointInvoiced - (boolean) - true if the account is a Joint Invoiced account. false otherwise.
-+ nextBillDate - (string) - Returned always  - Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed.
-+ numberOfEstimatedBills - (int) - Returned always - The total number of estimated bills so far for the account when the meter read window is open, else it will be zero.
++ id (string) - Account number of the account is considered as the unique identifier
++ holderName (string) - Name of the account holder if available
++ status (string) - Status of the account if available. Possible values are open, pending, closed, submitted, cancelled, complete, incomplete, locked, deactive, inprogress, new, processed, wafer and unknown
++ type (string) - Type of the account, this will be always Energy.
++ subType (string) - Subtype of the account, this will be Electricity, Gas or Dual
++ responsibilityType (string) - Responsibility type of the account if available.
++ balance (string)  - Balance of the account if available.
++ balanceType (string) - Type of account balance if available, it can be either "in credit" or "in debit".
++ tariff (string) -  Tariff id associated to the account if available.
++ paymentType (string) -  Payment type description of the account if available.
++ contractEndDate (string) - End date of contract associated to the account if available, in dd/MM/yyyy format 
++ supplyAddress (Address) -  Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
++ jointInvoiceDetails (object) -  Holds details of the merge related information only if the account was merged previously. 
++ registeredPaperlessBillingOn (string) - Represents the date when Paperless billing was opted in for this account. 
++ paperlessBilling (boolean) - true if account is opted into paperless billing, false otherwise. 
++ jointInvoiced (boolean) - true if the account is a Joint Invoiced account. false otherwise.
++ nextBillDate (string) - Returned always  - Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed.
++ numberOfEstimatedBills (int) - Returned always - The total number of estimated bills so far for the account when the meter read window is open, else it will be zero.
  
 ### Retrieve all energy accounts [GET /energy-accounts]
 + Request
@@ -118,23 +118,23 @@ Energy Account as a resource represents following information
         
 + Response 401 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
 
 
 ### Retrieve a specific Account [GET /energy-accounts{?accountNumber*}]
 + Parameters
 
-    + accountNumber (number) ...This is the customers account number
+    + accountNumber (number) - This is the customers account number
         
 + Request
 
@@ -145,120 +145,120 @@ Energy Account as a resource represents following information
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "energyAccounts": [
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "energyAccounts": [
+                        {
+                            "jointInvoiceDetails": {
+                                "mergeDate": null,
+                                "mergeType": null,
+                                "mergedAccountNumber": null
+                            },
+                            "registeredPaperlessBillingOn": "04/02/2011",
+                            "status": "open",
+                            "paymentType": "Direct Debit",
+                            "responsibilityType": "Legal Payer",
+                            "paperlessBilling": true,
+                            "type": "Energy",
+                            "holderName": "Mr Morita",
+                            "id": "850034235409",
+                            "contractEndDate": null,
+                            "balance": 111.47,
+                            "subType": "Electricity",
+                            "tariff": "fix-and-fall-june-2016",
+                            "supplyAddress": {
+                                "MPRN": null,
+                                "postalTown": "Salford",
+                                "houseName": "",
+                                "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                                "county": "LANCASHIRE",
+                                "MPAN": null,
+                                "houseNumber": "53B",
+                                "postcode": "WS3 3ER",
+                                "addressLine2": "",
+                                "addressLine1": "GARSTANG ROAD NORTH",
+                                "flatNumber": null
+                            },
+                            "balanceType": "in credit",
+                            "jointInvoiced": true,
+                            "myEnergyEligible": false,
+                            "nextBillDate": "2015-10-12T00:00:00+0100",
+                            "numberOfEstimatedBills": 1
                         },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034235409",
-                        "contractEndDate": null,
-                        "balance": 111.47,
-                        "subType": "Electricity",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        "myEnergyEligible": false,
-                        "nextBillDate": "2015-10-12T00:00:00+0100",
-                        "numberOfEstimatedBills": 1
-                    },
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
-                        },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034336151",
-                        "contractEndDate": null,
-                        "balance": 140.52,
-                        "subType": "Gas",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+                        {
+                            "jointInvoiceDetails": {
+                                "mergeDate": null,
+                                "mergeType": null,
+                                "mergedAccountNumber": null
+                            },
+                            "registeredPaperlessBillingOn": "04/02/2011",
+                            "status": "open",
+                            "paymentType": "Direct Debit",
+                            "responsibilityType": "Legal Payer",
+                            "paperlessBilling": true,
+                            "type": "Energy",
+                            "holderName": "Mr Morita",
+                            "id": "850034336151",
+                            "contractEndDate": null,
+                            "balance": 140.52,
+                            "subType": "Gas",
+                            "tariff": "fix-and-fall-june-2016",
+                            "supplyAddress": {
+                                "MPRN": null,
+                                "postalTown": "Salford",
+                                "houseName": "",
+                                "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                                "county": "LANCASHIRE",
+                                "MPAN": null,
+                                "houseNumber": "53B",
+                                "postcode": "WS3 3ER",
+                                "addressLine2": "",
+                                "addressLine1": "GARSTANG ROAD NORTH",
+                                "flatNumber": null
+                            },
+                            "balanceType": "in credit",
+                            "jointInvoiced": true,
+                            
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
         
 + Response 404 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
 
 ### Modify Energy Account [PUT /energy-accounts/{accountNumber}]
 + Parameters
 
-    + accountNumber (number) ...This is the customers account number
+    + accountNumber (number) - This is the customers account number
         
 + Request
 
@@ -314,28 +314,28 @@ Energy Account as a resource represents following information
             
 + Response 401 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
         
 + Response 404 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "orderPayload",
-                    "message": "error.client.orderPayload.invalid"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "orderPayload",
+                        "message": "error.client.orderPayload.invalid"
+                    }
+                ],
+                "meta": {}
+            }
