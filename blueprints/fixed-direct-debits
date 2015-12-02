@@ -1,4 +1,4 @@
-# Group Direct Debits
+## Group Direct Debits
 
 ## Fixed Direct debits Collection [/fixed-direct-debits]
 Fixed Direct Debits API allows you to list / view all the fixed direct debit information of the logged in customer. Responses from this API will be returned in JSON format only.
