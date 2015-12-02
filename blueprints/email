@@ -1,12 +1,13 @@
-# Group Emails
+## Group Emails
+
 Email API allows you to send an email. Responses from this API will be retuned in JSON format only.
 
-+ payload - (string, mandatory) - Email payload derived from source API
-+ timestamp - (string, mandatory) - Encrypted payload derived from source API
-+ checksum - (string, mandatory) - Checksum derived from source API
-+ to - (string, mandatory) - To email address derived from source API
-+ additionalInformation - (string, optional) - Additional information derived from source API
-+ apikey - (string, required) - Key that identifies client to API
++ payload (string, required) - Email payload derived from source API
++ timestamp (string, required) - Encrypted payload derived from source API
++ checksum (string, required) - Checksum derived from source API
++ to (string, required) - To email address derived from source API
++ additionalInformation (string, optional) - Additional information derived from source API
++ apikey (string, required) - Key that identifies client to API
 
 ## Email Collection [/email]
 
@@ -76,4 +77,3 @@ Email API allows you to send an email. Responses from this API will be retuned i
             },
             "meta": {}
         }
-        
