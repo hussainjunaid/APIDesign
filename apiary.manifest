@@ -25,4 +25,4 @@ blueprints/email
 blueprints/direct-debit-summaries
 blueprints/energy-accounts
 blueprints/fixed-direct-debits
-blueprints/meters
+blueprints/reset-password-requests
