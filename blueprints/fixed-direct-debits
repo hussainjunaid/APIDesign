@@ -42,136 +42,136 @@ Installment represents following information
             
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "fixedDirectDebits": [
-                    {
-                        "id": "851001347091-2403",
-                        "account": "851001347091",
-                        "yearEndBalance": 547.12,
-                        "yearEndBalanceType": "in-credit",
-                        "planStatus": "extreme-credit",
-                        "reassessment": false,
-                        "nextPaymentDate": "02/08/2015",
-                        "nextPaymentAmount": 17.9,
-                        "numberOfInstallments": 11,
-                        "numberOfPendingInstallments": 9,
-                        "installments": [
-                            {
-                                "date": "08/06/2015",
-                                "status": "in-process",
-                                "gasAmount": 20,
-                                "electricityAmount": 20,
-                                "totalAmount": 40
-                            },
-                            {
-                                "date": "02/07/2015",
-                                "status": "in-process",
-                                "gasAmount": 20,
-                                "electricityAmount": 20,
-                                "totalAmount": 40
-                            },
-                            {
-                                "date": "02/08/2015",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/09/2015",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/10/2015",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/11/2015",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/12/2015",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/01/2016",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/02/2016",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/03/2016",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            },
-                            {
-                                "date": "02/04/2016",
-                                "status": "pending",
-                                "gasAmount": 10,
-                                "electricityAmount": 7.9,
-                                "totalAmount": 17.9
-                            }
-                        ]
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "fixedDirectDebits": [
+                        {
+                            "id": "851001347091-2403",
+                            "account": "851001347091",
+                            "yearEndBalance": 547.12,
+                            "yearEndBalanceType": "in-credit",
+                            "planStatus": "extreme-credit",
+                            "reassessment": false,
+                            "nextPaymentDate": "02/08/2015",
+                            "nextPaymentAmount": 17.9,
+                            "numberOfInstallments": 11,
+                            "numberOfPendingInstallments": 9,
+                            "installments": [
+                                {
+                                    "date": "08/06/2015",
+                                    "status": "in-process",
+                                    "gasAmount": 20,
+                                    "electricityAmount": 20,
+                                    "totalAmount": 40
+                                },
+                                {
+                                    "date": "02/07/2015",
+                                    "status": "in-process",
+                                    "gasAmount": 20,
+                                    "electricityAmount": 20,
+                                    "totalAmount": 40
+                                },
+                                {
+                                    "date": "02/08/2015",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/09/2015",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/10/2015",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/11/2015",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/12/2015",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/01/2016",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/02/2016",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/03/2016",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                },
+                                {
+                                    "date": "02/04/2016",
+                                    "status": "pending",
+                                    "gasAmount": 10,
+                                    "electricityAmount": 7.9,
+                                    "totalAmount": 17.9
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "surname",
-                    "message": "error.client.surname.blank"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surname",
+                        "message": "error.client.surname.blank"
+                    }
+                ],
+                "meta": {}
+            }
 
 
 + Response 403 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "prospect",
-                    "message": "error.server.prospect.notcreated"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "prospect",
+                        "message": "error.server.prospect.notcreated"
+                    }
+                ],
+                "meta": {}
+            }
 
 ### Retrieve fixed direct debits [GET /fixed-direct-debits/{directDebitId}]
 
