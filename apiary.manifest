@@ -24,3 +24,4 @@ blueprints/userinfo
 blueprints/email
 blueprints/direct-debit-summaries
 blueprints/energy-accounts
+blueprints/fixed-direct-debits
