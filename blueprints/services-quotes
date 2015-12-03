@@ -1,28 +1,28 @@
 ## Group Services-Quotes
 
 The Services-Quote resource is designed to send customer, address and product information
-to the backend to create a quote object. 
+to the backend to create a quote object.
 
 ## Services-Quotes Collection [/services-quotes]
 
 A Services-Quote object has the following attributes:
 
 + id (optional, string) - When an request is sent, the id attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the id populated.
-+ title - (required, string) - Title of customer.
-+ firstName - (required, string) - First name of customer.
-+ lastName - (required, string) - LastName of customer.
-+ emailAddress - (required, string) - Email address of customer.
-+ telephoneNumber - (required, string) - Telephone number of customer.
-+ premiseId - (optional, string) - For logged in customers we can pass known premise id.
-+ bothAddressSame - (optional, Boolean) - Should be true if both billing address & supply address are same.
-+ supplyAddress - (required, Address) - Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.
-+ billingAddress - (optional, Address) - Billing address of customer. Value will not be available in response if billing address is not passed.
-+ paymentMethod - (required, string) - Payment method which customer choose.
-+ jci - (optional, Boolean) - Status based on whether JCI was applied as part of Online transaction.
-+ status - (optional, string) - This value will always be null and is used in controller endpoint for fetching the quote.
-+ servicesAccountNumber - (optional, string) - This value will always be null and is used in controller endpoint for fetching the quote.
-+ productFeatures - (required, Array of String) - List of product features for which the quote is to be created.
-+ productConfigurations - (optional, Array of Product Configurations) - List of product configurations for which the quote is to be created.
++ title (required, string) - Title of customer.
++ firstName (required, string) - First name of customer.
++ lastName (required, string) - LastName of customer.
++ emailAddress (required, string) - Email address of customer.
++ telephoneNumber (required, string) - Telephone number of customer.
++ premiseId (optional, string) - For logged in customers we can pass known premise id.
++ bothAddressSame (optional, Boolean) - Should be true if both billing address & supply address are same.
++ supplyAddress (required, Address) - Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.
++ billingAddress (optional, Address) - Billing address of customer. Value will not be available in response if billing address is not passed.
++ paymentMethod (required, string) - Payment method which customer choose.
++ jci (optional, Boolean) - Status based on whether JCI was applied as part of Online transaction.
++ status (optional, string) - This value will always be null and is used in controller endpoint for fetching the quote.
++ servicesAccountNumber (optional, string) - This value will always be null and is used in controller endpoint for fetching the quote.
++ productFeatures (required, Array of String) - List of product features for which the quote is to be created.
++ productConfigurations (optional, Array of Product Configurations) - List of product configurations for which the quote is to be created.
 
 
 ### Post a services quote to the backend systems [POST /services-quotes]
@@ -32,7 +32,7 @@ A Services-Quote object has the following attributes:
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
     + Body
 
             {
@@ -202,18 +202,18 @@ A Services-Quote object has the following attributes:
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "feature",
-                    "message": "error.client.feature.invalid"
-                }
-            ],
-            "meta": {}
-        }
-        
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "feature",
+                        "message": "error.client.feature.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
 ### Retrieve the status of a services quote from the backend systems [GET /services-quotes/{id}/status]
 
 + Parameters
@@ -225,99 +225,99 @@ A Services-Quote object has the following attributes:
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "transactionId": "23431234",
-                "status": "Checked-out",
-                "servicesAccountNumber": "911000626630"
-            },
-            "errors": {},
-            "meta": {}
-        }
-        
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "transactionId": "23431234",
+                    "status": "Checked-out",
+                    "servicesAccountNumber": "911000626630"
+                },
+                "errors": {},
+                "meta": {}
+            }
+
 + Response 200 (application/json)
-        
-        {
-            "status": "SUCCESS",
-            "data": {
-                "transactionId": "23431234",
-                "status": "In Progress",
-                "servicesAccountNumber": ""
-            },
-            "errors": {},
-            "meta": {}
-        }
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "transactionId": "23431234",
+                    "status": "In Progress",
+                    "servicesAccountNumber": ""
+                },
+                "errors": {},
+                "meta": {}
+            }
 
 + Response 500 (application/json)
 
-        {
-          "status": "ERROR",
-          "data": {},
-          "errors": [
             {
-              "code": "service",
-              "message": "error.create.quote.cancelled"
+              "status": "ERROR",
+              "data": {},
+              "errors": [
+                {
+                  "code": "service",
+                  "message": "error.create.quote.cancelled"
+                }
+              ],
+              "meta": {}
             }
-          ],
-          "meta": {}
-        }
-        
-+ Response 400 (application/json)
-        
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "paymentMethod",
-                    "message": "error.client.paymentMethod.notMatching"
-                }
-            ],
-            "meta": {}
-        }
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "productConfigurations",
-                    "message": "error.client.productConfigurations.productFeature.notMatching"
-                }
-            ],
-            "meta": {}
-        }
-        
-+ Response 400 (application/json)
-        
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "productAppliances",
-                    "message": "error.client.productAppliances.applianceId.notMatching"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "paymentMethod",
+                        "message": "error.client.paymentMethod.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "productAppliances",
-                    "message": "error.client.productAppliances.notValid"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productConfigurations",
+                        "message": "error.client.productConfigurations.productFeature.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.applianceId.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.notValid"
+                    }
+                ],
+                "meta": {}
+            }

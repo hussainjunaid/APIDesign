@@ -41,7 +41,7 @@ Retrieve all smart meter prepay energy accounts with smart card and balance deta
                 "errors": [],
                 "meta": {}
             }
-            
+
 + Response 401 (application/json)
 
             {
@@ -111,7 +111,7 @@ Retrieve all smart meter prepay energy accounts with smart card and balance deta
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve a specific smart card using id [GET /smart-cards/{id}]
 + Parameters
 
@@ -139,7 +139,7 @@ Retrieve all smart meter prepay energy accounts with smart card and balance deta
                 "errors": [],
                 "meta": {}
             }
-            
+
 + Response 401 (application/json)
 
             {
@@ -167,7 +167,7 @@ Retrieve all smart meter prepay energy accounts with smart card and balance deta
                 ],
                 "meta": {}
             }
-            
+
 + Response 404 (application/json)
 
             {
@@ -181,7 +181,7 @@ Retrieve all smart meter prepay energy accounts with smart card and balance deta
                 ],
                 "meta": {}
             }
-            
+
 + Response 500 (application/json)
 
             {

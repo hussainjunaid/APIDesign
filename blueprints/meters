@@ -19,7 +19,7 @@ Meter as a resource represents following information:
 + complexMeter (boolean) - Indicates the meter as a complex meter if the value is true.
 + registers (Array of Register) - Registers associated with the meter.
 
-# Registers
+#### Registers
 
 + id (string) - Concatenated account number, contract number, meter serial number and register number of the register, separated by '-', is considered as the unique identifier
 + numberOfDials (string) - Indicates the number of dials available for the register.
@@ -42,7 +42,7 @@ Meter as a resource represents following information:
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-          
+
 + Response 200 (application/json)
 
             {
@@ -114,7 +114,7 @@ Meter as a resource represents following information:
                 "errors": {},
                 "meta": {}
             }
-            
+
 + Response 401 (application/json)
 
             {
@@ -133,89 +133,81 @@ Meter as a resource represents following information:
 
 + Parameters
 
-  + accountNumber (number) ...This is the customers account number
+  + accountNumber (number) - This is the customers account number
 
 + Request
 
-  + Headers
+    + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
-
-          {
-              "status": "SUCCESS",
-              "data": {
-                  "meters": [
-                      {
-                          "numberOfRegisters": 1,
-                          "meterPointId": "1343152901",
-                          "assetNumber": "000000000010376382",
-                          "serialNumber": "G4A02208680401",
-                          "meterType": "gas",
-                          "smartMeter": false,
-                          "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
-                          "meterId": "3550020532",
-                          "complexMeter": false,
-                          "registers": [
-                              {
-                                  "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
-                                  "numberOfDials": 5,
-                                  "readingClassification": "Actual",
-                                  "reading": "03287",
-                                  "readingDate": "19/11/2013",
-                                  "meterReadType": "DayRead",
-                                  "nonCyclicToleranceFlag": "",
-                                  "validationFailureCode": "",
-                                  "usageType": "single",
-                                  "readingType": "1801",
-                                  "registerName": "Day",
-                                  "registerNumber": "001"
-                              }
-                          ],
-                          "contractType": "Gas",
-                          "account": "850000367878",
-                          "complexityCode": "0",
-                          "contractNumber": "0550013531"
-                      },
-                      {
-                          "numberOfRegisters": 1,
-                          "meterPointId": "1591031295962",
-                          "assetNumber": "000000000011291701",
-                          "serialNumber": "C62L06322",
-                          "meterType": "elecsr",
-                          "smartMeter": false,
-                          "id": "850000367878-2076700195-QzYyTDA2MzIy",
-                          "meterId": "3655023137",
-                          "complexMeter": false,
-                          "registers": [
-                              {
-                                  "id": "850000367878-2076700195-QzYyTDA2MzIy-001",
-                                  "numberOfDials": 5,
-                                  "readingClassification": "Actual",
-                                  "reading": "21768",
-                                  "readingDate": "19/11/2013",
-                                  "meterReadType": "DayRead",
-                                  "nonCyclicToleranceFlag": "",
-                                  "validationFailureCode": "",
-                                  "usageType": "single",
-                                  "readingType": "1801",
-                                  "registerName": "Standard",
-                                  "registerNumber": "001"
-                              }
-                          ],
-                          "contractType": "Electricity",
-                          "account": "850000367878",
-                          "complexityCode": "0",
-                          "contractNumber": "2076700195"
-                      }
-                  ]
-              },
-              "errors": {},
-              "meta": {}
-          }
+            {
+            	"status": "SUCCESS",
+            	"data": {
+            		"meters": [{
+            			"numberOfRegisters": 1,
+            			"meterPointId": "1343152901",
+            			"assetNumber": "000000000010376382",
+            			"serialNumber": "G4A02208680401",
+            			"meterType": "gas",
+            			"smartMeter": false,
+            			"id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
+            			"meterId": "3550020532",
+            			"complexMeter": false,
+            			"registers": [{
+            				"id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
+            				"numberOfDials": 5,
+            				"readingClassification": "Actual",
+            				"reading": "03287",
+            				"readingDate": "19/11/2013",
+            				"meterReadType": "DayRead",
+            				"nonCyclicToleranceFlag": "",
+            				"validationFailureCode": "",
+            				"usageType": "single",
+            				"readingType": "1801",
+            				"registerName": "Day",
+            				"registerNumber": "001"
+            			}],
+            			"contractType": "Gas",
+            			"account": "850000367878",
+            			"complexityCode": "0",
+            			"contractNumber": "0550013531"
+            		}, {
+            			"numberOfRegisters": 1,
+            			"meterPointId": "1591031295962",
+            			"assetNumber": "000000000011291701",
+            			"serialNumber": "C62L06322",
+            			"meterType": "elecsr",
+            			"smartMeter": false,
+            			"id": "850000367878-2076700195-QzYyTDA2MzIy",
+            			"meterId": "3655023137",
+            			"complexMeter": false,
+            			"registers": [{
+            				"id": "850000367878-2076700195-QzYyTDA2MzIy-001",
+            				"numberOfDials": 5,
+            				"readingClassification": "Actual",
+            				"reading": "21768",
+            				"readingDate": "19/11/2013",
+            				"meterReadType": "DayRead",
+            				"nonCyclicToleranceFlag": "",
+            				"validationFailureCode": "",
+            				"usageType": "single",
+            				"readingType": "1801",
+            				"registerName": "Standard",
+            				"registerNumber": "001"
+            			}],
+            			"contractType": "Electricity",
+            			"account": "850000367878",
+            			"complexityCode": "0",
+            			"contractNumber": "2076700195"
+            		}]
+            	},
+            	"errors": {},
+            	"meta": {}
+            }
 
 + Response 401 (application/json)
 
@@ -266,7 +258,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
 
 + Parameters
 
-  + meterPointId (string) ...Meter point identifier number of the meter, if available.
+  + meterPointId (string) - Meter point identifier number of the meter, if available.
 
 + Request
 
@@ -274,9 +266,9 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-          
+
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -350,7 +342,7 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
 
 + Parameters
 
-  + meterIdentifier (number) ...This is the customers account number
+  + meterIdentifier (number) - This is the customers account number
 
 + Request (application/json)
 
@@ -446,9 +438,9 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
 
 + Parameters
 
-  + meterIdentifier (string) ...Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
-  + registerNumber (string) ...Register number for which the reading is taken, Should not be null or empty
-  + reading (string) ...Should not be null or empty. Should be number and max 6 digits
+  + meterIdentifier (string) - Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
+  + registerNumber (string) - Register number for which the reading is taken, Should not be null or empty
+  + reading (string) - Should not be null or empty. Should be number and max 6 digits
 
 + Request (application/json)
 
@@ -606,4 +598,3 @@ Retrieve meter for a meter reference number (MPRN or MPAN)
               ],
               "meta": {}
           }
-		  
