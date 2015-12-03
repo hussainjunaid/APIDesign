@@ -27,3 +27,4 @@ blueprints/energy-accounts
 blueprints/fixed-direct-debits
 blueprints/reset-password-requests
 blueprints/smart-cards
+blueprints/smart-meter-appointment-slots
