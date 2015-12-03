@@ -30,3 +30,4 @@ blueprints/reset-password-requests
 blueprints/smart-cards
 blueprints/smart-meter-appointment-slots
 blueprints/services-quotes
+blueprints/survey-responses
