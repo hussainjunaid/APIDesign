@@ -125,154 +125,154 @@ A Services-Lead object has the following attributes:
         
 + Response 201 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "servicesLead": {
-                    "id": "3445",
-                    "title": "Mr",
-                    "firstName": "Ravi",
-                    "lastName": "Kumar",
-                    "emailAddress": "ravi.kumar@britfss.co.uk",
-                    "telephoneNumber": "07738998190",
-                    "supplyAddress": {
-                        "flatNumber": "14",
-                        "houseNumber": null,
-                        "houseName": "The Rushes",
-                        "addressLine1": "Wapshott road",
-                        "addressLine2": null,
-                        "postalTown": "Staines",
-                        "county": "Middlesex",
-                        "postcode": "TW183EZ"
-                    },
-                    "billingAddress": {
-                        "flatNumber": "17",
-                        "houseNumber": null,
-                        "houseName": "The Rushes",
-                        "addressLine1": "Wapshott road",
-                        "addressLine2": null,
-                        "postalTown": "Staines",
-                        "county": "Middlesex",
-                        "postcode": "TW183EZ"
-                    },
-                    "bothAddressSame": false,
-                    "marketingConsentDetails": {
-                        "letterOpted": false,
-                        "emailOpted": true,
-                        "landlineOpted": false,
-                        "mobileOpted": false,
-                        "smsMmsOpted": false,
-                        "facetoFaceOpted": false,
-                        "ivmOpted": false
-                    },
-                    "directDebitDetails": {
-                        "paymentMethod": "MDD",
-                        "bankAccountNumber": "/15Gu1TGiWNQjjqW0sZxoA==",
-                        "sortCode": "KRDmAEFzGOemFZROPx1gnQ==",
-                        "accountHolderName": "Deepak",
-                        "preferredPaymentDay": "5"
-                    },
-                    "jci": false,
-                    "legacyAccountNumber": null,
-                    "transactionId": null,
-                    "productFeatures": [
-                        "HC4|HC4-CH|CNI2|CHB|MDD",
-                        "HC4|HC4-PD|DNI2|PLDR|MDD",
-                        "HC4|HC4-HEC|HNI2|EWR|MDD"
-                    ],
-                    "productConfigurations": [
-                        {
-                            "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD",
-                            "productAppliances": [
-                                {
-                                    "applianceId": "CHB",
-                                    "makeId": "QUdBLS0tQUdDIEhlYXRpbmc",
-                                    "modelId": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
-                                    "age": "5"
-                                }
-                            ]
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "servicesLead": {
+                        "id": "3445",
+                        "title": "Mr",
+                        "firstName": "Ravi",
+                        "lastName": "Kumar",
+                        "emailAddress": "ravi.kumar@britfss.co.uk",
+                        "telephoneNumber": "07738998190",
+                        "supplyAddress": {
+                            "flatNumber": "14",
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ"
                         },
-                        {
-                            "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD",
-                            "productAppliances": [
-                                {
-                                    "applianceId": "PLDR",
-                                    "makeId": null,
-                                    "modelId": null,
-                                    "age": null
-                                }
-                            ]
+                        "billingAddress": {
+                            "flatNumber": "17",
+                            "houseNumber": null,
+                            "houseName": "The Rushes",
+                            "addressLine1": "Wapshott road",
+                            "addressLine2": null,
+                            "postalTown": "Staines",
+                            "county": "Middlesex",
+                            "postcode": "TW183EZ"
                         },
-                        {
-                            "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD",
-                            "productAppliances": [
-                                {
-                                    "applianceId": "EWR",
-                                    "makeId": null,
-                                    "modelId": null,
-                                    "age": null
-                                }
-                            ]
-                        }
-                    ]
-                }
-            },
-            "errors": [],
-            "meta": {}
-        }
+                        "bothAddressSame": false,
+                        "marketingConsentDetails": {
+                            "letterOpted": false,
+                            "emailOpted": true,
+                            "landlineOpted": false,
+                            "mobileOpted": false,
+                            "smsMmsOpted": false,
+                            "facetoFaceOpted": false,
+                            "ivmOpted": false
+                        },
+                        "directDebitDetails": {
+                            "paymentMethod": "MDD",
+                            "bankAccountNumber": "/15Gu1TGiWNQjjqW0sZxoA==",
+                            "sortCode": "KRDmAEFzGOemFZROPx1gnQ==",
+                            "accountHolderName": "Deepak",
+                            "preferredPaymentDay": "5"
+                        },
+                        "jci": false,
+                        "legacyAccountNumber": null,
+                        "transactionId": null,
+                        "productFeatures": [
+                            "HC4|HC4-CH|CNI2|CHB|MDD",
+                            "HC4|HC4-PD|DNI2|PLDR|MDD",
+                            "HC4|HC4-HEC|HNI2|EWR|MDD"
+                        ],
+                        "productConfigurations": [
+                            {
+                                "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD",
+                                "productAppliances": [
+                                    {
+                                        "applianceId": "CHB",
+                                        "makeId": "QUdBLS0tQUdDIEhlYXRpbmc",
+                                        "modelId": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
+                                        "age": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD",
+                                "productAppliances": [
+                                    {
+                                        "applianceId": "PLDR",
+                                        "makeId": null,
+                                        "modelId": null,
+                                        "age": null
+                                    }
+                                ]
+                            },
+                            {
+                                "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD",
+                                "productAppliances": [
+                                    {
+                                        "applianceId": "EWR",
+                                        "makeId": null,
+                                        "modelId": null,
+                                        "age": null
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
         
 + Response 400 (application/json)
         
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "paymentMethod",
-                    "message": "error.client.paymentMethod.notMatching"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "paymentMethod",
+                        "message": "error.client.paymentMethod.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
         
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "productConfigurations",
-                    "message": "error.client.productConfigurations.productFeature.notMatching"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productConfigurations",
+                        "message": "error.client.productConfigurations.productFeature.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
         
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "productAppliances",
-                    "message": "error.client.productAppliances.applianceId.notMatching"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.applianceId.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
         
 + Response 400 (application/json)
         
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "productAppliances",
-                    "message": "error.client.productAppliances.notValid"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.notValid"
+                    }
+                ],
+                "meta": {}
+            }
