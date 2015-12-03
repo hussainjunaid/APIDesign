@@ -4,17 +4,17 @@ Survey Responses API allows you to save the survey information from SAP system. 
 ## Survey Response Collection [/survey-responses]
 This service api is used to store the survey details into SAP system. The survey details will be mapped to the customer BP number and maintain in SAP. The request body of this post must be a JSON object with properties listed below.
 
-+ question - (string, Mandatory)
-+ answer - (string,	Mandatory)
++ question (string, Mandatory)
++ answer (string, Mandatory)
 
-Smart credit question Description
+#### Smart credit question Description
 
 + question2 - Is your meter an Economy 7 meter?
-+ question3	- Is your property a flat?
-+ question4	- Are all meters and fusebox accessible?
-+ question5	- Do you already have a smart meter at the property?
++ question3 - Is your property a flat?
++ question4 - Are all meters and fusebox accessible?
++ question5 - Do you already have a smart meter at the property?
 
-Smart prepay question description
+#### Smart prepay question description
 
 + question1 - Is your meter an Economy 7 meter?
 + question2 - Do you have an outstanding balance on your existing meter(s)?
@@ -32,44 +32,39 @@ This controller service is used to create or retrieve the existing UCRN and Busi
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-	+ Body
-	
-			{
-					"surveyResponse": {
-					"id": "100",
-					"survey": "1",
-					"responses": [
-						{
-							"question": "question2",
-							"answers": [
-								"option2"
-							]
-						},
-						{
-							"question": "question3",
-							"answers": [
-								"option2"
-							]
-						},
-						{
-							"question": "question4",
-							"answers": [
-								"option2"
-							]
-						},
-						{
-							"question": "question5",
-							"answers": [
-								"option2"
-							]
-						}
-					]
-				},
-				"meta": {
-					"prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
-				}
-			}
-			
+    + Body
+        
+            {
+            	"surveyResponse": {
+            		"id": "100",
+            		"survey": "1",
+            		"responses": [{
+            			"question": "question2",
+            			"answers": [
+            				"option2"
+            			]
+            		}, {
+            			"question": "question3",
+            			"answers": [
+            				"option2"
+            			]
+            		}, {
+            			"question": "question4",
+            			"answers": [
+            				"option2"
+            			]
+            		}, {
+            			"question": "question5",
+            			"answers": [
+            				"option2"
+            			]
+            		}]
+            	},
+            	"meta": {
+            		"prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
+            	}
+            }
+
 + Response 200 (application/json)
 
 			{
@@ -267,4 +262,3 @@ This controller service is used to create or retrieve the existing UCRN and Busi
 				],
 				"meta": {}
 			}			
-			
