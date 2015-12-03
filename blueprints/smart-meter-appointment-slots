@@ -64,7 +64,7 @@ Appointments resource endpoint will allow the retrieval of available and/or unav
                             "endTime": "12:00pm",
                             "available": false,
                             "preferredSlot": false
-                        }
+                        } 
                     ],
                     "errors": [],
                     "meta": {}
@@ -98,8 +98,7 @@ Appointments resource endpoint will allow the retrieval of available and/or unav
                 ],
                 "meta": {}
             }
-
-
+        
 ## Group Service Appointment Slots
 
 Slot endpoints will allow the retrieve of a set of appointment slots for a specific service account

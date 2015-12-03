@@ -21,9 +21,9 @@ Contract represents following information
 
 + contractId (string) - Returned always - Installment date in 'dd/MM/yyyy' format
 + instalmentChangeHonoured (boolean) - Returned always'. The customer’s choice of payment for the installment has been honored or not in contract level
-+ amountChanged (boolean) - Returned always - Indicates if the amount has changed after re-assessment
++ amountChanged (boolean) - Returned always - Indicates if the amount has changed after re-assessment 
 + proposedAmount (double) - Returned if the contract is honored - Amount recommended after re-assessment
-+ adoptedAmount (double) - Returned if the contract is honored - Amount used to honor the previous change
++ adoptedAmount (double) - Returned if the contract is honored - Amount used to honor the previous change 
 
 ## Direct Debits Summaries Collection [/direct-debit-summaries]
 

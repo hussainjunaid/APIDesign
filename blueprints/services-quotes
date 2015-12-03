@@ -213,7 +213,7 @@ A Services-Quote object has the following attributes:
                 ],
                 "meta": {}
             }
-
+        
 ### Retrieve the status of a services quote from the backend systems [GET /services-quotes/{id}/status]
 
 + Parameters
@@ -238,7 +238,7 @@ A Services-Quote object has the following attributes:
                 "errors": {},
                 "meta": {}
             }
-
+        
 + Response 200 (application/json)
 
             {
@@ -265,9 +265,9 @@ A Services-Quote object has the following attributes:
               ],
               "meta": {}
             }
-
+        
 + Response 400 (application/json)
-
+        
             {
                 "status": "FAIL",
                 "data": {},
@@ -293,9 +293,9 @@ A Services-Quote object has the following attributes:
                 ],
                 "meta": {}
             }
-
+        
 + Response 400 (application/json)
-
+        
             {
                 "status": "FAIL",
                 "data": {},

@@ -106,7 +106,6 @@ As an entity, following properties define a Temporary profile.
                       "data": {},
                       "errors": [],
                       "meta": {}
-
             }
 
 + Response 404 (application/json)

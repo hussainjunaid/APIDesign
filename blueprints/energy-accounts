@@ -13,15 +13,15 @@ Energy Account as a resource represents following information
 + balanceType (string) - Type of account balance if available, it can be either "in credit" or "in debit".
 + tariff (string) -  Tariff id associated to the account if available.
 + paymentType (string) -  Payment type description of the account if available.
-+ contractEndDate (string) - End date of contract associated to the account if available, in dd/MM/yyyy format
++ contractEndDate (string) - End date of contract associated to the account if available, in dd/MM/yyyy format 
 + supplyAddress (Address) -  Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend.
-+ jointInvoiceDetails (object) -  Holds details of the merge related information only if the account was merged previously.
-+ registeredPaperlessBillingOn (string) - Represents the date when Paperless billing was opted in for this account.
-+ paperlessBilling (boolean) - true if account is opted into paperless billing, false otherwise.
++ jointInvoiceDetails (object) -  Holds details of the merge related information only if the account was merged previously. 
++ registeredPaperlessBillingOn (string) - Represents the date when Paperless billing was opted in for this account. 
++ paperlessBilling (boolean) - true if account is opted into paperless billing, false otherwise. 
 + jointInvoiced (boolean) - true if the account is a Joint Invoiced account. false otherwise.
 + nextBillDate (string) - Returned always  - Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed.
 + numberOfEstimatedBills (int) - Returned always - The total number of estimated bills so far for the account when the meter read window is open, else it will be zero.
-
+ 
 ### Retrieve all energy accounts [GET /energy-accounts]
 + Request
 
@@ -135,7 +135,7 @@ Energy Account as a resource represents following information
 + Parameters
 
     + accountNumber (number) - This is the customers account number
-
+        
 + Request
 
     + Headers
@@ -240,7 +240,7 @@ Energy Account as a resource represents following information
                 ],
                 "meta": {}
             }
-
+        
 + Response 404 (application/json)
 
             {
@@ -259,7 +259,7 @@ Energy Account as a resource represents following information
 + Parameters
 
     + accountNumber (number) - This is the customers account number
-
+        
 + Request
 
     + Headers
@@ -325,7 +325,7 @@ Energy Account as a resource represents following information
                 ],
                 "meta": {}
             }
-
+        
 + Response 404 (application/json)
 
             {
