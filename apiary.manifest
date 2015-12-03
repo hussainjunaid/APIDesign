@@ -26,4 +26,4 @@ blueprints/direct-debit-summaries
 blueprints/energy-accounts
 blueprints/fixed-direct-debits
 blueprints/reset-password-requests
-blueprints/simulated-bills
+blueprints/smart-cards
