@@ -1,7 +1,2 @@
 apiary.header
-endpoint/accounts/index
-endpoint/accounts/energy-accounts
-endpoint/accounts/services-accounts
-endpoint/appliances
-endpoint/appointments
-endpoint/customers
+
