@@ -1,3 +1,5 @@
+## Group Userinfo
+
 ## Temporary profiles [/userinfo/temporary-profiles]
 Creates a profile and triggers an email using a temporary password.
 As an entity, following properties define a Temporary profile.
@@ -31,48 +33,48 @@ As an entity, following properties define a Temporary profile.
 
 + Response 200 (application/json)
 
-        {
-              "status": "SUCCESS",
-              "data": {
-                "temporaryProfile": {
-                  "id": "5aa6a106-c6d5-52c4-af9d-a3d0b361dffa",
-                  "firstName": "M",
-                  "surname": "Street",
-                  "title": "Mr",
-                  "email": "pradeepkrishna.govindaraju@centrica.com"
-                }
-              },
-              "errors": [],
-              "meta": {}
-        }
+            {
+                  "status": "SUCCESS",
+                  "data": {
+                    "temporaryProfile": {
+                      "id": "5aa6a106-c6d5-52c4-af9d-a3d0b361dffa",
+                      "firstName": "M",
+                      "surname": "Street",
+                      "title": "Mr",
+                      "email": "pradeepkrishna.govindaraju@centrica.com"
+                    }
+                  },
+                  "errors": [],
+                  "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                {
-                  "code": "matchToken",
-                  "message": "error.client.matchToken.invalid"
-                }
-              ],
-              "meta": {}
-        }
+            {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": [
+                    {
+                      "code": "matchToken",
+                      "message": "error.client.matchToken.invalid"
+                    }
+                  ],
+                  "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                {
-                  "code": "firstName",
-                  "message": "error.client.firstName.blank"
-                }
-              ],
-              "meta": {}
-        }
+            {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": [
+                    {
+                      "code": "firstName",
+                      "message": "error.client.firstName.blank"
+                    }
+                  ],
+                  "meta": {}
+            }
 
 ### Update temporary profile [PUT]
 
@@ -99,69 +101,69 @@ As an entity, following properties define a Temporary profile.
 
 + Response 200 (application/json)
 
-        {
-                  "status": "SUCCESS",
-                  "data": {},
-                  "errors": [],
-                  "meta": {}
-
-        }
+            {
+                      "status": "SUCCESS",
+                      "data": {},
+                      "errors": [],
+                      "meta": {}
+    
+            }
 
 + Response 404 (application/json)
 
-        {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                {
-                  "code": "temporaryProfile",
-                  "message": "error.client.temporaryProfile.invalid"
-                }
-              ],
-              "meta": {}
-        }
+            {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": [
+                    {
+                      "code": "temporaryProfile",
+                      "message": "error.client.temporaryProfile.invalid"
+                    }
+                  ],
+                  "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                {
-                  "code": "userinfo",
-                  "message": "error.server.userinfo.exists"
-                }
-              ],
-              "meta": {}
-        }
+            {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": [
+                    {
+                      "code": "userinfo",
+                      "message": "error.server.userinfo.exists"
+                    }
+                  ],
+                  "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                {
-                  "code": "firstName",
-                  "message": "error.client.firstName.blank"
-                }
-              ],
-              "meta": {}
-        }
+            {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": [
+                    {
+                      "code": "firstName",
+                      "message": "error.client.firstName.blank"
+                    }
+                  ],
+                  "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-              "status": "FAIL",
-              "data": {},
-              "errors": [
-                {
-                  "code": "password",
-                  "message": "error.client.password.invalid"
-                }
-              ],
-              "meta": {}
-        }
+            {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": [
+                    {
+                      "code": "password",
+                      "message": "error.client.password.invalid"
+                    }
+                  ],
+                  "meta": {}
+            }
 
 ## Temporary Profile tokeninfo [/userinfo/temporary-profiles/token-info{?token}]
 
@@ -178,24 +180,24 @@ As an entity, following properties define a Temporary profile.
 
 + Response 200 (application/json)
 
-        {
-              "title": "Mr",
-              "email": "pradeepkrishna.govindaraju@centrica.com",
-              "expiresIn": 1177,
-              "surname": "Street",
-              "firstName": "M"
-        }
+            {
+                  "title": "Mr",
+                  "email": "pradeepkrishna.govindaraju@centrica.com",
+                  "expiresIn": 1177,
+                  "surname": "Street",
+                  "firstName": "M"
+            }
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "token",
-                    "message": "error.client.token.invalid"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "token",
+                        "message": "error.client.token.invalid"
+                    }
+                ],
+                "meta": {}
+            }
