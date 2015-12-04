@@ -6,4 +6,4 @@ endpoint/addresses/addresses
 endpoint/api-management/heartbeat
 endpoint/appliances/appliances
 endpoint/appointments/appointments
-
+endpoint/appointments/smart-meter-appointment-slots
