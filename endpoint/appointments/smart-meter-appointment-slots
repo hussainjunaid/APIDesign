@@ -1,5 +1,3 @@
-## Group Appointments
-
 ## appointments collection [ /smart-meter-appointment-slots ]
 Appointments resource endpoint will allow the retrieval of available and/or unavailable appointment slots for a specific service order
 
@@ -100,20 +98,20 @@ Appointments resource endpoint will allow the retrieval of available and/or unav
             }
         
 
-## slots collection [ /slots ]
+## Slots collection [/slots]
 
 Slot endpoints will allow the retrieve of a set of appointment slots for a specific service account
 
 ### retrieve slots [GET /slots{?serviceAccount,type,fault} ]
 
 + serviceAccount (required, string) - The service account id
-+ reason (required, string) - the type of appointment - ASV, IB, BOTH
++ type (required, string) - the type of appointment - ASV, IB, BOTH
 + fault (optional, string) - fault code required for an IB booking
 
 + Parameters
 
     + serviceAccount (required, string) - The service account id
-    + reason (required, string) - the type of appointment - ASV, IB, BOTH
+    + type (required, string) - the type of appointment - ASV, IB, BOTH
     + fault (optional, string) - fault code required for an IB booking
 
 + Request
