@@ -1,0 +1,79 @@
+## Group Emails
+
+Email API allows you to send an email. Responses from this API will be retuned in JSON format only.
+
++ payload (string, required) - Email payload derived from source API
++ timestamp (string, required) - Encrypted payload derived from source API
++ checksum (string, required) - Checksum derived from source API
++ to (string, required) - To email address derived from source API
++ additionalInformation (string, optional) - Additional information derived from source API
++ apikey (string, required) - Key that identifies client to API
+
+## Email Collection [/email]
+
+### Send Email [POST]
+
++ Request (application/x-www-form-urlencoded)
+    
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "payload":"",
+                "timestamp":"",
+                "checksum":"",
+                "to":"",
+                "additionalInformation":"",
+                "apikey":""
+            }
+
++ Response 200 (application/json)
+        
+            {
+                   "status": "SUCCESS",
+                   "data":
+                       {
+                       },
+                   "errors":
+                       {
+                       },
+                   "meta":
+                       {           
+                       }
+            }
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                    "timestamp": "error.client.timestamp.expired"
+                },
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors":
+                {
+                    "timestamp": "error.client.checksum.expired"
+                },
+            "meta": {}
+        }
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors":{
+                "server.error.internal": "An internal error occurred while processing request."
+            },
+            "meta": {}
+        }

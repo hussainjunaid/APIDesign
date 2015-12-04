@@ -1,0 +1,188 @@
+## Group Smart Appointment
+
+Appointments resource endpoint will allow the retrieval of available and/or unavailable appointment slots for a specific service order
+
+## appointments collection [ /smart-meter-appointment-slots ]
+### get appointments [GET /smart-meter-appointment-slots{?serviceOrderId,startDate,range,isUnavailableRequired}]
+
++ serviceOrderId (string, required) -  The service order id
++ startDate (string, required) - The number of days from now to start appointment search
++ range (string, required) - The number of days to search for appointments in
++ isUnavailableRequired (string, required) - false if you only want to retrieve available slots
+
++ Parameters
+
+    + serviceOrderId (string, required) - The service order id
+    + startDate (number, required) - The number of days from now to start appointment search
+    + range (number, required) - The number of days to search for appointments in
+    + isUnavailableRequired (string, required) - false if you only want to retrieve available slots
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "smartMeterAppointmentSlots": [
+                        {
+                            "date": "2015-09-28T07:00:00+00:00",
+                            "id": "2015-09-28T07:00:00+00:00_8:00am_12:00pm",
+                            "variant": "4",
+                            "startTime": "8:00am",
+                            "endTime": "12:00pm",
+                            "available": true,
+                            "preferredSlot": false
+                        },
+                        {
+                            "date": "2015-09-28T07:00:00+00:00",
+                            "id": "2015-09-28T07:00:00+00:00_10:00am_2:00pm",
+                            "variant": "4",
+                            "startTime": "10:00am",
+                            "endTime": "2:00pm",
+                            "available": true,
+                            "preferredSlot": false
+                        },
+                        {
+                            "date": "2015-09-28T07:00:00+00:00",
+                            "id": "2015-09-28T07:00:00+00:00_1:00pm_5:00pm",
+                            "variant": "4",
+                            "startTime": "1:00pm",
+                            "endTime": "5:00pm",
+                            "available": true,
+                            "preferredSlot": false
+                        },
+                        {
+                            "date": "2015-09-29T07:00:00+00:00",
+                            "id": "2015-09-29T07:00:00+00:00_8:00am_12:00pm",
+                            "variant": "4",
+                            "startTime": "8:00am",
+                            "endTime": "12:00pm",
+                            "available": false,
+                            "preferredSlot": false
+                        } 
+                    ],
+                    "errors": [],
+                    "meta": {}
+                }
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "serviceorder",
+                        "message": "error.server.serviceorder.isEmpty"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+        
+## Group Service Appointment Slots
+
+Slot endpoints will allow the retrieve of a set of appointment slots for a specific service account
+
+## slots collection [ /slots ]
+### retrieve slots [GET /slots{?serviceAccount,type,fault} ]
+
++ serviceAccount (required, string) - The service account id
++ reason (required, string) - the type of appointment - ASV, IB, BOTH
++ fault (optional, string) - fault code required for an IB booking
+
++ Parameters
+
+    + serviceAccount (required, string) - The service account id
+    + reason (required, string) - the type of appointment - ASV, IB, BOTH
+    + fault (optional, string) - fault code required for an IB booking
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "slots": [
+                        {
+                            "id": "919918239012-567891011",
+                            "date": "2015-09-29T07:00:00+00:00",
+                            "startTime": "08:00",
+                            "endTime": "10:00",
+                            "available": true,
+                            "preferredSlot": false,
+                        },
+                        {
+                            "id": "919918239012-567891012",
+                            "date": "2015-09-29T07:00:00+00:00",
+                            "startTime": "14:00",
+                            "endTime": "16:00",
+                            "available": false,
+                            "preferredSlot": false,
+                        },
+                        {
+                            "id": "919918239013-567891013",
+                            "date": "2015-09-29T07:00:00+00:00",
+                            "startTime": "14:00",
+                            "endTime": "16:00",
+                            "available": true,
+                            "preferredSlot": false,
+                        }
+                    ],
+                }
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "serviceaccount",
+                        "message": "error.server.serviceaccount.isEmpty"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }

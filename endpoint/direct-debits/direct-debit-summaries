@@ -1,0 +1,120 @@
+## Group Direct Debits
+
+Direct Debit Summaries API allows you to list / view all the Customer Payment Scheme explanation information of the logged in fixed direct debt customer. Responses from this API will be returned in JSON format only.
+Direct Debit Summaries as a resource represents following information
+
++ id (string) - Returned always - Account number of the direct debit contract, to establish relationship with account
++ account (string) - Returned always - Account number of the direct debit contract, to establish relationship with account
++ eventType (string) - Returned always - An Integer is returned to indicate the event type. '1- Set up', '2- interim', '3-Rapid', '4-Simulation Interim', '5 - Periodic'
++ newInstalmentAmount (double) - Returned always - Variable to store customer's installment amount after re-assessment
++ oldInstalmentAmount (double) - Returned always - Variable to store customer's installment amount before re-assessment
++ recommendedInstalmentAmount (double) - Returned only if it’s a honored scenario - Variable to hold the proposed installment amount
++ reassessmentType (string) - Returned always - Variable to determine if the re-assessment is 'full'/'simple'/'none'
++ nextPaymentDate (string) - Returned always - Next payment date of the direct debit contract
++ nextPaymentAmount (double) - Returned always - Next payment amount of the direct debit contract
++ instalmentChangeHonoured (boolean) - Returned always - The customer’s choice of payment for the installment has been honored or not
++ previousReassessmentDate (string) - Returned always - Date the review was triggered
++ newInstalmentEffectiveDate (string) - Returned always - Variable for storing date when the new installment date will take effect
++ contracts (Collection of Contracts) - Contract details of the given account
+
+Contract represents following information
+
++ contractId (string) - Returned always - Installment date in 'dd/MM/yyyy' format
++ instalmentChangeHonoured (boolean) - Returned always'. The customer’s choice of payment for the installment has been honored or not in contract level
++ amountChanged (boolean) - Returned always - Indicates if the amount has changed after re-assessment 
++ proposedAmount (double) - Returned if the contract is honored - Amount recommended after re-assessment
++ adoptedAmount (double) - Returned if the contract is honored - Amount used to honor the previous change 
+
+## Direct Debits Summaries Collection [/direct-debit-summaries]
+
+### GET Direct debit summaries [GET /direct-debit-summaries{?accountNumber*}]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "directDebitSummaries": [
+                        {
+                            "id": "851001111192-2403",
+                            "account": "851001111192",
+                            "nextPaymentAmount": 81.32,
+                            "nextPaymentDate": "01/12/2016",
+                            "previousReassessmentDate": "03/03/2016",
+                            "eventType": "5",
+                            "oldInstalmentAmount": 104.54,
+                            "newInstalmentAmount": 81.32,
+                            "newInstalmentEffectiveDate": "01/04/2016",
+                            "instalmentChangeHonoured": false,
+                            "reassessmentType": "full",
+                            "recommendedInstalmentAmount": 0,
+                            "contracts": null
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                         "code": "directdebit",
+                        "message": "error.client.fixedDirectDebit.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "directDebitSummary",
+                        "message": "error.dd.summary.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "service",
+                        "message": "error.system.pi.operation.fail"
+                    }
+                ],
+                "meta": {}
+            }

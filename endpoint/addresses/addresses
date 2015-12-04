@@ -1,0 +1,197 @@
+## Group Addresses
+Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
+
+## Addresses Collection [/addresses]
+### Retrieve all addresses [GET /addresses{?postcode,house_no, validateServiceArea}]
++ Parameters
+
+    + postcode (string) ...A valid UK postcode
+    + house_no (string, optional) ...House number to restrict the search for
+    + validateServiceArea (Boolean, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "addresses": [
+                    {
+                        "MPRN": null,
+                        "postalTown": "STAINES-UPON-THAMES",
+                        "houseName": "Linden Place",
+                        "address": "Flat 10, Linden Place, Fairfield Avenue, STAINES-UPON-THAMES, Middlesex, TW18 4AF, United Kingdom",
+                        "county": "Middlesex",
+                        "MPAN": "2000003714247",
+                        "houseNumber": null,
+                        "postcode": "TW18 4AF",
+                        "addressLine2": null,
+                        "addressLine1": "Fairfield Avenue",
+                        "flatNumber": "Flat 10"
+                    }
+                ]
+            },
+            "errors": {},
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": {
+                "postcode": "error.client.postcode.invalid"
+            },
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "code": "system",
+                "message": "error.postcode.notInBGArea"
+            },
+            "meta": {}
+        }
+
+### Annonymous Supply Check  [GET /addresses/supply-check{?flatNumber,houseNumber,houseName,addressLine1,addressLine2,postalTown,county,postCode}]
++ Parameters
+
+    + flatNumber (string, optional) ...flat number of the selected address, if available.
+    + houseNumber (string, optional) ...house number of the selected address, if available.
+    + houseName (string, optional) ...house name of the selected address, if available. Atleast one of flat number, house number and house name need to be available for identifying a premise
+    + addressLine1 (string, optional) ...street of the selected address, if available.
+    + addressLine2 (string, optional) ...locality of the selected address, if available.
+    + postalTown (string) ...town or city of the selected address, if available.
+    + county (string, optional) ...county of the selected address, if available.
+    + postCode (string, optional) ...post code of the selected address, if available.
+
++ Request (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "00"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "01"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "02"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "03"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                        "supplyCheckCode": "04"
+                    },
+            "errors": [],
+            "meta": {}
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "checkavailability",
+                    "message": "error.client.checkavailability.no.supply"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "postalTown": "error.client.postalTown.blank"
+            },
+            "meta": {}
+        }
+
++ Response 500 (application/json)
+
+        {
+            "status": "ERROR",
+            "data": {},
+            "errors": {
+                "checkavailability": "error.client.checkavailability.no.response"
+            },
+            "meta": {}
+        }
+
+# Logged In supply Check [GET /address/supply-check?houseNumber=1&postCode=SL11AB]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+        {
+            "status": "SUCCESS",
+            "data": {
+                "supplyEnergyProducts": true,
+                "supplyElectricityProduct": true,
+                "supplyServiceProducts": true,
+                "supplyGasProduct": true
+            },
+            "errors": {},
+            "meta": {}
+        }
