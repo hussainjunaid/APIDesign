@@ -2,7 +2,4 @@ apiary.header
 endpoint/accounts/accounts
 endpoint/accounts/energy-accounts
 endpoint/accounts/services-accounts
-endpoint/appliances
-endpoint/appointments
-endpoint/customers
-
+endpoint/addresses/addresses
