@@ -1,8 +1,8 @@
 ## Group Appointments
 
+## appointments collection [ /smart-meter-appointment-slots ]
 Appointments resource endpoint will allow the retrieval of available and/or unavailable appointment slots for a specific service order
 
-## appointments collection [ /smart-meter-appointment-slots ]
 ### get appointments [GET /smart-meter-appointment-slots{?serviceOrderId,startDate,range,isUnavailableRequired}]
 
 + serviceOrderId (string, required) -  The service order id
@@ -99,11 +99,11 @@ Appointments resource endpoint will allow the retrieval of available and/or unav
                 "meta": {}
             }
         
-## Group Service Appointment Slots
+
+## slots collection [ /slots ]
 
 Slot endpoints will allow the retrieve of a set of appointment slots for a specific service account
 
-## slots collection [ /slots ]
 ### retrieve slots [GET /slots{?serviceAccount,type,fault} ]
 
 + serviceAccount (required, string) - The service account id
