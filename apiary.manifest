@@ -3,3 +3,7 @@ endpoint/accounts/accounts
 endpoint/accounts/energy-accounts
 endpoint/accounts/services-accounts
 endpoint/addresses/addresses
+endpoint/api-management/heartbeat
+endpoint/appliances/appliances
+endpoint/appointments/appointments
+endpoint/appointments/smart-meter-appointment-slots
