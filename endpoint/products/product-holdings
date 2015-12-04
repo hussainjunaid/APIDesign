@@ -1,4 +1,4 @@
-## Group Products Holdings
+## Group Products
 
 ## Product Holdings [/product-holdings]
 Product Holdings API allows you to list / view all the product holdings of the logged in customer. Responses from this API will be retuned in JSON format only.

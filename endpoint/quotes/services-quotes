@@ -1,4 +1,4 @@
-## Group Services-Quotes
+## Group Quotes
 
 The Services-Quote resource is designed to send customer, address and product information
 to the backend to create a quote object.
