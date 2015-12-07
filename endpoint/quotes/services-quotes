@@ -1,9 +1,7 @@
-## Group Quotes
+## Services-Quotes Collection [/services-quotes]
 
 The Services-Quote resource is designed to send customer, address and product information
 to the backend to create a quote object.
-
-## Services-Quotes Collection [/services-quotes]
 
 A Services-Quote object has the following attributes:
 
