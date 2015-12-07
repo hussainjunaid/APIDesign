@@ -1,9 +1,5 @@
-## Group Products
-
-Resources related to Product-Features in the API.
-
 ## Product-Features [/product-features]
-
+Resources related to Product-Features in the API.
 A Product-Feature object has the following attributes:
 
 + id (required, string) - Unique id for a product feature.
