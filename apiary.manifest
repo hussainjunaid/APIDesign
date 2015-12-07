@@ -8,3 +8,4 @@ endpoint/appliances/appliances
 endpoint/appointments/appointments
 endpoint/appointments/smart-meter-appointment-slots
 endpoint/contracts/services-contracts
+endpoint/customers/customers
