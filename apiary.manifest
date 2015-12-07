@@ -24,3 +24,4 @@ endpoint/products/product-prices
 endpoint/products/product-holdings
 endpoint/products/product-features
 endpoint/products/product-bundles
+endpoint/prospects/prospects
