@@ -1,4 +1,4 @@
-## Group Direct Debits
+## Direct Debits Summaries Collection [/direct-debit-summaries]
 
 Direct Debit Summaries API allows you to list / view all the Customer Payment Scheme explanation information of the logged in fixed direct debt customer. Responses from this API will be returned in JSON format only.
 Direct Debit Summaries as a resource represents following information
@@ -25,7 +25,6 @@ Contract represents following information
 + proposedAmount (double) - Returned if the contract is honored - Amount recommended after re-assessment
 + adoptedAmount (double) - Returned if the contract is honored - Amount used to honor the previous change 
 
-## Direct Debits Summaries Collection [/direct-debit-summaries]
 
 ### GET Direct debit summaries [GET /direct-debit-summaries{?accountNumber*}]
 
