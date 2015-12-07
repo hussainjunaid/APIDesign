@@ -1,8 +1,7 @@
-##Group Leads
+## Services-Leads Collection [/services-leads]
 
 Resources related to Services-Leads in the API.
 
-## Services-Leads Collection [/services-leads]
 ### Post services sales data to Uddingston [POST /services-leads]
 
 A Services-Lead object has the following attributes:
