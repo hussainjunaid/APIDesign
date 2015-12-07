@@ -7,3 +7,4 @@ endpoint/api-management/heartbeat
 endpoint/appliances/appliances
 endpoint/appointments/appointments
 endpoint/appointments/smart-meter-appointment-slots
+endpoint/bills/simulated-bills
