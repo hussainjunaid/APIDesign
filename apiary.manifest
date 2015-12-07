@@ -15,3 +15,4 @@ endpoint/direct-debits/fixed-direct-debits
 endpoint/emails/email
 endpoint/leads/home-move-leads
 endpoint/leads/services-leads
+endpoint/loyalties/loyalties
