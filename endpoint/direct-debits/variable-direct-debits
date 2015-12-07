@@ -1,5 +1,3 @@
-# Group Direct Debits
-
 ## Variable Direct debits Collection [/variable-direct-debits]
 Variable Direct Debits API allows you to list / view all the variable direct debit information of the logged in customer. Responses from this API will be returned in JSON format only.
 
