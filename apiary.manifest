@@ -26,3 +26,4 @@ endpoint/products/product-features
 endpoint/products/product-bundles
 endpoint/quotes/quotes
 endpoint/quotes/services-quotes
+endpoint/smart-cards/smart-cards
