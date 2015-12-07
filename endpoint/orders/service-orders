@@ -1,8 +1,5 @@
-## Group Orders
-
-Service Order allows the client to create and modify an appointment for a smart meter exchange
-
 ### create a service order [POST /service-orders]
+Service Order allows the client to create and modify an appointment for a smart meter exchange
 
 + id - string
 + startDate - string
