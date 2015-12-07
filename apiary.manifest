@@ -19,3 +19,8 @@ endpoint/loyalties/loyalties
 endpoint/orders/orders
 endpoint/orders/service-orders
 endpoint/premises/premises
+endpoint/products/products
+endpoint/products/product-prices
+endpoint/products/product-holdings
+endpoint/products/product-features
+endpoint/products/product-bundles
