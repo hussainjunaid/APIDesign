@@ -1,8 +1,6 @@
-## Group Products
+## Prices [/prices]
 
 The Prices Controller Endpoint in the API.
-
-## Prices [/prices]
 
 A price object has the following attributes:
 
