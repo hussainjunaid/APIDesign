@@ -1,5 +1,3 @@
-## Group Userinfo
-
 ## Temporary profiles [/userinfo/temporary-profiles]
 Creates a profile and triggers an email using a temporary password.
 As an entity, following properties define a Temporary profile.
