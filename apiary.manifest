@@ -16,5 +16,5 @@ endpoint/emails/email
 endpoint/leads/home-move-leads
 endpoint/leads/services-leads
 endpoint/loyalties/loyalties
-enpoint/orders/orders
-enpoint/orders/service-orders
+endpoint/orders/orders
+endpoint/orders/service-orders
