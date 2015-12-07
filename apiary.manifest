@@ -11,3 +11,4 @@ endpoint/contracts/services-contracts
 endpoint/customers/customers
 endpoint/direct-debits/direct-debits
 endpoint/direct-debits/direct-debit-summaries
+endpoint/direct-debits/fixed-direct-debits
