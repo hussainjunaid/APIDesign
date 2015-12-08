@@ -33,3 +33,4 @@ endpoint/userinfo/reset-password-requests
 endpoint/energy-estimate/energyestimate
 endpoint/meters/meters
 endpoint/meters/meter-reads-submit
+endpoint/bills/simulated-bills
