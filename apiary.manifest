@@ -30,3 +30,4 @@ endpoint/smart-cards/smart-cards
 endpoint/userinfo/userinfo
 endpoint/userinfo/temporary-profiles
 endpoint/userinfo/reset-password-requests
+endpoint/energy-estimate/energyestimate
