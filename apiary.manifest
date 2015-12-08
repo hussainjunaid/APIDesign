@@ -34,3 +34,4 @@ endpoint/energy-estimate/energyestimate
 endpoint/meters/meters
 endpoint/meters/meter-reads-submit
 endpoint/bills/simulated-bills
+endpoint/surveys/survey-responses
