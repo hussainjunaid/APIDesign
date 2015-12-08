@@ -34,133 +34,128 @@ Register is represented by the below properties
     + Headers
 
             Authorization: Bearer access-token
-			cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-	+ Body
+    + Body
 
-			{
-				"meta": {
-					"meters": [
-						{
-							"id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
-							"registers": [
-								{
-									"id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
-									"readingDate": "05/08/2015",
-									"reading": "00120"
-								},
-								{
-									"id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-002",
-									"readingDate": "05/08/2015",
-									"reading": "01120"
-								}
-							]
-						}
-					]
-				}
-			}
+            {
+                "meta": {
+                    "meters": [
+                        {
+                            "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE",
+                            "registers": [
+                                {
+                                    "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-001",
+                                    "readingDate": "05/08/2015",
+                                    "reading": "00120"
+                                },
+                                {
+                                    "id": "850000367878-0550013531-RzRBMDIyMDg2ODA0MDE-002",
+                                    "readingDate": "05/08/2015",
+                                    "reading": "01120"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
 
 + Response 200 (application/json)
 
-			{
-				"status": "SUCCESS",
-				"data": {
-					"simulated-bill": {
-						"id": "123007394603-128007401016",
-						"gasBalance": "502.15",
-						"gasInvoiceNumber": "123007394603",
-						"electricityBalance": "27.88",
-						"electricityInvoiceNumber": "128007401016",
-						"jointBalance": "0.00",
-						"balanceBroughtForward": "0.00",
-						"discountAndVat": "0.00"
-					}
-				},
-				"errors": {},
-				"meta": {}
-			}
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "simulated-bill": {
+                        "id": "123007394603-128007401016",
+                        "gasBalance": "502.15",
+                        "gasInvoiceNumber": "123007394603",
+                        "electricityBalance": "27.88",
+                        "electricityInvoiceNumber": "128007401016",
+                        "jointBalance": "0.00",
+                        "balanceBroughtForward": "0.00",
+                        "discountAndVat": "0.00"
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
-			{
-				"status": "FAIL",
-				"data": {},
-				"errors": [
-					{
-						"code": "authorize",
-						"message": "access_denied"
-					}
-				],
-				"meta": {}
-			}
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "authorize",
+                    "message": "access_denied"
+                }],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-			{
-				"status": "FAIL",
-				"data": {},
-				"errors": [
-					{
-						"code": "meterIdentifier",
-						"message": "error.client.meterIdentifier.invalid"
-					}
-				],
-				"meta": {}
-			}
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "meterIdentifier",
+                    "message": "error.client.meterIdentifier.invalid"
+                }],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-			{
-				"status": "FAIL",
-				"data": {},
-				"errors": [
-					{
-						"code": "accountNumber",
-						"message": "error.client.accountNumber.invalid"
-					}
-				],
-				"meta": {}
-			}
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
-			{
-				"status": "FAIL",
-				"data": {},
-				"errors": [
-					{
-						"code": "accountNumber",
-						"message": "error.client.accountNumber.invalid"
-					}
-				],
-				"meta": {}
-			}
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-			{
-				"status": "FAIL",
-				"data": {},
-				"errors": [
-					{
-						"code": "meta",
-						"message": "error.meterInfo.invalid"
-					}
-				],
-				"meta": {}
-			}
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "meta",
+                        "message": "error.meterInfo.invalid"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 500 (application/json)
 
-			{
-				"status": "ERROR",
-				"data": {},
-				"errors": [
-					{
-						"code": "system",
-						"message": "error.system.unexpected.error"
-					}
-				],
-				"meta": {}
-			}
-			
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
