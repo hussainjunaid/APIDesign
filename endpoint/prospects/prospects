@@ -4,28 +4,28 @@ Prospect API allow you to create or retrieve the UCRN and BP number for the cust
 ## Prospects Collection [/prospects]
 Prospect API is used to create or retrieve the UCRN and BP number for the customer based on Customer information.
 
-+ firstName - (string, mandatory) - First name validation applicable
-+ surname - (string, mandatory) - Surname validation applicable.
-+ emailAddress - (string, mandatory) - Email address validation applicable.
-+ primaryTelephoneNumber - (string, mandatory) - First name validation applicable.
-+ postcode - (string, mandatory) - Postcode validation applicable.
-+ correspondenceAddress - (Address, mandatory) - Address details of the customer.
++ firstName (string, mandatory) - First name validation applicable
++ surname (string, mandatory) - Surname validation applicable.
++ emailAddress (string, mandatory) - Email address validation applicable.
++ primaryTelephoneNumber (string, mandatory) - First name validation applicable.
++ postcode (string, mandatory) - Postcode validation applicable.
++ correspondenceAddress (Address, mandatory) - Address details of the customer.
 
 TelephoneNumber
 
-+ number - (string, mandatory) - Valid Telephone number applicable
++ number (string, mandatory) - Valid Telephone number applicable
 
 Address
 
-+ houseName - (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
-+ houseNumber - (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
-+ flatNumber - (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
-+ addressLine1 - (string, optional)
-+ addressLine2 - (string, optional)
-+ postalTown - (string, mandatory)
-+ county - (string, optional)
-+ postcode - (string, mandatory)
-+ smartMeterInterest - (Boolean, mandatory) While creating a prospect the value should be false. This will be updated accordingly on /PUT operation.
++ houseName (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
++ houseNumber (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
++ flatNumber (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
++ addressLine1 (string, optional)
++ addressLine2 (string, optional)
++ postalTown (string, mandatory)
++ county (string, optional)
++ postcode (string, mandatory)
++ smartMeterInterest (Boolean, mandatory) While creating a prospect the value should be false. This will be updated accordingly on /PUT operation.
 
 ### Create prospect [POST /prospects]
 This controller service is used to create or retrieve the existing UCRN and Busines Partner (BP) in SAP for the anonymous customer. UI needs to give the following information as a request. The request body of this post must be a JSON object with properties listed below.
