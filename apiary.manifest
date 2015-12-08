@@ -12,6 +12,7 @@ endpoint/customers/customers
 endpoint/direct-debits/direct-debits
 endpoint/direct-debits/direct-debit-summaries
 endpoint/direct-debits/fixed-direct-debits
+endpoint/direct-debits/variable-direct-debits
 endpoint/emails/email
 endpoint/leads/home-move-leads
 endpoint/leads/services-leads
