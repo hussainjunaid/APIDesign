@@ -31,3 +31,5 @@ endpoint/userinfo/userinfo
 endpoint/userinfo/temporary-profiles
 endpoint/userinfo/reset-password-requests
 endpoint/energy-estimate/energyestimate
+endpoint/meters/meters
+endpoint/meters/meter-reads-submit
