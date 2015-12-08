@@ -37,3 +37,4 @@ endpoint/meters/meter-reads-submit
 endpoint/bills/simulated-bills
 endpoint/surveys/survey-responses
 endpoint/tariffs/tariffs
+endpoint/prospects/prospects
