@@ -1,11 +1,25 @@
 ## Group Accounts
-Accounts API allows you to list / view all the accounts of the logged in customer. This includes energy accounts, services accounts, multi premise landlord accounts and sales orders of OAM registered and wafer thin profile customers. Responses from this API will be retuned in JSON format only.
 
 ## Accounts Collection [/accounts]
+Accounts endpoint allows you to list / view all the accounts of the logged in customer. This includes energy accounts, services accounts, multi premise landlord accounts and sales orders of OAM registered and wafer thin profile customers. Responses from this endpoint will be retuned in JSON format only.
+
+Account as a resource represents following information:
+
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. Account number or Sales Order number of the account is considered as the unique identifier |
+| holderName | string | `Returned always`. Name of the account holder if available. |
+| multiPremiseLandlord | boolean | `Returned always`. `true` if the account holder is a multi premise landlord, `false` otherwise. |
+| status | string | `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`.|
+| type | string | `Returned always`. Type of the account, this will be Energy, Services or Order. |
+| subType | string | `Returned always`. Subtype of the account, this will be Electricity, Gas or Dual for Energy accounts and Sales orders, Home Services or Security for Services account. |
+| responsibilityType | string | `Returned always`. Responsibility type of the account if available. Possible values are `Legal Payer`, `Contract Owner` and `Other Contract Owner`. | 
+| supplyAddress | Address | `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
+
 ### Retrieve a specific Account [GET /accounts/{accountNumber}]
 + Parameters
 
-    + accountNumber (number) ...This is the customers account number
+    + accountNumber (number) - This is the customers account number
 
 + Request
 
@@ -142,4 +156,3 @@ Accounts API allows you to list / view all the accounts of the logged in custome
             },
             "meta": {}
         }
-
