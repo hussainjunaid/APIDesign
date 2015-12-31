@@ -1,13 +1,33 @@
-## Group Addresses
-Addresses API allows you to list / view addresses for a given postcode using `QAS`. Responses from this API will be retuned in JSON format only.
-
 ## Addresses Collection [/addresses]
+
+Addresses endpoint allows you to list / view addresses for a given postcode using QAS. Responses from this endpoint will be retuned in JSON format only.
+
+Addresses endpoint also supports following controller.
+
+GET /addresses/supply-check
+
+Address as a resource represents following information
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| flatNumber | string | `Mandatory` if houseNumber and houseName is not available | `Returned always` | Flat number of the address if available |
+| houseNumber | string | `Mandatory` if flatNumber and houseName is not available | `Returned always` | House number of the address if available. |
+| houseName | string | `Mandatory` if flatNumber and houseNumber is not available | `Returned always` | House name of the address if available. |
+| addressLine1 | string | `Optional` | `Returned always` | Address line 1. Typically contains house name / street etc... |
+| addressLine2 | string | `Optional` | `Returned always` | Address line 2. Typically contains street / avenues etc... |
+| postalTown | string | `Mandatory` | `Returned always` | Postal town of the address. |
+| county | string | `Optional` | `Returned always` | County to which the address belongs. |
+| postcode | string | `Mandatory` | `Returned always` | Postcode of the address |
+| MPRN | string | `Optional` | `Returned always` | Meter point reference number for the given address. Typically used for gas. |
+| MPAN | string | `Optional` | `Returned always` | Meter point administration number for the address. Typically used for electricity. |
+| address | string | `Optional` | `Returned always` | Single line representation of the entire address. |
+
 ### Retrieve all addresses [GET /addresses{?postcode,house_no, validateServiceArea}]
 + Parameters
 
-    + postcode (string) ...A valid UK postcode
-    + house_no (string, optional) ...House number to restrict the search for
-    + validateServiceArea (Boolean, optional)
+    + postcode (string,required) - A valid UK postcode
+    + house_no (string, optional) - House number to restrict the search for
+    + validateServiceArea (Boolean, optional) - If this value is input as true then BG serviceability check is done prior to retrieving the addresses.
 
 + Request (application/json)
 
@@ -17,63 +37,363 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "addresses": [
-                    {
-                        "MPRN": null,
-                        "postalTown": "STAINES-UPON-THAMES",
-                        "houseName": "Linden Place",
-                        "address": "Flat 10, Linden Place, Fairfield Avenue, STAINES-UPON-THAMES, Middlesex, TW18 4AF, United Kingdom",
-                        "county": "Middlesex",
-                        "MPAN": "2000003714247",
-                        "houseNumber": null,
-                        "postcode": "TW18 4AF",
-                        "addressLine2": null,
-                        "addressLine1": "Fairfield Avenue",
-                        "flatNumber": "Flat 10"
-                    }
-                ]
-            },
-            "errors": {},
-            "meta": {}
-        }
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "addresses": [
+                        {
+                            "address": "2, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "2",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591059048109",
+                            "MPRN": "1347431510"
+                        },
+                        {
+                            "address": "4, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "4",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591035495579",
+                            "MPRN": "1347431701"
+                        },
+                        {
+                            "address": "6, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "6",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591031653188",
+                            "MPRN": "1347431903"
+                        },
+                        {
+                            "address": "8, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "8",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591050323986",
+                            "MPRN": "1347432108"
+                        },
+                        {
+                            "address": "10, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "10",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591028004377",
+                            "MPRN": "5036307408"
+                        },
+                        {
+                            "address": "12, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "12",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019948950",
+                            "MPRN": "1347432400"
+                        },
+                        {
+                            "address": "14, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "14",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019948941",
+                            "MPRN": "1347432602"
+                        },
+                        {
+                            "address": "16, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "16",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019948923",
+                            "MPRN": "1347432804"
+                        },
+                        {
+                            "address": "18, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "18",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591037191327",
+                            "MPRN": "1347433009"
+                        },
+                        {
+                            "address": "20, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "20",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591048508651",
+                            "MPRN": "1347433200"
+                        },
+                        {
+                            "address": "22, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "22",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939929",
+                            "MPRN": "1347433402"
+                        },
+                        {
+                            "address": "24, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "24",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591051301690",
+                            "MPRN": "1347433604"
+                        },
+                        {
+                            "address": "26, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "26",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939900",
+                            "MPRN": "1347433806"
+                        },
+                        {
+                            "address": "28, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "28",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939895",
+                            "MPRN": "1347434000"
+                        },
+                        {
+                            "address": "30, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "30",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939751",
+                            "MPRN": "1347434202"
+                        },
+                        {
+                            "address": "32, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "32",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591058204060",
+                            "MPRN": "1347434404"
+                        },
+                        {
+                            "address": "34, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "34",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939733",
+                            "MPRN": "1347434505"
+                        },
+                        {
+                            "address": "36, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "36",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591043231443",
+                            "MPRN": "1347434707"
+                        },
+                        {
+                            "address": "38, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "38",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939715",
+                            "MPRN": "1347434909"
+                        },
+                        {
+                            "address": "40, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "40",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939690",
+                            "MPRN": "1347435103"
+                        },
+                        {
+                            "address": "42, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "42",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591019939681",
+                            "MPRN": "1347435305"
+                        },
+                        {
+                            "address": "44, Rydal Road, Chester Le Street, County Durham, DH2 3DR",
+                            "houseNumber": "44",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Rydal Road",
+                            "addressLine2": null,
+                            "postalTown": "CHESTER LE STREET",
+                            "county": "County Durham",
+                            "postcode": "DH2 3DR",
+                            "MPAN": "1591027022630",
+                            "MPRN": "1347435507"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": {
-                "postcode": "error.client.postcode.invalid"
-            },
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "postcode",
+                    "message": "error.client.postcode.blank"
+                }],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors": {
-                "code": "system",
-                "message": "error.postcode.notInBGArea"
-            },
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "postcode",
+                    "message": "error.client.postcode.invalid"
+                }],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
 
-### Annonymous Supply Check  [GET /addresses/supply-check{?flatNumber,houseNumber,houseName,addressLine1,addressLine2,postalTown,county,postCode}]
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "system",
+                    "message": "error.postcode.notInBGArea"
+                }],
+                "meta": {}
+            }
+
+## Supply Check [/addresses/supply-check{?flatNumber,houseNumber,houseName,addressLine1,addressLine2,postalTown,county,postCode}]
+
+This service checks whether BritishGas supply products (Energy or Service) in an address and returns the response based on the following status codes.
+
+| Possible states | Description| Supply Check possible status codes|
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| No premise found | No premise found| 00 |
+| Energy Only | Premise has either Energy Contract or Energy Order| 01 |
+| Services Only | Premise has either Services Contract or Services Order| 02 |
+| Wafer thin Energy Only | Premise has only newly acquired Wafer thin Energy| 03 |
+| Both Energy & Services | Premise has either Energy Contract or Energy Order and Services Contract or Services Order|04 |
+
+>`Note:` For supply check we must be any one of the following - flatNumber, houseNumber, houseName and postcode and postalTown. In addition, if other attributes being available in QAS result (or) manual address entry should also be passed for making the search more efficient.
+
+### Annonymous Supply Check  [GET]
 + Parameters
 
-    + flatNumber (string, optional) ...flat number of the selected address, if available.
-    + houseNumber (string, optional) ...house number of the selected address, if available.
-    + houseName (string, optional) ...house name of the selected address, if available. Atleast one of flat number, house number and house name need to be available for identifying a premise
-    + addressLine1 (string, optional) ...street of the selected address, if available.
-    + addressLine2 (string, optional) ...locality of the selected address, if available.
-    + postalTown (string) ...town or city of the selected address, if available.
-    + county (string, optional) ...county of the selected address, if available.
-    + postCode (string, optional) ...post code of the selected address, if available.
+    + flatNumber (string, optional) - flat number of the selected address, if available.
+    + houseNumber (string, optional) - house number of the selected address, if available.
+    + houseName (string, optional) - house name of the selected address, if available. Atleast one of flat number, house number and house name need to be available for identifying a premise
+    + addressLine1 (string, optional) - street of the selected address, if available.
+    + addressLine2 (string, optional) - locality of the selected address, if available.
+    + postalTown (string, required) - town or city of the selected address, if available.
+    + county (string, optional) - county of the selected address, if available.
+    + postCode (string, optional) - post code of the selected address, if available.
 
 + Request (application/json)
 
@@ -81,117 +401,53 @@ Addresses API allows you to list / view addresses for a given postcode using `QA
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                        "supplyCheckCode": "00"
-                    },
-            "errors": [],
-            "meta": {}
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                        "supplyCheckCode": "01"
-                    },
-            "errors": [],
-            "meta": {}
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                        "supplyCheckCode": "02"
-                    },
-            "errors": [],
-            "meta": {}
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                        "supplyCheckCode": "03"
-                    },
-            "errors": [],
-            "meta": {}
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                        "supplyCheckCode": "04"
-                    },
-            "errors": [],
-            "meta": {}
-        }
-
-+ Response 404 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "checkavailability",
-                    "message": "error.client.checkavailability.no.supply"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "SUCCESS",
+                "data": {
+                            "supplyCheckCode": "04"
+                        },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors": {
-                "postalTown": "error.client.postalTown.blank"
-            },
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "postcode",
+                    "message": "error.client.postcode.blank"
+                }],
+                "meta": {}
+            }
 
-+ Response 500 (application/json)
++ Response 400 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors": {
-                "checkavailability": "error.client.checkavailability.no.response"
-            },
-            "meta": {}
-        }
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "address",
+                        "message": "error.client.address.request.invalid"
+                    }
+                ],
+                "meta": {}
+            }
 
-# Logged In supply Check [GET /address/supply-check?houseNumber=1&postCode=SL11AB]
++ Response 400 (application/json)
 
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
-+ Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                "supplyEnergyProducts": true,
-                "supplyElectricityProduct": true,
-                "supplyServiceProducts": true,
-                "supplyGasProduct": true
-            },
-            "errors": {},
-            "meta": {}
-        }
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "address",
+                        "message": "error.client.address.multiple.premises"
+                    }
+                ],
+                "meta": {}
+            }
