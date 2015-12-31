@@ -1,15 +1,17 @@
 ## Group Emails
 
-Email API allows you to send an email. Responses from this API will be retuned in JSON format only.
-
-+ payload (string, required) - Email payload derived from source API
-+ timestamp (string, required) - Encrypted payload derived from source API
-+ checksum (string, required) - Checksum derived from source API
-+ to (string, required) - To email address derived from source API
-+ additionalInformation (string, optional) - Additional information derived from source API
-+ apikey (string, required) - Key that identifies client to API
+Email endpoint allows you to send an email through `Online`. Responses from this endpoint will be retuned in JSON format only.
 
 ## Email Collection [/email]
+
+Email payload requires following items:
+
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| payload | string | `Required`. Email payload derived from source API. |
+| timestamp | string | `Required`. Encrypted payload derived from source API. |
+| checksum | string | `Required`. Checksum derived from source API. |
+| to | string | `Required`. To email address derived from source API.|
 
 ### Send Email [POST]
 
@@ -25,55 +27,56 @@ Email API allows you to send an email. Responses from this API will be retuned i
                 "payload":"",
                 "timestamp":"",
                 "checksum":"",
-                "to":"",
-                "additionalInformation":"",
-                "apikey":""
+                "to":""
             }
 
 + Response 200 (application/json)
         
             {
-                   "status": "SUCCESS",
-                   "data":
-                       {
-                       },
-                   "errors":
-                       {
-                       },
-                   "meta":
-                       {           
-                       }
+                "status": "SUCCESS",
+                "data": {},
+                "errors": [],
+                "meta": {}
             }
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": {
-                    "timestamp": "error.client.timestamp.expired"
-                },
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "timestamp",
+                        "message": "error.client.timestamp.expired"
+                    }
+                ],
+                "meta": {}
+            }
         
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors":
-                {
-                    "timestamp": "error.client.checksum.expired"
-                },
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "checksum",
+                        "message": "error.client.checksum.expired"
+                    }
+                ],
+                "meta": {}
+            }
+            
 + Response 500 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors":{
-                "server.error.internal": "An internal error occurred while processing request."
-            },
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error occurred while processing request."
+                    }
+                ],
+                "meta": {}
+            }
