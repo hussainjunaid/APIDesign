@@ -3,47 +3,51 @@
 Resources related to UserInfo
 
 ## UserInfo [/userinfo]
-UserInfo resource represents the online profile details of the customer. A UserInfo object has the following attributes:
+Userinfo represents information about the user profile maintained at online. Contrary to common belief, it doesn't not represent a customer's profile in SAP. Responses from this API will be returned in JSON format.
 
-+ id - represents email address
-+ title
-+ firstName
-+ surname
-+ registeredOn
-+ type - thin or oam
-+ status
-+ brand - BG or Sainsburys
+Various operations supported by Userinfo are detailed below.
+
+### Userinfo
+Userinfo as an entity represents following attributes.
+
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | string | `Mandatory` | `Returned always` | Email address with which the user wishes to register online.|
+| title | string | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
+| surname | string | `Mandatory` | `Returned always` | Surname of customer. |
+| brand | string | `Optional` | `Returned always` | `Returned always`. Represents brand of the user. Can be either `britishgas` or `sainsbury`. |
+| type | string | `Optional` | `Returned always` | `Returned always`. Represents type of user profile maintained at online. Can be either `thin` or `oam`. |
+| status | string | `Optional` | `Returned always` | `Returned always`. Represents current status of user profile. Can be `new`, `active` or `inactive`. |
 
 ### Retrieve logged in UserInfo details [GET]
 + Request (application/json)
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
             {
-            "status": "SUCCESS",
-            "data": {
+              "status": "SUCCESS",
+              "data": {
                 "userinfo": [
-                    {
-                        "id": "junaid.hussain@centrica.com",
-                        "title": "Mr",
-                        "firstName": "Junaid",
-                        "surname": "Hussain",
-                        "registeredOn": "25/05/2015",
-                        "type": "FULL",
-                        "status": "ACTIVE",
-                        "brand": "BG"
-
-                    }
+                  {
+                    "id": "gpradeepkrishna@gmail.com",
+                    "title": "Miss",
+                    "firstName": "firstname",
+                    "surname": "surname",
+                    "brand": "britishgas",
+                    "type": "thin",
+                    "status": "new"
+                  }
                 ]
-            },
-            "errors": {},
-            "meta": {}
-        }
+              },
+              "errors": [],
+              "meta": {}
+            }
 
 + Response 401 (application/json)
 
@@ -86,24 +90,22 @@ UserInfo resource represents the online profile details of the customer. A UserI
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "userinfo": [
-                    {
-                        "id": "junaid.hussain@centrica.com",
-                        "title": "Mr",
-                        "firstName": "Junaid",
-                        "surname": "Hussain",
-                        "type": "FULL",
-                        "status": "ACTIVE",
-                        "brand": "BG"
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+            {
+              "status": "SUCCESS",
+              "data": {
+                "userinfo": {
+                  "id": "pradeepkrishna.govindaraju@centrica.com",
+                  "title": "Mr",
+                  "firstName": "M",
+                  "surname": "Street",
+                  "brand": "britishgas",
+                  "type": "thin",
+                  "status": "active"
+                }
+              },
+              "errors": [],
+              "meta": {}
+            }
 
 + Response 403 (application/json)
 
@@ -171,24 +173,22 @@ UserInfo resource represents the online profile details of the customer. A UserI
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "userinfo": [
-                    {
-                        "id": "junaid.hussain@centrica.com",
-                        "title": "Mr",
-                        "firstName": "J",
-                        "surname": "H",
-                        "type": "FULL",
-                        "status": "ACTIVE",
-                        "brand": "BG"
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+            {
+              "status": "SUCCESS",
+              "data": {
+                "userinfo": {
+                  "id": "pradeepkrishna.govindaraju@centrica.com",
+                  "title": "Mr",
+                  "firstName": "M",
+                  "surname": "Street",
+                  "brand": "britishgas",
+                  "type": "thin",
+                  "status": "active"
+                }
+              },
+              "errors": [],
+              "meta": {}
+            }
 
 + Response 403 (application/json)
 
@@ -233,23 +233,30 @@ UserInfo resource represents the online profile details of the customer. A UserI
         }
 
 ## UserInfo profile check [/userinfo/profile-check]
-This endpoint allows you to check if a given user profile is registered at online or not.
-The request body of this post must be a JSON object with attributes as listed below.
+This endpoint allows you to check if a given user profile is registered at online or not. The request body of this post must be a JSON object with attributes as  listed below.
+
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| email | string | `mandatory`. Email validation applicable. |
+
+The possible response status codes are as follows:
+
+| Status | Description |
+| :-------------------- | :---------- |
+| 0xRM91 | Userinfo found |
+| 0xTXE0 | Userinfo not found |
 
 ### Profile check [POST]
 + Request (application/json)
 
     + Headers
 
-            Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
 
             {
                 "email" : "Gnanasakthivel.Ramanathan@britishgas.co.uk",
-                "brand" : "britishgas"
-
             }
 
 + Response 200 (application/json)
@@ -280,12 +287,15 @@ The request body of this post must be a JSON object with attributes as listed be
         }
 
 ## UserInfo by reference [/userinfo/find-by-reference]
-This is a controller service which allows to find out whether a user with matching account number, home care number or sales order number, is available in SAP system. The request body of this post must be a JSON object with properties listed below
+This is a controller endpoint which allows to find out whether a user with matching account number, home care number or sales order number, is available in SAP system.
+The request body of this post must be a JSON object with properties listed below.
 
-+ title - Mandatory
-+ firstName - Mandatory
-+ surname - Mandatory
-+ customerReference - Mandatory
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| title | string | `Mandatory`. |
+| firstName | string | `Mandatory`. First name validation applicable. |
+| surname | string | `Mandatory`. Surname validation applicable. |
+| customerReference | string | `Mandatory`. Can be energy account number (`85` followed by 10 digits), homecare number (`91` followed by 10 digits) or sales order number (`20` followed by 8 digits). |
 
 ### Retrieve userinfo by reference [POST]
 + Request (application/json)
