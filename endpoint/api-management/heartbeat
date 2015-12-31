@@ -1,19 +1,20 @@
-## Group API Management
 ## Heartbeat
-Heartbeat is a controller resource and allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this API will be returned in JSON format only.
-Heartbeat as a resource represents following information:
+Heartbeat endpoint allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this endpoint will be returned in JSON format only.
 
-+ status (string) - It is a concatenated value of CRM status code and ISU status code, separated by a hyphen
+Heartbeat as a resource represents following information
 
-Status codes can have the below values:
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| status | string | `Not applicable` | `Returned always` | It is a concatenated value of CRM status code and ISU status code, separated by a hyphen. |
 
-0-Up and running
+Status codes can have the below values
 
-1-Cached and served from MIS
-
-2-Down
-
-3-Undefined
+| Code | Description |
+| :------- | :------------------------ |
+| 0 | `Up and running`|
+| 1 | `Cached and served from MIS`|
+| 2 | `Down` |
+| 3 | `Undefined` |
 
 ### Retrieve heartbeat [GET /heartbeat]
 + Request
@@ -24,24 +25,25 @@ Status codes can have the below values:
 
 + Response 200 (application/json)
 
-          {
-              "status": "SUCCESS",
-              "data": {
-                  "heartbeat": {
-                      "status": "0-0"
-                  }
-              },
-              "errors": [],
-              "meta": {}
-          }
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "heartbeat": {
+                        "status": "0-0"
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 404 (application/json)
 
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": {
-                  "heartbeat": "error.configuration.data.notfound"
-              },
-              "meta": {}
-          }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [{
+                    "code": "heartbeat",
+                    "message": "error.heartbeat.status.notFound"
+                }],
+                "meta": {}
+            }
