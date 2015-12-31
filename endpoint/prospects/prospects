@@ -1,31 +1,30 @@
 ## Group Prospects
-Prospect API allow you to create or retrieve the UCRN and BP number for the customer based on Customer information. 
 
 ## Prospects Collection [/prospects]
-Prospect API is used to create or retrieve the UCRN and BP number for the customer based on Customer information.
+Prospect endpoint allows you to create or retrieve the UCRN and BP number for the customer based on Customer information. 
 
-+ firstName (string, mandatory) - First name validation applicable
-+ surname (string, mandatory) - Surname validation applicable.
-+ emailAddress (string, mandatory) - Email address validation applicable.
-+ primaryTelephoneNumber (string, mandatory) - First name validation applicable.
-+ postcode (string, mandatory) - Postcode validation applicable.
-+ correspondenceAddress (Address, mandatory) - Address details of the customer.
+### Prospect
+ 
+Prospect as a resource is made up of following data items:
 
-TelephoneNumber
+| Name | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| id | string | not passed on POST | `Returned always` | encrypted UCRN value is set as id  |
+| title | string | `mandatory` | `Returned always` | Title of the customer. |
+| firstName | string | `mandatory` | `Returned always` |  First name of the customer. |
+| surname | string | `mandatory` | `Returned always` |  Surname of the customer. |
+| emailAddress | string | `mandatory` | `Returned always` |  Email address of the customer. |
+| primaryTelephoneNumber | TelephoneNumber | `mandatory` | `Returned always` |  primary telephone number of the customer. |
+| postcode | string | `mandatory` | `Returned always` |  Postcode of cusstomer's address. |
+| correspondenceAddress | [Address](/api-reference/addresses.md#addresses) | `mandatory` | `Returned always` |  Address details of the customer. |
+| smartMeterInterest | Boolean | `mandatory` | `Returned always` |  While creating a prospect the value should be false. This will be updated accordingly on /PUT operation |
 
-+ number (string, mandatory) - Valid Telephone number applicable
+#### TelephoneNumber
 
-Address
-
-+ houseName (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
-+ houseNumber (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
-+ flatNumber (string, mandatory) - (any one of the field is mandatory. House name or house number or flat number) |
-+ addressLine1 (string, optional)
-+ addressLine2 (string, optional)
-+ postalTown (string, mandatory)
-+ county (string, optional)
-+ postcode (string, mandatory)
-+ smartMeterInterest (Boolean, mandatory) While creating a prospect the value should be false. This will be updated accordingly on /PUT operation.
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| number | string | 'mandatory'. Valid Telephone number applicable. |
+| type | string | 'optional' Telephone number type, it can be `home`, `work`, `mobile`|
 
 ### Create prospect [POST /prospects]
 This controller service is used to create or retrieve the existing UCRN and Busines Partner (BP) in SAP for the anonymous customer. UI needs to give the following information as a request. The request body of this post must be a JSON object with properties listed below.
@@ -97,7 +96,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "prospectToken": "6997bc57-4f6a-543d-96ba-8eacb65400f7"
                 }
             }
-
+            
 + Response 400 (application/json)
 
             {
@@ -218,6 +217,48 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     {
                         "code": "customer",
                         "message": "error.client.customer.modificationNotAllowed"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)            
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "prospect",
+                        "message": "error.server.prospectId.empty"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)            
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "prospect",
+                        "message": "error.server.prospectId.notMatching"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)            
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "prospect",
+                        "message": "error.server.prospectId.invalid"
                     }
                 ],
                 "meta": {}
