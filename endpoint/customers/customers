@@ -1,88 +1,239 @@
 ## Group Customers
-Customers API allows you to list details of current customer represented at Online. Responses from this API will be returned in JSON format only. In order to retrieve information about current customer, client should have logged into to online and supply the access token along with the request.
-
-Customer as a resource identifies current logged in user.
-
-+ id - string
-+ title - string
-+ firstName - string
-+ surname - string
-+ dateOfBirth - string
-+ primaryTelephoneNumber - Telephone number
-+ telephoneNumbers - Array of Telephone numbers
-+ correspondeceAddress - Address
-
-Telephone Number
-+ number - string
-+ type - string
 
 ## Customers Collection [/customers]
+Customers endpoint allows you to list details of customer represented in backend (Inclusive of both online and offline customers). Responses from this endpoint will be returned in JSON format only. In order to retrieve information about current customer, client should supply access token along with the request.
 
-### Retrieve customers [GET]
+Customers endpoint also supports following controllers.
+
+* POST /customers/account-check
+* POST /customers/match-by-account-info
+* POST /customers/match-by-bank-info
+* POST /customers/match-by-postcode
+* POST /customers/create-prospect
+
+#### Customer
+
+Customer as a resource identifies current logged in user. 
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :------------------ | :------------------ | ------------------------------------------------------------ |
+| id | string | `Mandatory` | `Returned always` | Encrypted and encoded UCRN is considered as the unique identifier.|
+| title | string | `Optional` | `Returned always` | Title of the customer if available. |
+| firstName | string | `Optional` | `Returned always` | First name of the customer if available. |
+| surname | string | `Optional` | `Returned always` | Surname of the customer if available. |
+| dateOfBirth | string | `Optional` | `Returned always` | Date of birth of the customer if available, will be in dd/MM/yyyy format. |
+| primaryTelephoneNumber | TelephoneNumber | `Optional` | `Returned always` | Primary telephone number of the customer if available. |
+| telephoneNumbers | Array of TelephoneNumber | `Optional` | `Returned always` | All phone numbers available for the customer including `home` , `work` , `mobile`. |
+| acquiredSmartMeter | string | `Optional` | `Returned always` | `true` if customer have acquired smart meters, else `false`. |
+| correspondenceAddress | Address | `Optional` | `Returned always` | Correspondence address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend system. Refer [Addresses API](/api-reference/addresses.md#address)|
+
+#### TelephoneNumber
+
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| number | string | `Returned always`. Telephone number.|
+| type | string | `Returned always`. Telephone number type, it can be `home`, `work`, `mobile`.|
+
+### Retrieve customers [GET /customers]
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "customers": [
-                    {
-                        "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09",
-                        "title": "Mr",
-                        "firstName": "Pentwazz Stavea",
-                        "surname": "Kenj",
-                        "dateOfBirth": "17/04/1975",
-                        "primaryTelephoneNumber": null,
-                        "telephoneNumbers": [],
-                        "correspondenceAddress": {
-                            "address": "67, Beresford Avenue, Surbiton, Surrey, KT5 9LH",
-                            "houseNumber": "67",
-                            "flatNumber": null,
-                            "houseName": null,
-                            "addressLine1": "Beresford Avenue",
-                            "addressLine2": null,
-                            "postalTown": "Surbiton",
-                            "county": "SURREY",
-                            "postcode": "KT5 9LH",
-                            "MPAN": null,
-                            "MPRN": null
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "customers": [
+                        {
+                            "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09",
+                            "title": "Mr",
+                            "firstName": "Pentwazz Stavea",
+                            "surname": "Kenj",
+                            "dateOfBirth": "17/04/1975",
+                            "primaryTelephoneNumber": null,
+                            "telephoneNumbers": [],
+                            "acquiredSmartMeter" : "false",
+                            "correspondenceAddress": {
+                                "address": "67, Beresford Avenue, Surbiton, Surrey, KT5 9LH",
+                                "houseNumber": "67",
+                                "flatNumber": null,
+                                "houseName": null,
+                                "addressLine1": "Beresford Avenue",
+                                "addressLine2": null,
+                                "postalTown": "Surbiton",
+                                "county": "SURREY",
+                                "postcode": "KT5 9LH",
+                                "MPAN": null,
+                                "MPRN": null
+                            }
                         }
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "authorize",
-                    "message": "access_denied"
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "customer",
+                        "message": "error.customer.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Modify customers [PUT /customers/{id}]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "customer": {
+                    "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09",
+                    "title": "Mr",
+                    "firstName": "Pentwazz Stavea",
+                    "surname": "Kenj",
+                    "dateOfBirth": "17/04/1975",
+                    "primaryTelephoneNumber": null,
+                    "telephoneNumbers": [
+                        {
+                            "type": "mobile",
+                            "number": "0738123456"
+                        }
+                    ],
+                    "acquiredSmartMeter": "false",
+                    "correspondenceAddress": {
+                        "address": "67, Beresford Avenue, Surbiton, Surrey, KT5 9LH",
+                        "houseNumber": "67",
+                        "flatNumber": null,
+                        "houseName": null,
+                        "addressLine1": "Beresford Avenue",
+                        "addressLine2": null,
+                        "postalTown": "Surbiton",
+                        "county": "SURREY",
+                        "postcode": "KT5 9LH",
+                        "MPAN": null,
+                        "MPRN": null
+                    }
                 }
-            ],
-            "meta": {}
-        }
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "customer": {
+                            "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09",
+                            "title": "Mr",
+                            "firstName": "Pentwazz Stavea",
+                            "surname": "Kenj",
+                            "dateOfBirth": "17/04/1975",
+                            "primaryTelephoneNumber": null,
+                            "telephoneNumbers": [
+                                {
+                                    "type": "mobile",
+                                    "number": "0738123456"
+                                }
+                            ],
+                            "acquiredSmartMeter" : "false",
+                            "correspondenceAddress": {
+                                "address": "67, Beresford Avenue, Surbiton, Surrey, KT5 9LH",
+                                "houseNumber": "67",
+                                "flatNumber": null,
+                                "houseName": null,
+                                "addressLine1": "Beresford Avenue",
+                                "addressLine2": null,
+                                "postalTown": "Surbiton",
+                                "county": "SURREY",
+                                "postcode": "KT5 9LH",
+                                "MPAN": null,
+                                "MPRN": null
+                            }
+                        }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 304 (application/json)
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "customer",
+                        "message": "error.client.customer.modificationNotAllowed"
+                    }
+                ],
+                "meta": {}
+            }
 
 ## Customers Match by account info [/customers/match-by-account-info]
-This is a controller service which allows to find out whether a customer with matching account number, home care number or sales order number, is available in backend system. The request body of this post must be a JSON object with properties listed below.
+This is a controller service which allows to find out whether a customer with matching account number, home care number or sales order number, is available in backend system.
 
-+ title
-+ firstName
-+ surname
-+ email
-+ postcode
-+ customerReference
+The request body of this post must be a JSON object with properties listed below.
+
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| title | string | `Mandatory`. Valid title applicable. |
+| firstName | string | `Mandatory`. First name validation applicable. |
+| surname | string | `Mandatory`. Surname validation applicable. |
+| email | string | `Mandatory`. Email validation applicable. |
+| postcode | string | `Mandatory` only when match to be done with sales order number. Postcode validation applicable. |
+| customerReference | string | `Mandatory`. It can be either energy account number (`85` followed by 10 digits), homecare number (`91` followed by 10 digits) or sales order number (`20` followed by 8 digits). |
+
+The possible response status codes are as follows:
+
+| Status | Description |
+| :-------------------- | :---------- |
+| 0xRM91 | Customer found |
+| 0xTXE0 | Customer not found |
 
 ### Customer match by account info [POST]
 
@@ -119,29 +270,54 @@ This is a controller service which allows to find out whether a customer with ma
 
 + Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "surname",
-                    "message": "error.client.surname.blank"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surname",
+                        "message": "error.client.surname.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "customer",
+                        "message": "error.customer.occupier"
+                    }
+                ],
+                "meta": {}
+            }
 
 
 ## Customers Match by bank info [/customers/match-by-bank-info]
 
-This is a controller service which allows to find out whether a customer with matching postcode and direct debit bank account number, is available in backend system. The request body of this post must be a JSON object identified with customer. The parameters of the JSON is as follows:
+This is a controller service which allows to find out whether a customer with matching postcode and direct debit bank account number, is available in backend system.
+The request body of this post must be a JSON object identified with `customer`.
+The parameters of the JSON is as follows:
 
-+ title - string
-+ firstName - string
-+ surname - string
-+ email - string
-+ postcode - string
-+ directDebitNumber - string
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| title | string | `mandatory`. |
+| firstName | string | `mandatory`. First name validation applicable. |
+| surname | string | `mandatory`. Surname validation applicable. |
+| email | string | `mandatory`. Email validation applicable. |
+| postcode | string | `mandatory`. Postcode validation applicable. |
+| directDebitNumber | string | `mandatory`. Last 4 numbers of the bank account number. |
+
+The possible response status codes are as follows:
+
+| Status | Description |
+| :-------------------- | :---------- |
+| 0xRM91 | Customer found |
+| 0xTXE0 | Customer not found |
 
 ### Match by bank info [POST]
 
@@ -190,30 +366,43 @@ This is a controller service which allows to find out whether a customer with ma
                 "meta": {}
             }
 
-+ Response 404 (application/json)
++ Response 400 (application/json)
 
         {
             "status": "FAIL",
             "data": {},
             "errors": [
                 {
-                    "code": "error.email.exists",
-                    "message": "Customer profile registered with given email address."
+                    "code": "customer",
+                    "message": "error.customer.occupier"
                 }
             ],
             "meta": {}
         }
-
+        
 ## Customers Match by postcode [/customers/match-by-postcode]
 
-This is a controller service which allows to find out whether a customer with matching postcode and email address, is available in backend system. The request body of this post must be a JSON object identified with customer. The parameters of the JSON is as follows:
+This is a controller service which allows to find out whether a customer with matching postcode and email address, is available in backend system.
+The request body of this post must be a JSON object identified with `customer`.
+The parameters of the JSON is as follows:
 
-+ title - string
-+ firstName - string
-+ surname - string
-+ email - string
-+ postcode - string
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| title | string | `mandatory`. |
+| firstName | string | `mandatory`. First name validation applicable. |
+| surname | string | `mandatory`. Surname validation applicable. |
+| email | string | `mandatory`. Email validation applicable. |
+| postcode | string | `mandatory`. Postcode validation applicable. |
 
+The possible response status codes are as follows:
+
+| Status | Description |
+| :-------------------- | :---------- |
+| 0xRM91 | Customer found |
+| 0xWTAB | Customer found for postcode but email not matching |
+| 0xTXE0 | Customer not found |
+
+>`Note`: matchToken will be returned for status `0xRM91`.
 
 ### Match by bank info [POST]
 
@@ -260,10 +449,24 @@ This is a controller service which allows to find out whether a customer with ma
                 ],
                 "meta": {}
             }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "customer",
+                        "message": "error.customer.occupier"                    
+                    }
+                ],
+                "meta": {}
+            }
 
 ## Customers Account check [/customers/account-check]
 
-This is a controller service allows you to identify what type of accounts customer holds based on the match done previously. As a controller it expects the input in the form of JSON object with an attribute matchToken. Request / response are as follows.
+This is a controller service allows you to identify what type of accounts `customer` holds based on the match done previously. As a controller it expects the input in the form of JSON object with an attribute `matchToken`. Request / response are as follows.
 
 ### Account check [POST]
 
@@ -302,6 +505,79 @@ This is a controller service allows you to identify what type of accounts custom
                     {
                         "code": "matchToken",
                         "message": "error.client.matchToken.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
+## Create Prospect [/customers/create-prospect]
+This controller service is used to create or retrieve the existing  `Busines Partner` (BP) in SAP for the anonymous customer. UI needs to pass following information in request. 
+The request body of this post must be a JSON object with properties listed below.
+
+### Create Prospect [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "sakthi",
+                "surname": "vel",
+                "telephoneDetails": {
+                    "number": "07404669698"
+                },
+                "email": "sakthi@bgdigitaltest.co.uk",
+                "addressDetails": {
+                    "houseName": "Wendover court",
+                    "houseNumber": "110",
+                    "flatNumber": "2",
+                    "addressLine1": "wendover raod",
+                    "addressLine2": "Staines",
+                    "postalTown": "surrey",
+                    "county": "Middlesex",
+                    "postcode": " TW183DQ"
+                }
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "prospectToken": "4582ccb3-3112-565f-82ca-d90c01ffea57"
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surname",
+                        "message": "error.client.surname.blank"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "customer",
+                        "message": "error.server.customer.notcreated"
                     }
                 ],
                 "meta": {}
