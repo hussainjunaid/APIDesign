@@ -1,28 +1,52 @@
 ## Group Contracts
 
-Resources related to Services-Contract in the API. 
-
 ## Services-Contracts Collection [/services-contracts]
+Services Contract API allows you to create the Services contract in SAP. Customer direct debit payment details & marketing consent details provided during the journey would be captured and posted to SAP for creating a contract. After creating a contract, this api will also trigger the confirmation email to customer with the customer & product details captured. Responses from this API will be returned in JSON format only.
 
-### Send marketing consent details and payment details to the backend to create services contract [POST /services-contracts]
+>`Note:` Services Contract API will be able to handle only either a bundle product or an individual product at a time.
 
-A Services-Contract object has the following attributes:
+#### Services Contract
+Services Contract as an entity represents following attributes.
 
-+ id (optional, string) - This is the services contract account number. It will be available in the response to the services-contracts API.
-+ title (required, string) - Represents title of the customer doing services sales journey.
-+ firstName (required, string) - Represents first name of the customer doing services sales journey.
-+ lastName (required, string) - Represents last name of the customer doing services sales journey.
-+ emailAddress (required, string) - Represents email address of the customer doing services sales journey. 
-+ telephoneNumber (required, string) - Represents telephone number of the customer doing services sales journey.
-+ bothAddressSame (optional, string) - Should be true if both billing address & supply address are same.
-+ supplyAddress (required, Address) - Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.
-+ billingAddress (optional, Address) - Should be passed if billing address & supply address are different.
-+ directDebitDetails (required, Direct Debit) - Captures specifics of direct debit payment method.
-+ marketingConsentDetails (optional, Marketing Consent) - Captures specifics of marketing preferences from customer.
-+ jci (optional, Boolean) - Status based on whether JCI discount was applied to transaction.
-+ legacyAccountNumber (optional, string) - Value will be populated based on the legacy account number returned from the service contract response.
-+ transactionId (required, string) - should be the value which we received in the Create Quote API response for transaction id tag 
-+ productFeatures (required, Array of string) - List of product features corresponding to the quote given to the customer.
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | string | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
+| title | string | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
+| lastName | string | `Mandatory`| `Returned always` | LastName of customer. |
+| emailAddress | string | `Mandatory` | `Returned always` | Email address of customer |
+| telephoneNumber | string | `Mandatory`| `Returned always` | Phone number of customer |
+| bothAddressSame | boolean | `Optional` | `Returned always` | Should be `true` if both billing address & supply address are same. |
+| supplyAddress | Address | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
+| billingAddress | Address | `Optional` | `Returned always` | Billing address of customer. Value will not be available in response if billing address is not passed. |
+| directDebitDetails | DirectDebit | `Mandatory` | `Returned always` | Direct debit details of customer.  |
+| marketingConsentDetails | MarketingConsent | `Optional` | `Returned always` | Marketting consent details which customer choose. |
+| jci | boolean | `Optional` | `Returned always` | Status based on whether JCI was offered to customer or not. |
+| legacyAccountNumber | string | `Optional` | `Returned always` | Value will be populated based on the legacy account number returned from the service contract response. |
+| transactionId | string | `Optional` | `Returned always` | Should be the value which we received in the Create Quote API response in transaction id tag |
+| productFeatures | string[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
+
+#### DirectDebit
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| paymentMethod | String | `Mandatory` | `Returned always` | Any one of the direct debit payment method `MDD` or `ADD`. |
+| bankAccountNumber | String | `Mandatory` | `Returned always` | Should contain the bank account number. |
+| sortCode | String | `Mandatory` | `Returned always` | Should contain the bank sort code without any hyphen like '208111'. |
+| accountHolderName | String | `Mandatory` | `Returned always` | Should contain the bank account holder name. |
+| preferredPaymentDay | int | `Mandatory` | `Returned always` | Should contain the preferred payment day selected by customer. |
+
+#### MarketingConsent
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| letterOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if letter is selected. |
+| emailOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if email is selected. |
+| landlineOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if landline is selected. |
+| mobileOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if mobile is selected. |
+| smsMmsOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if sms/mms is selected. |
+| facetoFaceOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if face to face is selected. |
+| ivmOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if ivm is selected. |
+
+### Create services contract [POST /services-contracts]
 
 + Request
 
@@ -35,132 +59,110 @@ A Services-Contract object has the following attributes:
             {
                 "servicesContract": {
                     "id": null,
-                    "transactionId": "12341123",        
+                    "transactionId": "2002756497",
                     "title": "Mr",
-                    "firstName": "Ravi",
-                    "lastName": "Kumar",
-                    "emailAddress": "ravi.kumar@britfss.co.uk",        
-                    "telephoneNumber": "07738998190",        
-                    "bothAddressSame": false,   
+                    "firstName": "test",
+                    "lastName": "test",
+                    "emailAddress": "viki@cen.com",
+                    "telephoneNumber": "07467665766",
+                    "bothAddressSame": true,
                     "supplyAddress": {
-                        "flatNumber": 14,
-                        "houseNumber": null,
-                        "houseName": "The Rushes",
-                        "addressLine1": "Wapshott road",
+                        "flatNumber": null,
+                        "houseNumber": "1",
+                        "houseName": null,
+                        "addressLine1": "Canada Road",
                         "addressLine2": null,
-                        "postalTown": "Staines",
-                        "county": "Middlesex",
-                        "postcode": "TW183EZ"
+                        "postalTown": "COBHAM",
+                        "county": "Surrey",
+                        "postcode": "KT11 2BB",
+                        "country": null
                     },
-                    "billingAddress": {
-                        "flatNumber": 17,
-                        "houseNumber": null,
-                        "houseName": "The Rushes",
-                        "addressLine1": "Wapshott road",
-                        "addressLine2": null,
-                        "postalTown": "Staines",
-                        "county": "Middlesex",
-                        "postcode": "TW183EZ"           
-                    },
+                    "jci": false,
                     "directDebitDetails": {
-                        "paymentMethod": "MDD",
-                        "bankAccountNumber": "93536377",
-                        "sortCode": "208122",
-                        "accountHolderName": "Deepak",
-                        "preferredPaymentDay": 5
+                        "paymentMethod": "ADD",
+                        "bankAccountNumber": "78987987",
+                        "sortCode": "787867",
+                        "accountHolderName": "viki",
+                        "preferredPaymentDay": 11
                     },
                     "marketingConsentDetails": {
-                        "letterOpted": false,
-                        "emailOpted": true,
+                        "letterOpted": true,
+                        "emailOpted": false,
                         "landlineOpted": false,
                         "mobileOpted": false,
                         "smsMmsOpted": false,
                         "facetoFaceOpted": false,
                         "ivmOpted": false
                     },
-                    "jci": false,
-                    "legacyAccountNumber":null,
                     "productFeatures": [
-                        "HC400|HC400-CH|3FI1|BBC|MDD",
-                        "HC400|HC400-PD|2PFI|PLDR|MDD",
-                        "HC400|HC400-HEC|HEFI|EWR|MDD"
+                        "NA|GAK|1S|WAW|ADD"
                     ]
                 }
             }
     
 + Response 201 (application/json)
 
-        {
-            "servicesContract": {
-                "id": "2153545",
-                "transactionId": "12341123",        
-                "title": "Mr",
-                "firstName": "Ravi",
-                "lastName": "Kumar",
-                "emailAddress": "ravi.kumar@britfss.co.uk",        
-                "telephoneNumber": "07738998190",        
-                "bothAddressSame": false,   
-                "supplyAddress": {
-                    "flatNumber": 14,
-                    "houseNumber": null,
-                    "houseName": "The Rushes",
-                    "addressLine1": "Wapshott road",
-                    "addressLine2": null,
-                    "postalTown": "Staines",
-                    "county": "Middlesex",
-                    "postcode": "TW183EZ"
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "servicesContract": {
+                        "id": "911000031928",
+                        "title": "Mr",
+                        "firstName": "test",
+                        "lastName": "test",
+                        "emailAddress": "viki@cen.com",
+                        "telephoneNumber": "07467665766",
+                        "supplyAddress": {
+                            "flatNumber": null,
+                            "houseNumber": "1",
+                            "houseName": null,
+                            "addressLine1": "Canada Road",
+                            "addressLine2": null,
+                            "postalTown": "COBHAM",
+                            "county": "Surrey",
+                            "postcode": "KT11 2BB"
+                        },
+                        "billingAddress": null,
+                        "bothAddressSame": true,
+                        "marketingConsentDetails": {
+                            "letterOpted": true,
+                            "emailOpted": false,
+                            "landlineOpted": false,
+                            "mobileOpted": false,
+                            "smsMmsOpted": false,
+                            "facetoFaceOpted": false,
+                            "ivmOpted": false
+                        },
+                        "directDebitDetails": {
+                            "paymentMethod": "ADD",
+                            "bankAccountNumber": "uh3Jj9APtv3G2ZurAmH8PA==",
+                            "sortCode": "y/Q4ZcRF8Esjyvw4zx63wg==",
+                            "accountHolderName": "viki",
+                            "preferredPaymentDay": "11"
+                        },
+                        "jci": false,
+                        "productFeatures": [
+                            "NA|GAK|1S|WAW|ADD"
+                        ],
+                        "productConfigurations": null,
+                        "transactionId": "2002756497",
+                        "legacyAccountNumber": "22185986L257382"
+                    }
                 },
-                "billingAddress": {
-                    "flatNumber": 17,
-                    "houseNumber": null,
-                    "houseName": "The Rushes",
-                    "addressLine1": "Wapshott road",
-                    "addressLine2": null,
-                    "postalTown": "Staines",
-                    "county": "Middlesex",
-                    "postcode": "TW183EZ"           
-                },
-                "directDebitDetails": {
-                    "paymentMethod": "MDD",
-                    "bankAccountNumber": "93536377",
-                    "sortCode": "208122",
-                    "accountHolderName": "Deepak",
-                    "preferredPaymentDay": 5
-                },
-                "marketingConsentDetails": {
-                    "letterOpted": false,
-                    "emailOpted": true,
-                    "landlineOpted": false,
-                    "mobileOpted": false,
-                    "smsMmsOpted": false,
-                    "facetoFaceOpted": false,
-                    "ivmOpted": false
-                },
-                "jci": false,
-                "legacyAccountNumber":"1654645",
-                "productFeatures": [
-                    "HC400|HC400-CH|3FI1|BBC|MDD",
-                    "HC400|HC400-PD|2PFI|PLDR|MDD",
-                    "HC400|HC400-HEC|HEFI|EWR|MDD"
-                ]
+                "errors": [],
+                "meta": {}
             }
-        }
         
 + Response 400 (application/json)
         
-        {
-               "status": "FAIL",
-               "data":
-               {
-               },
-               "errors":
-               [
-                   {
-                       "code": "productfeature",
-                       "message": "error.client.feature.invalid"
-                   }
-               ],
-               "meta":
-               {
-               }
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "feature",
+                        "message": "error.client.feature.invalid"
+                    }
+                ],
+                "meta": {}
+            }
