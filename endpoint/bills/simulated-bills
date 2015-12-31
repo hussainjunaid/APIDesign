@@ -1,33 +1,39 @@
 ## Group Bills
-Simulated bills API allows you to create simulated bill for single/dual/joint invoice accounts by submitting the meter reading. Responses from this API will be returned in JSON format only.
 
 ## Simulated Bills Collection [/simulated-bills]
+Simulated bills API allows you to create simulated bill for single/dual/joint invoice accounts by submitting the meter reading. Responses from this API will be returned in JSON format only.
+
 Simulated bill as a resource represents following information
 
-+ id (string,Returned always) - It is a concatenated value of gas and electricity invoice numbers, separated by (-). For joint invoice account, it will have the joint invoice number.
-+ gasBalance (string, Returned always) - Balance amount in gas account.
-+ gasInvoiceNumber (string, Returned always) - Invoice number for gas account.
-+ electricityBalance (string, Returned always) - Balance amount in electricity account.
-+ electricityInvoiceNumber (string, Returned always) - Invoice number for electricity account.
-+ jointBalance (string, Returned always) - Balance amount in joint invoice account.
-+ balanceBroughtForward (string, Returned always) - Balance amount brought forward from previous bill.
-+ discountAndVat (string, Returned always) - Discount and Vat for the accounts.
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. It is a concatenated value of gas and electricity invoice numbers, separated by (-). For joint invoice account, it will have the joint invoice number. |
+| gasBalance | string | `Returned always`. Balance amount in gas account. |
+| gasInvoiceNumber | string | `Returned always`. Invoice number for gas account. |
+| electricityBalance | string | `Returned always`. Balance amount in electricity account. |
+| electricityInvoiceNumber | string | `Returned always`. Invoice number for electricity account. |
+| jointBalance | string | `Returned always`. Balance amount in joint invoice account. |
+| balanceBroughtForward | string | `Returned always`. Balance amount brought forward from previous bill. |
+| discountAndVat | string | `Returned always`. Discount and Vat for the accounts. |
 
 ### Create Simulated bill [POST /simulated-bills]
-####Meta - Meter
+#### Meta - Meter
+All the meters associated to the account can be send in request body
+Meter is represented by the below properties
 
-All the meters associated to the account can be send in request body Meter is represented by the below properties
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Mandatory`. It is a concatenated value of account number, contract number and encoded serial number of the meter separated by (-), as retrieved in Meters API. |
+| registers | collection of Register | `Mandatory`. All the registers available for the meter. |
 
-+ id (string, Mandatory) - It is a concatenated value of account number, contract number and encoded serial number of the meter separated by (-), as retrieved in Meters API.
-+ registers (collection of Register, Mandatory) - All the registers available for the meter.
-
-####Meta - Register
-
+#### Meta - Register
 Register is represented by the below properties
 
-+ id (string, Mandatory) - Register identifier retrieved from Meters API, concatenated value of account number, contract number, meter serial number and register number separated by '-'
-+ readingDate (string, Mandatory) - Date in which the reading is taken in dd/MM/yyyy format.
-+ reading (string, Mandatory) - Reading from the register, should be numeric with maximum 6 digits.
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Mandatory`. Register identifier retrieved from Meters API, concatenated value of account number, contract number, meter serial number and register number separated by '-' |
+| readingDate | string | `Mandatory`. Date in which the reading is taken in dd/MM/yyyy format. |
+| reading | string | `Mandatory`. Reading from the register, should be numeric with maximum 6 digits. |
 
 + Request (application/json)
 
@@ -85,10 +91,12 @@ Register is represented by the below properties
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
-                    "code": "authorize",
-                    "message": "access_denied"
-                }],
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
                 "meta": {}
             }
 
@@ -97,10 +105,12 @@ Register is represented by the below properties
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
-                    "code": "meterIdentifier",
-                    "message": "error.client.meterIdentifier.invalid"
-                }],
+                "errors": [
+                    {
+                        "code": "meterIdentifier",
+                        "message": "error.client.meterIdentifier.invalid"
+                    }
+                ],
                 "meta": {}
             }
 
