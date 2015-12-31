@@ -1,58 +1,82 @@
 ##Group Premises
-Premises resource allow you to retrieve the customer account information based on their premises. In order to retrieve the the account information based on premises, client should have authorization access token
 
 ## Premises Collection [/premises]
+Premises endpoint allows you to retrieve premises information. In order to retrieve the account information based on premises, client should have authorization access token.
+
+#### Premises
+
+Premises as a resource comprises the following attributes:
+
+| Name | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| id | string | NA | `Returned always` | Hash code value of address and email |
+| address | [Address](/api-reference/addresses.md#addresses) | NA | `Returned always` | Address details  |
+| accounts | String[] | NA | `Returned always` | list of account number associated with each premise |
+| smartUpgradeEligibile | boolean | NA | `Returned always` | true/false - to indicate if the premise is eligible for smart meter upgrade |
+| smartMeterEligibility | SmartMeterEligibilityDetails | NA | `Returned always`| smart eligibility details for each contract within the premise |
+
+#### SmartMeterEligibilityDetails
+
+| Name | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| qualified | boolean | NA | `Returned always` | describes if the contract within the premise is qualified for smart upgrade |
+| targetable | boolean | NA | `Returned always` | describes if the post code that the customer resides is targeted for smart upgrade |
+| sectorAvailable | boolean | NA | `Returned always` | indication from business if customer's sector is available for smart upgrade |
+| inEligibleReasons  | SmartInEligibleReasons | NA | `Returned always` | this has all the reasons along with code and description returned by SAP for smart ineligibility of premises |
+
+#### SmartInEligibleReasons
+
+| Name | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| reasonCode | string | NA | Presence depends on `smartUpgradeEligibile` | reason code for smart ineligibility |
+| reasonText | string | NA | Presence depends on `smartUpgradeEligibile` | description for smart ineligibility |
+
 ### Retrieve all premises [GET /premises]
 + Request (application/json)
 
   + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
-          {
-              "status": "SUCCESS",
-              "data": {
-                  "premises": [
-                      {
-                          "id": "NjM4MDE2MTky",
-                          "accounts": [
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "premises": [
+                        {
+                            "id": "NjM4MDE2MTky",
+                             "accounts": [
                               "851001347259"
-                          ],
-                          "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
-                          "houseNumber": "",
-                          "flatNumber": null,
-                          "houseName": "Uxbridge Court",
-                          "addressLine1": "Uxbridge Road",
-                          "addressLine2": "",
-                          "postalTown": "Kingston upon Thames",
-                          "county": "SURREY",
-                          "postcode": "KT1 2LJ",
-                          "MPAN": "1900034021774",
-                          "MPRN": null,
-                          "smartUpgradeEligibile": true
-                          "smartMeterEligibility": [
-                            {
-                                "accountNumber": "851001347259",
-                                "qualificationStatusID": "1",
-                                "targetability": "",
-                                "sectorAvailability": "ON",
-                                "inEligibleReasons": [
-                                    {
-                                        "reasonCode": "7",
-                                        "reasonDescription": "Customer has an IGT Gas Meter"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+                             ],
+                            "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
+                            "houseNumber": "",
+                            "flatNumber": null,
+                            "houseName": "Uxbridge Court",
+                            "addressLine1": "Uxbridge Road",
+                            "addressLine2": "",
+                            "postalTown": "Kingston upon Thames",
+                            "county": "SURREY",
+                            "postcode": "KT1 2LJ",
+                            "MPAN": "1900034021774",
+                            "MPRN": null,
+                            "smartUpgradeEligibile": true,
+                            "smartMeterEligibility": [
+                                {
+                                    "accountNumber": "851001347259",
+                                    "qualified": true,
+                                    "targetable": true,
+                                    "sectorAvailable": true,
+                                    "inEligibleReasons": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
