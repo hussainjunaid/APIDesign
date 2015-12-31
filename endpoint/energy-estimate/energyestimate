@@ -1,22 +1,26 @@
 ## Group Estimate Energy
-Consumption estimation API for Energy allows you to estimate gas and electricity consumption based on few input parameters
 
 ## Estimate Energy collection [/estimate/energy]
-### Retrive consumption estimation [GET]
+Consumption estimation endpoint for Energy allows you to estimate gas and electricity consumption based on few input parameters.
 
-+ propertyType (string, Required) - Represents type of property for which estimation is needed. 
-+ noOfBedrooms (string, Required) - Represents number of bedrooms for which estimation is needed. 
-+ houseAge (string, optional) - Represents age of the house. 
-+ waterHeating (string, optional) - Represents type of water heating in use. 
-+ roomHeating (string, optional) - Represents type of room heating in use. 
-+ noOfPeople (string, Required) - Represents number of people occupying the house. 
-+ boilerType (string, optional) Represents type of boiler in use. 
-+ boilerAge (string, optional) Represents age of boiler. 
-+ electricityUsageType (string) - optional. Represents electricity usage pattern. 
-+ postcode (string, Required) - Represents a valid UK postcode.
-+ apikey (string, Required) - Key that identifies client to API.
+Following items are required in the payload:
 
-####Property Type
+#### Parameters
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| propertyType | string | `Required`. Represents type of property for which estimation is needed. [Refer here](#propertytype) for more information |
+| noOfBedrooms | string | `Required`. Represents number of bedrooms for which estimation is needed. [Refer here](#noofbedrooms) for more information |
+| houseAge | string | `optional`. Represents age of the house. [Refer here](#houseage) for more information |
+| waterHeating | string | `optional`. Represents type of water heating in use. [Refer here](#waterheating) for more information |
+| roomHeating | string | `optional`. Represents type of room heating in use. [Refer here](#roomheating) for more information |
+| noOfPeople | string | `Required`. Represents number of people occupying the house. [Refer here](#noofpeople) for more information |
+| boilerType | string | `optional`. Represents type of boiler in use. [Refer here](#boilertype) for more information |
+| boilerAge | string | `optional`. Represents age of boiler. [Refer here](#boilerage) for more information |
+| electricityUsageType | string | `optional`. Represents electricity usage pattern. [Refer here](#electricityusagetype) for more information |
+| postcode | string | `Required`. Represents a valid UK postcode. |
+
+
+#### propertyType
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -30,7 +34,7 @@ Possible values and mapped descriptions is listed below for reference.
 | PROP_DET_H | Detached house |
 | PROP_DET_B | Detached bungalow |
 
-####noOfBedrooms
+#### noOfBedrooms
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -42,7 +46,7 @@ Possible values and mapped descriptions is listed below for reference.
 | 5 | exactly 5 bedrooms |
 | 6 | exactly 6 or more bedrooms |
 
-####houseAge
+#### houseAge
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -52,17 +56,17 @@ Possible values and mapped descriptions is listed below for reference.
 | BUILT_A5 | 1995+ |
 | DONT_KNOW | Don't know |
 
-####waterHeating
+#### waterHeating
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
 | :-------------------- | ----------------------------------------------------------- |
 | WATER_GS | Gas |
 | WATER_EL | Electric |
-| _NONE_ | Oil/Other |
+| &#95;NONE&#95; | Oil/Other |
 | DONT_KNOW | Don't know |
 
-####roomHeating
+#### roomHeating
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -72,10 +76,10 @@ Possible values and mapped descriptions is listed below for reference.
 | RH_ELC_UNDR_HEAT | Electric underfloor |
 | RH_GAS_CENTRAL | Gas central heating |
 | RH_GAS_ROOM_HEAT | Gas room heating | 
-| _NONE_ | Oil/Other |
+| &#95;NONE&#95; | Oil/Other |
 | DONT_KNOW | Don't know |
 
-####noOfPeople
+#### noOfPeople
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -89,7 +93,7 @@ Possible values and mapped descriptions is listed below for reference.
 | 7 | exactly 7 members |
 | 8 | 8 or more members |
 
-####Boiler Type
+#### boilerType
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -102,7 +106,7 @@ Possible values and mapped descriptions is listed below for reference.
 | &#95;NONE&#95; | Oil/Other |
 | DONT_KNOW | Don't know |
 
-####boilerAge
+#### boilerAge
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -113,7 +117,7 @@ Possible values and mapped descriptions is listed below for reference.
 | DONT_KNOW | Don't know |
 | &#95;NONE&#95; | N/A |
 
-####electricityUsageType
+#### electricityUsageType
 Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
@@ -122,6 +126,8 @@ Possible values and mapped descriptions is listed below for reference.
 | USG_EL_MED | Evenings and weekends (e.g. working couple) |
 | USG_EL_HGH | All day (e.g. family home) |
 | DONT_KNOW | Don't know |
+
+### Retrive consumption estimation [GET]
 
 + Request
 
@@ -143,3 +149,16 @@ Possible values and mapped descriptions is listed below for reference.
                 "meta": {}
             }
 
++ Response 400 (application/json)            
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "postcode",
+                        "message": "error.client.postcode.invalid"
+                    }
+                ],
+                "meta": {}
+            }
