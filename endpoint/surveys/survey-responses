@@ -1,31 +1,40 @@
 ## Group Surveys
-Survey Responses API allows you to save the survey information from SAP system. Responses from this API will be returned in JSON format only. In order to save the survey information about the customer, client should supply access token along with the request body.
 
 ## Survey Response Collection [/survey-responses]
-This service api is used to store the survey details into SAP system. The survey details will be mapped to the customer BP number and maintain in SAP. The request body of this post must be a JSON object with properties listed below.
+Survey Responses allow us to save the survey information into SAP system using customer BP number. Responses from this API will be returned in JSON format only. In order to save the survey information about the customer, client should supply access token along with the request body.
 
-+ question (string, Mandatory)
-+ answer (string, Mandatory)
+#### Survey responses
+
+| Name | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+|id| string |'id' is formed by combining the values of ucrn and premise ID|
+| question | string | This is the value of question id that is returned from the SAP |
+| answer | string | This is the value of answer id that is returned from the SAP |
+
 
 #### Smart credit question Description
 
-+ question2 - Is your meter an Economy 7 meter?
-+ question3 - Is your property a flat?
-+ question4 - Are all meters and fusebox accessible?
-+ question5 - Do you already have a smart meter at the property?
+| Question ID | Question description |
+| :-------------------- | ------------------------------------------------------------ |
+| question2 |  Is your meter an Economy 7 meter? |
+| question3 |  Is your property a flat? |
+| question4 |  Are all meters and fusebox accessible? |
+| question5 |  Do you already have a smart meter at the property? |
 
-#### Smart prepay question description
 
-+ question1 - Is your meter an Economy 7 meter?
-+ question2 - Do you have an outstanding balance on your existing meter(s)?
-+ question3 - Is your property a flat?
-+ question4 - Are all meters and fusebox accessible?
-+ question5 - Do you already have a smart meter at the property?
+#### Smart prepay question description 
+
+
+| Question ID | Question description |
+| :-------------------- | ------------------------------------------------------------ |
+| question1 |  Is your meter an Economy 7 meter? |
+| question2 |  Do you have an outstanding balance on your existing meter(s)? |
+| question3 |  Is your property a flat? |
+| question4 |  Are all meters and fusebox accessible? |
+| question5 |  Do you already have a smart meter at the property? |
 
 
 ### Submit survey responses [POST /survey-responses]
-This controller service is used to create or retrieve the existing UCRN and Busines Partner (BP) in SAP for the anonymous customer. UI needs to give the following information as a request. The request body of this post must be a JSON object with properties listed below.
-
 + Request (application/json)
 
     + Headers
@@ -35,37 +44,40 @@ This controller service is used to create or retrieve the existing UCRN and Busi
     + Body
         
             {
-            
-             "surveyResponse": {
-                    "id": "100",
-                    "survey": "1",
-                    "responses": [{
-                        "question": "question2",
-                        "answers": [
-                            "option2"
-                        ]
-                    }, {
-                        "question": "question3",
-                        "answers": [
-                            "option2"
-                        ]
-                    }, {
-                        "question": "question4",
-                        "answers": [
-                            "option2"
-                        ]
-                    }, {
-                        "question": "question5",
-                        "answers": [
-                            "option2"
-                        ]
-                    }]
+                "surveyResponse": {
+                    "id": null,
+                    "responses": [
+                        {
+                            "question": "question2",
+                            "answers": [
+                                "option2"
+                            ]
+                        },
+                        {
+                            "question": "question3",
+                            "answers": [
+                                "option2"
+                            ]
+                        },
+                        {
+                            "question": "question4",
+                            "answers": [
+                                "option2"
+                            ]
+                        },
+                        {
+                            "question": "question5",
+                            "answers": [
+                                "option2"
+                            ]
+                        }
+                    ]
                 },
                 "meta": {
                     "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
                 }
             }
-
+            
 + Response 200 (application/json)
 
             {
@@ -121,7 +133,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "data": {
                     "surveyResponses": [
                         {
-                            "id": "003602114280_NjM4MDE2MTky",
+                            "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09_NjM4MDE2MTky",
                             "responses": [
                                 {
                                     "question": "question1",
@@ -138,7 +150,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                             ]
                         },
                         {
-                            "id": "003602114280_AqwerTky",
+                            "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09_AqwerTky",
                             "responses": [
                                 {
                                     "question": "question1",
@@ -172,8 +184,8 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     }
                 ],
                 "meta": {}
-            }
-
+            }     
+            
 + Response 500 (application/json)
 
             {
@@ -188,8 +200,11 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
 
-### Retrieve specific survey responses [GET /survey-responses/{surveyId}]
+### Retrieve responses for a specific survey [GET /survey-responses/{surveyId}]
++ Parameters
 
+    + surveyId (string) - Survey Id
+    
 + Request (application/json)
 
     + Headers
@@ -203,7 +218,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "status": "SUCCESS",
                 "data": {
                     "surveyResponse": {
-                        "id": "003602114280_NjM4MDE2MTky",
+                        "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09_NjM4MDE2MTky",
                         "responses": [
                             {
                                 "question": "question1",
@@ -259,6 +274,134 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     {
                         "code": "survey.id",
                         "message": "error.client.survey.notfound"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Modify survey responses [PUT /survey-responses/{surveyId}]
++ Parameters
+
+    + surveyId (string) - Survey Id
+    
++ Request (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+        
+            {
+                "surveyResponse": {
+                    "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09_NjM4MDE2MTky",
+                    "responses": [
+                        {
+                            "question": "question2",
+                            "answers": [
+                                "option2"
+                            ]
+                        },
+                        {
+                            "question": "question3",
+                            "answers": [
+                                "option2"
+                            ]
+                        },
+                        {
+                            "question": "question4",
+                            "answers": [
+                                "option2"
+                            ]
+                        },
+                        {
+                            "question": "question5",
+                            "answers": [
+                                "option2"
+                            ]
+                        }
+                    ]
+                }
+            }
+            
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "surveyResponse": {
+                        "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09_NjM4MDE2MTky",
+                        "responses": [
+                            {
+                                "question": "question2",
+                                "answers": [
+                                    "option2"
+                                ]
+                            },
+                            {
+                                "question": "question3",
+                                "answers": [
+                                    "option2"
+                                ]
+                            },
+                            {
+                                "question": "question4",
+                                "answers": [
+                                    "option2"
+                                ]
+                            },
+                            {
+                                "question": "question5",
+                                "answers": [
+                                    "option2"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surveyResponse",
+                        "message": "error.server.surveyResponse.notUpdated"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 304 (application/json)
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "surveyResponse",
+                        "message": "error.client.surveyResponse.modificationNotAllowed"
                     }
                 ],
                 "meta": {}
