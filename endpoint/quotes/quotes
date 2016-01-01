@@ -1,55 +1,73 @@
 ## Group Quotes
-Quote API allows you to request for energy quote from Online for a specific brand. Responses from this API will be in JSON format.
 
 ## Quotes Collection [/quotes]
+Quote API allows you to request for energy quote from `Online` for a specific brand. Responses from this API will be in JSON format.
+
+#### Quote
 Quote as a resource is comprised of following information.
 
-+ id (number, Returned always) - Unique identification for the resource. Note that this is a generated resource and hence is not unique across all requests but is within the result-set returned by the service. It also signifies the order of quote based on cost to user (lower the number, cheaper the quote).
-+ tariff (string, Returned always) - Represents a link to Tariff resource. Quote is always linked to a tariff and this relationship is represented via this propery.
-+ gasRates (object, Presence depends on parameters) - Represents quote rates applicable for gas.
-+ electricityRates (object, Presence depends on parameters) - Represents quote rates applicable for electricity.
-+ orderPayload (string, Returned always) - Represents payload to use if switching to tariff quoted.
-Note: orderPayload is just a temporary implementation. Will be revisited once Shop API is live.
+| Property | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| id | number | NA |`Returned always`| Unique identification for the resource. Note that this is a generated resource and hence is not unique across all requests but is within the result-set returned by the service. It also signifies the order of quote based on cost to user (lower the number, cheaper the quote).  |
+| tariff | string | NA | `Returned always`| Represents a link to [Tariff](Tariff-API-Reference) resource. Quote is always linked to a tariff and this relationship is represented via this propery. |
+| gasRates | object | NA | `Presence depends on parameters`| Represents quote rates applicable for `gas`. |
+| electricityRates | object | NA | `Presence depends on parameters` | Represents quote rates applicable for `electricity`. |
+| orderPayload | string | NA |`Returned always`| Represents payload to use if switching to tariff quoted. |
 
-Quote Rates
+>`Note:` orderPayload is just a temporary implementation. Will be revisited once Shop API is live.
+
+#### Quote Rates
 Quote rates is not an independent resource. It is however related to quote as it sheds more light on what rates apply for the quote requested. Instances of this object will always be related to a single fuel.
 
-+ standingCharges (number, Returned always) - Standing charges that apply for current instance of quote.
-+ personalProjection (number, Returned always) - Personalized projection value based on input parameters.
-+ consumption (number, Returned always) - Represents consumption value used for quote computation.
-+ estimatedAnnualConsumption (number) - Represents estimated annual consumption for current instance of quote.
-+ estimatedAnnualCost (number, Returned always) - Represents annual cost for current instance of quote.
-+ tariffComparisonRate (number, Returned always) - Represents tariff comparison rate based on average consumption for current quote.
-+ registers (object, Returned always) - List of registers pertaining to tariff linked with current instance of quote.
-Note: estimatedAnnualConsumption is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. estimatedAnnualCost would be the annual cost assuming the user had the same consumption as estimatedAnnualConsumption.
+| Property | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| standingCharges | number | NA | `Returned always` | Standing charges that apply for current instance of quote. |
+| personalProjection | number | NA |`Returned always`| Personalized projection value based on input parameters. |
+| consumption | number | NA |`Returned always`| Represents consumption value used for quote computation. |
+| estimatedAnnualConsumption | number | NA |  |Represents estimated annual consumption for current instance of quote. |
+| estimatedAnnualCost | number | NA | `Returned always`| Represents annual cost for current instance of quote. |
+| tariffComparisonRate | number | NA |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
+| registers | object | NA | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
 
-Registers
+Note: `estimatedAnnualConsumption` is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. `estimatedAnnualCost` would be the annual cost assuming the user had the same consumption as `estimatedAnnualConsumption`. 
 
+#### Registers
 Registers represents meter registers associated with a tariff. Properties of registers are listed below.
 
-+ id (string, Returned always) - Unique id associated with current register. This is always unique per tariff.
-+ description (string, Returned always) - Description of the register, also specifies the time period the register applies.
-+ unitRate (number, Returned always) - Represents rate that is applicable per unit of fuel.
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. Unique id associated with current register. This is always unique per tariff. |
+| description | string | `Returned always`. Description of the register, also specifies the time period the register applies. |
+| unitRate | number | `Returned always`. Represents rate that is applicable per unit of fuel. |
 
-### Retrieve Quote [GET /quotes]
+#### Meta Information
+Along with quote, you also get a mail payload with following properties returned. Should you need to send this payload to [Email API](Email-API-Reference), the client can do so.
+
+| Property | Type | Description |
+| :-------------------- | :---------- | :----------------------------------------------------------- |
+| timestamp | string | `Returned always`. Represents encrypted timestamp nounce. |
+| payload | string | `Returned always`. Represents encrypted payload. |
+| checksum | string | `Returned always`. Represents checksum value. |
+
+### Retrieve Quotes anonymously [GET /quotes?{type}&{apikey}&{fuel}&{paymentOption}&{postcode}&{gasConsumption}&{electricityConsumption}&{economyMeter}&{tariff}]
 
 + Parameters
 
-+ type (string,Optional) - Can be non-oam for anonymous quote. This is implied and hence can be omitted.
-+ apikey (string,Required) - Key that identifies client to API.
-+ fuel (string,Required) - Fuel type for which quote is requested for. Possible values include gas, electricity and dual.
-+ paymentOption (string,Required) - Payment option preferred by customer. Possible values include mdd (Monthly direct debit), qcc (Quarterly cash cheque) and ppm (Prepayment).
-+ postcode (string,Required) - Postcode for which the quote is requested. Quoted amount varies based on region.
-+ gasConsumption (string,Optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is electricity.
-+ electricityConsumption (string,Optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is gas.
-+ economyMeter (boolean,Optional) - Must be true if used has a Economy meter.
-+ tariff (string,Optional) - Tariff name if filtering required.
+    + type (string,Optional) - Can be non-oam for anonymous quote. This is implied and hence can be omitted.
+    + apikey (string,Required) - Key that identifies client to API.
+    + fuel (string,Required) - Fuel type for which quote is requested for. Possible values include gas, electricity and dual.
+    + paymentOption (string,Required) - Payment option preferred by customer. Possible values include 'mdd' i.e. Monthly direct debit, 'qcc' i.e. Quarterly cash cheque and 'ppm' i.e. Prepayment
+    + postcode (string,Required) - Postcode for which the quote is requested. Quoted amount varies based on region.
+    + gasConsumption (string,Optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is electricity.
+    + electricityConsumption (string,Optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is gas.
+    + economyMeter (boolean,Optional) - Must be true if used has a Economy meter.
+    + tariff (string,Optional) - Tariff name if filtering required.
 
 + Request (application/json)
 
-+ Headers
+    + Headers
 
-    cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
@@ -309,177 +327,178 @@ Registers represents meter registers associated with a tariff. Properties of reg
             }
 
 
-### Retrieve logged in Quote [GET /quotes]
+### Retrieve logged in Quotes [GET /quotes?{type}&{accountNumber*}]
 
 + Parameters
 
-+ type (string) - Required. This must be oam in order to imply logged in quote.
-+ accountNumber (string[]) - Required. List of account numbers for which the quote is to be retrieved.
+    + type (string) - Required. This must be oam in order to imply logged in quote.
+    + accountNumber (string[]) - Required. List of account numbers for which the quote is to be retrieved.
 
 + Request (application/json)
 
-+ Headers
-
-    cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    + Headers
+    
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
 
             {
-                "status": "SUCCESS",
-                "data": {
-                    "quotes": [
+              "status": "SUCCESS",
+              "data": {
+                "quotes": [
+                  {
+                    "id": 1,
+                    "gasRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 293.73,
+                      "consumption": 4415.33,
+                      "registers": [
                         {
-                            "id": 1,
-                            "gasRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 293.73,
-                                "consumption": 4415.33,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 4.67
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 13500,
-                                "estimatedAnnualCost": 718.22,
-                                "tariffComparisonRate": 5.32
-                            },
-                            "tariff": "fix-and-reward-february-2016",
-                            "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzY3o4d0xuVVhEL2N1L2NLUVI1UDRLSnF5enJZcENHSVhGcUQ3b1Z6M2tHWUdIU2Zyd2FZL0ZNQgpCUFJSVGdiVlhTaURJazVNYU5NdDBEbk1zdWoxQ0gyc1piVkFhSHBJNkZHWjlKSXFTS2FHRmVIaHhCS2RmcSszek5wYTRhNUxPOUlpClpWbG0rZkhFTmltZ2tPaFpuTWNOVnRncnRrMUJjYnNYbGNWNC9rT1AzcmZkRUs4SVorKzdWL2FyQ0M5N0E1bVJsYnhTVmRqZHcwUEQKdE1tWmlKSDBYWlJYWnVJR0h2bVBJTXRFemZSMg",
-                            "electricityRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 342.22,
-                                "consumption": 1924.41,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 13.24
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 3200,
-                                "estimatedAnnualCost": 511.12,
-                                "tariffComparisonRate": 15.97
-                            }
-                        },
-                        {
-                            "id": 2,
-                            "gasRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 294.19,
-                                "consumption": 4415.33,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 4.68
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 13500,
-                                "estimatedAnnualCost": 719.63,
-                                "tariffComparisonRate": 5.33
-                            },
-                            "tariff": "standard",
-                            "orderPayload": "eHBpM2ZmaDBMclFwOHF6T0lpK3pBNzFHZWMxTkcrU0szWmVla2dEODRJRmRrUGdKYmJONnI1MU1FNU1pdTRZLzRtdjBuRWkyVFBPcgpaVnB4SEZiaE9SNDg2dEg0ei9INEVrbzdVSlFEZmVrVTY0OHBrWkxEcjVxWkk3c1YyUGtOaXRaTUc0bWVzWHlQTkRkS29hSWRvSlZ6CldRT0VnNENOMk1iaEprV1pldUlRK2VJMkg4eXRSYTB1UXNNcVcyQ2o4MFFrZjlPZjFCWTFmQkJ2NTBuai9oTU1xeU9uN3Fmd3FCUWEKRmE0YmpHOD0",
-                            "electricityRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 342.62,
-                                "consumption": 1924.41,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 13.26
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 3200,
-                                "estimatedAnnualCost": 511.8,
-                                "tariffComparisonRate": 15.99
-                            }
-                        },
-                        {
-                            "id": 3,
-                            "gasRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 294.19,
-                                "consumption": 4415.33,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 4.68
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 13500,
-                                "estimatedAnnualCost": 719.63,
-                                "tariffComparisonRate": 5.33
-                            },
-                            "tariff": "fix-and-fall-june-2016",
-                            "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzWkl0YWdOS0pSRTdXR2VscEErOTYxTkx3WFFGZXUwWURhMmhvbW1SaEUvcXQxTUZjbEtLL0JKbAp2VVIvV3k0MFVKOHoxVkxYVjd0NHllWHdKbzljTkRLWGlFZ09MUEd1NmtXWWtDQWhjT3V3eUZ0WEk5SWJOb0w2a3IvRDRQdDRWaXBtClphRWtWZHNRQUxOdHBxRkZVL1d3MGJ0K093N0tlS2UvQ1BoQ2dWMjBnU2creUl1N29SUUJudTBMbFhmV0UxTm9QOXVYaFNuZzkybGUKZVFOeEJJUXRhbVVlZTU1SHJkSmh0dGlPekxxTQ",
-                            "electricityRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 342.62,
-                                "consumption": 1924.41,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 13.26
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 3200,
-                                "estimatedAnnualCost": 511.8,
-                                "tariffComparisonRate": 15.99
-                            }
-                        },
-                        {
-                            "id": 4,
-                            "gasRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 294.19,
-                                "consumption": 4415.33,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 4.68
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 13500,
-                                "estimatedAnnualCost": 719.63,
-                                "tariffComparisonRate": 5.33
-                            },
-                            "tariff": "fixed-price-december-2017",
-                            "orderPayload": "K1IyeXlxOEpacXU4QjFnR2hzMVplOFgxODQvSWVIbHhRSnA5WDRvK3dmUGxaamZyVElKM3Z1dHA3alhrSjlwemJIdWtvcEdiOHpENgpqSHdVQmcybklvYkQ5QmsxVENJVjVVWG12aHl6b1dQalQzaXdlSnl0Zk1CekhpNEJRYzNCSDhKV1R3bDBrRWw3Y1J1SVZrQ3hlSU42CkpmeStUTlNEL0MwVy9waExDZGJCa1VSd29WTjlZMlhsd0ZOY1k0NEJpSFRPNmcwaWxUcEloU2E3UWlSUnJQVURKYUZvQkRDTE9NdTIKK1p1ZlpGbmN4RnF6cGxpZjMvVU5lVGIya09OTw",
-                            "electricityRates": {
-                                "standingCharges": 26,
-                                "personalProjection": 372.52,
-                                "consumption": 1924.41,
-                                "registers": [
-                                    {
-                                        "id": "0001",
-                                        "description": "Standard",
-                                        "unitRate": 14.81
-                                    }
-                                ],
-                                "estimatedAnnualConsumption": 3200,
-                                "estimatedAnnualCost": 561.52,
-                                "tariffComparisonRate": 17.55
-                            }
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 4.67
                         }
-                    ]
-                },
-                "errors": {},
-                "meta": {
-                    "mail": {
-                        "timestamp": "LPnGH7BI/sikSiBj2Onvgg==",
-                        "payload": "...encrypted-payload...",
-                        "checksum": "1d4117235ec121a157427946f06652234ac187edbc27fab5a755360c1e693a83"
+                      ],
+                      "estimatedAnnualConsumption": 13500,
+                      "estimatedAnnualCost": 718.22,
+                      "tariffComparisonRate": 5.32
+                    },
+                    "tariff": "fix-and-reward-february-2016",
+                    "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzY3o4d0xuVVhEL2N1L2NLUVI1UDRLSnF5enJZcENHSVhGcUQ3b1Z6M2tHWUdIU2Zyd2FZL0ZNQgpCUFJSVGdiVlhTaURJazVNYU5NdDBEbk1zdWoxQ0gyc1piVkFhSHBJNkZHWjlKSXFTS2FHRmVIaHhCS2RmcSszek5wYTRhNUxPOUlpClpWbG0rZkhFTmltZ2tPaFpuTWNOVnRncnRrMUJjYnNYbGNWNC9rT1AzcmZkRUs4SVorKzdWL2FyQ0M5N0E1bVJsYnhTVmRqZHcwUEQKdE1tWmlKSDBYWlJYWnVJR0h2bVBJTXRFemZSMg",
+                    "electricityRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 342.22,
+                      "consumption": 1924.41,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 13.24
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 3200,
+                      "estimatedAnnualCost": 511.12,
+                      "tariffComparisonRate": 15.97
                     }
+                  },
+                  {
+                    "id": 2,
+                    "gasRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 294.19,
+                      "consumption": 4415.33,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 4.68
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 13500,
+                      "estimatedAnnualCost": 719.63,
+                      "tariffComparisonRate": 5.33
+                    },
+                    "tariff": "standard",
+                    "orderPayload": "eHBpM2ZmaDBMclFwOHF6T0lpK3pBNzFHZWMxTkcrU0szWmVla2dEODRJRmRrUGdKYmJONnI1MU1FNU1pdTRZLzRtdjBuRWkyVFBPcgpaVnB4SEZiaE9SNDg2dEg0ei9INEVrbzdVSlFEZmVrVTY0OHBrWkxEcjVxWkk3c1YyUGtOaXRaTUc0bWVzWHlQTkRkS29hSWRvSlZ6CldRT0VnNENOMk1iaEprV1pldUlRK2VJMkg4eXRSYTB1UXNNcVcyQ2o4MFFrZjlPZjFCWTFmQkJ2NTBuai9oTU1xeU9uN3Fmd3FCUWEKRmE0YmpHOD0",
+                    "electricityRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 342.62,
+                      "consumption": 1924.41,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 13.26
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 3200,
+                      "estimatedAnnualCost": 511.8,
+                      "tariffComparisonRate": 15.99
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "gasRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 294.19,
+                      "consumption": 4415.33,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 4.68
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 13500,
+                      "estimatedAnnualCost": 719.63,
+                      "tariffComparisonRate": 5.33
+                    },
+                    "tariff": "fix-and-fall-june-2016",
+                    "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzWkl0YWdOS0pSRTdXR2VscEErOTYxTkx3WFFGZXUwWURhMmhvbW1SaEUvcXQxTUZjbEtLL0JKbAp2VVIvV3k0MFVKOHoxVkxYVjd0NHllWHdKbzljTkRLWGlFZ09MUEd1NmtXWWtDQWhjT3V3eUZ0WEk5SWJOb0w2a3IvRDRQdDRWaXBtClphRWtWZHNRQUxOdHBxRkZVL1d3MGJ0K093N0tlS2UvQ1BoQ2dWMjBnU2creUl1N29SUUJudTBMbFhmV0UxTm9QOXVYaFNuZzkybGUKZVFOeEJJUXRhbVVlZTU1SHJkSmh0dGlPekxxTQ",
+                    "electricityRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 342.62,
+                      "consumption": 1924.41,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 13.26
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 3200,
+                      "estimatedAnnualCost": 511.8,
+                      "tariffComparisonRate": 15.99
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "gasRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 294.19,
+                      "consumption": 4415.33,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 4.68
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 13500,
+                      "estimatedAnnualCost": 719.63,
+                      "tariffComparisonRate": 5.33
+                    },
+                    "tariff": "fixed-price-december-2017",
+                    "orderPayload": "K1IyeXlxOEpacXU4QjFnR2hzMVplOFgxODQvSWVIbHhRSnA5WDRvK3dmUGxaamZyVElKM3Z1dHA3alhrSjlwemJIdWtvcEdiOHpENgpqSHdVQmcybklvYkQ5QmsxVENJVjVVWG12aHl6b1dQalQzaXdlSnl0Zk1CekhpNEJRYzNCSDhKV1R3bDBrRWw3Y1J1SVZrQ3hlSU42CkpmeStUTlNEL0MwVy9waExDZGJCa1VSd29WTjlZMlhsd0ZOY1k0NEJpSFRPNmcwaWxUcEloU2E3UWlSUnJQVURKYUZvQkRDTE9NdTIKK1p1ZlpGbmN4RnF6cGxpZjMvVU5lVGIya09OTw",
+                    "electricityRates": {
+                      "standingCharges": 26,
+                      "personalProjection": 372.52,
+                      "consumption": 1924.41,
+                      "registers": [
+                        {
+                          "id": "0001",
+                          "description": "Standard",
+                          "unitRate": 14.81
+                        }
+                      ],
+                      "estimatedAnnualConsumption": 3200,
+                      "estimatedAnnualCost": 561.52,
+                      "tariffComparisonRate": 17.55
+                    }
+                  }
+                ]
+              },
+              "errors": {},
+              "meta": {
+                "mail": {
+                  "timestamp": "LPnGH7BI/sikSiBj2Onvgg==",
+                  "payload": "...encrypted-payload...",
+                  "checksum": "1d4117235ec121a157427946f06652234ac187edbc27fab5a755360c1e693a83"
                 }
+              }
             }
-            
+
 + Response 400 (application/json)
 
             {
@@ -490,11 +509,3 @@ Registers represents meter registers associated with a tariff. Properties of reg
                 },
                 "meta": {}
             }
-
-Meta Information
-
-Along with quote, you also get a mail payload with following properties returned. Should you need to send this payload to Email API, the client can do so.
-        
-+ timestamp (string,Returned always) - Represents encrypted timestamp nounce.
-+ payload (string,Returned always) - Represents encrypted payload.
-+ checksum (string,Returned always) - Represents checksum value.
