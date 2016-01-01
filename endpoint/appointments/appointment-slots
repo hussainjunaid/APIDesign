@@ -1,0 +1,132 @@
+## appointment slots collection [/appointment-slots]
+Appointment Slots endpoint allows you to retrieve appointment slots for following operations,
+
+1. Book an appointment to install smart meter for service order.
+2. Book an appointment for `Annual service visit (ASV)`, `First visit (FV)`, `Interim Breakdown (IB)` or reschedule the same.
+
+#### Appointment Slot
+Appointment Slot as a resource will be represented as below:
+
+| Name | Type | Description |
+| :------------| :---------- | ------------------------------------------------------------ |
+| id | string | Unique Id to represent the appointment slot with pattern of variant, start time and end time. |
+| variant | String | It will represent the time variant of slots. Possible variants for preference slots are `AM`, `PM`, `FF`, `ALLDAY`, `EVENING`.|
+| startTime | String | Start time of the appointment slot.  |
+| endTime | String | End time of the appointment slot. |
+| available | boolean |  Status of the appointment slot. |
+
+### Retrieve appointment-slots [GET /appointment-slots?j{jobType}&{dateStartFrom}&{range}&{showUnavailableSlot}&{serviceOrder}&{servicesAccount}&{appointment}&{priority}&{fault*}]
++ Parameters
+
+    + jobType (string,required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
+    + dateStartFrom (integer,Optional) - Number of days added to the current to set the start date of appointment
+    + range (integer,Optional) - Number of days added to the start date  to set the end date of appointment
+    + showUnavailableSlot (boolean,Optional) - default value is `true`. Used to filter unavailable slots from the appointment slots response
+    + serviceOrder (string,optional) - Required for the type `smart`. 64-bit encrypted service order number
+    + servicesAccount (string,optional) - Required for the types `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`. Service account of the customer which has the appointment to be rescheduled
+    + appointment (string,optional) - Required while rescheduling an existing appointment. Id of the appointment to be rescheduled
+    + priority (boolean,Optional) - default value is `false`. Priority of the appointment to be rescheduled
+    + fault (string,optional) - Required for type `ib`, `asv-and-ib` and `fv-and-ib`. Multiple faults can be passed as a query parameter to get the appointment slots to book an engineer
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "appointmentSlots": [
+                        {
+                            "id": "1-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                            "variant": "1",
+                            "startTime": "2015-10-11T08:00:00+0100",
+                            "endTime": "2015-10-11T10:00:00+0100",
+                            "available": true
+                        },
+                        {
+                            "id": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                            "variant": "2",
+                            "startTime": "2015-09-11T14:00:00+0100",
+                            "endTime": "2015-09-11T16:00:00+0100",
+                            "available": true
+                        },
+                        {
+                            "id": "AM-2015-10-11T08:00:00+0100-2015-10-11T13:00:00+0100",
+                            "variant": "AM",
+                            "startTime": "2015-10-11T08:00:00+0100",
+                            "endTime": "2015-10-11T13:00:00+0100",
+                            "available": true
+                        },
+                        {
+                            "id": "2-2015-11-12T14:00:00+0000-2015-10-11T16:00:00+0000",
+                            "variant": "2",
+                            "startTime": "2015-11-12T14:00:00+0000",
+                            "endTime": "2015-11-12T16:00:00+0000",
+                            "available": false
+                        }            
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "serviceorder",
+                        "message": "error.client.serviceorder.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slots",
+                        "message": "error.client.slots.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
