@@ -1,201 +1,769 @@
 ## Group Appointments
 
-Appointments and endpoints will allow the retrieve, cancel or set an appointment for a specific service account  
+## appointments collection [/appointments]
+Appointments endpoint allows you to manage appointments. Responses will be returned in JSON format only.
 
-## appointments collection [ /appointments ]
-### get appointments [GET /appointments{?serviceAccount} ]
-+ serviceAccount - (required, string) ... The service account id
+#### Appointment
+Appointment as a resource represents following information
 
-+ Parameters
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :-------------------- | :-------------------- | ------------------------------------------------------------ |
+| id | String | `Optional` | `Returned always` | It is the work request number to track the appointment. |
+| servicesAccount | String | `Required` | `Returned always` | It is the account number of the appointment. |
+| status | String | `Optional` | `Returned always` | It is the status of the appointment like `booked`, `engineer-preparing`, `engineer-on-the-way`, `completed`, `not-available`.|
+| jobType | String | `Optional` | `Returned always` | It is the type of the appointment. The possible reasons of appointment for a customer are `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib`.|
+| trackable | boolean | `Optional` | `Returned always` | It is used to determine whether the job tracking can be displayed. |
+| reschedulable | boolean | `Optional` | `Returned always` | It is used to identify reschedule option for the appointment. |
+| cancellable | boolean | `Optional` | `Returned always` | It is used to identify cancel option for the appointment. |
+| telephoneNumber | String | `Required` | `Returned always` | It is the contact number for the appointment. |
+| appointmentSlot | String | `Required` | `Returned always` | It represents the [appointment slot](/api-reference/appointment-slots.md#appointment-slot) mapped to this appointment. |
+| priority | boolean | `Optional` | `Returned always` | It represents the priority of the appointment. Default value is false. |
+| faults | Array of String |`Optional` | `Returned always` | It is list of [fault(s)](/api-reference/faults.md#fault) booked for the appointment. |
 
-    + serviceAccount - (required, string) ... The service account id
-
+### Retrieve appointments [GET /appointments]
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
     
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
+            {
+              "status": "SUCCESS",
+              "data": {
                 "appointments": [
+                  {
+                    "id": "567891011",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0057",
+                      "F0008"
+                    ]
+                  },
+                  {
+                    "id": "567891012",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0057"
+                    ]
+                  },
+                  {
+                    "id": "567891013",
+                    "servicesAccount": "919918239013",
+                    "status": "booked",
+                    "jobType": "fv-and-ib",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-11-12T14:00:00+0000-2015-11-12T16:00:00+0000",
+                    "priority": false,
+                    "faults": [
+                      "F0007"
+                    ]
+                  }
+                ]
+              },
+              "errors": [],
+              "meta": {}
+            }
+
+### Retrieve specific appointment [GET /appointments/{appointmentId}]
++ Parameters
+
+    + appointmentId (string) - Appointment Id
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+            {
+              "status": "SUCCESS",
+              "data": {
+                "appointment": {
+                  "id": "567891011",
+                  "servicesAccount": "919918239012",
+                  "status": "booked",
+                  "reason": "asv",
+                  "trackable": true,
+                  "reschedulable": true,
+                  "cancellable": true,
+                  "telephoneNumber": "0738123456",
+                  "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                  "priority": false,
+                  "faults": [
+                    "F0007",
+                    "F0008"
+                  ]
+                }
+              },
+              "errors": [],
+              "meta": {}
+            }
+
+### Retrieve specific appointment with slots and faults sideloaded [GET /appointments/{appointmentId}?include=appointmentSlot&include=fault]
++ Parameters
+
+    + appointmentId (string) - Appointment Id
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+            {
+              "status": "SUCCESS",
+              "data": {
+                "appointment": {
+                  "id": "567891011",
+                  "servicesAccount": "919918239012",
+                  "status": "booked",
+                  "reason": "asv",
+                  "trackable": true,
+                  "reschedulable": true,
+                  "cancellable": true,
+                  "telephoneNumber": "0738123456",
+                  "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                  "priority": false,
+                  "faults": [
+                    "F0007",
+                    "F0008"
+                  ]
+                },
+                "appointmentSlot": {
+                  "id": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                  "variant": "2",
+                  "startTime": "2015-10-11T08:00:00+0100",
+                  "endTime": "2015-10-11T10:00:00+0100",
+                  "available": false
+                },
+                "faults": [
+                  {
+                    "id": "F0008",
+                    "title": "Unknown",
+                    "description": "Unknown fault"
+                  },
+                  {
+                    "id": "F0007",
+                    "title": "Time Clock",
+                    "description": "Problem with Time Clock"
+                  }
+                ]
+              },
+              "errors": [],
+              "meta": {}
+            }
+
++ Response 404 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
                     {
-                        "id": "567891011",
-                        "account": "919918239012",
-                        "status": "booked",
-                        "reason": "asv",
-                        "showTracking": true,
-                        "reschedulable": true,
-                        "cancellable": true,
-                        "slot": "919918239012-567891011"
+                        "code": "appointment",
+                        "message": "error.client.appointment.notFound"
                     }
                 ],
-                "slots": [
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+            
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
                     {
-                        "id": "919918239012-567891011",
-                        "date": "2015-09-29T07:00:00+00:00",
-                        "startTime": "08:00",
-                        "endTime": "10:00",
-                        "available": false,
-                        "preferredSlot": false,
-                        "appointment": "567891011"
+                        "code": "service",
+                        "message": "error.system.pi.operation.fail"
                     }
+                ],
+                "meta": {}
+            }
+            
+### Retrieve all appointments with Slots and Faults sideloaded [GET /appointments?include=appointmentSlot&include=fault]
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+            {
+              "status": "SUCCESS",
+              "data": {
+                "appointments": [
+                  {
+                    "id": "567891011",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0057",
+                      "F0008"
+                    ]
+                  },
+                  {
+                    "id": "567891012",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0057"
+                    ]
+                  },
+                  {
+                    "id": "567891013",
+                    "servicesAccount": "919918239013",
+                    "status": "booked",
+                    "jobType": "fv-and-ib",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-11-12T14:00:00+0000-2015-11-12T16:00:00+0000",
+                    "priority": false,
+                    "faults": [
+                      "F0007"
+                    ]
+                  }
+                ],
+                "appointmentSlots": [
+                  {
+                    "id": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                    "variant": "2",
+                    "startTime": "2015-10-11T08:00:00+0100",
+                    "endTime": "2015-10-11T10:00:00+0100",
+                    "available": false
+                  },
+                  {
+                    "id": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                    "variant": "2",
+                    "startTime": "2015-09-11T14:00:00+0100",
+                    "endTime": "2015-09-11T16:00:00+0100",
+                    "available": false
+                  },
+                  {
+                    "id": "2-2015-11-12T14:00:00+0000-2015-11-12T16:00:00+0000",
+                    "variant": "2",
+                    "startTime": "2015-11-12T14:00:00+0000",
+                    "endTime": "2015-11-12T16:00:00+0000",
+                    "available": false
+                  }
+                ],
+                "faults": [
+                  {
+                    "id": "F0057",
+                    "title": "Fusebox",
+                    "description": "Fusebox damaged"
+                  },
+                  {
+                    "id": "F0008",
+                    "title": "Unknown",
+                    "description": "Unknown fault"
+                  },
+                  {
+                    "id": "F0007",
+                    "title": "Time Clock",
+                    "description": "Problem with Time Clock"
+                  }
                 ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+              },
+              "errors": [],
+              "meta": {}
+            }
+            
++ Response 401 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
 
-+ Response 403 (application/json)
-
-        {
-            "status": "FAIL",
-            "data": {}
-            "errors": [
-                {
-                    "code": "serviceaccount",
-                    "message": "error.server.serviceaccount.isEmpty"
-                }
-            ],
-            "meta": {}
-        }
++ Response 404 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.client.appointment.notFound"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 500 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {}
-            "errors": [
-                {
-                    "code": "server.error.internal",
-                    "message": "An internal error while processing request."
-                }
-            ],
-            "meta": {}
-        }
-        
-### post appointments [POST /appointments ]
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "service",
+                        "message": "error.system.pi.operation.fail"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve all appointments for specific account numbers [GET /appointments?{accountNumber*}]
++ Parameters
+
+    + accountNumber (string) - Account number for which the appointments are required
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+            {
+              "status": "SUCCESS",
+              "data": {
+                "appointments": [
+                  {
+                    "id": "567891011",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0057",
+                      "F0008"
+                    ]
+                  },
+                  {
+                    "id": "567891012",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv-and-ib",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0008"
+                    ]
+                  }
+                ]
+              },
+              "errors": [],
+              "meta": {}
+            }
+
+### Retrieve all appointments for specific account numbers with slots and faults sideloaded [GET /appointments?include=appointmentSlot&include=fault&{accountNumber*}]
++ Parameters
+
+    + accountNumber (string) - Account number for which the appointments are required
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+    
++ Response 200 (application/json)
+
+            {
+              "status": "SUCCESS",
+              "data": {
+                "appointments": [
+                  {
+                    "id": "567891011",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0057",
+                      "F0008"
+                    ]
+                  },
+                  {
+                    "id": "567891012",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "jobType": "asv-and-ib",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                    "priority": false,
+                    "faults": [
+                      "F0008"
+                    ]
+                  }
+                ],
+                "appointmentSlots": [
+                  {
+                    "id": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                    "variant": "2",
+                    "startTime": "2015-10-11T08:00:00+0100",
+                    "endTime": "2015-10-11T10:00:00+0100",
+                    "available": false
+                  },
+                  {
+                    "id": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                    "variant": "2",
+                    "startTime": "2015-09-11T14:00:00+0100",
+                    "endTime": "2015-09-11T16:00:00+0100",
+                    "available": false
+                  }
+                ],
+                "faults": [
+                  {
+                    "id": "F0057",
+                    "title": "Fusebox",
+                    "description": "Fusebox damaged"
+                  },
+                  {
+                    "id": "F0008",
+                    "title": "Unknown",
+                    "description": "Unknown fault"
+                  }
+                ]
+              },
+              "errors": [],
+              "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }          
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.client.appointment.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)            
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Modify an appointment [PUT /appointments/{appointmentId}]
++ Parameters
+
+    + appointmentId (string) - Appointment Id
 
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-
+    
             {
-                "appointment": 
-                {
-                    "account" : "919918239012",
-                    "slot" : "919918239012-567891011"
+                "appointment": {
+                    "id": "567891011",
+                    "servicesAccount": "919918239012",
+                    "status": "booked",
+                    "reason": "asv",
+                    "trackable": true,
+                    "reschedulable": true,
+                    "cancellable": true,
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "1-2015-12-11T08:00:00+0000-2015-12-11T10:00:00+0000",
+                    "priority": false,
+                    "faults": [
+                        "F0057",
+                        "F0008"
+                    ]
                 }
-            } 
+            }
 
 + Response 200 (application/json)
-
-        {
-            "status": "SUCCESS",
-            "data": {
-                "appointments": [
-                    {
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "appointment": {
                         "id": "567891011",
-                        "account": "919918239012",
+                        "servicesAccount": "919918239012",
                         "status": "booked",
                         "reason": "asv",
-                        "showTracking": true,
+                        "trackable": true,
                         "reschedulable": true,
                         "cancellable": true,
-                        "slot": "919918239012-567891011"
+                        "telephoneNumber": "0738123456",
+                        "appointmentSlot": "1-2015-12-11T08:00:00+0000-2015-12-11T10:00:00+0000",
+                        "priority": false,
+                        "faults": [
+                            "F0057",
+                            "F0008"
+                        ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slot",
+                        "message": "error.client.slot.invalid"
                     }
                 ],
-                "slots": [
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
                     {
-                        "id": "919918239012-567891011",
-                        "date": "2015-09-29T07:00:00+00:00",
-                        "startTime": "08:00",
-                        "endTime": "10:00",
-                        "available": false,
-                        "preferredSlot": false,
-                        "appointment": "567891011"
+                        "code": "telephoneNumber",
+                        "message": "error.client.telephoneNumber.invalid"
                     }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+                ],
+                "meta": {}
+            }
 
-+ Response 403 (application/json)
++ Response 400 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {}
-            "errors": [
-                {
-                    "code": "serviceaccount",
-                    "message": "error.server.serviceaccount.isEmpty"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.invalid"
+                    }
+                ],
+                "meta": {}
+            }   
+            
++ Response 404 (application/json)
 
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.client.appointment.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.client.appointment.notModified"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.client.appointment.modificationNotAllowed"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slot",
+                        "message": "error.client.slot.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+            
 + Response 500 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {}
-            "errors": [
-                {
-                    "code": "server.error.internal",
-                    "message": "An internal error while processing request."
-                }
-            ],
-            "meta": {}
-        }
-        
-
-### delete appointment [DELETE /appointments/{appointment} ]
-+ appointment - (required, string) ... The appointment id that you want to cancel
-
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Delete an appointment [DELETE /appointments/{appointmentId} ]
 + Parameters
 
-    + appointment - (required, string) ... The appointment id that you want to cancel
+    + appointmentId (string) - The appointment id that you want to cancel
 
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
     
-+ Response 200 (application/json)
++ Response 204 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {},
-            "errors": [],
-            "meta": {}
-        }
++ Response 404 (application/json)
 
-+ Response 403 (application/json)
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.client.appointment.notFound"
+                    }
+                ],
+                "meta": {}
+            }
 
-        {
-            "status": "FAIL",
-            "data": {}
-            "errors": [
-                {
-                    "code": "invalidappointment",
-                    "message": "error.server.appointment.invalid"
-                }
-            ],
-            "meta": {}
-        }
++ Response 400 (application/json)
 
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.blank"
+                    }
+                ],
+                "meta": {}
+            }
+            
 + Response 500 (application/json)
 
         {
@@ -203,8 +771,8 @@ Appointments and endpoints will allow the retrieve, cancel or set an appointment
             "data": {}
             "errors": [
                 {
-                    "code": "server.error.internal",
-                    "message": "An internal error while processing request."
+                    "code": "system",
+                    "message": "error.system.unexpected.error"                
                 }
             ],
             "meta": {}
