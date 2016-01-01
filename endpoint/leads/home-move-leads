@@ -61,6 +61,76 @@ Home move lead as a resource represents following information.
 | electricityTariff | string | `Returned always`. Electricity tariff selected for new property . |
 | optOutReasonForHomeServices | string | `Returned always`. Reason given by customer when they are not taking home services account to the new address. |
 
+#### Validations
+
+Following validations apply on individual attributes
+
+| Attribute | Validations |
+| :-------------------- | ----------- |
+| id | Can be `null` or `blank` |
+| accountNumbers | Cannot be `null` or `empty`|
+|                | Each account number should match either energy account number format or service account number format |
+| mobileNumber | Cannot be `non-numeric` |
+|              | Cannot be less than 10 characters in length and greater than 11 characters in length |
+|              | Must start with `07` |
+| moveOutDate | Cannot be `null` or `blank` |
+|             | Should be matching format dd/MM/yyyy if moveOutDate is not null or empty |
+| moveOutGasReading | Can be only numbers |
+|                   | Cannot be more than 6 digits |
+| moveOutElectricityDayReading | Can be only numbers |
+|                              | Cannot be more than 6 digits |
+| moveOutElectricityNightReading | Can be only numbers |
+|                                | Cannot be more than 6 digits |
+| moveInDate | Cannot be `null` or `blank` |
+|            | Should be matching format dd/MM/yyyy |
+| optOutReasonForEnergy | Cannot be `null` or `blank` if moveInGasAccount and moveInElectricityAccount is false for energy homemove |
+| optOutReasonForHomeServices | Cannot be `null` or `blank` if moveInGasAccount and moveInElectricityAccount is false for homeservices homemove |
+| moveInGasReading | Can be only numbers |
+|                  | Cannot be more than 6 digits |
+| moveInElectricityDayReading | Can be only numbers |
+|                             | Cannot be more than 6 digits |
+| moveInElectricityNightReading | Can be only numbers |
+|                               | Cannot be more than 6 digits |
+| moveInFlatNumber | Cannot exceed `30` characters in length |
+|                  | Cannot be `blank` or `null` when both `moveInHouseNumber` & `moveInHouseName` is not available |
+| moveInHouseNumber | Cannot exceed `30` characters in length |
+|                   | Cannot be `blank` or `null` when both `moveInFlatNumber` & `moveInHouseName` is not available |
+| moveInHouseName | Cannot exceed `75` characters in length |
+|                 | Cannot be `blank` or `null` when both `moveInFlatNumber` & `moveInHouseNumber` is not available |
+| moveInAddressLine1 | `Optional`. Cannot exceed `50` characters in length |
+| moveInAddressLine2 | `Optional`. Cannot exceed `50` characters in length |
+| moveInPostalTown | Cannot be 'blank' or 'null' |
+|                  | Cannot exceed `30` characters in length |
+| moveInCounty | Cannot exceed `30` characters in length |
+| moveInPostcode | Cannot be `null` or `blank` |
+|                | UK postcode validations apply |
+| selectedProposition | Can be `null` or `blank` or any value |
+| status | Can be `null` or `blank` or any value (status is redefined in service so this data will not be used while create or update of lead data) |
+| expiryDate | Can be `null` or `blank` |
+|            | if not `blank`, it should be of dd/MM/yyyy format |
+| createdDate | Can be `null` or `blank` |
+|             | if not `blank`, it should be of dd/MM/yyyy format |
+| propertyType | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|              | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#property-type) for possible values |
+| noOfBedrooms | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|              | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#no-of-bedrooms) for possible values |
+| noOfPeople | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|            | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#no-of-people) for possible values |
+| electricityUsageType | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|                      | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#electricity-usage-type) for possible values |
+| houseAge | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|          | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#house-age) for possible values |
+| roomHeating | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|             | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#room-heating) for possible values |
+| boilerType | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|            | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#boiler-type) for possible values |
+| waterHeating | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|              | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#water-heating) for possible values |
+| boilerAge | Should have a value if consumption is estimated (consumptionEstimated = true) |
+|           | [Refer here](https://github.com/ConnectedHomes/BG-Website-Transformation/wiki/Energy-consumption-estimation-API-Reference#boiler-age) for possible values |
+| gasConsumptionValue | Should have a value if consumption is estimated (consumptionEstimated = true) |
+| electricityConsumptionValue | Should have a value if consumption is estimated (consumptionEstimated = true)  |
+
 ### Retrieve all Homemove Leads for logged in customer [GET /home-move-leads]
 + Request (application/json)
 
