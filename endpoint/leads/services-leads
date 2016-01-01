@@ -1,28 +1,67 @@
 ## Services-Leads Collection [/services-leads]
 
-Resources related to Services-Leads in the API.
+Services Lead endpoint allows you to create the Services Lead in Online database (PO_TA_SERVICES_LEAD). Responses from this endpoint will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to create Services Lead which would be sent to Uddingston for processing. After creating the lead, this api will also trigger the confirmation email to customer.
+
+>`Note:` Fundamental assumption behind the design of this API to send Services lead to Uddingston is that there will be NO basket. Service API will be able to handle only either a bundle product or an individual product at a time.
+
+#### Services Lead
+Services Lead as an entity represents following attributes.
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | string | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
+| title | string | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
+| lastName | string | `Mandatory`| `Returned always` | LastName of customer. |
+| emailAddress | string | `Mandatory` | `Returned always` | Email address of customer |
+| telephoneNumber | string | `Mandatory`| `Returned always` | Phone number of customer |
+| bothAddressSame | boolean | `Optional` | `Returned always` | Should be `true` if both billing address & supply address are same. |
+| supplyAddress | Address | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
+| billingAddress | Address | `Optional` | `Returned always` | Billing address of customer. Value will not be available in response if billing address is not passed. |
+| directDebitDetails | DirectDebit | `Mandatory` | `Returned always` | Direct debit details of customer.  |
+| marketingConsentDetails | MarketingConsent | `Optional` | `Returned always` | Marketting consent details which customer choose. |
+| jci | boolean | `Optional` | `Returned always` | Status based on whether JCI was offered to customer or not. |
+| legacyAccountNumber | string | `Optional` | `Returned always` | This value will be available only in services-contracts API as same entity is used. So  this value will always be null. |
+| transactionId | string | `Optional` | `Returned always` | This value will be available only in services-contracts API as same entity is used. So  this value will always be null. |
+| productFeatures | string[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
+| productConfigurations | ProductConfigurations[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
+
+##### DirectDebit
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| paymentMethod | String | `Mandatory` | `Returned always` | Any one of the direct debit payment method `MDD` or `ADD`. |
+| bankAccountNumber | String | `Mandatory` | `Returned always` | Should contain the bank account number. |
+| sortCode | String | `Mandatory` | `Returned always` | Should contain the bank sort code without any hyphen like '208111'. |
+| accountHolderName | String | `Mandatory` | `Returned always` | Should contain the bank account holder name. |
+| preferredPaymentDay | int | `Mandatory` | `Returned always` | Should contain the preferred payment day selected by customer. |
+
+##### MarketingConsent
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| letterOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if letter is selected. |
+| emailOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if email is selected. |
+| landlineOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if landline is selected. |
+| mobileOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if mobile is selected. |
+| smsMmsOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if sms/mms is selected. |
+| facetoFaceOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if face to face is selected. |
+| ivmOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if ivm is selected. |
+
+##### ProductConfigurations 
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| productFeature | string | `Mandatory` | `Returned always` | Product feature id for which the appliances details to be provided. |
+| productAppliances | ProductAppliances[] | `Mandatory` | `Returned always` | Appliances details of a product with appliance type, make, model and age information. |
+
+##### ProductAppliances 
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| applianceId | string | `Mandatory` | `Returned always` | Appliance id of a product which customer choosen. |
+| makeId | string| `Optional` | `Returned always` | If customer choose any make the value can be passed. If value is not passed it is defaulted to value `Default`.|
+| modelId | string | `Optional` | `Returned always` | If customer choose any model the value can be passed. If value is not passed it is defaulted to value `Default`.|
+| age | Integer | `Optional` | `Returned always` | If customer choose any age the value can be passed. If value is not passed it is defaulted to value `5`.|
+
 
 ### Post services sales data to Uddingston [POST /services-leads]
-
-A Services-Lead object has the following attributes:
-
-+ id (optional, string) - The Online Identifer for the transaction.
-+ title (required, string) - The Title of the Customer.
-+ firstName (required, string) - The First Name of the Customer.
-+ lastName (required, string) - The Last Name of the Customer.
-+ emailAddress (required, string) - The Email Address of the Customer.
-+ telephoneNumber (required, string) - The Telephone Number of the Customer.
-+ bothAddressSame (optional, Boolean) - Should be true if both billing address & supply address are the same.
-+ supplyAddress (required, Address) - Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.
-+ billingAddress (optional, Address) - Billing address of customer. Value will not be available in response if billing address is not passed.
-+ directDebitDetails (required, Direct Debit) - Direct debit details of customer.
-+ marketingConsentDetails (optional, Marketing Consent) - Marketing Consent Details.
-+ jci (optional, Boolean) - Status based on whether JCI discount was applied to transaction.
-+ legacyAccountNumber (optional, string) - Will be passed as NULL.
-+ transactionId (optional, string) - Will be passed as NULL.
-+ productFeatures (required, Array of string) - List of product features corresponding to the quote given to the customer.
-+ productConfigurations (optional, Array of Product Configurations) - List of product configurations corresponding to the quote given to the customer.
-
 + Request (application/json)
 
     + Headers
@@ -219,7 +258,7 @@ A Services-Lead object has the following attributes:
                 "errors": [],
                 "meta": {}
             }
-        
+
 + Response 400 (application/json)
         
             {
