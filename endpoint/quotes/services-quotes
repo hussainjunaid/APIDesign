@@ -1,26 +1,44 @@
 ## Services-Quotes Collection [/services-quotes]
 
-The Services-Quote resource is designed to send customer, address and product information
-to the backend to create a quote object.
+Services Quote endpoint allows you to create the Services sales order in SAP. Responses from this API will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to SAP which will then create an real time service contract. 
 
-A Services-Quote object has the following attributes:
+>`Note:` Services Quote API will be able to handle only either a bundle product or an individual product at a time.
 
-+ id (optional, string) - When an request is sent, the id attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the id populated.
-+ title (required, string) - Title of customer.
-+ firstName (required, string) - First name of customer.
-+ lastName (required, string) - LastName of customer.
-+ emailAddress (required, string) - Email address of customer.
-+ telephoneNumber (required, string) - Telephone number of customer.
-+ premiseId (optional, string) - For logged in customers we can pass known premise id.
-+ bothAddressSame (optional, Boolean) - Should be true if both billing address & supply address are same.
-+ supplyAddress (required, Address) - Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.
-+ billingAddress (optional, Address) - Billing address of customer. Value will not be available in response if billing address is not passed.
-+ paymentMethod (required, string) - Payment method which customer choose.
-+ jci (optional, Boolean) - Status based on whether JCI was applied as part of Online transaction.
-+ status (optional, string) - This value will always be null and is used in controller endpoint for fetching the quote.
-+ servicesAccountNumber (optional, string) - This value will always be null and is used in controller endpoint for fetching the quote.
-+ productFeatures (required, Array of String) - List of product features for which the quote is to be created.
-+ productConfigurations (optional, Array of Product Configurations) - List of product configurations for which the quote is to be created.
+#### Services Quote
+Services Quote as an entity represents following attributes.
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | string | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
+| title | string | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
+| lastName | string | `Mandatory`| `Returned always` | LastName of customer. |
+| emailAddress | string | `Mandatory` | `Returned always` | Email address of customer |
+| telephoneNumber | string | `Mandatory`| `Returned always` | Phone number of customer |
+| premiseID | string | `Optional` | `Returned always` | Will always be null. |
+| bothAddressSame | boolean | `Optional` | `Returned always` | Should be `true` if both billing address & supply address are same. |
+| supplyAddress | Address | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
+| billingAddress | Address | `Optional` | `Returned always` | Billing address of customer. Value will not be available in response if billing address is not passed. |
+| paymentMethod | string | `Mandatory` | `Returned always` | Payment method which customer choose.  |
+| jci | boolean | `Optional` | `Returned always` | Status based on whether JCI was offered to customer or not. |
+| status | string | `Optional` | `Returned always` | This value will always be null and is used in controller endpoint |
+| servicesAccountNumber | string | `Optional` | `Returned always` | This value will always be null and is used in controller endpoint |
+| productFeatures | string[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
+| productConfigurations | ProductConfigurations[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
+
+##### ProductConfigurations 
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| productFeature | string | `Mandatory` | `Returned always` | Product feature id for which the appliances details to be provided. |
+| productAppliances | ProductAppliances[] | `Mandatory` | `Returned always` | Appliances details of a product with appliance type, make, model and age information. |
+
+##### ProductAppliances 
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| applianceId | string | `Mandatory` | `Returned always` | Appliance id of a product which customer choosen. |
+| makeId | string| `Optional` | `Returned always` | If customer choose any make the value can be passed. If value is not passed it is defaulted to value `Default`.|
+| modelId | string | `Optional` | `Returned always` | If customer choose any model the value can be passed. If value is not passed it is defaulted to value `Default`.|
+| age | Integer | `Optional` | `Returned always` | If customer choose any age the value can be passed. If value is not passed it is defaulted to value `5`.|
 
 
 ### Post a services quote to the backend systems [POST /services-quotes]
@@ -212,11 +230,11 @@ A Services-Quote object has the following attributes:
                 "meta": {}
             }
         
-### Retrieve the status of a services quote from the backend systems [GET /services-quotes/{id}/status]
+### Retrieve the status of a services quote [GET /services-quotes/{id}/status]
 
 + Parameters
 
-    + id (required, string)
+    + id (required, string) -  transactionId which is returned in Create services quote response
 
 + Request
 
