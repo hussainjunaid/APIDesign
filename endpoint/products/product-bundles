@@ -1,22 +1,500 @@
 ## Product Bundles collection [/product-bundles]
-Product Bundles API allows you to view the base information about a product bundle, understand how the product bundle and its 
-constituent products can be configured and establish the relationship between a product bundle and its constituent products.
+Product bundles API allows you to list the information about the product bundle. Responses from this API will be retuned in JSON format only. Information about the constituent products that form a bundle will be side-loaded which will internally side load the product feature.  
 
-A Product Bundles object has the following attributes:
+### Product bundle
+Product bundle as a resource represents following information:
 
-+ id (required, string) - Bundle code is considered as the unique identifier.
-+ description (required, string) - Bundle product description is considered as the unique identifier.
-+ type (required, string) - Indicates the product type like Services.
-+ excesses (required, Array of int) - Applicable levels of excess for the bundle. 
-+ paymentMethods (required, Array of string) - Applicable payment methods for the bundle.
-+ products (required, Array of Products) - The constituent products which are part of the higher level bundle product.
-+ productFeatures (required, Array of Product Features) - Product feature information of base product feature of every product which makes a bundle.
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | String | `Not applicable` | `Returned always` | Unique identifier for a bundle product. |
+| description | String | `Not applicable` | `Returned always` | Bundle product description. |
+| type | String | `Not applicable` | `Returned always` | Indicates the product type like `Services`. |
+| excesses | Array of Integer | `Not applicable` | `Returned always` | Applicable levels of excess for the bundle. |
+| paymentMethods | Array of PaymentMethods | `Not applicable` | `Returned always` | Applicable [payment methods](/api-reference/products.md#PaymentMethods) for the bundle. |
+| products | Array of product | `Not applicable` | `Returned always` | [Product](/api-reference/products.md#product) information of all products which make a bundle. |
+
+### Retrieve all Product Bundles [GET /product-bundles] 
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productFeatures": [
+                        {
+                            "id": "HC1|HC1-BC|BNI2|CHB|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "CHB",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "BNI2"
+                        },
+                        {
+                            "id": "HC2|HC2-CH|CNI2|CHB|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "CHB",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "CNI2"
+                        },
+                        {
+                            "id": "HC3|HC3-CH|CNI2|CHB|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "CHB",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "CNI2"
+                        },
+                        {
+                            "id": "HC3|HC3-PD|DNI2|PLDR|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": false,
+                            "applianceType": "PLDR",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "DNI2"
+                        },
+                        {
+                            "id": "HC4|HC4-CH|CNI2|CHB|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "CHB",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "CNI2"
+                        },
+                        {
+                            "id": "HC4|HC4-PD|DNI2|PLDR|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": false,
+                            "applianceType": "PLDR",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "DNI2"
+                        },
+                        {
+                            "id": "HC4|HC4-HEC|HNI2|EWR|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": false,
+                            "applianceType": "EWR",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "HNI2"
+                        }
+                    ],
+                    "appliances": [
+                        {
+                            "id": "BBC",
+                            "description": "Back Boiler Circulator",
+                            "links": {
+                                "makes": "/api/secure/appliances/BBC/makes"
+                            }
+                        },
+                        {
+                            "id": "BBF",
+                            "description": "Back Boiler Fire",
+                            "links": {
+                                "makes": "/api/secure/appliances/BBF/makes"
+                            }
+                        },
+                        {
+                            "id": "CHB",
+                            "description": "Central Heating Boiler",
+                            "links": {
+                                "makes": "/api/secure/appliances/CHB/makes"
+                            }
+                        },
+                        {
+                            "id": "WAU",
+                            "description": "Warm Air Unit",
+                            "links": {
+                                "makes": "/api/secure/appliances/WAU/makes"
+                            }
+                        },
+                        {
+                            "id": "WAW",
+                            "description": "Warm Air With Water Heater",
+                            "links": {
+                                "makes": "/api/secure/appliances/WAW/makes"
+                            }
+                        },
+                        {
+                            "id": "PLDR",
+                            "description": "PLDR",
+                            "links": {
+                                "makes": "/api/secure/appliances/PLDR/makes"
+                            }
+                        },
+                        {
+                            "id": "EWR",
+                            "description": "Washing Machine",
+                            "links": {
+                                "makes": "/api/secure/appliances/EWR/makes"
+                            }
+                        }
+                    ],
+                    "productBundle": [
+                        {
+                            "id": "HC1",
+                            "description": "HomeCare One",
+                            "products": [
+                                "HC1-BC"
+                            ],
+                            "type": "Services",
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "HC2",
+                            "description": "HomeCare Two",
+                            "products": [
+                                "HC2-CH"
+                            ],
+                            "type": "Services",
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "HC3",
+                            "description": "HomeCare Three",
+                            "products": [
+                                "HC3-CH",
+                                "HC3-PD"
+                            ],
+                            "type": "Services",
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "HC4",
+                            "description": "HomeCare Four",
+                            "products": [
+                                "HC4-CH",
+                                "HC4-PD",
+                                "HC4-HEC"
+                            ],
+                            "type": "Services",
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ]
+                        }
+                    ],
+                    "products": [
+                        {
+                            "id": "HC1-BC",
+                            "description": "Boiler & Control",
+                            "type": "Services",
+                            "annualServiceApplicable": true,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "BBC",
+                                "BBF",
+                                "CHB",
+                                "WAU",
+                                "WAW"
+                            ],
+                            "annualServiceMandatory": true,
+                            "productFeature": "HC1|HC1-BC|BNI2|CHB|MDD"
+                        },
+                        {
+                            "id": "HC2-CH",
+                            "description": "Central Heating",
+                            "type": "Services",
+                            "annualServiceApplicable": true,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "BBC",
+                                "BBF",
+                                "CHB",
+                                "WAU",
+                                "WAW"
+                            ],
+                            "annualServiceMandatory": true,
+                            "productFeature": "HC2|HC2-CH|CNI2|CHB|MDD"
+                        },
+                        {
+                            "id": "HC3-CH",
+                            "description": "Central Heating",
+                            "type": "Services",
+                            "annualServiceApplicable": true,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "BBC",
+                                "BBF",
+                                "CHB",
+                                "WAU",
+                                "WAW"
+                            ],
+                            "annualServiceMandatory": true,
+                            "productFeature": "HC3|HC3-CH|CNI2|CHB|MDD"
+                        },
+                        {
+                            "id": "HC3-PD",
+                            "description": "Plumbing & drains",
+                            "type": "Services",
+                            "annualServiceApplicable": false,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "PLDR"
+                            ],
+                            "annualServiceMandatory": false,
+                            "productFeature": "HC3|HC3-PD|DNI2|PLDR|MDD"
+                        },
+                        {
+                            "id": "HC4-CH",
+                            "description": "Central Heating",
+                            "type": "Services",
+                            "annualServiceApplicable": true,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "BBC",
+                                "BBF",
+                                "CHB",
+                                "WAU",
+                                "WAW"
+                            ],
+                            "annualServiceMandatory": true,
+                            "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD"
+                        },
+                        {
+                            "id": "HC4-PD",
+                            "description": "Plumbing & drains",
+                            "type": "Services",
+                            "annualServiceApplicable": false,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "PLDR"
+                            ],
+                            "annualServiceMandatory": false,
+                            "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD"
+                        },
+                        {
+                            "id": "HC4-HEC",
+                            "description": "Home Electrics",
+                            "type": "Services",
+                            "annualServiceApplicable": false,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "EWR"
+                            ],
+                            "annualServiceMandatory": false,
+                            "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "bundle",
+                        "message": "error.client.bundle.notFound"
+                    }
+                ],
+                "meta": {}
+            }
 
 ### Retrieve Product Bundle Information Based on an ID [GET /product-bundles{id}] 
 
 + Parameters
 
-    + id (required, string) 
+    + id (required, string) - Product bundle id
 
 + Request
 
@@ -26,241 +504,241 @@ A Product Bundles object has the following attributes:
             
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "productFeatures": [
-                    {
-                        "id": "HC4|HC4-CH|CNI2|CHB|MDD",
-                        "excess": 60,
-                        "annualServiceVisitSelected": true,
-                        "applianceType": "CHB",
-                        "paymentMethod": "MDD",
-                        "levelOfService": "CNI2"
-                    },
-                    {
-                        "id": "HC4|HC4-PD|DNI2|PLDR|MDD",
-                        "excess": 60,
-                        "annualServiceVisitSelected": false,
-                        "applianceType": "PLDR",
-                        "paymentMethod": "MDD",
-                        "levelOfService": "DNI2"
-                    },
-                    {
-                        "id": "HC4|HC4-HEC|HNI2|EWR|MDD",
-                        "excess": 60,
-                        "annualServiceVisitSelected": false,
-                        "applianceType": "EWR",
-                        "paymentMethod": "MDD",
-                        "levelOfService": "HNI2"
-                    }
-                ],
-                "appliances": [
-                    {
-                        "id": "BBC",
-                        "description": "Back Boiler Circulator",
-                        "links": {
-                            "makes": "/appliances/BBC/makes"
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productFeatures": [
+                        {
+                            "id": "HC4|HC4-CH|CNI2|CHB|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "CHB",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "CNI2"
+                        },
+                        {
+                            "id": "HC4|HC4-PD|DNI2|PLDR|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": false,
+                            "applianceType": "PLDR",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "DNI2"
+                        },
+                        {
+                            "id": "HC4|HC4-HEC|HNI2|EWR|MDD",
+                            "excess": 60,
+                            "annualServiceVisitSelected": false,
+                            "applianceType": "EWR",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "HNI2"
                         }
-                    },
-                    {
-                        "id": "BBF",
-                        "description": "Back Boiler Fire",
-                        "links": {
-                            "makes": "/appliances/BBF/makes"
-                        }
-                    },
-                    {
-                        "id": "CHB",
-                        "description": "Central Heating Boiler",
-                        "links": {
-                            "makes": "/appliances/CHB/makes"
-                        }
-                    },
-                    {
-                        "id": "WAU",
-                        "description": "Warm Air Unit",
-                        "links": {
-                            "makes": "/appliances/WAU/makes"
-                        }
-                    },
-                    {
-                        "id": "WAW",
-                        "description": "Warm Air With Water Heater",
-                        "links": {
-                            "makes": "/appliances/WAW/makes"
-                        }
-                    },
-                    {
-                        "id": "PLDR",
-                        "description": "PLDR",
-                        "links": {
-                            "makes": "/appliances/PLDR/makes"
-                        }
-                    },
-                    {
-                        "id": "EWR",
-                        "description": "Washing Machine",
-                        "links": {
-                            "makes": "/appliances/EWR/makes"
-                        }
-                    }
-                ],
-                "productBundle": [
-                    {
-                        "id": "HC4",
-                        "description": "HomeCare Four",
-                        "products": [
-                            "HC4-CH",
-                            "HC4-PD",
-                            "HC4-HEC"
-                        ],
-                        "type": "Services",
-                        "excesses": [
-                            0,
-                            60
-                        ],
-                        "paymentMethods": [
-                            {
-                                "id": "MDD",
-                                "description": "Monthly Direct Debit"
-                            },
-                            {
-                                "id": "ADD",
-                                "description": "Annual Direct Debit"
-                            },
-                            {
-                                "id": "CC",
-                                "description": "Annual Credit or Debit Card"
+                    ],
+                    "appliances": [
+                        {
+                            "id": "BBC",
+                            "description": "Back Boiler Circulator",
+                            "links": {
+                                "makes": "/api/secure/appliances/BBC/makes"
                             }
-                        ]
-                    }
-                ],
-                "products": [
-                    {
-                        "id": "HC4-CH",
-                        "description": "Central Heating",
-                        "type": "Services",
-                        "annualServiceApplicable": true,
-                        "numberOfAppliances": 1,
-                        "excesses": [
-                            0,
-                            60
-                        ],
-                        "paymentMethods": [
-                            {
-                                "id": "MDD",
-                                "description": "Monthly Direct Debit"
-                            },
-                            {
-                                "id": "ADD",
-                                "description": "Annual Direct Debit"
-                            },
-                            {
-                                "id": "CC",
-                                "description": "Annual Credit or Debit Card"
+                        },
+                        {
+                            "id": "BBF",
+                            "description": "Back Boiler Fire",
+                            "links": {
+                                "makes": "/api/secure/appliances/BBF/makes"
                             }
-                        ],
-                        "appliances": [
-                            "BBC",
-                            "BBF",
-                            "CHB",
-                            "WAU",
-                            "WAW"
-                        ],
-                        "annualServiceMandatory": true,
-                        "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD"
-                    },
-                    {
-                        "id": "HC4-PD",
-                        "description": "Plumbing & drains",
-                        "type": "Services",
-                        "annualServiceApplicable": false,
-                        "numberOfAppliances": 1,
-                        "excesses": [
-                            0,
-                            60
-                        ],
-                        "paymentMethods": [
-                            {
-                                "id": "MDD",
-                                "description": "Monthly Direct Debit"
-                            },
-                            {
-                                "id": "ADD",
-                                "description": "Annual Direct Debit"
-                            },
-                            {
-                                "id": "CC",
-                                "description": "Annual Credit or Debit Card"
+                        },
+                        {
+                            "id": "CHB",
+                            "description": "Central Heating Boiler",
+                            "links": {
+                                "makes": "/api/secure/appliances/CHB/makes"
                             }
-                        ],
-                        "appliances": [
-                            "PLDR"
-                        ],
-                        "annualServiceMandatory": false,
-                        "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD"
-                    },
-                    {
-                        "id": "HC4-HEC",
-                        "description": "Home Electrics",
-                        "type": "Services",
-                        "annualServiceApplicable": false,
-                        "numberOfAppliances": 1,
-                        "excesses": [
-                            0,
-                            60
-                        ],
-                        "paymentMethods": [
-                            {
-                                "id": "MDD",
-                                "description": "Monthly Direct Debit"
-                            },
-                            {
-                                "id": "ADD",
-                                "description": "Annual Direct Debit"
-                            },
-                            {
-                                "id": "CC",
-                                "description": "Annual Credit or Debit Card"
+                        },
+                        {
+                            "id": "WAU",
+                            "description": "Warm Air Unit",
+                            "links": {
+                                "makes": "/api/secure/appliances/WAU/makes"
                             }
-                        ],
-                        "appliances": [
-                            "EWR"
-                        ],
-                        "annualServiceMandatory": false,
-                        "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD"
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+                        },
+                        {
+                            "id": "WAW",
+                            "description": "Warm Air With Water Heater",
+                            "links": {
+                                "makes": "/api/secure/appliances/WAW/makes"
+                            }
+                        },
+                        {
+                            "id": "PLDR",
+                            "description": "PLDR",
+                            "links": {
+                                "makes": "/api/secure/appliances/PLDR/makes"
+                            }
+                        },
+                        {
+                            "id": "EWR",
+                            "description": "Washing Machine",
+                            "links": {
+                                "makes": "/api/secure/appliances/EWR/makes"
+                            }
+                        }
+                    ],
+                    "productBundle": [
+                        {
+                            "id": "HC4",
+                            "description": "HomeCare Four",
+                            "products": [
+                                "HC4-CH",
+                                "HC4-PD",
+                                "HC4-HEC"
+                            ],
+                            "type": "Services",
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ]
+                        }
+                    ],
+                    "products": [
+                        {
+                            "id": "HC4-CH",
+                            "description": "Central Heating",
+                            "type": "Services",
+                            "annualServiceApplicable": true,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "BBC",
+                                "BBF",
+                                "CHB",
+                                "WAU",
+                                "WAW"
+                            ],
+                            "annualServiceMandatory": true,
+                            "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD"
+                        },
+                        {
+                            "id": "HC4-PD",
+                            "description": "Plumbing & drains",
+                            "type": "Services",
+                            "annualServiceApplicable": false,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "PLDR"
+                            ],
+                            "annualServiceMandatory": false,
+                            "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD"
+                        },
+                        {
+                            "id": "HC4-HEC",
+                            "description": "Home Electrics",
+                            "type": "Services",
+                            "annualServiceApplicable": false,
+                            "numberOfAppliances": 1,
+                            "excesses": [
+                                0,
+                                60
+                            ],
+                            "paymentMethods": [
+                                {
+                                    "id": "MDD",
+                                    "description": "Monthly Direct Debit"
+                                },
+                                {
+                                    "id": "ADD",
+                                    "description": "Annual Direct Debit"
+                                },
+                                {
+                                    "id": "CC",
+                                    "description": "Annual Credit or Debit Card"
+                                }
+                            ],
+                            "appliances": [
+                                "EWR"
+                            ],
+                            "annualServiceMandatory": false,
+                            "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
         
 + Response 404 (application/json)
         
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors": [
-                {
-                    "code": "bundle",
-                    "message": "error.client.bundle.notFound"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "bundle",
+                        "message": "error.client.bundle.notFound"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 404 (application/json)
 
-        {
-            "status": "ERROR",
-            "data": {},
-            "errors": [
-                {
-                    "code": "product",
-                    "message": "error.client.product.notFound"
-                }
-            ],
-            "meta": {}
-        }
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "product",
+                        "message": "error.client.product.notFound"
+                    }
+                ],
+                "meta": {}
+            }
