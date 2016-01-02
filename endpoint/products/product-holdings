@@ -1,59 +1,71 @@
 ## Product Holdings [/product-holdings]
-Product Holdings API allows you to list / view all the product holdings of the logged in customer. Responses from this API will be retuned in JSON format only.
+Product Holdings endpint allows you to list / view all the product holdings of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
 
-# Energy Product holding
-
+#### Energy product holding
 Energy product holding as a resource represents following information
 
-+ id (string) - Combination of account number and product code is considered as the unique identifier.
-+ type (string) - Specifies which data model is supported by the resources, it will be EnergyProductHolding.
-+ moveInDate (string) - Date when the product is moved to the address, in dd/MM/yyyy format.
-+ moveOutDate (string) - Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999
-+ productCode (string) - Product code, 1601 for gas and 1602 for electricity.
-+ tariffCode (string) - Tariff code for the product, if available.
-+ productTypeDescription (string) - Product description of the product, if available.
-+ account (string) - Account number to which the product is linked, if available.
-+ energyAccount - (string) - Returned always. Energy account number to which the product is linked, if available.
-+ propositionId (string) - Proposition id for the product.
-+ tariffName (String) - Tariff description for the product, if available.
-+ isTariffEnergySmart (boolean) - Indicates that the product has energy smart tariff if the value is true.
-+ isMonthlyBilling (boolean) - Indicates that the product is monthly billed if the value is true.
-+ isSmartMonthlyBilling (boolean) - Indicates that the product is smart monthly billed if the value is true.
-+ isSmartMeterProduct (boolean) - Indicates that the product is having a smart meter if the value is true.
-+ features (Array of string) - Mentions any specific features of the product
-+ monthlyBillingData (Complex type) - All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date.
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. Combination of account number and product code is considered as the unique identifier. |
+| type | string | `Returned always`. Specifies which data model is supported by the resources, it will be EnergyProductHolding. |
+| moveInDate | string | `Returned always`. Date when the product is moved to the address, in dd/MM/yyyy format. |
+| moveOutDate | string | `Returned always`. Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999 |
+| productCode | string | `Returned always`. Product code, 1601 for gas and 1602 for electricity. |
+| tariffCode | string | `Returned always`. Tariff code for the product, if available. |
+| productTypeDescription | string | `Returned always`. Product description of the product, if available. |
+| account | string | `Returned always`. Account number to which the product is linked, if available. | 
+| energyAccount | string | `Returned always`. Energy account number to which the product is linked, if available. | 
+| propositionId | string | `Returned always`. Proposition id for the product. |
+| tariffName | string | `Returned always`. Tariff description for the product, if available. |
+| tariffEnergySmart | boolean | `Returned always`. Indicates that the product has energy smart tariff if the value is true. |
+| monthlyBilling | boolean | `Returned always`. Indicates that the product is monthly billed if the value is true. |
+| smartMonthlyBilling | boolean | `Returned always`. Indicates that the product is smart monthly billed if the value is true. |
+| smartMeterProduct | boolean | `Returned always`. Indicates that the product is having a smart meter if the value is true. |
+| features | Array of string | `Returned always`. Mentions any specific features of the product |
+| monthlyBillingData | Complex type | `Returned always`. All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date. |
 
-# Service Product holding
+#### Services product holding
+Services product holding as a resource represents following information
 
-Service product holding as a resource represents following information
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. Combination of account number and product code is considered as the unique identifier. |
+| type | string | `Returned always`. Specifies which data model is supported by the resources, it will be ServicesProductHolding. |
+| productCode | string | `Returned always`. Product code of the product. |
+| customerId | string | `Returned always`. Customer id associated to the product, if available. |
+| productTypeDescription | string | `Returned always`. Product description of the product, if available. |
+| productName | string | `Returned always`. Name of the product, if available. |
+| account | string | `Returned always`. Account number to which the product is linked, if available. | 
+| servicesAccount | string | `Returned always`. Services account number to which the product is linked, if available. | 
+| propositionId | string | `Returned always`. Proposition id for the product. |
+| premiseId | string | `Returned always`. Premise id associated to the product, if available. |
+| plumbingAndDrains | boolean | `Returned always`. Indicates that the product has plumbing and drains, if the value is true. |
+| crossSellProduct | boolean | `Returned always`. Indicates that the product is a cross sell product, if the value is true. |
+| features | Array of string | `Returned always`. Mentions any specific features of the product. |
+| bundleProduct | boolean | `Returned always`. Indicates that the product is a bundle product, if the value is true. |
+| appliances | Array of string | `Returned always`. All the appliances associated to the product. |
+| excess | string | `Returned always`. Mentions the excess amount selected for services product. |
+| levelOfService | string | `Returned always`. Level of service associated for services product. |
+| product | string | `Returned always`. Product code mapped to level of service, this is the id to Product resource. |
+| bundleCode | string | `Returned always`. Bundle code mapped to level of service. |
+| asvAvailable | boolean | `Returned always`. Indicates that Annual Service Visit is applicable for this product, if the value is true. |
 
-+ id (string) - Combination of account number and product code is considered as the unique identifier.
-+ type (string) - Specifies which data model is supported by the resources, it will be ServicesProductHolding.
-+ productCode (string) - Product code of the product.
-+ customerId (string) - Customer id associated to the product, if available.
-+ productTypeDescription (string) - Product description of the product, if available.
-+ productName (string) - Name of the product, if available.
-+ account (string) - Account number to which the product is linked, if available.
-+ serviceAccount -(string) - Returned always. Service account number to which the product is linked, if available
-+ propositionId (string) - Proposition id for the product.
-+ premiseId (String) - Premise id associated to the product, if available.
-+ isPlumbingAndDrains (boolean) - Indicates that the product has plumbing and drains, if the value is true.
-+ isCrossSellProduct (boolean) - Indicates that the product is a cross sell product, if the value is true.
-+ features (Array of string) - Mentions any specific features of the product
+#### Order product holding
+Order product holding as a resource represents following information
 
-# Order product holding
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. Combination of order number and product code is considered as the unique identifier. |
+| type | string | `Returned always`. Specifies which data model is supported by the resources, it will be OrderProductHolding. |
+| productCode | string | `Returned always`. Product type, Gas for gas and Electricity for electricity. |
+| account | string | `Returned always`. Order number to which the product is linked, if available. | 
 
-+ id (string) - Combination of order number and product code is considered as the unique identifier.
-+ type (string) - Specifies which data model is supported by the resources, it will be OrderProductHolding.
-+ productCode (string) - Product type, Gas for gas and Electricity for electricity.
-+ account (string) - Order number to which the product is linked, if available.
-
-### Retrieve Product holdings [GET /product-holdings]
+### Retrieve all Product holdings [GET /product-holdings]
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -63,7 +75,7 @@ Service product holding as a resource represents following information
                 "data": {
                     "productHoldings": [
                         {
-                            "isSmartMonthlyBilling": false,
+                            "smartMonthlyBilling": false,
                             "moveInDate": "01/01/2014",
                             "moveOutDate": "31/12/9999",
                             "productCode": "1601",
@@ -76,10 +88,10 @@ Service product holding as a resource represents following information
                                 "nextBillDate": null
                             },
                             "tariffCode": "GSD",
-                            "isMonthlyBilling": false,
+                            "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1601",
-                            "isTariffEnergySmart": false,
+                            "tariffEnergySmart": false,
                             "productTypeDescription": "Gas",
                             "features": [
                                 "Standard"
@@ -88,10 +100,10 @@ Service product holding as a resource represents following information
                             "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
-                            "isSmartMeterProduct": false
+                            "smartMeterProduct": false
                         },
                         {
-                            "isSmartMonthlyBilling": false,
+                            "smartMonthlyBilling": false,
                             "moveInDate": "01/01/2014",
                             "moveOutDate": "31/12/9999",
                             "productCode": "1602",
@@ -104,10 +116,10 @@ Service product holding as a resource represents following information
                                 "nextBillDate": null
                             },
                             "tariffCode": "ESD",
-                            "isMonthlyBilling": false,
+                            "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1602",
-                            "isTariffEnergySmart": false,
+                            "tariffEnergySmart": false,
                             "productTypeDescription": "Electricity",
                             "features": [
                                 "Standard"
@@ -116,44 +128,63 @@ Service product holding as a resource represents following information
                             "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
-                            "isSmartMeterProduct": false
+                            "smartMeterProduct": false
                         },
                         {
-                            "productCode": "ZSIS",
-                            "isPlumbingAndDrains": false,
+                            "productCode": "ZFI1",
+                            "plumbingAndDrains": false,
                             "type": "ServicesProductHolding",
-                            "id": "911000156354-ZSIS",
+                            "id": "911000156354-ZFI1",
                             "customerId": "22212484",
                             "productTypeDescription": "HomeCare 300(TM)",
-                            "isCrossSellProduct": false,
+                            "crossSellProduct": false,
                             "features": [
                                 "Boiler & controls",
                                 "First service visit"
                             ],
                             "account": "911000156354",
-                            "serviceAccount": "911000156354",
+                            "servicesAccount": "911000156354",
                             "propositionId": "1",
                             "premiseId": "L280628",
-                            "productName": "Central Heating"
+                            "productName": "Central Heating - £99 Excess",
+                            "bundleCode": "HC300",
+                            "levelOfService": "3FI1",
+                            "excess": 99,
+                            "product": "HC300-CH",
+                            "appliances": [
+                                "Central Heating - £99 Excess"
+                            ],
+                            "asvAvailable": true,
+                            "bundleProduct": true
                         },
                         {
                             "productCode": "ZPDI",
-                            "isPlumbingAndDrains": true,
+                            "plumbingAndDrains": true,
                             "type": "ServicesProductHolding",
                             "id": "911000156354-ZPDI",
                             "customerId": "22212484",
                             "productTypeDescription": "HomeCare 300(TM)",
-                            "isCrossSellProduct": false,
+                            "crossSellProduct": false,
                             "features": [
                                 "Boiler & controls",
                                 "Plumbing & drains",
                                 "First service visit"
                             ],
                             "account": "911000156354",
-                            "serviceAccount": "911000156354",
+                            "servicesAccount": "911000156354",
                             "propositionId": "0",
                             "premiseId": "L280628",
-                            "productName": "Plumbing & Drains Cover (TM)"
+                            "productName": "Plumbing & Drains Cover (TM)",
+                            "bundleCode": "HC300",
+                            "levelOfService": "2PDI",
+                            "excess": 0,
+                            "product": "HC300-PD",
+                            "appliances": [
+                                "Drains",
+                                "Plumbing"
+                            ],
+                            "asvAvailable": false,
+                            "bundleProduct": true
                         },
                         {
                             "id": "2005895634-Gas",
@@ -172,23 +203,39 @@ Service product holding as a resource represents following information
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
                 "meta": {}
             }
 
++ Response 500 (application/json)
 
-### Retrieve specific product holdings using account number [GET /product-holdings{?accountNumber*}]
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productHoldings",
+                        "message": "error.product.notFound.911000030791"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Retrieve product holdings for specific accounts [GET /product-holdings{?accountNumber*}]
 + Parameters
 
-    + accountNumber (number) ...This is the customers account number
+    + accountNumber (string) - This is the customers account number
 
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -198,7 +245,7 @@ Service product holding as a resource represents following information
                 "data": {
                     "productHoldings": [
                         {
-                            "isSmartMonthlyBilling": false,
+                            "smartMonthlyBilling": false,
                             "moveInDate": "01/01/2014",
                             "moveOutDate": "31/12/9999",
                             "productCode": "1601",
@@ -211,10 +258,10 @@ Service product holding as a resource represents following information
                                 "nextBillDate": null
                             },
                             "tariffCode": "GSD",
-                            "isMonthlyBilling": false,
+                            "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1601",
-                            "isTariffEnergySmart": false,
+                            "tariffEnergySmart": false,
                             "productTypeDescription": "Gas",
                             "features": [
                                 "Standard"
@@ -223,10 +270,10 @@ Service product holding as a resource represents following information
                             "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
-                            "isSmartMeterProduct": false
+                            "smartMeterProduct": false
                         },
                         {
-                            "isSmartMonthlyBilling": false,
+                            "smartMonthlyBilling": false,
                             "moveInDate": "01/01/2014",
                             "moveOutDate": "31/12/9999",
                             "productCode": "1602",
@@ -239,10 +286,10 @@ Service product holding as a resource represents following information
                                 "nextBillDate": null
                             },
                             "tariffCode": "ESD",
-                            "isMonthlyBilling": false,
+                            "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1602",
-                            "isTariffEnergySmart": false,
+                            "tariffEnergySmart": false,
                             "productTypeDescription": "Electricity",
                             "features": [
                                 "Standard"
@@ -251,7 +298,7 @@ Service product holding as a resource represents following information
                             "energyAccount": "851002262167",
                             "propositionId": "00",
                             "tariffName": "Standard",
-                            "isSmartMeterProduct": false
+                            "smartMeterProduct": false
                         }
                     ]
                 },
@@ -259,14 +306,18 @@ Service product holding as a resource represents following information
                 "meta": {}
             }
 
+
 + Response 401 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
                 "meta": {}
             }
 
@@ -275,9 +326,12 @@ Service product holding as a resource represents following information
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                                "accountNumber": "error.client.accountnumber.invalid"
-                },
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountnumber.invalid"
+                    }
+                ],
                 "meta": {}
             }
 
@@ -287,23 +341,39 @@ Service product holding as a resource represents following information
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                    "accountNumber": "error.client.accountnumber.invalid"
-                },
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountnumber.invalid"
+                    }
+                ],
                 "meta": {}
             }
 
++ Response 500 (application/json)
 
-### Retrieve product holdings using product id [GET /product-holdings{productId}]
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productHoldings",
+                        "message": "error.product.notFound.911000030791"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve product holdings using product id [GET /product-holdings/{productId}]
 + Parameters
 
-    + productId (number) ...This is the customers account number
+    + productId (string) - Product id
 
 + Request
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -312,10 +382,10 @@ Service product holding as a resource represents following information
                 "status": "SUCCESS",
                 "data": {
                     "productHolding": {
-                        "productCode": "ZSIS",
-                        "isPlumbingAndDrains": false,
+                        "productCode": "ZFI1",
+                        "plumbingAndDrains": false,
                         "type": "ServicesProductHolding",
-                        "id": "911000156354-ZSIS",
+                        "id": "911000156354-ZFI1",
                         "customerId": "22212484",
                         "productTypeDescription": "HomeCare 300(TM)",
                         "isCrossSellProduct": false,
@@ -324,13 +394,51 @@ Service product holding as a resource represents following information
                             "First service visit"
                         ],
                         "account": "911000156354",
-                        "serviceAccount": "911000156354",
+                        "servicesAccount": "911000156354",
                         "propositionId": "1",
                         "premiseId": "L280628",
-                        "productName": "Central Heating"
+                        "productName": "Central Heating - £99 Excess",
+                        "bundleCode": "HC300",
+                        "levelOfService": "3FI1",
+                        "excess": 99,
+                        "product": "HC300-CH",
+                        "appliances": [
+                            "Central Heating - £99 Excess"
+                        ],
+                        "asvAvailable": true,
+                        "bundleProduct": true
                     }
                 },
                 "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productId",
+                        "message": "error.client.product.notfound"
+                    }
+                ],
                 "meta": {}
             }
 
@@ -339,31 +447,11 @@ Service product holding as a resource represents following information
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                    "productId": "error.client.productId.invalid"
-                },
-                "meta": {}
-            }
-
-
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "authorize": "invalid_request"
-                },
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "productId": "error.client.product.notfound"
-                },
+                "errors": [
+                    {
+                        "code": "productId",
+                        "message": "error.client.productId.invalid"
+                    }
+                ],
                 "meta": {}
             }
