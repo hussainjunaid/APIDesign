@@ -1,15 +1,20 @@
 ## Product-Features [/product-features]
-Resources related to Product-Features in the API.
-A Product-Feature object has the following attributes:
+Product features API allows you to list the features related to product or bundle product. Responses from this API will be returned in JSON format only. Feature will be made up of all the primary characteristics of a product or bundle product to compute its price.
 
-+ id (required, string) - Unique id for a product feature.
-+ excess (required, string) - Indicates the excess amount customer will pay as a result of the new configuration of the product.
-+ annualServiceVisitSelected - (required, Boolean) - Indicates whether the new configuration of the product inludes an Annual Service Visit.
-+ applianceType (required, string) - Indicates the appliance type. Can be empty if there aren't any appliances for the product.
-+ paymentMethod (required, string) - Indicates the payment method for the latest configuration of the product. 
-+ levelOfService (required, string) - The level of service for the new product configuration.
+### Product features
+Product features as a resource represents following information:
 
-### Retrieve the level of service for a specific configuration of a product [GET /product-features/{?product, excess, annualServiceVisit, applianceType, paymentMethod}]
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Returned always`. Unique id for a product feature. |
+| excess | string | `Returned always`. Indicates excess which will be any of the following, `0`,`50`,`99`. |
+| annualServiceVisit | boolean | `Returned always`. Indicates annual service visit. |
+| applianceType | string | `Returned always`. Indicates the appliance type. Can be empty if there aren't any appliances for the product. |
+| paymentMethod | string | `Returned always`. Indicates the payment method. |
+
+>`Note:` Format of the product feature id will be `BundleCode|ProductCode|LosCode|ApplianceType|PaymentMethod`. If the product is `individual`, then BundleCode will be `NA`.
+
+### Retrieve the level of service for a specific configuration of a product [GET /product-features{?product, excess, annualServiceVisit, applianceType*, paymentMethod}]
 
 + Parameters
 
@@ -27,71 +32,71 @@ A Product-Feature object has the following attributes:
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "productFeatures": [
-                    {
-                        "id": "NA|GAK|1S|WAW|MDD",
-                        "excess": "0",
-                        "annualServiceVisitSelected": true,
-                        "applianceType": "WAW",
-                        "paymentMethod": "MDD",
-                        "levelOfService": "1S"
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productFeatures": [
+                        {
+                            "id": "NA|GAK|1S|WAW|MDD",
+                            "excess": "0",
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "WAW",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "1S"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
         
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "productFeatures": [
-                    {
-                        "id": "HC400|HC400-CH|3FI1|BBC|MDD",
-                        "excess": "99",
-                        "annualServiceVisitSelected": true,
-                        "applianceType": "BBC",
-                        "paymentMethod": "MDD",
-                        "levelOfService": "3FI1"
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "productFeatures": [
+                        {
+                            "id": "HC400|HC400-CH|3FI1|BBC|MDD",
+                            "excess": "99",
+                            "annualServiceVisitSelected": true,
+                            "applianceType": "BBC",
+                            "paymentMethod": "MDD",
+                            "levelOfService": "3FI1"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
 + Response 404 (application/json)
 
-        {
-            "status" : ERROR
-            "data": {}
-            "errors": [
-                {
-                    "code": "product",
-                    "message": "error.client.product.notFound"
-                }
-            ]
-            "meta": {}
-        }
+            {
+                "status" : ERROR
+                "data": {}
+                "errors": [
+                    {
+                        "code": "product",
+                        "message": "error.client.product.notFound"
+                    }
+                ]
+                "meta": {}
+            }
 
 + Response 400 (application/json)
 
-        {
-            "status" : FAIL
-            "data": {}
-            "errors": [
-                {
-                    "code": "excess",
-                    "message": "error.client.excess.inValid"
-                }
-            ]
-            "meta": {}
-        }
+            {
+                "status" : FAIL
+                "data": {}
+                "errors": [
+                    {
+                        "code": "excess",
+                        "message": "error.client.excess.inValid"
+                    }
+                ]
+                "meta": {}
+            }
 
 + Response 400 (application/json) 
 
@@ -116,6 +121,20 @@ A Product-Feature object has the following attributes:
                 {
                     "code": "paymentMethod",
                     "message": "error.client.paymentMethod.inValid"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "bundle",
+                    "message": "error.client.bundle.notFound"
                 }
             ],
             "meta": {}
