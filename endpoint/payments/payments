@@ -1,1 +1,235 @@
+## Group Payments
 
+## Payments [/payments]
+
+The payments resource allows you to validate, [authenticate with 3D secure](../artefacts/PA%20Merchant%20Server%20Implem%20Guide%200553-08.pdf) and generate payment resource to make a payment for logged in customers. Responses will be returned in JSON format only.
+
+### Payment
+Payment as a resource represents following information
+
+| Property | Type | As request | As response | Description |
+| :---------- | :---------- | :---------- | :---------- | :----------- | 
+| id | String | `Optional` | `Returned always` | Identifier for the payment. |
+| intent | String | `Required` | `Returned always` | Intent can be `payment-transaction`. |
+| energyAccount | String | `Required` | `Returned always` | Account number of the customer to make a payment. |
+| amount | String | `Required` | `Returned always` | Amount paid by the customer, payment amount validation applicable. |
+| card | Card | `Required` | `Returned always` | Card details of the customer, card validation applicable. |
+
+#### Card
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | :------------------------------------------------------------ |
+| number | String | `Required` | `Returned always` | Number associated to the card, card number validation applicable. |
+| cardType | String | `Required` | `Returned always` | Card type of the customer, Card type validation applicable. Supported card types are `visa-debit`, `visa-delta`, `visa-credit-card`, `mastercard` and `maestro`. |
+| holderName | String | `Required` | `Returned always` | Name displayed on the card, name validation applicable. |
+| startMonth | String | `Optional - based on card type` | `Returned always` | Start month of the card, start month validation applicable. Start month is mandatory for card type `maestro`. |
+| startYear | String | `Optional - based on card type` | `Returned always` | Start year of the card, start year validation applicable. Start year is mandatory for card type `maestro`. |
+| expiryMonth | String | `Required` | `Returned always` | Expiry month of the card, expiry month validation applicable. |
+| expiryYear | String | `Required` | `Returned always` | Expiry year of the card, expiry year validation applicable. |
+| issueNumber | String | `Required` | `Returned always` | Issue number of the card, issue number validation applicable. |
+| securityNumber | String | `Required` | `Returned always` | Security number of the card, security validation applicable. |
+
+
+### Use cases
+This section explains the flow of `payment-transactions`.
+
+#### Use case for `payment-transactions`
+```
++-------------------+                                               +-------------------+                              
+|                   |                                               |                   |
+|                  -+---(1)-- POST /payments ---------------------->|                   |
+|                   |                                               |                   |
+|                   |                                               |                   |
+|                  -+---(2)-- POST /payments/:id/verify-enrolment ->|                   |
+|                   |                                               |                   |
+|      Client       |                                               |   Online server   |<------(6)-- POST /bank-payment-response -.
+|                   |<--(3)-- ACS Url is sent back to app ----------+-                  |                                          |
+|                   |                                               |                   |                                          |
+|                   |                                               |                   |                                          |
+|                   |<--(7)-- Reload app with validation status ----+-                  |                                          |
+|                   |                                               |                   |                                          |
+|                   |                                               |                   |                                          |
+|       .          -+---(8)-- POST /payment-transactions ---------->|                   |                                          |
++-------+-----------+                                               +-------------------+                                          |
+        |                                                                                                                +---------+---------+
+        |                                                                                                                |         '         |----.
+        |                                                                                                                |                   |    |
+        '--------------------------------(4)-- POST /[acs-url] --------------------------------------------------------->|   Bank merchant   |   (5) Validate card information
+                                                                                                                         |                   |    |
+                                                                                                                         |                   |<---'
+                                                                                                                         +-------------------+
+```
+`payment-transactions` - explanation below,
+
+1. POST operation on [`/payments`](#post-payments) [`Secured by OAuth`] with payment amount and card details, will generate a Payment resource with id. This id can be used for furthur transactions.
+2. POST operation on [`/payments/:id/verify-enrolment`](#post-paymentsidverify-enrolment) [`Secured by OAuth`] with the payment id. This will validate the card details with 3d-secure and respond with Card Enrolment Verification details which contains Access control server (ACS) URL.
+3. Access control server (ACS) URL is sent back to the client which is used to contact the bank merchant.
+4. Client has to interact with ACS server by making the POST to the bank merchant system by the help of IFrame. IFrame should comprise of a form with following fields,
+
+   | FieldName | Description |
+   | :---------- | :---------- |
+   | PaReq | The encoded PaReq to submit to the ACS. |
+   | MD | The Merchant Data to submit to the ACS (this will contain the id of payment resource). |
+   | TermUrl | The API URL to which the ACS response is submitted (PARes). |
+
+5. Once the POST operation is made to the ACS URL, bank merchant will take control and validate the information provided by the customer.
+6. Bank merchant will perform a POST on [`/bank-payment-response`](/api-reference/bank-payment-response.md#post-bank-payment-response) with the following fields. 
+
+   | FieldName | Description |
+   | :---------- | :---------- |
+   | PaRes | The encoded PaRes to submit to the Term URL (API URL). |
+   | MD | The Merchant Data that was submitted in the ACS redirect request to the ACS (this will contain the id of payment resource). |
+   
+   `paRes` returned from ACS will be validated by online server and redirected to intermediate page.
+7. Intermediate page URL is loaded with status of the response which is either `success` or `failed`. Once the intermediate page is redirected in the IFrame, client can close the IFrame window.
+8. Once all the payment related authentications are done, POST operation on [`/payment-transactions`](/api-reference/payment-transactions.md#post-payment-transactions) [`Secured by OAuth`] will post the payment to SAP system and respond with `paymentTransaction`.
+
+### Make a payment [POST /payments]
++ Request
+
+    + Headers
+            
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+        
+            {
+                "payment": {
+                    "intent": "payment-transaction",
+                    "energyAccount": "850034235409",
+                    "amount": 12.34,
+                    "card": {
+                        "number": "4462111112113665",
+                        "cardType": "visa-debit",
+                        "holderName": "Test",
+                        "startMonth": "05",
+                        "startYear": "2013",
+                        "expiryMonth": "04",
+                        "expiryYear": "2018",
+                        "securityNumber": "123"
+                    }
+                }
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "payment": {
+                        "id": "p2sa-34klsd",
+                        "intent": "payment-transaction",
+                        "energyAccount": "850034235409",
+                        "amount": 12.34,
+                        "card": {
+                            "number": "4462111112113665",
+                            "cardType": "visa-debit",
+                            "holderName": "Test",
+                            "startMonth": "05",
+                            "startYear": "2013",
+                            "expiryMonth": "04",
+                            "expiryYear": "2018",
+                            "securityNumber": "123"
+                        }
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+        
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "amount",
+                        "message": "error.client.amount.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 406 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "payment",
+                        "message": "error.client.payment.count.exceeded"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Verify Enrolment [POST /payments/{id}/verify-enrolment]
++ Parameters
+
+    + id (string) - Payment transaction id
+
++ Request
+
+    + Headers
+            
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "cardEnrolmentVerification": {
+                        "authenticationRequired": true,
+                        "acsURL": "https://acsUrl",
+                        "paRequestMessage": "dfk33dfdsfd"
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
+            
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "payment",
+                        "message": "error.client.payment.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
