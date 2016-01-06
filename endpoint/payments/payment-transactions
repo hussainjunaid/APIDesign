@@ -1,1 +1,408 @@
+## Payment Transactions [/payment-transactions]
+
+Payment transactions endpoint allows you to list / view all the payment transaction of the logged in customer. Responses from this API will be retuned in JSON format only.
+
+### Payment transaction
+Payment transaction as a resource represents following information
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | :------------------------------------------------------------ |
+| id | String | `Optional` |  `Returned always` | Combination of account number, transaction date in YYYYMMDD format and the serial number of transaction in ascending order, seperated by "-". |
+| date | String | `Optional` | `Returned always` | Transaction date in UTC format. |
+| transactionType | String | `Optional` | `Returned always` |  Defines the type of transaction, it will be any one the following `charges`, `miscellaneous-adjustment`, `reversal`, `payment`, `failed-payment`, `non-energy-related-charge`, `amount-written-off`, `amount-transferred`, `migrated-item`, `payment-request`, `migrated-payment`, `final-statement`, `annual-statement`, `prompt-pay-discount`, `miscellaneous-charge`, `amount-refunded`, `miscellaneous`, `conversion-document`,`other-charges`, `cp-conversion-payment` and `charges reversed`. |
+| credit | double | `Optional` | `Returned always` | Credit balance associated with the transaction. |
+| debit | double | `Optional` | `Returned always` | Debit balance associated with the transaction. |
+| balance | double | `Optional` | `Returned always` | Final balance after the transaction. | 
+| billId | String | `Optional` | `Returned always` | Bill Identifier, if transaction is a bill generation. |
+| energyAccount | String | `Required` | `Returned always`| Represents the relationship with energy account of the customer |
+
+### Retrieve all payment transactions [GET /payment-transactions]
++ Request
+
+    + Headers
+            
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "paymentTransactions": [
+                        {
+                            "id": "851234567890-20110204-1",
+                            "date": "2011-02-04T00:00:00+0000",
+                            "transactionType": "payment",
+                            "credit": 10,
+                            "debit": 0,
+                            "balance": 146.98,
+                            "billId": null,
+                            "energyAccount": "851234567890"
+                        },
+                        {
+                            "id": "851234567890-20110131-1",
+                            "date": "2011-01-31T00:00:00+0000",
+                            "transactionType": "charges",
+                            "credit": 0,
+                            "debit": 55,
+                            "balance": 156.98,
+                            "billId": "234567",
+                            "energyAccount": "851234567890"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
+### Retrieve specific payment transactions [GET /payment-transactions/{transactionId}]
++ Parameters
+
+    + transactionId (string) - Payment transaction id
+    
++ Request
+
+    + Headers
+            
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "paymentTransaction": {
+                        "id": "851234567890-20110204-1",
+                        "date": "2011-02-04T00:00:00+0000",
+                        "transactionType": "payment",
+                        "credit": 10,
+                        "debit": 0,
+                        "balance": 146.98,
+                        "billId": null,
+                        "energyAccount": "851234567890"
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+        
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                       "code": "identifer",
+                        "message": "error.client.identifer.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 403 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+ 
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "paymentTransactions",
+                        "message": "error.paymentTransactions.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.transaction.history.detail.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
+
+### Retrieve payment transactions for specific account [GET /payment-transactions?accountNumber={accountNumber}]
++ Parameters
+
+    + accountNumber (string) - Account number for which the payment transactions are required
+    
++ Request
+
+    + Headers
+            
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "paymentTransactions": [
+                        {
+                            "id": "851234567890-20110204-1",
+                            "date": "2011-02-04T00:00:00+0000",
+                            "transactionType": "payment",
+                            "credit": 10,
+                            "debit": 0,
+                            "balance": 146.98,
+                            "billId": null,
+                            "energyAccount": "851234567890"
+                        },
+                        {
+                            "id": "851234567890-20110131-1",
+                            "date": "2011-01-31T00:00:00+0000",
+                            "transactionType": "charges",
+                            "credit": 0,
+                            "debit": 55,
+                            "balance": 156.98,
+                            "billId": "234567",
+                            "energyAccount": "851234567890"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+        
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 403 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+ 
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "paymentTransactions",
+                        "message": "error.paymentTransactions.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.transaction.history.detail.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Post payment transactions [POST /payment-transactions]
++ Request
+
+    + Headers
+            
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "paymentTransaction": {
+                    "id": null,
+                    "date": null,
+                    "transactionType": null,
+                    "credit": 0,
+                    "debit": 0,
+                    "balance": 0,
+                    "billId": null,
+                    "energyAccount": "851234567890"
+                },
+                "meta": {
+                    "payment": "pwqew-1232wsw"
+                }
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "paymentTransaction": {
+                        "id": "851234567890-20110204-1",
+                        "date": "2011-02-04T00:00:00+0000",
+                        "transactionType": "payment",
+                        "credit": 10,
+                        "debit": 0,
+                        "balance": 156.98,
+                        "billId": null,
+                        "energyAccount": "851234567890"
+                    }
+                },
+                "errors": [],
+                "meta": {
+                    "reference": "47535731277",
+                    "paymentStatus": "success"
+                }
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 403 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "payment",
+                        "message": "error.client.payment.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+ 
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
 
