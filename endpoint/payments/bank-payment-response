@@ -1,1 +1,31 @@
+## Bank Payment Response [/bank-payment-response]
+
+The process bank payment response is a controller endpoint allows you to validate the payment response details sent from bank. Response from this endpoint is a redirection to a intermediate payment callback page.
+
+#### Request
+
+Process bank response will be posted with the following query parameters. 
+paRes and MD are the return parameters from the bank. In this post the paRes will be extracted and verified.
+
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| paRes | string | `Required`. paRes is the response returned from bank to process payment. |
+| MD | string | `Required`. MD is the parameter to continue the session in the payment processing. MD holds the payment token key to process payment. |
+
+#### Response
+
+The response will return the URL which has to be redirected. URL contains the status as `success` or `failed`. Redirection URL is, `https://www.britishgas.co.uk/process-3d-secure-complete?status={status}`.
+```http
+Status: 303 See Other
+```
+
+
+### Post bank payment response [POST /bank-payment-response]
+
++ Request (application/text)
+
+    + Body
+        
++ Response 303 (application/json)
+
 
