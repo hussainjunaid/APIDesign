@@ -1,1 +1,174 @@
+## Dyno Appointment Slots [/dyno-appointment-slots]
+Dyno Appointment Slots resource allows you to retrieve slots to book an appointment for a fault that is associated to plumbing and drains product. Response from this end point will be in JSON format only.
 
+#### Dyno Appointment Slot
+Dyno Appointment Slot as a resource represents following information:
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | :------------------------------------------------------------ |
+| id | String | Not Applicable | `Returned always` | Unique Id that is returned from backend for each slot. |
+| variant | String | Not applicable | `Returned always` | It will represent the time variant of slots. Possible [variants](/api-reference/dyno-appointment-slots.md#variant) for DYNO slots are described in the below table |
+| startTime | String | Not applicable | `Returned always` | Start time of the appointment slot. |
+| endTime | String | Not applicable | `Returned always` | End time of the appointment slot. |
+| available | boolean | Not applicable | `Returned always` | Status of the appointment slot. |
+
+>`Note` : `range` - Currently slots for the range of 14 days(maximum) is returned from DYNO. Even if we request for range more than 14, DYNO returns back slots for 14 days only.
+
+##### Variant
+
+| Start time | End time | Variant |
+| :---------- | :-------------- | :---------------- |
+| 00:00 | 08:00 | OOH am |
+| 08:00 | 18:00 | All Day |
+| 08:00 | 13:00 | AM |
+| 08:00 | 09:00 | 1st Call |
+| 12:00 | 18:00 | PM |
+| 17:00 | 21:00 | Evening |
+| 20:00 | 00:00 | OOH Ngt |
+
+### Retrieve Dyno appointment slots [GET /dyno-appointment-slots{?range,showUnavailableSlots,servicesAccount,serviceArea,workType}]
++ Parameters
+
+    + range (int, optional) - Number of days for which the slots is to be retrieved starting from the current date. By default backend would return slots for 14 days.
+    + showUnavailableSlots (boolean, optional) - Used to filter the unavailable slots from the appointment response. Defaulted to `true`
+    + servicesAccount (string, required) - Used to fetch services contract number through which DYNO slots are retrieved
+    + serviceArea (string, required) - This value is fetched from the priority-questions end point
+    + workType (string, required) -  This value is fetched from the priority-questions end point
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "dynoAppointmentSlots": [
+                        {
+                            "id": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                            "variant": "AM",
+                            "startTime": "2015-10-11T08:00:00+0000",
+                            "endTime": "2015-10-11T13:00:00+0000",
+                            "available": true
+                        },
+                        {
+                            "id": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzARE",
+                            "variant": "PM",
+                            "startTime": "2015-09-11T12:00:00+0000",
+                            "endTime": "2015-09-11T18:00:00+0000",
+                            "available": true
+                        },
+                        {
+                            "id": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODsDEFT",
+                            "variant": "AM",
+                            "startTime": "2015-10-12T08:00:00+0000",
+                            "endTime": "2015-10-12T13:00:00+0000",
+                            "available": true
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "servicesAccount",
+                        "message": "error.client.servicesAccount.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "serviceArea",
+                        "message": "error.client.serviceArea.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "workType",
+                        "message": "error.client.workType.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "servicesAccount",
+                        "message": "error.client.servicesAccount.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
