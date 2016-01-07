@@ -316,7 +316,7 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
             
-### Retrieve energy product holdings for specific accounts [GET /product-holdings{?accountNumber*}]
+### Retrieve energy product holdings for specific accounts [GET /energy-product-holdings{?accountNumber*}]
 + Parameters
 
     + accountNumber (string) - This is the customers account number
@@ -452,7 +452,7 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
-### Retrieve product holdings using product id [GET /product-holdings/{productId}]
+### Retrieve product holdings using product id [GET /energy-product-holdings/{productId}]
 + Parameters
 
     + productId (string) - Product id
