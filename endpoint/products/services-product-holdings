@@ -1,1 +1,362 @@
+## Services Product Holdings [//services-product-holdings]
+Services product holdings endpoint allows you to list / view all the services product holdings of the logged in customer. Responses from this endpoint will be returned in JSON format only.
 
+### Services product holding
+Services product holding as a resource represents following information
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` | Combination of account number and product code is considered as the unique identifier. |
+| type | string | `Not Applicable` | `Returned always` | Specifies which data model is supported by the resources, it will be ServicesProductHolding. |
+| productCode | string | `Not Applicable` | `Returned always` | Product code of the product. |
+| customerId | string | `Not Applicable` | `Returned always` | Customer id associated to the product, if available. |
+| productTypeDescription | string | `Not Applicable` | `Returned always` | Product description of the product, if available. |
+| productName | string | `Not Applicable` | `Returned always` | Name of the product, if available. |
+| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. | 
+| servicesAccount | string | `Not Applicable` | `Returned always` | Services account number to which the product is linked, if available. | 
+| propositionId | string | `Not Applicable` | `Returned always` | Proposition id for the product. |
+| premiseId | string | `Not Applicable` | `Returned always` | Premise id associated to the product, if available. |
+| plumbingAndDrains | boolean | `Not Applicable` | `Returned always` | Indicates that the product has plumbing and drains, if the value is true. |
+| crossSellProduct | boolean | `Not Applicable` | `Returned always` | Indicates that the product is a cross sell product, if the value is true. |
+| features | Array of string | `Not Applicable` | `Returned always` | Mentions any specific features of the product. |
+| bundleProduct | boolean | `Not Applicable` | `Returned always` | Indicates that the product is a bundle product, if the value is true. |
+| appliances | Array of string | `Not Applicable` | `Returned always` | All the appliances associated to the product. |
+| excess | string | `Not Applicable` | `Returned always` | Mentions the excess amount selected for services product. |
+| levelOfService | string | `Not Applicable` | `Returned always` | Level of service associated for services product. |
+| product | string | `Not Applicable` | `Returned always` | Product code mapped to level of service, this is the id to Product resource. |
+| bundleCode | string | `Not Applicable` | `Returned always` | Bundle code mapped to level of service. |
+| asvAvailable | boolean | `Not Applicable` | `Returned always` | Indicates that Annual Service Visit is applicable for this product, if the value is true. |
+
+### Retrieve services product holdings [GET /services-product-holdings]
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "servicesProductHoldings": [
+                        {
+                            "productCode": "ZFI1",
+                            "plumbingAndDrains": false,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZFI1",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "crossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "servicesAccount": "911000156354",
+                            "propositionId": "1",
+                            "premiseId": "L280628",
+                            "productName": "Central Heating - £99 Excess",
+                            "bundleCode": "HC300",
+                            "levelOfService": "3FI1",
+                            "excess": 99,
+                            "product": "HC300-CH",
+                            "appliances": [
+                                "Central Heating - £99 Excess"
+                            ],
+                            "asvAvailable": true,
+                            "bundleProduct": true
+                        },
+                        {
+                            "productCode": "ZPDI",
+                            "plumbingAndDrains": true,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZPDI",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "crossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "Plumbing & drains",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "servicesAccount": "911000156354",
+                            "propositionId": "0",
+                            "premiseId": "L280628",
+                            "productName": "Plumbing & Drains Cover (TM)",
+                            "bundleCode": "HC300",
+                            "levelOfService": "2PDI",
+                            "excess": 0,
+                            "product": "HC300-PD",
+                            "appliances": [
+                                "Drains",
+                                "Plumbing"
+                            ],
+                            "asvAvailable": false,
+                            "bundleProduct": true
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "servicesProductHoldings",
+                        "message": "error.server.product.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve energy product holdings for specific accounts [GET /services-product-holdings{?accountNumber*}]
++ Parameters
+
+    + accountNumber (string) - This is the customers account number
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "servicesProductHoldings": [
+                        {
+                            "productCode": "ZFI1",
+                            "plumbingAndDrains": false,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZFI1",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "crossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "servicesAccount": "911000156354",
+                            "propositionId": "1",
+                            "premiseId": "L280628",
+                            "productName": "Central Heating - £99 Excess",
+                            "bundleCode": "HC300",
+                            "levelOfService": "3FI1",
+                            "excess": 99,
+                            "product": "HC300-CH",
+                            "appliances": [
+                                "Central Heating - £99 Excess"
+                            ],
+                            "asvAvailable": true,
+                            "bundleProduct": true
+                        },
+                        {
+                            "productCode": "ZPDI",
+                            "plumbingAndDrains": true,
+                            "type": "ServicesProductHolding",
+                            "id": "911000156354-ZPDI",
+                            "customerId": "22212484",
+                            "productTypeDescription": "HomeCare 300(TM)",
+                            "crossSellProduct": false,
+                            "features": [
+                                "Boiler & controls",
+                                "Plumbing & drains",
+                                "First service visit"
+                            ],
+                            "account": "911000156354",
+                            "servicesAccount": "911000156354",
+                            "propositionId": "0",
+                            "premiseId": "L280628",
+                            "productName": "Plumbing & Drains Cover (TM)",
+                            "bundleCode": "HC300",
+                            "levelOfService": "2PDI",
+                            "excess": 0,
+                            "product": "HC300-PD",
+                            "appliances": [
+                                "Drains",
+                                "Plumbing"
+                            ],
+                            "asvAvailable": false,
+                            "bundleProduct": true
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
+
++ Response 403 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "servicesProductHoldings",
+                        "message": "error.server.product.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve product holdings using product id [GET /services-product-holdings/{productId}]
++ Parameters
+
+    + productId (string) - Product id
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "servicesProductHolding": {
+                        "productCode": "ZFI1",
+                        "plumbingAndDrains": false,
+                        "type": "ServicesProductHolding",
+                        "id": "911000156354-ZFI1",
+                        "customerId": "22212484",
+                        "productTypeDescription": "HomeCare 300(TM)",
+                        "isCrossSellProduct": false,
+                        "features": [
+                            "Boiler & controls",
+                            "First service visit"
+                        ],
+                        "account": "911000156354",
+                        "servicesAccount": "911000156354",
+                        "propositionId": "1",
+                        "premiseId": "L280628",
+                        "productName": "Central Heating - £99 Excess",
+                        "bundleCode": "HC300",
+                        "levelOfService": "3FI1",
+                        "excess": 99,
+                        "product": "HC300-CH",
+                        "appliances": [
+                            "Central Heating - £99 Excess"
+                        ],
+                        "asvAvailable": true,
+                        "bundleProduct": true
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                       "code": "id",
+                        "message": "error.client.id.notfound"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.invalid"
+                    }
+                ],
+                "meta": {}
+            }
