@@ -1,1 +1,383 @@
+## Priority Questions [/priority-questions]
+Priority question resource allows you to fetch the questions and answers from DYNO which are related to a fault. The client will continually call the priority questions endpoint until a service area and work type is returned for the given answer. Once the service area and work type is available this will ultimately determine the nature of the problem and the classification of slots e.g. whether to fetch standard, priority or emergency availability.
 
+#### Priority Question
+Priority question as an entity represents the following attributes:
+
+| Property | Type | As request | As response |Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | String | `Not applicable` | `Returned always` | Unique id - encoded value formed by combining faultId or answerId and static text. |
+| description | String | `Not applicable` | `Returned always` | Description of the question. |
+| priorityAnswers | Array of String | `Not applicable` | `Returned always` | Returns the ids of [priority answer](api-reference/priority-questions.md#priority-answer) associated with a question. |
+
+> `Note` : This endpoint returns only one level of questions as per current implementation. In future following enhancement would be done
+   * `questionLevel` attribute to fetch the required levels of questions and answers for a given fault.
+   * `hasContract` attribute to differentiate existing/new services contracts.
+   
+#### Priority Answer
+Priority answer as an entity represents the following attributes:
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | String | `Not applicable` | `Returned always` | Unique id of a answer which is returned from DYNO. |
+| description | String | `Not applicable` | `Returned always` | Description of the answer. |
+| workType | String | `Not applicable` | `Not returned always` | This indicates the type of work it would be required to address the faults choosen. |
+| serviceArea | String | `Not applicable` | `Not returned always` | This indicates the nature of the service to be provided. |
+| priorityQuestion | String | `Not applicable` | `Not returned always` | Question id to get the current question level. |
+| nextPriorityQuestion | String | `Not applicable` | `Not returned always` | Question id to get the next level of questions. |
+
+### Retrieve priority questions for a specific fault [GET /priority-questions{?fault}]
++ Parameters
+
+    + fault (string, required) - Fault id of a fault which customer choose
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "priorityQuestions": [
+                        {
+                            "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "description": "Is there raw sewage backing up into the property?",
+                            "priorityAnswers": [
+                                "7f076500-5d5d-e511-ae27-005056984a95",
+                                "9e076500-5d5d-e511-ae27-005056984a95"
+                            ]
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "fault",
+                        "message": "error.client.fault.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "fault",
+                        "message": "error.client.fault.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve priority questions for a specific fault with answers sideloaded [GET /priority-questions{?fault}&include=priorityAnswers]
++ Parameters
+
+    + fault (string, required) - Fault id of a fault which customer choose
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "priorityQuestions": [
+                        {
+                            "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "description": "Is there raw sewage backing up into the property?",
+                            "priorityAnswers": [
+                                "7f076500-5d5d-e511-ae27-005056984a95",
+                                "9e076500-5d5d-e511-ae27-005056984a95"
+                            ]
+                        }
+                    ],
+                    "priorityAnswers": [
+                        {
+                            "id": "7f076500-5d5d-e511-ae27-005056984a95",
+                            "description": "No",
+                            "workType": null,
+                            "serviceArea": null,
+                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "nextPriorityQuestion": "N2YwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE"
+                        },
+                        {
+                            "id": "9e076500-5d5d-e511-ae27-005056984a95",
+                            "description": "Yes",
+                            "workType": "100",
+                            "serviceArea": "11",
+                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "nextPriorityQuestion": null
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "fault",
+                        "message": "error.client.fault.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "fault",
+                        "message": "error.client.fault.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve specific priority question [GET /priority-questions/{id}]
++ Parameters
+
+    + id (string, required) - Id of the priority question
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "priorityQuestion": {
+                        "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                        "description": "Is there raw sewage backing up into the property?",
+                        "priorityAnswers": [
+                            "7f076500-5d5d-e511-ae27-005056984a95",
+                            "9e076500-5d5d-e511-ae27-005056984a95"
+                        ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve specific priority question with answers sideloaded [GET /priority-questions/{id}?include=priorityAnswers]
++ Parameters
+
+    + id (string, required) - Id of the priority question
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "priorityQuestion": {
+                        "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                        "description": "Is there raw sewage backing up into the property?",
+                        "priorityAnswers": [
+                            "7f076500-5d5d-e511-ae27-005056984a95",
+                            "9e076500-5d5d-e511-ae27-005056984a95"
+                        ]
+                    },
+                    "priorityAnswers": [
+                        {
+                            "id": "7f076500-5d5d-e511-ae27-005056984a95",
+                            "description": "No",
+                            "workType": null,
+                            "serviceArea": null,
+                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "nextPriorityQuestion": "N2YwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE"
+                        },
+                        {
+                            "id": "9e076500-5d5d-e511-ae27-005056984a95",
+                            "description": "Yes",
+                            "workType": "100",
+                            "serviceArea": "11",
+                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "nextPriorityQuestion": null
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
