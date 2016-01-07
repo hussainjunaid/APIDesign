@@ -1,4 +1,4 @@
-## Services Product Holdings [//services-product-holdings]
+## Services Product Holdings [/services-product-holdings]
 Services product holdings endpoint allows you to list / view all the services product holdings of the logged in customer. Responses from this endpoint will be returned in JSON format only.
 
 ### Services product holding
