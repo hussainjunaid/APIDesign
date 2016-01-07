@@ -1,1 +1,199 @@
+## Group Dyno
 
+## Dyno Appointments [/dyno-appointments]
+Dyno appointment resource allows you to post the appointment details to confirm the same for a fault that is associated to plumbing and drains product. Response from this end point will be in JSON format only.
+
+#### Dyno Appointment
+Dyno appointment as a resource represents following information:
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- |:---------- |:---------- |:------------------------------------------------------------ |
+| id | String | `Not Applicable`|`Returned always`.| It is the service order number for which the appointment is been booked. |
+| servicesAccount | String | `Mandatory`|`Returned always`. |It is account number of the appointment. |
+| telephoneNumber | String | `Optional`|`Returned always`. |It is contact number of the customer. |
+| dynoAppointmentSlot | String | `Mandatory`|`Returned always`. |It is the slot id value mapped to the appointment |
+| serviceArea | String | `Mandatory`|`Returned always`.|It represents the service area  value returned in the priority questions response |
+| workType | String | `Mandatory`|`Returned always`.|It reresents the work type  value returned in the priority questions response |
+| comments | String | `Optional`|`Returned always`.|Plumbing & drains fault related information provided by customer. This value is defaulted to `NA`|
+
+
+### Book Dyno appointment [POST /dyno-appointments]
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "dynoAppointment": {
+                    "id": null,
+                    "servicesAccount": "911000031855",
+                    "telephoneNumber": "0738123456",
+                    "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                    "serviceArea": "11",
+                    "workType": "100",
+                    "comments": "water leakage in toilet"
+                }
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "dynoAppointment": {
+                        "id": "SO-5867569-6RVX",
+                        "servicesAccount": "911000031855",
+                        "telephoneNumber": "0738123456",
+                        "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                        "serviceArea": "11",
+                        "workType": "100",
+                        "comments": "water leakage in toilet"
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slot",
+                        "message": "error.client.slot.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slot",
+                        "message": "error.client.slot.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "serviceArea",
+                        "message": "error.client.serviceArea.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "workType",
+                        "message": "error.client.workType.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "contract",
+                        "message": "error.client.contract.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
