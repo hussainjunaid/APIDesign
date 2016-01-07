@@ -1,1 +1,545 @@
+## Energy Product Holdings [/energy-product-holdings]
+Energy product holdings endpoint allows you to list / view all the energy product holdings of the logged in customer. Responses from this endpoint will be returned in JSON format only.
 
+#### Energy product holding
+Energy product holding as a resource represents following information
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` | Combination of account number and product code is considered as the unique identifier. |
+| type | string | `Not Applicable` | `Returned always` | Specifies which data model is supported by the resources, it will be EnergyProductHolding. |
+| moveInDate | string | `Not Applicable` | `Returned always` | Date when the product is moved to the address, in dd/MM/yyyy format. |
+| moveOutDate | string | `Not Applicable` | `Returned always` | Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999 |
+| productCode | string | `Not Applicable` | `Returned always` | Product code, 1601 for gas and 1602 for electricity. |
+| tariff | string | `Not Applicable` | `Returned always` | Identifies the tariff associated to the product, if available. Tariff can be sideloaded upon request |
+| productTypeDescription | string | `Not Applicable` | `Returned always` | Product description of the product, if available. |
+| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. | 
+| energyAccount | string | `Not Applicable` | `Returned always` | Energy account number to which the product is linked, if available. | 
+| propositionId | string | `Not Applicable` | `Returned always` | Proposition id for the product. |
+| tariffEnergySmart | boolean | `Not Applicable` | `Returned always` | Indicates that the product has energy smart tariff if the value is true. |
+| monthlyBilling | boolean | `Not Applicable` | `Returned always` | Indicates that the product is monthly billed if the value is true. |
+| smartMonthlyBilling | boolean | `Not Applicable` | `Returned always` | Indicates that the product is smart monthly billed if the value is true. |
+| smartMeterProduct | boolean | `Not Applicable` | `Returned always` | Indicates that the product is having a smart meter if the value is true. |
+| features | Array of string | `Not Applicable` | `Returned always` | Mentions any specific features of the product |
+| monthlyBillingData | Complex type | `Not Applicable` | `Returned always` | All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date. |
+
+#### Monthly Billing Data
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| currentBillDay | string | `Not Applicable` | `Returned always` | Current bill date for the product in `dd/MM/yyyy` format. |
+| estimatedReadCounter | string | `Not Applicable` | `Returned always` | Specifies how many bills generated for estimated meter reads. |
+| installmentDate | string | `Not Applicable` | `Returned always` | Installment date for the product in `dd/MM/yyyy` format. |
+| signUpDate | string | `Not Applicable` | `Returned always` | Sign up date for the product in `dd/MM/yyyy` format. |
+| currentPropositionId | string | `Not Applicable` | `Returned always` | Proposition id of the product. |
+| nextBillDate | string | `Not Applicable` | `Returned always` | Next bill date for the product in `dd/MM/yyyy` format. |
+
+### Retrieve energy product holdings [GET /energy-product-holdings]
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "energyProductHoldings": [
+                        {
+                            "smartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariff": "standard",
+                            "monthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "tariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "energyAccount": "851002262167",
+                            "propositionId": "00",
+                            "smartMeterProduct": false
+                        },
+                        {
+                            "smartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariff": "standard",
+                            "monthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "tariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "energyAccount": "851002262167",
+                            "propositionId": "00",
+                            "smartMeterProduct": false
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "energyProductHoldings",
+                        "message": "error.server.product.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve energy product holdings with tariffs sideloaded [GET /energy-product-holdings?include=tariff]
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "energyProductHoldings": [
+                        {
+                            "smartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariff": "standard",
+                            "monthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "tariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "energyAccount": "851002262167",
+                            "propositionId": "00",
+                            "smartMeterProduct": false
+                        },
+                        {
+                            "smartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariff": "standard",
+                            "monthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "tariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "energyAccount": "851002262167",
+                            "propositionId": "00",
+                            "smartMeterProduct": false
+                        }
+                    ],
+                    "tariffs": [
+                        {
+                            "supplierName": "British Gas",
+                            "gasAdditionalProducts": "Not applicable",
+                            "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                            "supportedFuels": [
+                                "gas",
+                                "electricity"
+                            ],
+                            "endDate": "Not applicable",
+                            "electricityAdditionalProducts": "Not applicable",
+                            "type": "variable",
+                            "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                            "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                            "energySmartPaymentOptions": [
+                                "mdd"
+                            ],
+                            "cancellationCharge": "Not applicable",
+                            "id": "standard",
+                            "isEnergyExtraEligible": false,
+                            "paymentOptions": [
+                                "mdd",
+                                "qcc",
+                                "ppm"
+                            ],
+                            "priceGuaranteedDate": "Not applicable",
+                            "isEnergySmartEligible": true,
+                            "discountRates": [
+                                {
+                                    "rate": 0,
+                                    "type": "gas"
+                                },
+                                {
+                                    "rate": 0,
+                                    "type": "electricity"
+                                },
+                                {
+                                    "rate": 15,
+                                    "type": "dual"
+                                }
+                            ],
+                            "onlineAccountMandatory": false,
+                            "displayName": "Standard",
+                            "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                            "isTimeOfUseTariff": false,
+                            "rates": [
+                                {
+                                    "fuel": "gas",
+                                    "standingCharges": 26,
+                                    "registers": [
+                                        {
+                                            "id": "1",
+                                            "description": "Standard",
+                                            "unitRate": 3.83
+                                        }
+                                    ],
+                                    "tariffComparisonRate": 4.48
+                                },
+                                {
+                                    "fuel": "electricity",
+                                    "standingCharges": 26,
+                                    "registers": [
+                                        {
+                                            "id": "1",
+                                            "description": "Day",
+                                            "unitRate": 10.46
+                                        },
+                                        {
+                                            "id": "2",
+                                            "description": "Night",
+                                            "unitRate": 2.45
+                                        }
+                                    ],
+                                    "tariffComparisonRate": 13.2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "energyProductHoldings",
+                        "message": "error.server.product.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Retrieve energy product holdings for specific accounts [GET /product-holdings{?accountNumber*}]
++ Parameters
+
+    + accountNumber (string) - This is the customers account number
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "energyProductHoldings": [
+                        {
+                            "smartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1601",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariff": "standard",
+                            "monthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1601",
+                            "tariffEnergySmart": false,
+                            "productTypeDescription": "Gas",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "energyAccount": "851002262167",
+                            "propositionId": "00",
+                            "smartMeterProduct": false
+                        },
+                        {
+                            "smartMonthlyBilling": false,
+                            "moveInDate": "01/01/2014",
+                            "moveOutDate": "31/12/9999",
+                            "productCode": "1602",
+                            "monthlyBillingData": {
+                                "currentBillDay": "0",
+                                "estimatedReadCounter": "0",
+                                "installmentDate": null,
+                                "signUpDate": null,
+                                "currentPropositionId": "00",
+                                "nextBillDate": null
+                            },
+                            "tariff": "standard",
+                            "monthlyBilling": false,
+                            "type": "EnergyProductHolding",
+                            "id": "851002262167-1602",
+                            "tariffEnergySmart": false,
+                            "productTypeDescription": "Electricity",
+                            "features": [
+                                "Standard"
+                            ],
+                            "account": "851002262167",
+                            "energyAccount": "851002262167",
+                            "propositionId": "00",
+                            "smartMeterProduct": false
+                        }
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
+
++ Response 403 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "energyProductHoldings",
+                        "message": "error.server.product.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve product holdings using product id [GET /product-holdings/{productId}]
++ Parameters
+
+    + productId (string) - Product id
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "energyProductHolding": {
+                        "smartMonthlyBilling": false,
+                        "moveInDate": "01/01/2014",
+                        "moveOutDate": "31/12/9999",
+                        "productCode": "1601",
+                        "monthlyBillingData": {
+                            "currentBillDay": "0",
+                            "estimatedReadCounter": "0",
+                            "installmentDate": null,
+                            "signUpDate": null,
+                            "currentPropositionId": "00",
+                            "nextBillDate": null
+                        },
+                        "tariff": "standard",
+                        "monthlyBilling": false,
+                        "type": "EnergyProductHolding",
+                        "id": "851002262167-1601",
+                        "tariffEnergySmart": false,
+                        "productTypeDescription": "Gas",
+                        "features": [
+                            "Standard"
+                        ],
+                        "account": "851002262167",
+                        "energyAccount": "851002262167",
+                        "propositionId": "00",
+                        "smartMeterProduct": false
+                    }
+                },
+                "errors": {},
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
+
++ Response 404 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                       "code": "id",
+                        "message": "error.client.id.notfound"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.invalid"
+                    }
+                ],
+                "meta": {}
+            }
