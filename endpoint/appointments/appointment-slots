@@ -1,4 +1,4 @@
-## appointment slots collection [/appointment-slots]
+## Appointment slots collection [/appointment-slots]
 Appointment Slots endpoint allows you to retrieve appointment slots for following operations,
 
 1. Book an appointment to install smart meter for service order.
@@ -9,13 +9,18 @@ Appointment Slot as a resource will be represented as below:
 
 | Name | Type | Description |
 | :------------| :---------- | ------------------------------------------------------------ |
-| id | string | Unique Id to represent the appointment slot with pattern of variant, start time and end time. |
+| id | string | Unique Id to represent the appointment slot with pattern of variant, start time and end time  or Encrypted unique id that is returned from backend for each slot. |
 | variant | String | It will represent the time variant of slots. Possible variants for preference slots are `AM`, `PM`, `FF`, `ALLDAY`, `EVENING`.|
 | startTime | String | Start time of the appointment slot.  |
 | endTime | String | End time of the appointment slot. |
 | available | boolean |  Status of the appointment slot. |
 
-### Retrieve appointment-slots [GET /appointment-slots?j{jobType}&{dateStartFrom}&{range}&{showUnavailableSlot}&{serviceOrder}&{servicesAccount}&{appointment}&{priority}&{fault*}]
+> `Note`: Authorization is not required when slots are requested for the job type `smart` and `chi`
+
+> `Note`: For `chi` job type the `priority` of receiving the appointment slots is based on the current working state of the boiler. If the current working state of boiler is chosen as `Yes` by the customer, then the priority value will be sent as `false` and vice versa. 
+
+
+### Retrieve appointment-slots [GET /appointment-slots{?jobType,dateStartFrom,range,showUnavailableSlot,serviceOrder,servicesAccount,appointment,priority,fault*,postcode}]
 + Parameters
 
     + jobType (string,required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
@@ -27,6 +32,7 @@ Appointment Slot as a resource will be represented as below:
     + appointment (string,optional) - Required while rescheduling an existing appointment. Id of the appointment to be rescheduled
     + priority (boolean,Optional) - default value is `false`. Priority of the appointment to be rescheduled
     + fault (string,optional) - Required for type `ib`, `asv-and-ib` and `fv-and-ib`. Multiple faults can be passed as a query parameter to get the appointment slots to book an engineer
+    + postcode (string,optional) - `Required` for the type `chi`. Postcode which customer entered
 
 + Request
 
