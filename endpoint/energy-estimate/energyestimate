@@ -141,8 +141,8 @@ Possible values and mapped descriptions is listed below for reference.
                 "status": "SUCCESS",
                 "data": {
                     "consumption": {
-                        "electricityConsumption": 100,
-                        "gasConsumption": 200
+                        "electricityConsumption": 2780,
+                        "gasConsumption": 8797
                     }
                 },
                 "errors": {},
