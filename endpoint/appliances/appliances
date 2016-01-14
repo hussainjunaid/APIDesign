@@ -1,9 +1,7 @@
 ## Group Appliances
 
 ## Appliances [/appliances/{id}]
-Appliances API allows you to list the details of appliances with type, makes and models. Responses from this endpoint will be returned in JSON format only.
-
-#### Appliance
+Appliances endpoint allows you to list the details of appliances with type, makes and models. Responses from this endpoint will be returned in JSON format only. 
 
 Appliance as a resource represents following information. 
 
@@ -12,7 +10,6 @@ Appliance as a resource represents following information.
 | id | string | `Not applicable` | `Returned always` | Appliance type code.|
 | description | string |`Not applicable` | `Returned always` | Appliance type description. |
 | links | object | `Not applicable` | `Returned always` | Relationship link to makes. |
-
 
 ### Retrieve specific appliance [GET /appliances/{id}]
 
@@ -31,18 +28,20 @@ Appliance as a resource represents following information.
             {
                 "status": "SUCCESS",
                 "data": {
-                    "makes": [{
-                        "id": "AGA",
-                        "description": "Combined Boiler And Cooker",
-                        "links": {
-                            "makes": "/api/secure/appliances/AGA/makes"
+                    "makes": [
+                        {
+                            "id": "AGA",
+                            "description": "Combined Boiler And Cooker",
+                            "links": {
+                                "makes": "/api/secure/appliances/AGA/makes"
+                            }
                         }
-                    }]
+                    ]
                 },
                 "errors": [],
                 "meta": {}
-            }
-        
+            } 
+            
 + Response 500 (application/json)
 
             {
@@ -82,24 +81,27 @@ Make as a resource represents following information.
             {
                 "status": "SUCCESS",
                 "data": {
-                    "makes": [{
-                        "id": "QWdhIC0gUmF5YnVybg",
-                        "description": "Aga - Rayburn",
-                        "links": {
-                            "models": "/api/secure/appliances/AGA/makes/QWdhIC0gUmF5YnVybg/models"
+                    "makes": [
+                        {
+                            "id": "QWdhIC0gUmF5YnVybg",
+                            "description": "Aga - Rayburn",
+                            "links": {
+                                "models": "/api/secure/appliances/AGA/makes/QWdhIC0gUmF5YnVybg/models"
+                            }
+                        },
+                        {
+                            "id": "VHJpYW5jbyBSZWRmeXJl",
+                            "description": "Trianco Redfyre",
+                            "links": {
+                                "models": "/api/secure/appliances/AGA/makes/VHJpYW5jbyBSZWRmeXJl/models"
+                            }
                         }
-                    }, {
-                        "id": "VHJpYW5jbyBSZWRmeXJl",
-                        "description": "Trianco Redfyre",
-                        "links": {
-                            "models": "/api/secure/appliances/AGA/makes/VHJpYW5jbyBSZWRmeXJl/models"
-                        }
-                    }]
+                    ]
                 },
                 "errors": [],
                 "meta": {}
             }
-        
+            
 + Response 400 (application/json)
 
             {
@@ -124,7 +126,7 @@ Make as a resource represents following information.
                 "meta": {}
             }
             
-## Models [/appliances/{applianceId}/makes/{makeId}/models]
+#### Models [/appliances/{applianceId}/makes/{makeId}/models]
 
 Model as a resource represents following information. 
 
@@ -152,27 +154,33 @@ Model as a resource represents following information.
             {
                 "status": "SUCCESS",
                 "data": {
-                    "models": [{
-                        "id": "cmVkZnlyZWMlMmZodGdjb29rZXIxMDA",
-                        "status": "Supported",
-                        "description": "REDFYRE C/HTG COOKER 100"
-                    }, {
-                        "id": "cmVkZnlyZWMlMmZodGdjb29rZXIxMjA",
-                        "status": "Supported",
-                        "description": "REDFYRE C/HTG COOKER 120"
-                    }, {
-                        "id": "cmVkZnlyZWMlMmZodGdjb29rZXI2MA",
-                        "status": "Supported",
-                        "description": "REDFYRE C/HTG COOKER 60"
-                    }, {
-                        "id": "cmVkZnlyZWMlMmZodGdjb29rZXI4MA",
-                        "status": "Supported",
-                        "description": "REDFYRE C/HTG COOKER 80"
-                    }]
+                    "models": [
+                        {
+                            "id": "cmVkZnlyZWMlMmZodGdjb29rZXIxMDA",
+                            "status": "Supported",
+                            "description": "REDFYRE C/HTG COOKER 100"
+                        },
+                        {
+                            "id": "cmVkZnlyZWMlMmZodGdjb29rZXIxMjA",
+                            "status": "Supported",
+                            "description": "REDFYRE C/HTG COOKER 120"
+                        },
+                        {
+                            "id": "cmVkZnlyZWMlMmZodGdjb29rZXI2MA",
+                            "status": "Supported",
+                            "description": "REDFYRE C/HTG COOKER 60"
+                        },
+                        {
+                            "id": "cmVkZnlyZWMlMmZodGdjb29rZXI4MA",
+                            "status": "Supported",
+                            "description": "REDFYRE C/HTG COOKER 80"
+                        }
+                    ]
                 },
                 "errors": [],
                 "meta": {}
             }
+
         
 + Response 400 (application/json)
         
@@ -186,7 +194,7 @@ Model as a resource represents following information.
                 "meta": {}
             }
 
-+ Response 404 (application/json)
++ Response 400 (application/json)
 
             {
                 "status": "FAIL",
