@@ -98,7 +98,7 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "meta": {}
             }
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
@@ -135,7 +135,7 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
 
     + Headers
 
-            Authorization: Bearer accesstoken
+            Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -153,7 +153,7 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
