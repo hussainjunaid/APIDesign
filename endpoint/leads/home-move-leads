@@ -4,6 +4,8 @@
 
 Home move leads API allows you to retrieve, create and update homemove lead. Responses from this API will be returned in JSON format only.
 >`Note:` The payload should be of `JSON` format for this API. This API accepts requests only if the content-type is `application/json`.
+
+>`Note:` There is a business requirement to take services customer through new experience and new experience emails need to be send in this scenario. API will use CQ feature management to get the products configured for new experience and send new experience email to the customer.
  
 #### Home move lead
 Home move lead as a resource represents following information. 
