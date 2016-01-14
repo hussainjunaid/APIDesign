@@ -1,1 +1,334 @@
+## Group Correspondences
+
+## Correspondences [/correspondences]
+correspondences endpoint allows you to list / view correspondences for a given account number and query type using `ICV`. 
+
+#### Correspondence
+Correspondence as a resource represents following information
+
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Mandatory` | `Returned always` | Unique Id to represent the document with pattern of document type, account number and document id. |
+| date | string | `Optional` | `Returned always` | Date of the document generated. |
+| subject | string | `Optional` | `Returned always` | Subject of the document. |
+| read | boolean | `Optional` | `Returned always` | Read status of the document, will be used for view correspondences.  |
+| fuel | string | `Optional` | `Returned always` | Fuel type of the document, will be used for Annual summary. |
+| description | string | `Optional` | `Returned always` | Correspondence description of the document, will be used for view CP12 certificates. |
+| links | Array of object | `Optional` | `Returned always` | Download link for the correspondence if it's eligible for download. |
+| energyAccount | string | `Optional` | `Returned always` | Energy account number to which the document is linked, if available. |
+| servicesAccount | string | `Optional` | `Returned always` | Services account number to which the document is linked, if available. |
+
+
+
+### Retrieve specific correspondences for an account  [GET /correspondences{?account,documentType}]
+
++ Parameters
+
+    + account (string,required) - Account Number
+    + documentType (string,required) - Query type of the documents to be retrieved. values will be `landlord-gas-safety-certificate`, `service-correspondence`.
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "correspondences": [
+                        {
+                            "id": "AS-911000155091-0903112a826f844a",
+                            "date": "2015-09-11T14:00:00+0100",
+                            "subject": "Welcome to HomeCare Online",
+                            "read": false,
+                            "fuel": null,
+                            "description": "",
+                            "links": null,
+                            "energyAccount": null,
+                            "servicesAccount": "911000155091"
+                        },
+                        {
+                            "id": "AS-911000155091-0903112a826f844a",
+                            "date": "2015-11-12T14:00:00+0000",
+                            "subject": "Welcome to HomeCare Online",
+                            "read": false,
+                            "fuel": null,
+                            "description": "",
+                            "links": {
+                                "download": "/api/secure/correspondences/AS-911000155091-0903112a826f844a/download"
+                            },
+                            "energyAccount": null,
+                            "servicesAccount": "911000155091"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"                    
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "identifier",
+                        "message": "error.client.identifier.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "correspondences",
+                        "message": "error.correspondences.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve specific correspondence  [GET /correspondences/{id}]
+
++ Parameters
+
+    + id (string,required) - Correspondence id
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "correspondence": {
+                        "id": "AS-911000155091-0903112a826f844a",
+                        "date": "2015-09-11T14:00:00+0100",
+                        "subject": "Welcome to HomeCare Online",
+                        "read": false,
+                        "fuel": null,
+                        "destination": "",
+                        "context": "",
+                        "links": {
+                            "download": "/api/secure/correspondences/AS-911000155091-0903112a826f844a/download"
+                        },
+                        "energyAccount": null,
+                        "servicesAccount": "911000155091"
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"                    
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "identifier",
+                        "message": "error.client.identifier.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "correspondences",
+                        "message": "error.correspondences.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
+            
+### Download specific correspondence  [GET /correspondences/{id}/download]
+
++ Parameters
+
+    + id (string,required) - Correspondence id
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/pdf)
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"                    
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "identifier",
+                        "message": "error.client.identifier.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "correspondences",
+                        "message": "error.correspondences.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }
 
