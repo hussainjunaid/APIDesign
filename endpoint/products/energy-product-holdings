@@ -416,7 +416,7 @@ Energy product holding as a resource represents following information
                 "data": {},
                 "errors": [
                     {
-                        "code": "accountNumber",
+                        "code": "account",
                         "message": "error.client.account.invalid"
                     }
                 ],
