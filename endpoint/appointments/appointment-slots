@@ -102,8 +102,8 @@ Appointment Slot as a resource will be represented as below:
                 "data": {},
                 "errors": [
                     {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
+                        "code": "account",
+                        "message": "error.client.account.invalid"
                     }
                 ],
                 "meta": {}
