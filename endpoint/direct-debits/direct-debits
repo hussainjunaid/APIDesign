@@ -90,6 +90,20 @@ Direct Debit as a resource represents following information
             ],
             "meta": {}
         }
+   
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "account",
+                    "message": "error.client.account.invalid"
+                }
+            ],
+            "meta": {}
+        }
 
 + Response 404 (application/json)
 
