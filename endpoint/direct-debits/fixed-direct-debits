@@ -383,15 +383,15 @@ Installment represents following information
                 "meta": {}
             }
 
-+ Response 401 (application/json)
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "authorize",
-                        "message": "access_denied"
+                        "code": "account",
+                        "message": "error.client.account.invalid"
                     }
                 ],
                 "meta": {}
