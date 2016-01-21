@@ -106,8 +106,8 @@ Loyalty as a resource represents following information. This is equivalent of a 
                 "data": {},
                 "errors": [
                     {
-                        "code": "server.error.internal",
-                        "message": "An internal error while processing request."
+                        "code": "service",
+                        "message": "error.system.pi.operation.fail"
                     }
                 ],
                 "meta": {}
