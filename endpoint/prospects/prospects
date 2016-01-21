@@ -1,15 +1,17 @@
 ## Group Prospects
 
 ## Prospects Collection [/prospects]
-Prospect endpoint allows you to create or retrieve the UCRN and BP number for the customer based on Customer information. 
+Prospect API allows the user to validate the customer details and create or retrieve the existing UCRN & BP number depending on the classification value sent as part of the request.
+If the classification value sent is 'Smart',then UCRN & BP number will be created for the customer details passed as part of request.If the customer details are already available, then existing UCRN and BP will be returned.
+If the classification value sent as part of the request is 'CHI', then the customer details will be validated and stored in the Memcache.
 
-### Prospect
- 
-Prospect as a resource is made up of following data items:
+#### Prospect
+
+Prospect as a resource represent the following information
 
 | Name | Type | As request | As response | Description |
 | :---------- | :------ | -------- |---------|------------------------------------ |
-| id | string | not passed on POST | `Returned always` | encrypted UCRN value is set as id  |
+| id | string | not passed on POST | `Returned always` | Encrypted UCRN value is set as an id for the classfication 'smart'. Memcache Token key will be set as an id for the classification 'chi' |
 | title | string | `mandatory` | `Returned always` | Title of the customer. |
 | firstName | string | `mandatory` | `Returned always` |  First name of the customer. |
 | surname | string | `mandatory` | `Returned always` |  Surname of the customer. |
@@ -17,7 +19,8 @@ Prospect as a resource is made up of following data items:
 | primaryTelephoneNumber | TelephoneNumber | `mandatory` | `Returned always` |  primary telephone number of the customer. |
 | postcode | string | `mandatory` | `Returned always` |  Postcode of cusstomer's address. |
 | correspondenceAddress | [Address](/api-reference/addresses.md#addresses) | `mandatory` | `Returned always` |  Address details of the customer. |
-| smartMeterInterest | Boolean | `mandatory` | `Returned always` |  While creating a prospect the value should be false. This will be updated accordingly on /PUT operation |
+| classification | string | `mandatory` | `Returned always` |classification value will be sent either as 'smart' or 'chi' depending on the targeted back end system.|
+| smartMeterInterest | Boolean | `optional` | `Returned always` |  This value will be sent only when the classification value is been sent as 'Smart'. While creating a prospect for Smart customers the value should be false. This will be updated accordingly on /PUT operation.|
 
 #### TelephoneNumber
 
@@ -29,7 +32,7 @@ Prospect as a resource is made up of following data items:
 ### Create prospect [POST /prospects]
 This controller service is used to create or retrieve the existing UCRN and Busines Partner (BP) in SAP for the anonymous customer. UI needs to give the following information as a request. The request body of this post must be a JSON object with properties listed below.
 
-+ Request (application/json)
++ Request Case 1:  When the classification value been sent as 'smart' (application/json)
 
     + Headers
 
@@ -38,28 +41,41 @@ This controller service is used to create or retrieve the existing UCRN and Busi
     + Body
 
             {
-                "prospect": {
-                    "title": "Mr",
-                    "firstName": "Pentwazz Stavea",
-                    "surname": "Kenj",
-                    "email": "sakthi@bgdigitaltest.co.uk",
-                    "smartMeterInterest": false,
-                    "primaryTelephoneNumber": {
-                        "number": "07404669698"
-                    },
-                    "correspondenceAddress": {
-                        "houseNumber": "67",
-                        "flatNumber": null,
-                        "houseName": null,
-                        "addressLine1": "Beresford Avenue",
-                        "addressLine2": null,
-                        "postalTown": "Surbiton",
-                        "county": "SURREY",
-                        "postcode": "KT5 9LH"
+                "status": "SUCCESS",
+                "data": {
+                    "prospect": {
+                        "id": "SXYwOGRFczg5aUEwc1hTZWFUc2VIdz09",
+                        "title": "Mr",
+                        "firstName": "Pentwazz Stavea",
+                        "surname": "Kenj",
+                        "classification": "smart",
+                        "primaryTelephoneNumber": {
+                            "number": "07404669698",
+                            "type": null
+                        },
+                        "email": "sakthi@bgdigitaltest.co.uk",
+                        "correspondenceAddress": {
+                            "address": null,
+                            "houseNumber": "67",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Beresford Avenue",
+                            "addressLine2": null,
+                            "postalTown": "Surbiton",
+                            "county": "SURREY",
+                            "postcode": "KT5 9LH",
+                            "MPAN": null,
+                            "MPRN": null
+                        },
+                        "smartMeterInterest": false
                     }
+                },
+                "errors": [],
+                "meta": {
+                    "prospectToken": "6997bc57-4f6a-543d-96ba-8eacb65400f7"
                 }
             }
-
+            
 + Response 200 (application/json)
 
             {
@@ -96,7 +112,75 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "prospectToken": "6997bc57-4f6a-543d-96ba-8eacb65400f7"
                 }
             }
+
++ Request Case 2:  When the classification value been sent as 'chi' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "prospect": {
+                    "title": "Mr",
+                    "firstName": "Pentwazz Stavea",
+                    "surname": "Kenj",
+                    "email": "sakthi@bgdigitaltest.co.uk",
+                    "smartMeterInterest": false,
+                    "classification": "chi",
+                    "primaryTelephoneNumber": {
+                        "number": "07404669698"
+                    },
+                    "correspondenceAddress": {
+                        "houseNumber": "67",
+                        "flatNumber": null,
+                        "houseName": null,
+                        "addressLine1": "Beresford Avenue",
+                        "addressLine2": null,
+                        "postalTown": "Surbiton",
+                        "county": "SURREY",
+                        "postcode": "KT5 9LH"
+                    }
+                }
+            }
             
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "prospect": {
+                        "id": "6997bc57-4f6a-543d-96ba-8eacb65400f7",
+                        "title": "Mr",
+                        "firstName": "Pentwazz Stavea",
+                        "surname": "Kenj",
+                        "classification": "chi",
+                        "primaryTelephoneNumber": {
+                            "number": "07404669698",
+                            "type": null
+                        },
+                        "email": "sakthi@bgdigitaltest.co.uk",
+                        "correspondenceAddress": {
+                            "address": null,
+                            "houseNumber": "67",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Beresford Avenue",
+                            "addressLine2": null,
+                            "postalTown": "Surbiton",
+                            "county": "SURREY",
+                            "postcode": "KT5 9LH",
+                            "MPAN": null,
+                            "MPRN": null
+                        },
+                        "smartMeterInterest": false
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
 + Response 400 (application/json)
 
             {
@@ -124,6 +208,34 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
+            
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "classification",
+                        "message": "error.client.classification.blank"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "classification",
+                        "message": "error.client.classification.invalid"
+                    }
+                ],
+                "meta": {}
+            }
 
 ### Modify prospect [PUT /prospects/{id}]
 
@@ -146,6 +258,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "surname": "Kenj",
                     "email": "sakthi@bgdigitaltest.co.uk",
                     "smartMeterInterest": true,
+                    "classification": "smart",
                     "primaryTelephoneNumber": {
                         "number": "07404669698"
                     },
@@ -163,7 +276,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {
                     "prospectToken": "a1045c92-3828-5619-b845-145904e0768b"
                 }
-            }
+            }   
             
 + Response 200 (application/json)
 
@@ -174,6 +287,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "surname": "Kenj",
                     "email": "sakthi@bgdigitaltest.co.uk",
                     "smartMeterInterest": "true",
+                    "classification": "smart",
                     "primaryTelephoneNumber": {
                         "number": "07404669698"
                     },
@@ -250,15 +364,15 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
             
-+ Response 400 (application/json)            
++ Response 403 (application/json)            
             
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "prospect",
-                        "message": "error.server.prospectId.invalid"
+                        "code": "classification",
+                        "message": "error.server.classification.invalid"
                     }
                 ],
                 "meta": {}
