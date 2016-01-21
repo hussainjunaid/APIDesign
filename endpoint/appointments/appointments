@@ -1,24 +1,76 @@
+FORMAT: 1A
+HOST: https://193.67.163.23/api/secure
+
+# britishgas
 ## Group Appointments
 
 ## appointments collection [/appointments]
 Appointments endpoint allows you to manage appointments. Responses will be returned in JSON format only.
 
-#### Appointment
+### Appointment
 Appointment as a resource represents following information
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :-------------------- | :-------------------- | ------------------------------------------------------------ |
-| id | String | `Optional` | `Returned always` | It is the work request number to track the appointment. |
-| servicesAccount | String | `Required` | `Returned always` | It is the account number of the appointment. |
+| id | String | `Optional` | `Returned always` | It is the work request number to track the appointment in case of jobType values`asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib`. For jobType `chi` CHILeadID created for the appointment confirmation will be sent.. |
+| servicesAccount | String | `Optional` | `Returned always` | It is the account number of the appointment. |
 | status | String | `Optional` | `Returned always` | It is the status of the appointment like `booked`, `engineer-preparing`, `engineer-on-the-way`, `completed`, `not-available`.|
-| jobType | String | `Optional` | `Returned always` | It is the type of the appointment. The possible reasons of appointment for a customer are `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib`.|
+| jobType | String | `Mandatory` | `Returned always` | It is the type of the appointment. The possible reasons of appointment for a customer are `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib` and `chi`.|
 | trackable | boolean | `Optional` | `Returned always` | It is used to determine whether the job tracking can be displayed. |
 | reschedulable | boolean | `Optional` | `Returned always` | It is used to identify reschedule option for the appointment. |
 | cancellable | boolean | `Optional` | `Returned always` | It is used to identify cancel option for the appointment. |
-| telephoneNumber | String | `Required` | `Returned always` | It is the contact number for the appointment. |
+| combinable | boolean | `Optional` | `Returned always` | It is used to specify the appointment can be combined for the new jobs. | 
+| telephoneNumber | String | `Optional` | `Returned always` | It is the contact number for the appointment. Telephone number value will be sent only when the jobType value is sent as `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib`. |
 | appointmentSlot | String | `Required` | `Returned always` | It represents the [appointment slot](/api-reference/appointment-slots.md#appointment-slot) mapped to this appointment. |
 | priority | boolean | `Optional` | `Returned always` | It represents the priority of the appointment. Default value is false. |
-| faults | Array of String |`Optional` | `Returned always` | It is list of [fault(s)](/api-reference/faults.md#fault) booked for the appointment. |
+| faults | Array of String | `Optional` | `Returned always` | It is list of [fault(s)](/api-reference/faults.md#fault) booked for the appointment. `Required` for jobType `ib`, `asv-and-ib` and `fv-and-ib`. |
+
+### Use cases
+This section explains the flow of `appointments`.
+#### Use case for book a breakdown appointment
+
+            +----------+                                  +---------------+
+            |          |                                  |               |
+            |         -+--(1)-- GET /services-accounts -->|               |
+            |          |                                  |               |
+            |         -+--(2)-- GET /faults ------------->|               |
+            |  Client  |                                  |Online server  |
+            |         -+--(3)-- GET /appointment-slots -->|               |
+            |          |                                  |               |
+            |         -+--(4)-- POST /appointments ------>|               |
+            |          |                                  |               |
+            +----------+                                  +---------------+
+
+`book a breakdown appointment` - explanation below,
+
+1. GET operation on [`/services-accounts`](/api-reference/services-accounts.md#get-services-accounts) [`Secured by OAuth`] with a specific account number, returns the services account with the eligibility status of booking a breakdown (`eligibleForInterimBreakdown`), first vist (`eligibleForFirstVisit`) and annual service visit (`eligibleForAnnualServiceVisit`).
+2. GET operation on [`/faults`](/api-reference/faults.md#get-faultsaccountaccountservicesproductholdingservicesproductholding) [`Secured by OAuth`] with account number and services product holding, returns the list of faults available for the services product. Customer can select a fault to book an engineer and fix the same.
+3. GET operation on [`/appointment-slots`](/api-reference/appointment-slots.md#get-appointment-slots) [`Secured by OAuth`] with account number and parameters like jobType, selected fault(s) and the priority of the appointment, returns the available slots to book an engineer.
+4. POST operation on [`/appointments`](#post-appointments) [`Secured by OAuth`] with account number, selected fault(s) and selected appointment slot will create a appointment for the account with `first visit` or `annual service visit`.
+
+#### Use case for combine breakdown appointment with existing appointment
+
+            +----------+                                  +---------------+
+            |          |                                  |               |
+            |         -+--(1)-- GET /services-accounts -->|               |
+            |          |                                  |               |
+            |         -+--(2)-- GET /faults ------------->|               |
+            |  Client  |                                  | Online server |
+            |         -+--(3)-- GET /appointment-slots -->|               |
+            |          |                                  |               |
+            |         -+--(4)-- GET /appointments ------->|               |
+            |          |                                  |               |
+            |         -+--(5)-- PUT /appointments ------->|               |
+            |          |                                  |               |
+            +----------+                                  +---------------+
+
+`combine breakdown appointment with existing appointment` - explanation below,
+
+1. GET operation on [`/services-accounts`](/api-reference/services-accounts.md#get-services-accounts) [`Secured by OAuth`] with a specific account number, returns the services account with the eligibility status of booking a breakdown (`eligibleForInterimBreakdown`), first vist (`eligibleForFirstVisit`) and annual service visit (`eligibleForAnnualServiceVisit`).
+2. GET operation on [`/faults`](/api-reference/faults.md#get-faultsaccountaccountservicesproductholdingservicesproductholding) [`Secured by OAuth`] with account number and services product holding, returns the list of faults available for the services product. Customer can select a fault to book an engineer and fix the same.
+3. GET operation on [`/appointment-slots`](/api-reference/appointment-slots.md#get-appointment-slots) [`Secured by OAuth`] with account number and parameters like jobType, selected fault(s) and the priority of the appointment, returns the available slots to book an engineer. Also, if the new appointment is combinable with an exsiting available appointment, then the existing appointment is returned as part of meta.
+4. GET operation on [`/appointments`](#get-appointmentsid) [`Secured by OAuth`] with the appointment id(obtained in the meta of appointment slots), returns the appointment that can be merged with new appointment. 
+5. The appointment returned in the GET [`/appointments`](#get-appointmentsid) can be updated with the selected fault and the appointment slot using PUT [`/appointments`](#put-appointmentsid) [`Secured by OAuth`].
 
 ### Retrieve appointments [GET /appointments]
 + Request
@@ -31,61 +83,61 @@ Appointment as a resource represents following information
 + Response 200 (application/json)
 
             {
-              "status": "SUCCESS",
-              "data": {
-                "appointments": [
-                  {
-                    "id": "567891011",
-                    "servicesAccount": "919918239012",
-                    "status": "booked",
-                    "jobType": "asv",
-                    "trackable": true,
-                    "reschedulable": true,
-                    "cancellable": true,
-                    "telephoneNumber": "0738123456",
-                    "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
-                    "priority": false,
-                    "faults": [
-                      "F0057",
-                      "F0008"
+                "status": "SUCCESS",
+                "data": {
+                    "appointments": [
+                        {
+                            "id": "567891011",
+                            "servicesAccount": "919918239012",
+                            "status": "booked",
+                            "jobType": "asv",
+                            "trackable": true,
+                            "reschedulable": true,
+                            "cancellable": true,
+                            "telephoneNumber": "0738123456",
+                            "appointmentSlot": "2-2015-10-11T08:00:00+0100-2015-10-11T10:00:00+0100",
+                            "priority": false,
+                            "faults": [
+                                "F0057",
+                                "F0008"
+                            ]
+                        },
+                        {
+                            "id": "567891012",
+                            "servicesAccount": "919918239012",
+                            "status": "booked",
+                            "jobType": "asv",
+                            "trackable": true,
+                            "reschedulable": true,
+                            "cancellable": true,
+                            "telephoneNumber": "0738123456",
+                            "appointmentSlot": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
+                            "priority": false,
+                            "faults": [
+                                "F0057"
+                            ]
+                        },
+                        {
+                            "id": "567891013",
+                            "servicesAccount": "919918239013",
+                            "status": "booked",
+                            "jobType": "fv-and-ib",
+                            "trackable": true,
+                            "reschedulable": true,
+                            "cancellable": true,
+                            "telephoneNumber": "0738123456",
+                            "appointmentSlot": "2-2015-11-12T14:00:00+0000-2015-11-12T16:00:00+0000",
+                            "priority": false,
+                            "faults": [
+                                "F0007"
+                            ]
+                        }
                     ]
-                  },
-                  {
-                    "id": "567891012",
-                    "servicesAccount": "919918239012",
-                    "status": "booked",
-                    "jobType": "asv",
-                    "trackable": true,
-                    "reschedulable": true,
-                    "cancellable": true,
-                    "telephoneNumber": "0738123456",
-                    "appointmentSlot": "2-2015-09-11T14:00:00+0100-2015-09-11T16:00:00+0100",
-                    "priority": false,
-                    "faults": [
-                      "F0057"
-                    ]
-                  },
-                  {
-                    "id": "567891013",
-                    "servicesAccount": "919918239013",
-                    "status": "booked",
-                    "jobType": "fv-and-ib",
-                    "trackable": true,
-                    "reschedulable": true,
-                    "cancellable": true,
-                    "telephoneNumber": "0738123456",
-                    "appointmentSlot": "2-2015-11-12T14:00:00+0000-2015-11-12T16:00:00+0000",
-                    "priority": false,
-                    "faults": [
-                      "F0007"
-                    ]
-                  }
-                ]
-              },
-              "errors": [],
-              "meta": {}
+                },
+                "errors": [],
+                "meta": {}
             }
-
+            
 ### Retrieve specific appointment [GET /appointments/{appointmentId}]
 + Parameters
 
@@ -107,7 +159,7 @@ Appointment as a resource represents following information
                   "id": "567891011",
                   "servicesAccount": "919918239012",
                   "status": "booked",
-                  "reason": "asv",
+                  "jobType": "asv",
                   "trackable": true,
                   "reschedulable": true,
                   "cancellable": true,
@@ -145,7 +197,7 @@ Appointment as a resource represents following information
                   "id": "567891011",
                   "servicesAccount": "919918239012",
                   "status": "booked",
-                  "reason": "asv",
+                  "jobType": "asv",
                   "trackable": true,
                   "reschedulable": true,
                   "cancellable": true,
@@ -565,6 +617,167 @@ Appointment as a resource represents following information
                 "meta": {}
             }
 
+### Create an appointment [POST /appointments]
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "appointment": {
+                    "servicesAccount": "919918239012",
+                    "jobType": "ib",
+                    "telephoneNumber": "0738123456",
+                    "appointmentSlot": "1-2015-12-11T08:00:00+0000-2015-12-11T10:00:00+0000"
+                },
+                "meta": {
+                    "appointmentPayload": "srx7t/fT2CajwcGXZ30kz/M3RyEs5RuelZ+qxavAbNokWG94AK8M2vmxjn7WAOhhE3CTTPMj/f7a8LF/DFv+Xw=="
+                }
+            }
+            
++ Response 200 (application/json)
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "appointment": {
+                        "id": "567891011",
+                        "servicesAccount": "919918239012",
+                        "status": "booked",
+                        "jobType": "ib",
+                        "trackable": true,
+                        "reschedulable": true,
+                        "cancellable": true,
+                        "telephoneNumber": "0738123456",
+                        "appointmentSlot": "1-2015-12-11T08:00:00+0000-2015-12-11T10:00:00+0000",
+                        "priority": false,
+                        "faults": [
+                            "F0057",
+                            "F0008"
+                        ]
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
++ Request CHI Appointment
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+    
+            {
+                "appointment": {
+                    "jobType": "chi",
+                    "appointmentSlot": "a0Bw000000d6FtVEAU"
+                },
+                "meta": {
+                    "prospect": "ebf62607-7aef-5501-ac18-c2ec8bfe563d",
+                    "appointmentPayload": "srx7t/fT2CajwcGXZ30kz/M3RyEs5RuelZ+qxavAbNokWG94AK8M2vmxjn7WAOhhE3CTTPMj/f7a8LF/DFv+Xw=="
+                }
+            }
+
++ Response 200 (application/json)
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "appointment": {
+                        "id": "00617000007vkzjAAA",
+                        "servicesAccount": "null",
+                        "status": "booked",
+                        "jobType": "chi",
+                        "trackable": false,
+                        "reschedulable": false,
+                        "cancellable": false,
+                        "telephoneNumber": null,
+                        "appointmentSlot": "a0Bw000000d6FtVEAU",
+                        "priority": false,
+                        "faults": null
+                    }
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "servicesAccount",
+                        "message": "error.client.servicesAccount.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slot",
+                        "message": "error.client.slot.unavailable"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+            
 ### Modify an appointment [PUT /appointments/{appointmentId}]
 + Parameters
 
@@ -584,7 +797,7 @@ Appointment as a resource represents following information
                     "id": "567891011",
                     "servicesAccount": "919918239012",
                     "status": "booked",
-                    "reason": "asv",
+                    "jobType": "asv",
                     "trackable": true,
                     "reschedulable": true,
                     "cancellable": true,
@@ -607,7 +820,7 @@ Appointment as a resource represents following information
                         "id": "567891011",
                         "servicesAccount": "919918239012",
                         "status": "booked",
-                        "reason": "asv",
+                        "jobType": "asv",
                         "trackable": true,
                         "reschedulable": true,
                         "cancellable": true,
@@ -623,7 +836,7 @@ Appointment as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 400 (application/json)
 
             {
@@ -722,6 +935,20 @@ Appointment as a resource represents following information
                 "meta": {}
             }
             
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "jobType",
+                        "message": "error.server.jobType.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
 + Response 500 (application/json)
 
             {
@@ -736,7 +963,7 @@ Appointment as a resource represents following information
                 "meta": {}
             }
             
-### Delete an appointment [DELETE /appointments/{appointmentId} ]
+### Delete an appointment [DELETE /appointments/{appointmentId}]
 + Parameters
 
     + appointmentId (string) - The appointment id that you want to cancel
