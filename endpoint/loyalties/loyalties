@@ -1,61 +1,43 @@
 ## Group Loyalties
 
 ## Loyalties Collection [/loyalties]
-Loyalties endpoint allows you to create a loyalty card for a customer. Responses from this API will be retuned in JSON format only.
->`Note:` The payload should be of `JSON` format for this API. This API accepts requests only if the content-type is `application/json`.
+Loyalties endpoint allows you to create a loyalty card for a customer. Responses from this endpoint will be retuned in JSON format only.
+>`Note:` The payload should be of `JSON` format for this endpoint. This endpoint accepts requests only if the content-type is `application/json`.
+ 
+### Version
+Current version of loyalties endpoint stands at v1. Version numbers will form part of the url used to access the resource.
+ 
+```
+GET /v1/loyalties
+```
+ 
+>`Note:` Versioning information will be omitted in documentation henceforth. It is assumed that all endpoints will have this versioning information prepend to it.
+ 
+>`Note:` Endpoint versioning is no longer functional. We are working our way through to enable this is future. For now, please replace /v1 with /api/secure.
 
-#### Loyalty
+> `Note:` It is mandatory for the client to negotiate the content-type as `application/json` as the current service is compatible only with this content-type.
+
+> `Note:` When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual card is created, the response will have the `id` populated.
+ 
+### Loyalty
 Loyalty as a resource represents following information. This is equivalent of a nectar card supplied to the customer.
  
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Loyalty card number associated to the customer. |
-| title | string | `Returned always`. Title of the customer registering for Loyalty card. |
-| firstName | string | `Returned always`. First name of the customer registering for Loyalty card. |
-| surname | string | `Returned always`. Surname of the customer registering for Loyalty card. |
-| telephoneNumber | string | `Returned always`. Telephone number of the customer registering for Loyalty card. |
-| flatNumber | string | `Returned always`. Flat number of the address if available |
-| houseNumber | string | `Returned always`. House number of the address if available. |
-| houseName | string | `Returned always`. House name of the address if available. |
-| addressLine1 | string | `Returned always`. Address line 1. Typically contains building name / street etc... |
-| addressLine2 | string | `Returned always`. Address line 2. Typically contains street / avenues etc... |
-| postalTown | string | `Returned always`. Postal town of the address. |
-| county | string | `Returned always`. County to which the address belongs. |
-| postcode | string | `Returned always`. Postcode of the address |
-| emailAddress | string | `Returned always`. Email address of the customer attempting to register for a Loyalty card. |
-
-#### Validations
-Following validations apply on individual attributes
-
-| Attribute | Validations |
-| :-------------------- | ----------- |
-| title | Cannot be `null` or `blank` |
-|       | Cannot exceed `10` characters in length |
-| firstName | Cannot be `null` or `blank`|
-|           | Cannot be `"Occupier"` (or) `"The Occupier"` |
-|           | Cannot exceed `24` characters in length |
-| surname | Cannot be `null` or `blank` |
-|         | Cannot be `"Occupier"` (or) `"The Occupier"` |
-|           | Cannot exceed `32` characters in length |
-| telephoneNumber | Cannot be `null` or `blank` |
-|                 | Cannot be `non-numeric` |
-|                 | Cannot be less than 10 characters in length and greater than 11 characters in length |
-|                 | Must start with either `01`, `02`, `03` or `07` |
-| flatNumber | Cannot exceed `30` characters in length |
-|            | Cannot be `blank` or `null` when both `houseNumber` & `houseName` is not available |
-| houseNumber | Cannot exceed `30` characters in length |
-|             | Cannot be `blank` or `null` when both `flatNumber` & `houseName` is not available |
-| houseName | Cannot exceed `75` characters in length |
-|           | Cannot be `blank` or `null` when both `flatNumber` & `houseNumber` is not available |
-| addressLine1 | `Optional`. Cannot exceed `50` characters in length |
-| addressLine2 | `Optional`. Cannot exceed `50` characters in length |
-| postalTown | Cannot be 'blank' or 'null' |
-|            | Cannot exceed `30` characters in length |
-| county | Cannot exceed `30` characters in length |
-| postcode | Cannot be `null` or `blank` |
-|          | UK postcode validations apply |
-| emailAddress | Cannot be `null` or `blank` |
-|              | Must satisfy regex `^[_+#~A-Za-z0-9-]+(\.[_#~+A-Za-z0-9-]+)*@[_+#~A-Za-z0-9-]+(\.[_+#~A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$` |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| id | string | `Required` | `Returned always` |Loyalty card number associated to the customer. |
+| title | string | `Required` | `Returned always` |  Title of the customer registering for Loyalty card. |
+| firstName | string | `Required` | `Returned always` |  First name of the customer registering for Loyalty card. |
+| surname | string | `Required` | `Returned always` | Surname of the customer registering for Loyalty card. |
+| telephoneNumber | string | `Required` | `Returned always` | Telephone number of the customer registering for Loyalty card. |
+| flatNumber | string | `Required` when `houseNumber` and `houseName` are not available | `Returned always` | Flat number of the address if available |
+| houseNumber | string | `Required` when `flatNumber` and `houseName` are not available | `Returned always` | House number of the address if available. |
+| houseName | string | `Required` when `houseNumber` and `flatNumber` are not available | `Returned always` | House name of the address if available. |
+| addressLine1 | string | `Optional` | `Returned always` | Address line 1. Typically contains building name / street etc... |
+| addressLine2 | string | `Optional` | `Returned always` | Address line 2. Typically contains street / avenues etc... |
+| postalTown | string | `Required` | `Returned always` | Postal town of the address. |
+| county | string  |`Optional` | `Returned always` | County to which the address belongs. |
+| postcode | string | `Required` | `Returned always` | Postcode of the address |
+| emailAddress | string | `Required` | `Returned always` | Email address of the customer attempting to register for a Loyalty card. |
 
 ### Create loyalty card [POST /loyalties]
 + Request (application/json)
@@ -66,55 +48,67 @@ Following validations apply on individual attributes
 
   + Body
 
-              {
-
-              "loyalty": {
-                  "id": null,
-                  "title": "Mr",
-                  "firstName": "Mark",
-                  "surname": "Blair",
-                  "telephoneNumber": "07404174628",
-                  "flatNumber": "Flat 10",
-                  "houseNumber": null,
-                  "houseName": "Linden place",
-                  "addressLine1": "Meadow Gardens",
-                  "addressLine2": null,
-                  "postalTown": "Staines",
-                  "county": "Middlesex",
-                  "postcode": "TW18 3HE",
-                  "emailAddress": "test@bgdigitaltest.co.uk"
-              }
+            {
+                "loyalty": {
+                    "id": null,
+                    "title": "Mr",
+                    "firstName": "Mark",
+                    "surname": "Blair",
+                    "telephoneNumber": "07404174628",
+                    "flatNumber": "Flat 10",
+                    "houseNumber": null,
+                    "houseName": "Linden place",
+                    "addressLine1": "Meadow Gardens",
+                    "addressLine2": null,
+                    "postalTown": "Staines",
+                    "county": "Middlesex",
+                    "postcode": "TW18 3HE",
+                    "emailAddress": "test@bgdigitaltest.co.uk"
+                }
             }
-
 
 + Response 200 (application/json)
 
-          {
-              "loyalty": {
-                  "id": "91270909018",
-                  "title": "Mr",
-                  "firstName": "Mark",
-                  "surname": "Blair",
-                  "telephoneNumber": "07404174628",
-                  "flatNumber": "Flat 10",
-                  "houseNumber": null,
-                  "houseName": "Linden place",
-                  "addressLine1": "Meadow Gardens",
-                  "addressLine2": null,
-                  "postalTown": "Staines",
-                  "county": "Middlesex",
-                  "postcode": "TW18 3HE",
-                  "emailAddress": "test@bgdigitaltest.co.uk"
-              }
-          }
+            {
+                "loyalty": {
+                    "id": "91270909018",
+                    "title": "Mr",
+                    "firstName": "Mark",
+                    "surname": "Blair",
+                    "telephoneNumber": "07404174628",
+                    "flatNumber": "Flat 10",
+                    "houseNumber": null,
+                    "houseName": "Linden place",
+                    "addressLine1": "Meadow Gardens",
+                    "addressLine2": null,
+                    "postalTown": "Staines",
+                    "county": "Middlesex",
+                    "postcode": "TW18 3HE",
+                    "emailAddress": "test@bgdigitaltest.co.uk"
+                }
+            }
 
 + Response 400 (application/json)
 
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": {
-                  "postcode": "error.client.postcode.invalid"
-              },
-              "meta": {}
-          }
+              {
+                  "status": "FAIL",
+                  "data": {},
+                  "errors": {
+                      "postcode": "error.client.postcode.invalid"
+                  },
+                  "meta": {}
+              }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
