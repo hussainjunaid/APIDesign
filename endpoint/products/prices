@@ -1,0 +1,167 @@
+## Prices [/product-prices]
+
+Prices endpoint allows you to calculate the total price and product feature prices of a product which can either be an individual product like KAC-3 (or) a bundle product like HC4. Responses from this endpoint will be retuned in JSON format only.
+
+Prices endpoint supports following controller.
+ * GET /prices
+
+Response from this controller has the following information:
+### Price
+
+| Property | Type | As response | Description |
+| :-------------------- | :---------- | :---------- | ------------------------------------------------------------ |
+| totalGrossPrice | BigDecimal | `Returned always` | Returns the total gross price of an individual or bundle product.  |
+| totalNetPrice | BigDecimal | `Returned always` | Returns the total net price of an individual or bundle product (i.e.) excluding all discounts. |
+| totalDiscounts | Array of Discounts | `Returned always` | Indicates all types of [discounts](/api-reference/prices.md#discount) applied and their values. Returned an empty array when there are no discounts. |
+
+#### ProductFeaturePrices
+
+| Property | Type | As response | Description |
+| :-------------------- | :---------- | :---------- | ------------------------------------------------------------ |
+| featureId | String |  `Returned always` | Indicates the product feature. |
+| annualGrossPrice | BigDecimal | `Returned always` | Returns the total gross price of the specific product feature.|
+| annualNetPrice | BigDecimal | `Returned always` | Returns the total net price of the specific product feature (i.e.) excluding all discounts.|
+| discounts | Array of Discounts | `Returned always` | Indicates all types of [discounts](/api-reference/prices.md#discount) applied to a product feature and their values. Returned an empty array when there are no discounts. |
+
+#### Discount
+
+| Property | Type | As response | Description |
+| :-------------------- | :---------- | :---------- | ------------------------------------------------------------ |
+| type | String |  `Returned always` | Indicates the type of the discount. |
+| code | String | `Returned always` | Indicates the unique code of the discount. |
+| value | BigDecimal | `Returned always` | Returns the price of the discount.|
+| description | String | `Not returned always` | Detailed description of the discount is returned. Currently description is sent only for `PAYMENT_TYPE` discount. |
+
+
+### Calculate Product price [GET /product-prices{?productFeature*, jci, postcode}]
+
++ Parameters
+
+    + productFeature (required, string) - Product feature for which price is to be calculated
+    + jci (required, string) - To understand whether Energy Customer Discount is to be applied
+    + postcode (required, string) - To understand whether M25 price should be applied
+
++ Request
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "price": {
+                        "totalGrossPrice": 240,
+                        "totalNetPrice": 234,
+                        "totalDiscounts": [
+                            {
+                                "type": "PAYMENT_TYPE",
+                                "code": "P3SI",
+                                "value": 6,
+                                "description": "Direct debit discount"
+                            }
+                        ]
+                    },
+                    "productFeaturePrices": [
+                        {
+                            "featureId": "HC4|HC4-CH|CNI2|CHB|MDD",
+                            "annualGrossPrice": 168,
+                            "annualNetPrice": 162,
+                            "discounts": [
+                                {
+                                    "type": "PAYMENT_TYPE",
+                                    "code": "P3SI",
+                                    "value": 6,
+                                    "description": "Direct debit discount"
+                                }
+                            ]
+                        },
+                        {
+                            "featureId": "HC4|HC4-PD|DNI2|PLDR|MDD",
+                            "annualGrossPrice": 42,
+                            "annualNetPrice": 42,
+                            "discounts": []
+                        },
+                        {
+                            "featureId": "HC4|HC4-HEC|HNI2|EWR|MDD",
+                            "annualGrossPrice": 30,
+                            "annualNetPrice": 30,
+                            "discounts": []
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+        {
+          "status": "FAIL",
+          "data": {},
+          "errors": [
+            {
+              "code": "productfeature",
+              "message": "error.client.feature.blank"
+            }
+          ],
+          "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "postcode",
+                    "message": "error.client.postcode.blank"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "jci",
+                    "message": "error.client.jci.blank"
+                }
+            ],
+            "meta": {}
+        }
+
++ Response 400 (application/json)
+        
+        {
+          "status": "FAIL",
+          "data": {},
+          "errors": [
+            {
+              "code": "postcode",
+              "message": "error.client.postcode.invalid"
+            }
+          ],
+          "meta": {}
+        }
+
++ Response 400 (application/json)
+
+        {
+          "status": "FAIL",
+          "data": {},
+          "errors": [
+            {
+              "code": "productfeature",
+              "message": "error.client.feature.invalid"
+            }
+          ],
+          "meta": {}
+        }
