@@ -15,6 +15,8 @@ Energy Account as a resource represents following information
 | balance | string | `Returned always`. Balance of the account if available. |
 | balanceType | string | `Returned always`. Type of account balance if available, it can be either "in credit" or "in debit". |
 | tariff | string | `Returned always`. Tariff id associated to the account if available. |
+| fixedDirectDebit | string | `Returned always`. to associate energy-accounts resource to fixed direct-debit. It is a combination of account number and payment type code. |
+| variableDirectDebit | string | `Returned always`. to associate energy-accounts resource to variable direct-debit. It is a combination of account number and payment type code. |
 | paymentType | string | `Returned always`. Payment type description of the account if available. |
 | contractEndDate | string | `Returned always`. End date of contract associated to the account if available, in dd/MM/yyyy format |
 | supplyAddress | Address | `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
@@ -53,104 +55,6 @@ MyEnergy Details as a resource represents following information and this will be
 
 + Response 200 (application/json)
 
-        {
-            "status": "SUCCESS",
-            "data": {
-                "energyAccounts": [
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
-                        },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034235409",
-                        "contractEndDate": null,
-                        "balance": 111.47,
-                        "subType": "Electricity",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        "myEnergyEligible": false,
-                        "nextBillDate": "2015-10-12T00:00:00+0100",
-                        "numberOfEstimatedBills": 1
-                    },
-                    {
-                        "jointInvoiceDetails": {
-                            "mergeDate": null,
-                            "mergeType": null,
-                            "mergedAccountNumber": null
-                        },
-                        "registeredPaperlessBillingOn": "04/02/2011",
-                        "status": "open",
-                        "paymentType": "Direct Debit",
-                        "responsibilityType": "Legal Payer",
-                        "paperlessBilling": true,
-                        "type": "Energy",
-                        "holderName": "Mr Morita",
-                        "id": "850034336151",
-                        "contractEndDate": null,
-                        "balance": 140.52,
-                        "subType": "Gas",
-                        "tariff": "fix-and-fall-june-2016",
-                        "supplyAddress": {
-                            "MPRN": null,
-                            "postalTown": "Salford",
-                            "houseName": "",
-                            "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
-                            "county": "LANCASHIRE",
-                            "MPAN": null,
-                            "houseNumber": "53B",
-                            "postcode": "WS3 3ER",
-                            "addressLine2": "",
-                            "addressLine1": "GARSTANG ROAD NORTH",
-                            "flatNumber": null
-                        },
-                        "balanceType": "in credit",
-                        "jointInvoiced": true,
-                        "myEnergyEligible": false,
-                        "nextBillDate": null,
-                        "numberOfEstimatedBills": 0
-                    }
-                ]
-            },
-            "errors": [],
-            "meta": {}
-        }
-
-### Retrieve a specific Account using Account Number [GET /energy-accounts{?accountNumber*}]
-+ Parameters
-
-    + accountNumber (string) - This is the customers account number
-        
-+ Request
-
-    + Headers
-
-            Authorization: Bearer {accesstoken}
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
-+ Response 200 (application/json)
-
             {
                 "status": "SUCCESS",
                 "data": {
@@ -169,6 +73,8 @@ MyEnergy Details as a resource represents following information and this will be
                             "type": "Energy",
                             "holderName": "Mr Morita",
                             "id": "850034235409",
+                            "fixedDirectDebit": "850034235409-2411",
+                            "variableDirectDebit": null,
                             "contractEndDate": null,
                             "balance": 111.47,
                             "subType": "Electricity",
@@ -188,7 +94,7 @@ MyEnergy Details as a resource represents following information and this will be
                             },
                             "balanceType": "in credit",
                             "jointInvoiced": true,
-                            "myEnergyEligible": false,
+                            "energyInsight": "ODUxMDAxMzQ4NTI4",
                             "nextBillDate": "2015-10-12T00:00:00+0100",
                             "numberOfEstimatedBills": 1
                         },
@@ -225,7 +131,109 @@ MyEnergy Details as a resource represents following information and this will be
                             },
                             "balanceType": "in credit",
                             "jointInvoiced": true,
+                            "energyInsight": "FDUxMDAxMzQ4NTI4",
+                            "nextBillDate": null,
+                            "numberOfEstimatedBills": 0
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
 
+### Retrieve a specific Account using Account Number [GET /energy-accounts{?accountNumber*}]
++ Parameters
+
+    + accountNumber (string) - This is the customers account number
+        
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "energyAccounts": [
+                        {
+                            "jointInvoiceDetails": {
+                                "mergeDate": null,
+                                "mergeType": null,
+                                "mergedAccountNumber": null
+                            },
+                            "registeredPaperlessBillingOn": "04/02/2011",
+                            "status": "open",
+                            "paymentType": "Direct Debit",
+                            "responsibilityType": "Legal Payer",
+                            "paperlessBilling": true,
+                            "type": "Energy",
+                            "holderName": "Mr Morita",
+                            "id": "850034235409",
+                            "fixedDirectDebit": "850034235409-2411",
+                            "variableDirectDebit": null,
+                            "contractEndDate": null,
+                            "balance": 111.47,
+                            "subType": "Electricity",
+                            "tariff": "fix-and-fall-june-2016",
+                            "supplyAddress": {
+                                "MPRN": null,
+                                "postalTown": "Salford",
+                                "houseName": "",
+                                "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                                "county": "LANCASHIRE",
+                                "MPAN": null,
+                                "houseNumber": "53B",
+                                "postcode": "WS3 3ER",
+                                "addressLine2": "",
+                                "addressLine1": "GARSTANG ROAD NORTH",
+                                "flatNumber": null
+                            },
+                            "balanceType": "in credit",
+                            "jointInvoiced": true,
+                            "energyInsight": "ODUxMDAxMzQ4NTI4",
+                            "nextBillDate": "2015-10-12T00:00:00+0100",
+                            "numberOfEstimatedBills": 1
+                        },
+                        {
+                            "jointInvoiceDetails": {
+                                "mergeDate": null,
+                                "mergeType": null,
+                                "mergedAccountNumber": null
+                            },
+                            "registeredPaperlessBillingOn": "04/02/2011",
+                            "status": "open",
+                            "paymentType": "Direct Debit",
+                            "responsibilityType": "Legal Payer",
+                            "paperlessBilling": true,
+                            "type": "Energy",
+                            "holderName": "Mr Morita",
+                            "id": "850034336151",
+                            "contractEndDate": null,
+                            "balance": 140.52,
+                            "subType": "Gas",
+                            "tariff": "fix-and-fall-june-2016",
+                            "supplyAddress": {
+                                "MPRN": null,
+                                "postalTown": "Salford",
+                                "houseName": "",
+                                "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                                "county": "LANCASHIRE",
+                                "MPAN": null,
+                                "houseNumber": "53B",
+                                "postcode": "WS3 3ER",
+                                "addressLine2": "",
+                                "addressLine1": "GARSTANG ROAD NORTH",
+                                "flatNumber": null
+                            },
+                            "balanceType": "in credit",
+                            "jointInvoiced": true,
+                            "energyInsight": "FDUxMDAxMzQ4NTI4",
+                            "nextBillDate": null,
+                            "numberOfEstimatedBills": 0
                         }
                     ]
                 },
@@ -264,6 +272,8 @@ MyEnergy Details as a resource represents following information and this will be
                         "type": "Energy",
                         "holderName": "Mr Morita",
                         "id": "850034235409",
+                        "fixedDirectDebit": null,
+                        "variableDirectDebit": "850034235409-2406",
                         "contractEndDate": null,
                         "balance": 111.47,
                         "subType": "Electricity",
@@ -283,7 +293,7 @@ MyEnergy Details as a resource represents following information and this will be
                         },
                         "balanceType": "in credit",
                         "jointInvoiced": true,
-                        "myEnergyDetails": "ODUxMDAxMzQ4NTI4",
+                        "energyInsight": "ODUxMDAxMzQ4NTI4",
                         "nextBillDate": "2015-10-12T00:00:00+0100",
                         "numberOfEstimatedBills": 1
                     }
@@ -292,7 +302,7 @@ MyEnergy Details as a resource represents following information and this will be
                 "meta": {}
             }
             
-### Retrieve all Energy accounts with myEnergyDetails sideloaded [GET /energy-accounts?include=myEnergyDetails]
+### Retrieve all Energy accounts with energy insights sideloaded [GET /energy-accounts?include=energy-insights]
 + Request
 
     + Headers
@@ -320,6 +330,8 @@ MyEnergy Details as a resource represents following information and this will be
                             "type": "Energy",
                             "holderName": "Mr Morita",
                             "id": "850034235409",
+                            "fixedDirectDebit": "850034235409-2411",
+                            "variableDirectDebit": null,
                             "contractEndDate": null,
                             "balance": 111.47,
                             "subType": "Electricity",
@@ -339,7 +351,7 @@ MyEnergy Details as a resource represents following information and this will be
                             },
                             "balanceType": "in credit",
                             "jointInvoiced": true,
-                            "myEnergyDetails": "ODUxMDAxMzQ4NTI4",
+                            "energyInsight": "ODUxMDAxMzQ4NTI4",
                             "nextBillDate": "2015-10-12T00:00:00+0100",
                             "numberOfEstimatedBills": 1
                         },
@@ -376,34 +388,36 @@ MyEnergy Details as a resource represents following information and this will be
                             },
                             "balanceType": "in credit",
                             "jointInvoiced": true,
-                            "myEnergyDetails": "FDUxMDAxMzQ4NTI4",
+                            "energyInsight": "FDUxMDAxMzQ4NTI4",
                             "nextBillDate": "2015-10-12T00:00:00+0100",
                             "numberOfEstimatedBills": 1
                         }
                     ],
-                    "myEnergyDetails": [
+                    "energyInsights": [
                         {
                             "id": "ODUxMDAxMzQ4NTI4",
-                            "myEnergyEligible": true,
+                            "energyAccounts": ["850034235409"],
+                            "energyInsightsEligible": true,
                             "link": "/smartreport?accounts=850034235409",
-                            "generatorId": "AM",
+                            "generator": "AM",
                             "productType": "fkdjfd23r45",
-                            "agentId": null
+                            "agent": null
                         },
                         {
                             "id": "FDUxMDAxMzQ4NTI4",
-                            "myEnergyEligible": false,
+                            "energyAccounts": ["850034336151"],
+                            "energyInsightsEligible": false,
                             "link": "/Account-History/Consumption-Informations/?accountnumber=850034336151",
-                            "generatorId": null,
+                            "generator": null,
                             "productType": null,
-                            "agentId": null
+                            "agent": null
                         }
                     ]
                 },
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
@@ -432,7 +446,7 @@ MyEnergy Details as a resource represents following information and this will be
                 "meta": {}
             }
 
-### Retrieve specific Energy account with myEnergyDetails sideloaded [GET /energy-accounts/{id}?include=myEnergyDetails]
+### Retrieve specific Energy account with energy insights sideloaded [GET /energy-accounts/{id}?include=energy-insights]
 + Parameters
 
     + id (string) - This is the customers account number
@@ -463,6 +477,8 @@ MyEnergy Details as a resource represents following information and this will be
                         "type": "Energy",
                         "holderName": "Mr Morita",
                         "id": "850034235409",
+                        "fixedDirectDebit": null,
+                        "variableDirectDebit": "850034235409-2406",
                         "contractEndDate": null,
                         "balance": 111.47,
                         "subType": "Electricity",
@@ -482,17 +498,18 @@ MyEnergy Details as a resource represents following information and this will be
                         },
                         "balanceType": "in credit",
                         "jointInvoiced": true,
-                        "myEnergyDetails": "ODUxMDAxMzQ4NTI4",
+                        "energyInsight": "ODUxMDAxMzQ4NTI4",
                         "nextBillDate": "2015-10-12T00:00:00+0100",
                         "numberOfEstimatedBills": 1
                     },
-                    "myEnergyDetails": {
+                    "energyInsight": {
                         "id": "ODUxMDAxMzQ4NTI4",
-                        "myEnergyEligible": true,
+                        "energyAccounts": ["850034235409"],
+                        "energyInsightsEligible": true,
                         "link": "/smartreport?accounts=850034235409",
-                        "generatorId": "AM",
+                        "generator": "AM",
                         "productType": "fkdjfd23r45",
-                        "agentId": null
+                        "agent": null
                     }
                 },
                 "errors": [],
@@ -561,9 +578,11 @@ MyEnergy Details as a resource represents following information and this will be
                             "paymentType": "Prepayment",
                             "responsibilityType": "Legal Payer",
                             "paperlessBilling": true,
-                            "myEnergyDetails": "ODUxMDAxMzUwNDQ5",
+                            "energyInsight": "ODUxMDAxMzUwNDQ5",
                             "type": "Energy",
                             "holderName": "Mr Wall Street",
+                            "fixedDirectDebit": null,
+                            "variableDirectDebit": null,
                             "productHoldings": [
                                 "851001350449-1602"
                             ],
@@ -660,9 +679,11 @@ MyEnergy Details as a resource represents following information and this will be
                             "paymentType": "Prepayment",
                             "responsibilityType": "Legal Payer",
                             "paperlessBilling": true,
-                            "myEnergyDetails": "ODUxMDAxMzUwNDQ5",
+                            "energyInsight": "ODUxMDAxMzUwNDQ5",
                             "type": "Energy",
                             "holderName": "Mr Wall Street",
+                            "fixedDirectDebit": null,
+                            "variableDirectDebit": null,
                             "productHoldings": [
                                 "851001350449-1602"
                             ],
@@ -739,6 +760,53 @@ Modifying energy account: It is possible to modify an energy account but the mod
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
+    + Body
+    
+            {
+                "energyAccount": {
+                    "jointInvoiceDetails": {
+                        "mergeDate": null,
+                        "mergeType": null,
+                        "mergedAccountNumber": null
+                    },
+                    "registeredPaperlessBillingOn": "04/02/2011",
+                    "status": "open",
+                    "paymentType": "Direct Debit",
+                    "responsibilityType": "Legal Payer",
+                    "paperlessBilling": true,
+                    "type": "Energy",
+                    "holderName": "Mr Morita",
+                    "id": "850034235409",
+                    "fixedDirectDebit": null,
+                    "variableDirectDebit": "850034235409-2406",
+                    "contractEndDate": null,
+                    "balance": 111.47,
+                    "subType": "Electricity",
+                    "tariff": "fix-and-fall-june-2016",
+                    "supplyAddress": {
+                        "MPRN": null,
+                        "postalTown": "Salford",
+                        "houseName": "",
+                        "address": "53b, Garstang Road North, Salford, Lancashire, WS3 3ER",
+                        "county": "LANCASHIRE",
+                        "MPAN": null,
+                        "houseNumber": "53B",
+                        "postcode": "WS3 3ER",
+                        "addressLine2": "",
+                        "addressLine1": "GARSTANG ROAD NORTH",
+                        "flatNumber": null
+                    },
+                    "balanceType": "in credit",
+                    "jointInvoiced": true,
+                    "energyInsight": "ODUxMDAxMzQ4NTI4",
+                    "nextBillDate": "2015-10-12T00:00:00+0100",
+                    "numberOfEstimatedBills": 1
+                },
+                "meta": {
+                    "orderPayload": "eXJrazFFaXlKcC9qTlI3NWVSTEZzWkl0YWdOS0pSRTdXR2VscEErOTYxTkx3WFFGZXUwWURhMmhvbW1SaEUvcXQxTUZjbEtLL0JKbAp2VVIvV3k0MFVGNzc4TVdjUmpGREtqeS9nMzZUT0JCQTJPR3E0V05HcGRZZThGSU5EREc2NktNcXBrNnJmWEpUYUgxT2Z5RmVPenVSCmFrUVNoUTdUcVE2WVRTT2hKbUZtNVZwSEtFYjAyTWNHUXpldTFsWmZhUjczZDVLSTFIWFBGUnJNZWpKR1RZY25FZFEwNlpjT1c2OEwKTkRvU3MzYndxRmtiS0F5YjVkQ0krNFhFdnpUaktwTzN1RzJjTU42Q2RubUdlTUlvMXc9PQ"
+                }
+            }
+
 + Response 200 (application/json)
 
             {
@@ -756,6 +824,8 @@ Modifying energy account: It is possible to modify an energy account but the mod
                     "type": "Energy",
                     "holderName": "Mr Morita",
                     "id": "850034235409",
+                    "fixedDirectDebit": null,
+                    "variableDirectDebit": "850034235409-2406",
                     "contractEndDate": null,
                     "balance": 111.47,
                     "subType": "Electricity",
