@@ -1,6 +1,8 @@
+## Group API Management
 ## Heartbeat
 Heartbeat endpoint allows you to view the status of backend services. This currently supports SAP-CRM and SAP-ISU systems. Responses from this endpoint will be returned in JSON format only.
 
+### Heartbeat
 Heartbeat as a resource represents following information
 
 | Property | Type | As request | As response | Description |
@@ -15,6 +17,7 @@ Status codes can have the below values
 | 1 | `Cached and served from MIS`|
 | 2 | `Down` |
 | 3 | `Undefined` |
+
 
 ### Retrieve heartbeat [GET /heartbeat]
 + Request
@@ -41,9 +44,11 @@ Status codes can have the below values
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
-                    "code": "heartbeat",
-                    "message": "error.heartbeat.status.notFound"
-                }],
+                "errors": [
+                    {
+                        "code": "heartbeat",
+                        "message": "error.heartbeat.status.notFound"
+                    }
+                ],
                 "meta": {}
             }
