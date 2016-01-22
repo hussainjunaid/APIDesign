@@ -1,5 +1,5 @@
 ## Product Holdings [/product-holdings]
-Product Holdings endpint allows you to list / view all the product holdings of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
+Product Holdings endpoint allows you to list / view all the product holdings of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
 
 #### Energy product holding
 Energy product holding as a resource represents following information
@@ -11,12 +11,11 @@ Energy product holding as a resource represents following information
 | moveInDate | string | `Returned always`. Date when the product is moved to the address, in dd/MM/yyyy format. |
 | moveOutDate | string | `Returned always`. Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999 |
 | productCode | string | `Returned always`. Product code, 1601 for gas and 1602 for electricity. |
-| tariffCode | string | `Returned always`. Tariff code for the product, if available. |
+| tariff | string | `Returned always`. Identifies the tariff associated to the product, if available. |
 | productTypeDescription | string | `Returned always`. Product description of the product, if available. |
 | account | string | `Returned always`. Account number to which the product is linked, if available. | 
 | energyAccount | string | `Returned always`. Energy account number to which the product is linked, if available. | 
 | propositionId | string | `Returned always`. Proposition id for the product. |
-| tariffName | string | `Returned always`. Tariff description for the product, if available. |
 | tariffEnergySmart | boolean | `Returned always`. Indicates that the product has energy smart tariff if the value is true. |
 | monthlyBilling | boolean | `Returned always`. Indicates that the product is monthly billed if the value is true. |
 | smartMonthlyBilling | boolean | `Returned always`. Indicates that the product is smart monthly billed if the value is true. |
@@ -87,7 +86,7 @@ Order product holding as a resource represents following information
                                 "currentPropositionId": "00",
                                 "nextBillDate": null
                             },
-                            "tariffCode": "GSD",
+                            "tariff": "standard",
                             "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1601",
@@ -99,7 +98,6 @@ Order product holding as a resource represents following information
                             "account": "851002262167",
                             "energyAccount": "851002262167",
                             "propositionId": "00",
-                            "tariffName": "Standard",
                             "smartMeterProduct": false
                         },
                         {
@@ -115,7 +113,7 @@ Order product holding as a resource represents following information
                                 "currentPropositionId": "00",
                                 "nextBillDate": null
                             },
-                            "tariffCode": "ESD",
+                            "tariff": "standard",
                             "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1602",
@@ -127,7 +125,6 @@ Order product holding as a resource represents following information
                             "account": "851002262167",
                             "energyAccount": "851002262167",
                             "propositionId": "00",
-                            "tariffName": "Standard",
                             "smartMeterProduct": false
                         },
                         {
@@ -257,7 +254,7 @@ Order product holding as a resource represents following information
                                 "currentPropositionId": "00",
                                 "nextBillDate": null
                             },
-                            "tariffCode": "GSD",
+                            "tariff": "standard",
                             "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1601",
@@ -269,7 +266,6 @@ Order product holding as a resource represents following information
                             "account": "851002262167",
                             "energyAccount": "851002262167",
                             "propositionId": "00",
-                            "tariffName": "Standard",
                             "smartMeterProduct": false
                         },
                         {
@@ -285,7 +281,7 @@ Order product holding as a resource represents following information
                                 "currentPropositionId": "00",
                                 "nextBillDate": null
                             },
-                            "tariffCode": "ESD",
+                            "tariff": "standard",
                             "monthlyBilling": false,
                             "type": "EnergyProductHolding",
                             "id": "851002262167-1602",
@@ -297,7 +293,6 @@ Order product holding as a resource represents following information
                             "account": "851002262167",
                             "energyAccount": "851002262167",
                             "propositionId": "00",
-                            "tariffName": "Standard",
                             "smartMeterProduct": false
                         }
                     ]
