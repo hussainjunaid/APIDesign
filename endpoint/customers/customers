@@ -25,7 +25,7 @@ Customer as a resource identifies current logged in user.
 | primaryTelephoneNumber | TelephoneNumber | `Optional` | `Returned always` | Primary telephone number of the customer if available. |
 | telephoneNumbers | Array of TelephoneNumber | `Optional` | `Returned always` | All phone numbers available for the customer including `home` , `work` , `mobile`. |
 | acquiredSmartMeter | string | `Optional` | `Returned always` | `true` if customer have acquired smart meters, else `false`. |
-| correspondenceAddress | Address | `Optional` | `Returned always` | Correspondence address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend system. Refer [Addresses API](/api-reference/addresses.md#address)|
+| correspondenceAddress | [Address](/api-reference/addresses.md#address) | `Optional` | `Returned always` | Correspondence address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend system.|
 
 #### TelephoneNumber
 
@@ -91,7 +91,7 @@ Customer as a resource identifies current logged in user.
                 "meta": {}
             }
 
-+ Response 401 (application/json)
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
@@ -200,7 +200,7 @@ Customer as a resource identifies current logged in user.
             
 + Response 304 (application/json)
 
-+ Response 401 (application/json)
++ Response 400 (application/json)
 
             {
                 "status": "FAIL",
@@ -209,6 +209,90 @@ Customer as a resource identifies current logged in user.
                     {
                         "code": "customer",
                         "message": "error.client.customer.modificationNotAllowed"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "id",
+                        "message": "error.client.id.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "number",
+                        "message": "error.client.number.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "number",
+                        "message": "error.client.number.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "type",
+                        "message": "error.client.type.blank"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "type",
+                        "message": "error.client.type.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "acquiredSmartMeter",
+                        "message": "error.client.acquiredSmartMeter.invalid"
                     }
                 ],
                 "meta": {}
