@@ -2,10 +2,10 @@
 
 ## Direct Debits collection [/directdebits]
 
-Direct Debits endpoint allows you to list / view all the direct debit information of the logged in customer. Currently it supports only fixed monthly direct debit. Responses from this API will be returned in JSON format only.
+Direct debits endpoint allows you to list / view all the direct debit information of the logged in customer. Responses from this API will be returned in JSON format only. This end point is deprecated.
 
 ### Direct Debit
-Direct Debit as a resource represents following information
+Direct debit as a resource represents following information
 
 | Property | Type | Description |
 | :-------------------- | :---------- | ------------------------------------------------------------ |
