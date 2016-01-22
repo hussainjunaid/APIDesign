@@ -27,16 +27,18 @@ Variable Direct Debit as a resource represents following information
                 "data": {
                     "variableDirectDebits": [
                         {
-                          "id": "851001347092-2406",
-                          "account": "851001347092",
-                          "lastPaymentDate": "16/06/2015",
-                          "lastPaymentAmount": 25.12
+                            "id": "851001347092-2406",
+                            "account": "851001347092",
+                            "energyAccount": "851001347092",
+                            "lastPaymentDate": "16/06/2015",
+                            "lastPaymentAmount": 25.12
                         },
                         {
-                          "id": "851001347093-2406",
-                          "account": "851001347093",
-                          "lastPaymentDate": "16/06/2015",
-                          "lastPaymentAmount": 25.12
+                            "id": "851001347093-2406",
+                            "account": "851001347093",
+                            "energyAccount": "851001347093",
+                            "lastPaymentDate": "16/06/2015",
+                            "lastPaymentAmount": 25.12
                         }
                     ]
                 },
@@ -102,6 +104,7 @@ Variable Direct Debit as a resource represents following information
                     "variableDirectDebit": {
                         "id": "851001347092-2406",
                         "account": "851001347092",
+                        "energyAccount": "851001347092",
                         "lastPaymentDate": "16/06/2015",
                         "lastPaymentAmount": 25.12
                     }
@@ -124,15 +127,15 @@ Variable Direct Debit as a resource represents following information
                 "meta": {}
             }
             
-+ Response 401 (application/json)
++ Response 403 (application/json)
 
         {
             "status": "FAIL",
             "data": {},
             "errors": [
                 {
-                    "code": "authorize",
-                    "message": "access_denied"
+                    "code": "account",
+                    "message": "error.client.account.invalid"
                 }
             ],
             "meta": {}
@@ -149,5 +152,52 @@ Variable Direct Debit as a resource represents following information
                         "message": "error.client.variableDirectDebit.notFound"
                     }
                 ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)            
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "variableDirectDebit",
+                        "message": "error.client.id.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Request Payment details are not available for the customer (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)             
+            
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "variableDirectDebits": [
+                        {
+                            "id": "851001347092-2406",
+                            "account": "851001347092",
+                            "energyAccount": "851001347092",
+                            "lastPaymentDate": null,
+                            "lastPaymentAmount": 0
+                        },
+                        {
+                            "id": "851001347093-2406",
+                            "account": "851001347093",
+                            "energyAccount": "851001347093",
+                            "lastPaymentDate": null,
+                            "lastPaymentAmount": 0
+                        }
+                    ]
+                },
+                "errors": [],
                 "meta": {}
             }
