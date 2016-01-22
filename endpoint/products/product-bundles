@@ -1,5 +1,5 @@
 ## Product Bundles collection [/product-bundles]
-Product bundles API allows you to list the information about the product bundle. Responses from this API will be retuned in JSON format only. Information about the constituent products that form a bundle will be side-loaded which will internally side load the product feature.  
+Product bundles endpoint allows you to list the information about the product bundle. Responses from this endpoint will be retuned in JSON format only. Information about the constituent products that form a bundle will be side-loaded which will internally side load the product feature.  
 
 ### Product bundle
 Product bundle as a resource represents following information:
