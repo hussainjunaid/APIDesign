@@ -396,18 +396,26 @@ MyEnergy Details as a resource represents following information and this will be
                     "energyInsights": [
                         {
                             "id": "ODUxMDAxMzQ4NTI4",
-                            "energyAccounts": ["850034235409"],
+                            "energyAccounts": [
+                                "850034235409"
+                            ],
                             "energyInsightsEligible": true,
-                            "link": "/smartreport?accounts=850034235409",
+                            "links": {
+                                "self": "/smartreport?accounts=850034235409"
+                            },
                             "generator": "AM",
                             "productType": "fkdjfd23r45",
                             "agent": null
                         },
                         {
                             "id": "FDUxMDAxMzQ4NTI4",
-                            "energyAccounts": ["850034336151"],
+                            "energyAccounts": [
+                                "850034336151"
+                            ],
                             "energyInsightsEligible": false,
-                            "link": "/Account-History/Consumption-Informations/?accountnumber=850034336151",
+                            "links": {
+                                "self": "/Account-History/Consumption-Informations?accountnumber=850034336151"
+                            },
                             "generator": null,
                             "productType": null,
                             "agent": null
@@ -417,7 +425,7 @@ MyEnergy Details as a resource represents following information and this will be
                 "errors": [],
                 "meta": {}
             }
-            
+
 + Response 401 (application/json)
 
             {
@@ -504,9 +512,13 @@ MyEnergy Details as a resource represents following information and this will be
                     },
                     "energyInsight": {
                         "id": "ODUxMDAxMzQ4NTI4",
-                        "energyAccounts": ["850034235409"],
+                        "energyAccounts": [
+                            "850034235409"
+                        ],
                         "energyInsightsEligible": true,
-                        "link": "/smartreport?accounts=850034235409",
+                        "links": {
+                            "self": "/smartreport?accounts=850034235409"
+                        },
                         "generator": "AM",
                         "productType": "fkdjfd23r45",
                         "agent": null
@@ -515,7 +527,7 @@ MyEnergy Details as a resource represents following information and this will be
                 "errors": [],
                 "meta": {}
             }
-            
+
 + Response 401 (application/json)
 
             {
