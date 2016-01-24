@@ -37,7 +37,7 @@ Appointment Slot as a resource will be represented as below:
     + fault (string,optional) - Required for type `ib`, `asv-and-ib` and `fv-and-ib`. Multiple faults can be passed as a query parameter to get the appointment slots to book an engineer
     + postcode (string,optional) - `Required` for the type `chi`. Postcode which customer entered
 
-+ Request
++ Request When jobType value sent as `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
 
     + Headers
 
@@ -81,6 +81,54 @@ Appointment Slot as a resource will be represented as below:
                     "appointmentPayload": "srx7t/fT2CajwcGXZ30kz/M3RyEs5RuelZ+qxavAbNokWG94AK8M2vmxjn7WAOhhE3CTTPMj/f7a8LF/DFv+Xw=="
                 }
             }
+
++ Request When jobType value sent as `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "appointmentSlots": [
+                        {
+                            "id": "Ri2ZzvrA+GvSfGcjVUBVfqibwrQ8MqjYQc2p33eKxxk=",
+                            "variant": "6",
+                            "startTime": "2016-02-01T08:00:00+0100",
+                            "endTime": "2016-02-01T14:00:00+0100",
+                            "available": true
+                        },
+                        {
+                            "id": "M1y6K+lyIXmBBVQSv3/qO6eUl4qV2UvQEij4IaMiYHs=",
+                            "variant": "2",
+                            "startTime": "2016-02-01T14:00:00+0100",
+                            "endTime": "2016-02-01T16:30:00+0100",
+                            "available": true
+                        },
+                        {
+                            "id": "/heqXE5i5IgHxFHtZIii0RAk1Jjknj61qjbsrnkTKLE=",
+                            "variant": "2",
+                            "startTime": "2016-02-01T16:30:00+0100",
+                            "endTime": "2016-02-01T18:30:00+0100",
+                            "available": true
+                        },
+                        {
+                            "id": "Dl3a5kmjXpCuob4VSVsUuRu1eae6N75m8/FN607JJbE=",
+                            "variant": "1",
+                            "startTime": "2016-02-01T18:30:00+0100",
+                            "endTime": "2016-02-01T20:00:00+0100",
+                            "available": true
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {
+                    "appointmentPayload": "TTZ3ZUxXNmRUY0FEYXYxVWJVZlUvVWlqUEFEeUJ6a0pPbW1tZ0NhKzNEeFJWQmw0Uy92cVo3dUx6SGVaVDF1cjFFVlFVN1Fhd2IzRAo3MGVGdStXVHFrTCt0aW80MkFyU2J1eFcvUnlPd3Rqc2U3R2pRVHM3bTh0RGx3Mm5wL0trcVhGL3VQK3F5ZXlXVEtTdC82eE1Qdz09"
+                }
+            }
             
 + Response 400 (application/json)
 
@@ -117,21 +165,7 @@ Appointment Slot as a resource will be represented as below:
                 "data": {},
                 "errors": [
                     {
-                        "code": "slots",
-                        "message": "error.client.slots.notFound"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "slots",
+                        "code": "postcode",
                         "message": "error.client.postcode.notAvailable"
                     }
                 ],
