@@ -123,6 +123,20 @@ Appointment Slot as a resource will be represented as below:
                 ],
                 "meta": {}
             }
+
++ Response 404 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "slots",
+                        "message": "error.client.postcode.notAvailable"
+                    }
+                ],
+                "meta": {}
+            }
             
 + Response 500 (application/json)
 
