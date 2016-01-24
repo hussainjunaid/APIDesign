@@ -8,37 +8,37 @@ Quote as a resource is comprised of following information.
 
 | Property | Type | As request | As response | Description |
 | :---------- | :------ | -------- |---------|------------------------------------ |
-| id | number | NA |`Returned always`| Unique identification for the resource. Note that this is a generated resource and hence is not unique across all requests but is within the result-set returned by the service. It also signifies the order of quote based on cost to user (lower the number, cheaper the quote).  |
+| id | string | NA |`Returned always`| Unique identification for the resource. Note that this is a generated resource and hence is not unique across all requests but is within the result-set returned by the service. It also signifies the order of quote based on cost to user (lower the number, cheaper the quote).  |
 | tariff | string | NA | `Returned always`| Represents a link to [Tariff](Tariff-API-Reference) resource. Quote is always linked to a tariff and this relationship is represented via this propery. |
-| gasRates | object | NA | `Presence depends on parameters`| Represents quote rates applicable for `gas`. |
-| electricityRates | object | NA | `Presence depends on parameters` | Represents quote rates applicable for `electricity`. |
+| gasRates | Rate | NA | `Presence depends on parameters`| Represents quote rates applicable for `gas`. |
+| electricityRates | Rate | NA | `Presence depends on parameters` | Represents quote rates applicable for `electricity`. |
 | orderPayload | string | NA |`Returned always`| Represents payload to use if switching to tariff quoted. |
 
 >`Note:` orderPayload is just a temporary implementation. Will be revisited once Shop API is live.
 
-#### Quote Rates
-Quote rates is not an independent resource. It is however related to quote as it sheds more light on what rates apply for the quote requested. Instances of this object will always be related to a single fuel.
+#### Rates
+Rate is not an independent resource. It is however related to quote as it sheds more light on what rates apply for the quote requested. Instances of this object will always be related to a single fuel.
 
 | Property | Type | As request | As response | Description |
 | :---------- | :------ | -------- |---------|------------------------------------ |
-| standingCharges | number | NA | `Returned always` | Standing charges that apply for current instance of quote. |
-| personalProjection | number | NA |`Returned always`| Personalized projection value based on input parameters. |
-| consumption | number | NA |`Returned always`| Represents consumption value used for quote computation. |
-| estimatedAnnualConsumption | number | NA |  |Represents estimated annual consumption for current instance of quote. |
-| estimatedAnnualCost | number | NA | `Returned always`| Represents annual cost for current instance of quote. |
-| tariffComparisonRate | number | NA |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
-| registers | object | NA | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
+| standingCharges | double | NA | `Returned always` | Standing charges that apply for current instance of quote. |
+| personalProjection | double | NA |`Returned always`| Personalized projection value based on input parameters. |
+| consumption | double | NA |`Returned always`| Represents consumption value used for quote computation. |
+| estimatedAnnualConsumption | double | NA |  |Represents estimated annual consumption for current instance of quote. |
+| estimatedAnnualCost | double | NA | `Returned always`| Represents annual cost for current instance of quote. |
+| tariffComparisonRate | double | NA |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
+| registers | Register | NA | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
 
 Note: `estimatedAnnualConsumption` is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. `estimatedAnnualCost` would be the annual cost assuming the user had the same consumption as `estimatedAnnualConsumption`. 
 
 #### Registers
-Registers represents meter registers associated with a tariff. Properties of registers are listed below.
+Register represents meter registers associated with a tariff. Properties of registers are listed below.
 
 | Property | Type | Description |
 | :-------------------- | :---------- | ------------------------------------------------------------ |
 | id | string | `Returned always`. Unique id associated with current register. This is always unique per tariff. |
 | description | string | `Returned always`. Description of the register, also specifies the time period the register applies. |
-| unitRate | number | `Returned always`. Represents rate that is applicable per unit of fuel. |
+| unitRate | double | `Returned always`. Represents rate that is applicable per unit of fuel. |
 
 #### Meta Information
 Along with quote, you also get a mail payload with following properties returned. Should you need to send this payload to [Email API](Email-API-Reference), the client can do so.
@@ -76,7 +76,7 @@ Along with quote, you also get a mail payload with following properties returned
                 "data": {
                     "quotes": [
                         {
-                            "id": 1,
+                            "id": "Zml4LWFuZC1yZXdhcmQtamFudWFyeS0yMDE3",
                             "gasRates": {
                                 "standingCharges": 26,
                                 "personalProjection": 279.04,
@@ -111,7 +111,7 @@ Along with quote, you also get a mail payload with following properties returned
                             }
                         },
                         {
-                            "id": 2,
+                            "id": "Zml4LWFuZC1mYWxsLWphbnVhcnktMjAxNw",
                             "gasRates": {
                                 "standingCharges": 26,
                                 "personalProjection": 296.9,
@@ -146,7 +146,7 @@ Along with quote, you also get a mail payload with following properties returned
                             }
                         },
                         {
-                            "id": 3,
+                            "id": "Zml4LWFuZC1mYWxsLWphbnVhcnktMjAxNw",
                             "gasRates": {
                                 "standingCharges": 33.6,
                                 "personalProjection": 284.19,
@@ -181,7 +181,7 @@ Along with quote, you also get a mail payload with following properties returned
                             }
                         },
                         {
-                            "id": 4,
+                            "id": "Zml4LWFuZC1mYWxsLWphbnVhcnktMjAxNw",
                             "gasRates": {
                                 "standingCharges": 26,
                                 "personalProjection": 318.43,
