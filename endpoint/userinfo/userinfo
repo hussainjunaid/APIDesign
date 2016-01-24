@@ -285,6 +285,21 @@ The possible response status codes are as follows:
             ],
             "meta": {}
         }
+        
++ Response 500 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                   "code": "system",
+                   "message": "error.system.unexpected.error"
+                }
+            ],
+            "meta": {}
+        }
+
 
 ## UserInfo by reference [/userinfo/find-by-reference]
 This is a controller endpoint which allows to find out whether a user with matching account number, home care number or sales order number, is available in SAP system.
@@ -362,6 +377,20 @@ The request body of this post must be a JSON object with properties listed below
                 {
                     "code": "userinfo",
                     "message": "error.server.userinfo.notFound"
+                }
+            ],
+            "meta": {}
+        }
+        
++ Response 500 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                   "code": "system",
+                   "message": "error.system.unexpected.error"
                 }
             ],
             "meta": {}
