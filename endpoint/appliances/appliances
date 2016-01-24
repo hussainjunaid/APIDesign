@@ -28,7 +28,7 @@ Appliance as a resource represents following information.
             {
                 "status": "SUCCESS",
                 "data": {
-                    "makes": [
+                    "appliance": 
                         {
                             "id": "AGA",
                             "description": "Combined Boiler And Cooker",
@@ -36,7 +36,6 @@ Appliance as a resource represents following information.
                                 "makes": "/api/secure/appliances/AGA/makes"
                             }
                         }
-                    ]
                 },
                 "errors": [],
                 "meta": {}
@@ -48,8 +47,8 @@ Appliance as a resource represents following information.
                 "status": "ERROR",
                 "data": {},
                 "errors": [{
-                    "code": "system",
-                    "message": "error.system.unexpected.error"
+                    "code": "appliance",
+                    "message": "error.client.appliance.notFound"
                 }],
                 "meta": {}
             }
@@ -133,7 +132,7 @@ Model as a resource represents following information.
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
 | id | string | `Not applicable` | `Returned always` | Model in encoded format for identification.|
-| description | string | `Not applicable` | `Returned always` | ` Model description. |
+| description | string | `Not applicable` | `Returned always` | Model description. |
 | status | string | `Not applicable` | `Returned always` | Status of the model. |
 
 
