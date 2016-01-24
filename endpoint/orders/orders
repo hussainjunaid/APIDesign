@@ -306,11 +306,24 @@ Meter details represent metering information about the user.
                 "status": "FAIL",
                 "data": {},
                 "errors": {
+                     "code": "postcode",
                     "postcode": "error.client.postcode.invalid"
                 },
                 "meta": {}
             }
 
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                     "code": "brand",
+                    "postcode": "error.client.brand.incompatible"
+                },
+                "meta": {}
+            }
+            
 ### Modify orders [PUT /orders]
 
 + Request (application/json)
@@ -478,6 +491,7 @@ Meter details represent metering information about the user.
                 "status": "FAIL",
                 "data": {},
                 "errors": {
+                    "code": "postcode",
                     "postcode": "error.client.postcode.invalid"
                 },
                 "meta": {}
