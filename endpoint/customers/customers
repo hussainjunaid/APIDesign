@@ -298,6 +298,20 @@ Customer as a resource identifies current logged in user.
                 "meta": {}
             }
 
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "acquiredSmartMeter",
+                        "message": "error.client.customer.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
 ## Customers Match by account info [/customers/match-by-account-info]
 This is a controller service which allows to find out whether a customer with matching account number, home care number or sales order number, is available in backend system.
 
