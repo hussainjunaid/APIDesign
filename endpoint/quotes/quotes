@@ -499,13 +499,26 @@ Along with quote, you also get a mail payload with following properties returned
               }
             }
 
-+ Response 400 (application/json)
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "authorize": "invalid_account_numbers"
-                },
+                            "code": "account",
+                            "message": "error.client.account.invalid"                
+                            },
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                            "code": "brand",
+                            "message": "error.client.brand.invalid"                            
+                            },
                 "meta": {}
             }
