@@ -127,7 +127,6 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "firstName": "Pentwazz Stavea",
                     "surname": "Kenj",
                     "email": "sakthi@bgdigitaltest.co.uk",
-                    "smartMeterInterest": false,
                     "classification": "chi",
                     "primaryTelephoneNumber": {
                         "number": "07404669698"
@@ -151,11 +150,10 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "status": "SUCCESS",
                 "data": {
                     "prospect": {
-                        "id": "6997bc57-4f6a-543d-96ba-8eacb65400f7",
+                        "id": "8fbe249f-09b3-5649-b512-08bd3fa3fc56",
                         "title": "Mr",
                         "firstName": "Pentwazz Stavea",
                         "surname": "Kenj",
-                        "classification": "chi",
                         "primaryTelephoneNumber": {
                             "number": "07404669698",
                             "type": null
@@ -174,7 +172,8 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                             "MPAN": null,
                             "MPRN": null
                         },
-                        "smartMeterInterest": false
+                        "smartMeterInterest": null,
+                        "classification": "chi"
                     }
                 },
                 "errors": [],
