@@ -1,20 +1,20 @@
 ## Group Dyno
 
 ## Dyno Appointments [/dyno-appointments]
-Dyno appointment resource allows you to post the appointment details to confirm the same for a fault that is associated to plumbing and drains product. Response from this end point will be in JSON format only.
+Dyno appointment endpoint allows you to post the appointment details to confirm the same for a fault that is associated to plumbing and drains product. Response from this endpoint will be in JSON format only.
 
-#### Dyno Appointment
+#### Dyno appointment
 Dyno appointment as a resource represents following information:
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- |:---------- |:---------- |:------------------------------------------------------------ |
 | id | String | `Not Applicable`|`Returned always`.| It is the service order number for which the appointment is been booked. |
-| servicesAccount | String | `Mandatory`|`Returned always`. |It is account number of the appointment. |
-| telephoneNumber | String | `Optional`|`Returned always`. |It is contact number of the customer. |
-| dynoAppointmentSlot | String | `Mandatory`|`Returned always`. |It is the slot id value mapped to the appointment |
-| serviceArea | String | `Mandatory`|`Returned always`.|It represents the service area  value returned in the priority questions response |
-| workType | String | `Mandatory`|`Returned always`.|It reresents the work type  value returned in the priority questions response |
-| comments | String | `Optional`|`Returned always`.|Plumbing & drains fault related information provided by customer. This value is defaulted to `NA`|
+| servicesAccount | String | `Mandatory`|`Returned always`. | It is the account number of the appointment. |
+| telephoneNumber | String | `Optional`|`Returned always`. | It is the contact number for the appointment. |
+| dynoAppointmentSlot | String | `Mandatory`|`Returned always`. | It represents the [appointment slot](/api-reference/dyno-appointment-slots.md#dyno-appointment-slot) mapped to this appointment. |
+| serviceArea | String | `Mandatory`|`Returned always`.| It represents the service area value returned in the priority questions response |
+| workType | String | `Mandatory`|`Returned always`.| It reresents the work type value returned in the priority questions response |
+| comments | String | `Optional`|`Returned always`.| Plumbing & drains fault related information provided by customer. This value is defaulted to `NA`|
 
 
 ### Book Dyno appointment [POST /dyno-appointments]
@@ -38,7 +38,7 @@ Dyno appointment as a resource represents following information:
                     "comments": "water leakage in toilet"
                 }
             }
-
+            
 + Response 200 (application/json)
 
             {
@@ -57,7 +57,7 @@ Dyno appointment as a resource represents following information:
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
@@ -67,34 +67,6 @@ Dyno appointment as a resource represents following information:
                     {
                         "code": "authorize",
                         "message": "access_denied"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "slot",
-                        "message": "error.client.slot.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "slot",
-                        "message": "error.client.slot.unavailable"
                     }
                 ],
                 "meta": {}
@@ -123,34 +95,6 @@ Dyno appointment as a resource represents following information:
                     {
                         "code": "account",
                         "message": "error.client.account.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "serviceArea",
-                        "message": "error.client.serviceArea.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-            
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "workType",
-                        "message": "error.client.workType.invalid"
                     }
                 ],
                 "meta": {}
