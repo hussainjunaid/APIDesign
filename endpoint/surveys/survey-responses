@@ -1,15 +1,15 @@
 ## Group Surveys
 
 ## Survey Response Collection [/survey-responses]
-Survey Responses allow us to save the survey information into SAP system using customer BP number. Responses from this API will be returned in JSON format only. In order to save the survey information about the customer, client should supply access token along with the request body.
+Survey Responses represent the information about the smart survey details which helps to identify the smart eligibility of a customer.Responses from this endpoint will be in JSON format.
 
 #### Survey responses
 
-| Name | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-|id| string |'id' is formed by combining the values of ucrn and premise ID|
-| question | string | This is the value of question id that is returned from the SAP |
-| answer | string | This is the value of answer id that is returned from the SAP |
+| Name | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- |  :---------- | ------------------------------------------------------------ |
+|id| string |`Not Required` | `Returned always` | 'id' is formed by combining the values of ucrn and premise ID|
+| question | string | `Mandatory` | `Returned always` |  This is the value of question id that is returned from the SAP |
+| answer | string | `Mandatory` | `Returned always` |  This is the value of answer id that is returned from the SAP |
 
 
 #### Smart credit question Description
@@ -32,6 +32,7 @@ Survey Responses allow us to save the survey information into SAP system using c
 | question3 |  Is your property a flat? |
 | question4 |  Are all meters and fusebox accessible? |
 | question5 |  Do you already have a smart meter at the property? |
+
 
 
 ### Submit survey responses [POST /survey-responses]
@@ -171,7 +172,7 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
@@ -185,6 +186,20 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }     
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }    
             
 + Response 500 (application/json)
 
@@ -193,8 +208,8 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "data": {},
                 "errors": [
                     {
-                        "code": "server.error.internal",
-                        "message": "An internal error while processing request."
+                        "code": "service",
+                        "message": "error.system.pi.operation.fail"
                     }
                 ],
                 "meta": {}
@@ -236,6 +251,20 @@ Survey Responses allow us to save the survey information into SAP system using c
                     }
                 }
             }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "invalid_request"
+                    }
+                ],
+                "meta": {}
+            }
 
 + Response 401 (application/json)
 
@@ -250,7 +279,7 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }
-
+            
 + Response 500 (application/json)
 
             {
@@ -279,10 +308,10 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "meta": {}
             }
             
-### Modify survey responses [PUT /survey-responses/{surveyId}]
+### Modify survey responses [PUT /survey-responses/{id}]
 + Parameters
 
-    + surveyId (string) - Survey Id
+    + id (string) - Survey Id
     
 + Request (application/json)
 
@@ -363,6 +392,20 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "meta": {}
             }
 
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "invalid_request"
+                    }
+                ],
+                "meta": {}
+            }
+            
 + Response 401 (application/json)
 
             {
