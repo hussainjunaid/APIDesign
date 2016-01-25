@@ -1,18 +1,20 @@
 ## Product-Features [/product-features]
-Product features API allows you to list the features related to product or bundle product. Responses from this API will be returned in JSON format only. Feature will be made up of all the primary characteristics of a product or bundle product to compute its price.
+Product features endpoint allows you to list the features related to product or bundle product. Responses from this endpoint will be returned in JSON format only. Feature will be made up of all the primary characteristics of a product or bundle product to compute its price.
 
-### Product features
-Product features as a resource represents following information:
+#### Product feature
+Product feature as a resource represents following information:
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Unique id for a product feature. |
-| excess | string | `Returned always`. Indicates excess which will be any of the following, `0`,`50`,`99`. |
-| annualServiceVisit | boolean | `Returned always`. Indicates annual service visit. |
-| applianceType | string | `Returned always`. Indicates the appliance type. Can be empty if there aren't any appliances for the product. |
-| paymentMethod | string | `Returned always`. Indicates the payment method. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
+| id | string | `Not applicable` | `Returned always` | Unique id for a product feature. |
+| excess | string | `Not applicable` | `Returned always` | Indicates excess which will be any of the following, `0`,`50`,`99`. |
+| annualServiceVisit | boolean | `Not applicable` | `Returned always` | Indicates annual service visit. |
+| applianceType | string | `Not applicable` | `Returned always` | Indicates the appliance type. Can be empty if there aren't any appliances for the product. |
+| paymentMethod | string | `Not applicable` | `Returned always` | Indicates the payment method. |
+| levelOfService | string | `Not applicable` | `Returned always` | Indicates the Level of service of the product. |
 
 >`Note:` Format of the product feature id will be `BundleCode|ProductCode|LosCode|ApplianceType|PaymentMethod`. If the product is `individual`, then BundleCode will be `NA`.
+
 
 ### Retrieve the level of service for a specific configuration of a product [GET /product-features{?product, excess, annualServiceVisit, applianceType*, paymentMethod}]
 
@@ -24,7 +26,7 @@ Product features as a resource represents following information:
     + applianceType (optional, string) - If not passed, Default appliance type is taken based on product.Multiple appliance types can be passed as parameter based on number of appliances supported by the product.
     + paymentMethod (optional, string) - If not passed, payment method is taken based on product.
 
-+ Request
++ Request Individual products
 
     + Headers
 
@@ -49,6 +51,12 @@ Product features as a resource represents following information:
                 "errors": [],
                 "meta": {}
             }
+
++ Request Bundle products
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
         
 + Response 200 (application/json)
 
@@ -57,12 +65,12 @@ Product features as a resource represents following information:
                 "data": {
                     "productFeatures": [
                         {
-                            "id": "HC400|HC400-CH|3FI1|BBC|MDD",
-                            "excess": "99",
+                            "id": "HC4|HC4-CH|CNI2|BBC|MDD",
+                            "excess": "60",
                             "annualServiceVisitSelected": true,
                             "applianceType": "BBC",
                             "paymentMethod": "MDD",
-                            "levelOfService": "3FI1"
+                            "levelOfService": "CNI2"
                         }
                     ]
                 },
@@ -133,8 +141,8 @@ Product features as a resource represents following information:
             "data": {},
             "errors": [
                 {
-                    "code": "bundle",
-                    "message": "error.client.bundle.notFound"
+                    "code": "annualServiceVisit",
+                    "message": "error.client.annualServiceVisit.inValid"
                 }
             ],
             "meta": {}
