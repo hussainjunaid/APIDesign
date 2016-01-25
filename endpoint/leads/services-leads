@@ -1,65 +1,27 @@
 ## Services-Leads Collection [/services-leads]
 
-Services Lead endpoint allows you to create the Services Lead in Online database (PO_TA_SERVICES_LEAD). Responses from this endpoint will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to create Services Lead which would be sent to Uddingston for processing. After creating the lead, this api will also trigger the confirmation email to customer.
+Services leads endpoint allows you to create a services lead in online database (PO_TA_SERVICES_LEAD). Responses from this endpoint will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to create services lead which would be sent to Uddingston for processing. After creating the lead, this endpoint will also trigger the confirmation email to customer.
 
->`Note:` Fundamental assumption behind the design of this API to send Services lead to Uddingston is that there will be NO basket. Service API will be able to handle only either a bundle product or an individual product at a time.
+>`Note:` Services leads endpoint will be able to handle only either a bundle product or an individual product at a time.
 
-#### Services Lead
-Services Lead as an entity represents following attributes.
+#### Services lead
+Services lead as a resource represents following attributes.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| id | string | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
-| title | string | `Mandatory` | `Returned always` | Title of customer. |
-| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
-| lastName | string | `Mandatory`| `Returned always` | LastName of customer. |
-| emailAddress | string | `Mandatory` | `Returned always` | Email address of customer |
-| telephoneNumber | string | `Mandatory`| `Returned always` | Phone number of customer |
-| bothAddressSame | boolean | `Optional` | `Returned always` | Should be `true` if both billing address & supply address are same. |
-| supplyAddress | Address | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
-| billingAddress | Address | `Optional` | `Returned always` | Billing address of customer. Value will not be available in response if billing address is not passed. |
-| directDebitDetails | DirectDebit | `Mandatory` | `Returned always` | Direct debit details of customer.  |
-| marketingConsentDetails | MarketingConsent | `Optional` | `Returned always` | Marketting consent details which customer choose. |
+| id | String | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
+| title | String | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | String | `Mandatory` | `Returned always` | First name of customer. |
+| lastName | String | `Mandatory`| `Returned always` | LastName of customer. |
+| emailAddress | String | `Mandatory` | `Returned always` | Email address of customer |
+| telephoneNumber | String | `Mandatory`| `Returned always` | Phone number of customer |
+| supplyAddress | [Address](/api-reference/addresses.md#addresses) | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
+| billingAddress | [Address](/api-reference/addresses.md#addresses) | `Optional` | `Returned always` | Billing address of customer. If `billingAddress` is not sent in the request `supplyAddress` is taken as `billingAddress` and will return the same. |
+| directDebitDetails | [DirectDebit](/api-reference/services-contracts.md#DirectDebit) | `Mandatory` | `Returned always` | Direct debit details of customer.  |
+| marketingConsentDetails | [MarketingConsent](/api-reference/services-contracts.md#MarketingConsent) | `Optional` | `Not returned always` | Marketting consent details which customer choose. |
 | jci | boolean | `Optional` | `Returned always` | Status based on whether JCI was offered to customer or not. |
-| legacyAccountNumber | string | `Optional` | `Returned always` | This value will be available only in services-contracts API as same entity is used. So  this value will always be null. |
-| transactionId | string | `Optional` | `Returned always` | This value will be available only in services-contracts API as same entity is used. So  this value will always be null. |
-| productFeatures | string[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
-| productConfigurations | ProductConfigurations[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
-
-##### DirectDebit
-| Property | Type | As request | As response |Description |
-| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| paymentMethod | String | `Mandatory` | `Returned always` | Any one of the direct debit payment method `MDD` or `ADD`. |
-| bankAccountNumber | String | `Mandatory` | `Returned always` | Should contain the bank account number. |
-| sortCode | String | `Mandatory` | `Returned always` | Should contain the bank sort code without any hyphen like '208111'. |
-| accountHolderName | String | `Mandatory` | `Returned always` | Should contain the bank account holder name. |
-| preferredPaymentDay | int | `Mandatory` | `Returned always` | Should contain the preferred payment day selected by customer. |
-
-##### MarketingConsent
-| Property | Type | As request | As response |Description |
-| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| letterOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if letter is selected. |
-| emailOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if email is selected. |
-| landlineOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if landline is selected. |
-| mobileOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if mobile is selected. |
-| smsMmsOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if sms/mms is selected. |
-| facetoFaceOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if face to face is selected. |
-| ivmOpted | boolean | `Optional` | `Returned always` | If customer was shown marketing consent options, then pass `true` if ivm is selected. |
-
-##### ProductConfigurations 
-| Property | Type | As request | As response |Description |
-| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| productFeature | string | `Mandatory` | `Returned always` | Product feature id for which the appliances details to be provided. |
-| productAppliances | ProductAppliances[] | `Mandatory` | `Returned always` | Appliances details of a product with appliance type, make, model and age information. |
-
-##### ProductAppliances 
-| Property | Type | As request | As response |Description |
-| :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| applianceId | string | `Mandatory` | `Returned always` | Appliance id of a product which customer choosen. |
-| makeId | string| `Optional` | `Returned always` | If customer choose any make the value can be passed. If value is not passed it is defaulted to value `Default`.|
-| modelId | string | `Optional` | `Returned always` | If customer choose any model the value can be passed. If value is not passed it is defaulted to value `Default`.|
-| age | Integer | `Optional` | `Returned always` | If customer choose any age the value can be passed. If value is not passed it is defaulted to value `5`.|
-
+| productFeatures | String[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
+| productConfigurations | [ProductConfigurations](/api-reference/services-quotes.md#ProductConfigurations)[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
 
 ### Post services sales data to Uddingston [POST /services-leads]
 + Request (application/json)
@@ -78,7 +40,6 @@ Services Lead as an entity represents following attributes.
                     "lastName": "Kumar",
                     "emailAddress": "ravi.kumar@britfss.co.uk",
                     "telephoneNumber": "07738998190",
-                    "bothAddressSame": false,
                     "supplyAddress": {
                         "flatNumber": 14,
                         "houseNumber": null,
@@ -116,8 +77,6 @@ Services Lead as an entity represents following attributes.
                         "ivmOpted": false
                     },
                     "jci": false,
-                    "legacyAccountNumber": null,
-                    "transactionId": null,
                     "productFeatures": [
                         "HC4|HC4-CH|CNI2|CHB|MDD",
                         "HC4|HC4-PD|DNI2|PLDR|MDD",
@@ -128,10 +87,10 @@ Services Lead as an entity represents following attributes.
                             "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD",
                             "productAppliances": [
                                 {
-                                    "applianceId": "CHB",
-                                    "makeId": "QUdBLS0tQUdDIEhlYXRpbmc",
-                                    "modelId": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
-                                    "age": "5"
+                                    "appliance": "CHB",
+                                    "make": "QUdBLS0tQUdDIEhlYXRpbmc",
+                                    "model": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
+                                    "age": 5
                                 }
                             ]
                         },
@@ -139,9 +98,9 @@ Services Lead as an entity represents following attributes.
                             "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD",
                             "productAppliances": [
                                 {
-                                    "applianceId": "PLDR",
-                                    "makeId": null,
-                                    "modelId": null,
+                                    "appliance": "PLDR",
+                                    "make": null,
+                                    "model": null,
                                     "age": null
                                 }
                             ]
@@ -150,9 +109,9 @@ Services Lead as an entity represents following attributes.
                             "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD",
                             "productAppliances": [
                                 {
-                                    "applianceId": "EWR",
-                                    "makeId": null,
-                                    "modelId": null,
+                                    "appliance": "EWR",
+                                    "make": null,
+                                    "model": null,
                                     "age": null
                                 }
                             ]
@@ -160,7 +119,7 @@ Services Lead as an entity represents following attributes.
                     ]
                 }
             }
-
+            
 + Response 201 (application/json)
 
             {
@@ -174,6 +133,7 @@ Services Lead as an entity represents following attributes.
                         "emailAddress": "ravi.kumar@britfss.co.uk",
                         "telephoneNumber": "07738998190",
                         "supplyAddress": {
+                            "address": null,
                             "flatNumber": "14",
                             "houseNumber": null,
                             "houseName": "The Rushes",
@@ -181,9 +141,12 @@ Services Lead as an entity represents following attributes.
                             "addressLine2": null,
                             "postalTown": "Staines",
                             "county": "Middlesex",
-                            "postcode": "TW183EZ"
+                            "postcode": "TW183EZ",
+                            "MPAN": null,
+                            "MPRN": null
                         },
                         "billingAddress": {
+                            "address": null,
                             "flatNumber": "17",
                             "houseNumber": null,
                             "houseName": "The Rushes",
@@ -191,9 +154,10 @@ Services Lead as an entity represents following attributes.
                             "addressLine2": null,
                             "postalTown": "Staines",
                             "county": "Middlesex",
-                            "postcode": "TW183EZ"
+                            "postcode": "TW183EZ",
+                            "MPAN": null,
+                            "MPRN": null
                         },
-                        "bothAddressSame": false,
                         "marketingConsentDetails": {
                             "letterOpted": false,
                             "emailOpted": true,
@@ -208,11 +172,9 @@ Services Lead as an entity represents following attributes.
                             "bankAccountNumber": "/15Gu1TGiWNQjjqW0sZxoA==",
                             "sortCode": "KRDmAEFzGOemFZROPx1gnQ==",
                             "accountHolderName": "Deepak",
-                            "preferredPaymentDay": "5"
+                            "preferredPaymentDay": 5
                         },
                         "jci": false,
-                        "legacyAccountNumber": null,
-                        "transactionId": null,
                         "productFeatures": [
                             "HC4|HC4-CH|CNI2|CHB|MDD",
                             "HC4|HC4-PD|DNI2|PLDR|MDD",
@@ -223,10 +185,10 @@ Services Lead as an entity represents following attributes.
                                 "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD",
                                 "productAppliances": [
                                     {
-                                        "applianceId": "CHB",
-                                        "makeId": "QUdBLS0tQUdDIEhlYXRpbmc",
-                                        "modelId": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
-                                        "age": "5"
+                                        "appliance": "CHB",
+                                        "make": "QUdBLS0tQUdDIEhlYXRpbmc",
+                                        "model": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
+                                        "age": 5
                                     }
                                 ]
                             },
@@ -234,10 +196,10 @@ Services Lead as an entity represents following attributes.
                                 "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD",
                                 "productAppliances": [
                                     {
-                                        "applianceId": "PLDR",
-                                        "makeId": null,
-                                        "modelId": null,
-                                        "age": null
+                                        "appliance": "PLDR",
+                                        "make": null,
+                                        "model": null,
+                                        "age": 5
                                     }
                                 ]
                             },
@@ -245,10 +207,10 @@ Services Lead as an entity represents following attributes.
                                 "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD",
                                 "productAppliances": [
                                     {
-                                        "applianceId": "EWR",
-                                        "makeId": null,
-                                        "modelId": null,
-                                        "age": null
+                                        "appliance": "EWR",
+                                        "make": null,
+                                        "model": null,
+                                        "age": 5
                                     }
                                 ]
                             }
@@ -266,8 +228,22 @@ Services Lead as an entity represents following attributes.
                 "data": {},
                 "errors": [
                     {
+                        "code": "feature",
+                        "message": "error.client.feature.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+        
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
                         "code": "paymentMethod",
-                        "message": "error.client.paymentMethod.notMatching"
+                        "message": "error.client.paymentMethod.invalid"
                     }
                 ],
                 "meta": {}
@@ -281,21 +257,7 @@ Services Lead as an entity represents following attributes.
                 "errors": [
                     {
                         "code": "productConfigurations",
-                        "message": "error.client.productConfigurations.productFeature.notMatching"
-                    }
-                ],
-                "meta": {}
-            }
-        
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "productAppliances",
-                        "message": "error.client.productAppliances.applianceId.notMatching"
+                        "message": "error.client.productConfigurations.productFeature.invalid"
                     }
                 ],
                 "meta": {}
@@ -309,7 +271,21 @@ Services Lead as an entity represents following attributes.
                 "errors": [
                     {
                         "code": "productAppliances",
-                        "message": "error.client.productAppliances.notValid"
+                        "message": "error.client.productAppliances.appliance.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+        
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.invalid"
                     }
                 ],
                 "meta": {}
