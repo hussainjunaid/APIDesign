@@ -1,35 +1,43 @@
 ##Group Premises
 
 ## Premises Collection [/premises]
-Premises endpoint allows you to retrieve premises information. In order to retrieve the account information based on premises, client should have authorization access token.
+Premises endpoint allows you to retrieve customer account information based on their premises. In order to retrieve the account information based on premises, client should have valid authorization access token.
 
-#### Premises
+#### Premise
+ 
+Premise as a resource represents following information
 
-Premises as a resource comprises the following attributes:
+| Name | Type | As request | As response |Description |
+| :-------------------- | :---------- |:---------- |:---------- | ------------------------------------------------------------ |
+| id | string | `Not applicable` | `Returned always` | Hash code value of address and email |
+| accounts | String[] | `Not Applicable` | `Returned always` | List of accounts associated to each premise. |
+| flatNumber | string | `Mandatory` if houseNumber and houseName is not available | `Returned always` | Flat number of the address if available |
+| houseNumber | string | `Mandatory` if flatNumber and houseName is not available | `Returned always` | House number of the address if available. |
+| houseName | string | `Mandatory` if flatNumber and houseNumber is not available | `Returned always` | House name of the address if available. |
+| addressLine1 | string | `Optional` | `Returned always` | Address line 1. Typically contains house name / street etc... |
+| addressLine2 | string | `Optional` | `Returned always` | Address line 2. Typically contains street / avenues etc... |
+| postalTown | string | `Mandatory` | `Returned always` | Postal town of the address. |
+| county | string | `Optional` | `Returned always` | County to which the address belongs. |
+| postcode | string | `Mandatory` | `Returned always` | Postcode of the address |
+| MPRN | string | `Optional` | `Returned always` | Meter point reference number for the given address. Typically used for gas. |
+| MPAN | string | `Optional` | `Returned always` | Meter point administration number for the address. Typically used for electricity. | address | string | `Optional` | `Returned always` | Single line representation of the entire address. |
+| smartUpgradeEligible | String  | `Not applicable` | `Returned always` | Indicate if the premise is eligible for smart meter upgrade |
+| smartMeterEligibilityDetails | SmartMeterEligibilityDetails[]  | `Not applicable` | `Returned always` | Smart eligibility details for each contract within the premise |
 
-| Name | Type | As request | As response | Description |
-| :---------- | :------ | -------- |---------|------------------------------------ |
-| id | string | NA | `Returned always` | Hash code value of address and email |
-| address | [Address](/api-reference/addresses.md#addresses) | NA | `Returned always` | Address details  |
-| accounts | String[] | NA | `Returned always` | list of account number associated with each premise |
-| smartUpgradeEligibile | boolean | NA | `Returned always` | true/false - to indicate if the premise is eligible for smart meter upgrade |
-| smartMeterEligibility | SmartMeterEligibilityDetails | NA | `Returned always`| smart eligibility details for each contract within the premise |
+####Smart Meter Eligibility Details
+| Name | Type | As request | As response |Description |
+| :-------------------- | :---------- |:---------- |:---------- | ------------------------------------------------------------ |
+| accountNumber | String  | `Not applicable` | `Returned always` | Account number of the customer. |
+| qualified | boolean  | `Not applicable` | `Returned always` | Describes if the contract within the premise is qualified for smart upgrade |
+| targetable | boolean  | `Not applicable` | `Returned always` | Describes if the post code that the customer resides is targeted for smart upgrade |
+| sectorAvailable | boolean  | `Not applicable` | `Returned always` | Indication from business if customer's sector is available for smart upgrade |
+| ineligibleReasons  | SmartInEligibleReasons[]  | `Not applicable` | `Returned always` | This has all the reasons along with code and description returned by SAP for smart ineligibility of premises |
 
-#### SmartMeterEligibilityDetails
-
-| Name | Type | As request | As response | Description |
-| :---------- | :------ | -------- |---------|------------------------------------ |
-| qualified | boolean | NA | `Returned always` | describes if the contract within the premise is qualified for smart upgrade |
-| targetable | boolean | NA | `Returned always` | describes if the post code that the customer resides is targeted for smart upgrade |
-| sectorAvailable | boolean | NA | `Returned always` | indication from business if customer's sector is available for smart upgrade |
-| inEligibleReasons  | SmartInEligibleReasons | NA | `Returned always` | this has all the reasons along with code and description returned by SAP for smart ineligibility of premises |
-
-#### SmartInEligibleReasons
-
-| Name | Type | As request | As response | Description |
-| :---------- | :------ | -------- |---------|------------------------------------ |
-| reasonCode | string | NA | Presence depends on `smartUpgradeEligibile` | reason code for smart ineligibility |
-| reasonText | string | NA | Presence depends on `smartUpgradeEligibile` | description for smart ineligibility |
+####Smart InEligible Reasons
+| Name | Type | As request | As response |Description |
+| :-------------------- | :---------- |:---------- |:---------- | ------------------------------------------------------------ |
+| reasonCode  | `Not applicable`  | `Returned always` |  Reason code for ineligible. | 
+| reasonText  | `Not applicable`  | `Returned always` |  Reason text or description for ineligible. | 
 
 ### Retrieve all premises [GET /premises]
 + Request (application/json)
@@ -46,31 +54,146 @@ Premises as a resource comprises the following attributes:
                 "data": {
                     "premises": [
                         {
-                            "id": "NjM4MDE2MTky",
-                             "accounts": [
-                              "851001347259"
-                             ],
-                            "address": "Uxbridge Court, Uxbridge Road, Kingston upon Thames, SURREY, KT1 2LJ",
+                            "id": "MTc3OTMzNTM4OQ",
+                            "accounts": [
+                                "851005340773"
+                            ],
+                            "smartUpgradeEligible": null,
+                            "smartMeterEligibilityDetails": null,
+                            "address": "Albany Court, Oatlands Drive, Weybridge, SURREY, KT13 9JF",
                             "houseNumber": "",
                             "flatNumber": null,
-                            "houseName": "Uxbridge Court",
-                            "addressLine1": "Uxbridge Road",
+                            "houseName": "Albany Court",
+                            "addressLine1": "Oatlands Drive",
                             "addressLine2": "",
-                            "postalTown": "Kingston upon Thames",
+                            "postalTown": "Weybridge",
                             "county": "SURREY",
-                            "postcode": "KT1 2LJ",
-                            "MPAN": "1900034021774",
-                            "MPRN": null,
-                            "smartUpgradeEligibile": true,
-                            "smartMeterEligibility": [
+                            "postcode": "KT13 9JF",
+                            "MPAN": "1900011029846",
+                            "MPRN": "613178802"
+                        },
+                        {
+                            "id": "LTQ0NzYxMTIyNg",
+                            "accounts": [
+                                "851005340768"
+                            ],
+                            "smartUpgradeEligible": "true",
+                            "smartMeterEligibilityDetails": [
                                 {
-                                    "accountNumber": "851001347259",
+                                    "accountNumber": "851005340768",
+                                    "sectorAvailable": true,
                                     "qualified": true,
                                     "targetable": true,
-                                    "sectorAvailable": true,
-                                    "inEligibleReasons": []
+                                    "ineligibleReasons": []
                                 }
-                            ]
+                            ],
+                            "address": "24, Aldridge Rise, New Malden, SURREY, KT3 5RJ",
+                            "houseNumber": "24",
+                            "flatNumber": null,
+                            "houseName": "",
+                            "addressLine1": "Aldridge Rise",
+                            "addressLine2": "",
+                            "postalTown": "New Malden",
+                            "county": "SURREY",
+                            "postcode": "KT3 5RJ",
+                            "MPAN": "1200026976737",
+                            "MPRN": "607466507"
+                        },
+                        {
+                            "id": "LTE3MTU0NzAyODI",
+                            "accounts": [
+                                "851005340772"
+                            ],
+                            "smartUpgradeEligible": null,
+                            "smartMeterEligibilityDetails": null,
+                            "address": "Coachmans Cottage, Leatherhead Road, Oxshott, Leatherhead, SURREY, KT22 0HG",
+                            "houseNumber": "",
+                            "flatNumber": null,
+                            "houseName": "Coachmans Cottage",
+                            "addressLine1": "Leatherhead Road",
+                            "addressLine2": "",
+                            "postalTown": "Leatherhead",
+                            "county": "SURREY",
+                            "postcode": "KT22 0HG",
+                            "MPAN": "1900004055239",
+                            "MPRN": "638677600"
+                        },
+                        {
+                            "id": "MTY3MDk5MDU4OQ",
+                            "accounts": [
+                                "851005340774"
+                            ],
+                            "smartUpgradeEligible": null,
+                            "smartMeterEligibilityDetails": null,
+                            "address": "47, Somerset Close, New Malden, SURREY, KT3 5RG",
+                            "houseNumber": "47",
+                            "flatNumber": null,
+                            "houseName": "",
+                            "addressLine1": "Somerset Close",
+                            "addressLine2": "",
+                            "postalTown": "New Malden",
+                            "county": "SURREY",
+                            "postcode": "KT3 5RG",
+                            "MPAN": "1200025300757",
+                            "MPRN": "607101006"
+                        }
+                    ]
+                },
+                "errors": [],
+                "meta": {}
+            }
+
++ Request When smart eligibility PI call returns an error with BP code 5 (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "premises": [
+                        {
+                            "id": "ODQzODEyNjg4",
+                            "accounts": [
+                                "911000029887"
+                            ],
+                            "smartUpgradeEligible": null,
+                            "smartMeterEligibilityDetails": null,
+                            "address": "38c, Gallion Walk, Kilmarnock, AYRSHIRE, KA1 3HB",
+                            "houseNumber": "38c",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Gallion Walk",
+                            "addressLine2": null,
+                            "postalTown": "Kilmarnock",
+                            "county": "AYRSHIRE",
+                            "postcode": "KA1 3HB",
+                            "MPAN": null,
+                            "MPRN": null
+                        },
+                        {
+                            "id": "MjExOTE0NjM3NQ",
+                            "accounts": [
+                                "851001347032",
+                                "851001347033"
+                            ],
+                            "smartUpgradeEligible": null,
+                            "smartMeterEligibilityDetails": null,
+                            "address": "40, Consfield Avenue, New Malden, SURREY, KT3 6HD",
+                            "houseNumber": "40",
+                            "flatNumber": null,
+                            "houseName": "",
+                            "addressLine1": "Consfield Avenue",
+                            "addressLine2": "",
+                            "postalTown": "New Malden",
+                            "county": "SURREY",
+                            "postcode": "KT3 6HD",
+                            "MPAN": "1200039598850",
+                            "MPRN": "620839407"
                         }
                     ]
                 },
@@ -92,6 +215,19 @@ Premises as a resource comprises the following attributes:
               "meta": {}
           }
 
++ Response 401 (application/json)
+
+          {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                  {
+                      "code": "authorize",
+                      "message": "invalid_request"
+                  }
+              ],
+              "meta": {}
+          }
 
 + Response 500 (application/json)
 
