@@ -72,6 +72,8 @@ This section explains the flow of `appointments`.
 4. GET operation on [`/appointments`](#get-appointmentsid) [`Secured by OAuth`] with the appointment id(obtained in the meta of appointment slots), returns the appointment that can be merged with new appointment. 
 5. The appointment returned in the GET [`/appointments`](#get-appointmentsid) can be updated with the selected fault and the appointment slot using PUT [`/appointments`](#put-appointmentsid) [`Secured by OAuth`].
 
+`Note`: When the jobType in the request been sent as 'chi', prospect in the meta needs to be populated with the value that has been sent as part of prospect resource response in the id tag also appointmentPayload is the meta tag value returned in the appointment-slots resource's response.
+
 ### Retrieve appointments [GET /appointments]
 + Request
 
@@ -698,7 +700,7 @@ This section explains the flow of `appointments`.
                         "trackable": false,
                         "reschedulable": false,
                         "cancellable": false,
-                        "telephoneNumber": null,
+                        "telephoneNumber": '0738123456',
                         "appointmentSlot": "a0Bw000000d6FtVEAU",
                         "priority": false,
                         "faults": null
@@ -750,6 +752,20 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Response 409 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "appointment",
+                        "message": "error.server.appointment.booking.failed"
+                    }
+                ],
+                "meta": {}
+            }
+
 + Response 400 (application/json)
             
             {
@@ -757,8 +773,8 @@ This section explains the flow of `appointments`.
                 "data": {},
                 "errors": [
                     {
-                        "code": "slot",
-                        "message": "error.client.slot.unavailable"
+                        "code": "appointment",
+                        "message": "error.appointment.already.booked"
                     }
                 ],
                 "meta": {}
@@ -777,7 +793,9 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
+`Note`: When the error code returned from the sales force system while confirming the CHI appointment details is either of 1,2,3 and 9 values the above error message will be returned from the endpoint.
+
 ### Modify an appointment [PUT /appointments/{appointmentId}]
 + Parameters
 
@@ -808,6 +826,9 @@ This section explains the flow of `appointments`.
                         "F0057",
                         "F0008"
                     ]
+                },
+                "meta": {
+                    "appointmentPayload": "L1R4MFhzVlp6WHZtK2dVT3NSRW5wVGFudldhaCt2cHJuaWtHQW4zdW15MVlmTzhOdGJnZmgxZ1ZRT0VaMlNuM0drb0hQNkZjL3o2QQ0KMUpkbVU0SDN0OVlnSzRXcG0xWGpyY21zcVZJK3ViZ2MwYkl2eEt0U3pOWWV4dmd2VEJHdDlNOVF6UFVUV3FYZSs0NmZUbTR5NXRhUA0KSzBrVnRXNStES1FpdjczeEpITWdYTEJFMGxQbjZCZEZNYi9UZWRkbA"
                 }
             }
 
@@ -837,15 +858,15 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
             
-+ Response 400 (application/json)
++ Response 401 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "slot",
-                        "message": "error.client.slot.invalid"
+                        "code": "authorize",
+                        "message": "access_denied"
                     }
                 ],
                 "meta": {}
@@ -858,8 +879,8 @@ This section explains the flow of `appointments`.
                 "data": {},
                 "errors": [
                     {
-                        "code": "telephoneNumber",
-                        "message": "error.client.telephoneNumber.invalid"
+                        "code": "servicesAccount",
+                        "message": "error.client.servicesAccount.invalid"
                     }
                 ],
                 "meta": {}
@@ -893,20 +914,8 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
             
-+ Response 400 (application/json)
++ Response 304 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "appointment",
-                        "message": "error.client.appointment.notModified"
-                    }
-                ],
-                "meta": {}
-            }
-            
 + Response 400 (application/json)
 
             {
@@ -916,20 +925,6 @@ This section explains the flow of `appointments`.
                     {
                         "code": "appointment",
                         "message": "error.client.appointment.modificationNotAllowed"
-                    }
-                ],
-                "meta": {}
-            }
-            
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "slot",
-                        "message": "error.client.slot.unavailable"
                     }
                 ],
                 "meta": {}
