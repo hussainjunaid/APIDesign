@@ -294,7 +294,7 @@ Energy account as a resource represents following information
                 "meta": {}
             }
             
-### Retrieve all Energy accounts with energy insights sideloaded [GET /energy-accounts?include=energy-insights]
+### Retrieve all Energy accounts with energy insights sideloaded [GET /energy-accounts?include=energyInsights]
 + Request
 
     + Headers
@@ -380,7 +380,7 @@ Energy account as a resource represents following information
                             },
                             "balanceType": "in credit",
                             "jointInvoiced": true,
-                            "energyInsight": "FDUxMDAxMzQ4NTI4",
+                            "energyInsight": "null",
                             "nextBillDate": "2015-10-12T00:00:00+0100",
                             "numberOfEstimatedBills": 1
                         }
@@ -391,25 +391,9 @@ Energy account as a resource represents following information
                             "energyAccounts": [
                                 "850034235409"
                             ],
-                            "energyInsightsEligible": true,
-                            "links": {
-                                "self": "/smartreport?accounts=850034235409"
-                            },
+                            "link": "/smartreport?accounts=850034235409",
                             "generator": "AM",
                             "productType": "fkdjfd23r45",
-                            "agent": null
-                        },
-                        {
-                            "id": "FDUxMDAxMzQ4NTI4",
-                            "energyAccounts": [
-                                "850034336151"
-                            ],
-                            "energyInsightsEligible": false,
-                            "links": {
-                                "self": "/Account-History/Consumption-Informations?accountnumber=850034336151"
-                            },
-                            "generator": null,
-                            "productType": null,
                             "agent": null
                         }
                     ]
@@ -446,7 +430,7 @@ Energy account as a resource represents following information
                 "meta": {}
             }
 
-### Retrieve specific Energy account with energy insights sideloaded [GET /energy-accounts/{id}?include=energy-insights]
+### Retrieve specific Energy account with energy insights sideloaded [GET /energy-accounts/{id}?include=energyInsights]
 + Parameters
 
     + id (string) - This is the customers account number
@@ -502,19 +486,16 @@ Energy account as a resource represents following information
                         "nextBillDate": "2015-10-12T00:00:00+0100",
                         "numberOfEstimatedBills": 1
                     },
-                    "energyInsight": {
+                    "energyInsights": [{
                         "id": "ODUxMDAxMzQ4NTI4",
                         "energyAccounts": [
                             "850034235409"
                         ],
-                        "energyInsightsEligible": true,
-                        "links": {
-                            "self": "/smartreport?accounts=850034235409"
-                        },
+                        "link": "/smartreport?accounts=850034235409",
                         "generator": "AM",
                         "productType": "fkdjfd23r45",
                         "agent": null
-                    }
+                    }]
                 },
                 "errors": [],
                 "meta": {}
