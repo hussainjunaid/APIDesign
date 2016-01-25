@@ -3,8 +3,12 @@
 Resources related to UserInfo
 
 ## UserInfo [/userinfo]
-Userinfo represents information about the user profile maintained at online. Contrary to common belief, it doesn't not represent a customer's profile in SAP. Responses from this API will be returned in JSON format.
-
+Userinfo represents information about the user profile maintained at online. Contrary to common belief, it doesn't not represent a customer's profile in SAP. Responses from this endpoint will be returned in JSON format.
+ 
+Userinfo endpoint supports the below controllers:
+* POST /userinfo/profile-check
+* POST /userinfo/find-by-reference
+ 
 Various operations supported by Userinfo are detailed below.
 
 ### Userinfo
