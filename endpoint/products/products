@@ -6,7 +6,7 @@ Resources related to Product in the API.
 
 Products endpoint allows you to list the individual (i.e.) non-bundle product information. objective of this endpoint is to return all the applicable levels of excess, payment methods, annual service visit eligibility and supported appliance types of a product. Responses from this endpoint will be retuned in JSON format only. Features will side-loaded to describe the parameters of a product which form a feature.
 
-### Product
+#### Product
 Product as a resource represents following information:
 
 | Property | Type | As request | As response | Description |
