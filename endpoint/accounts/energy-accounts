@@ -1,33 +1,33 @@
 ## Energy Accounts [/energy-accounts]
-Energy Accounts endpoint allows you to list / view all the energy accounts of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
+Energy accounts endpoint allows you to list / view all the energy accounts of the logged in customer. Responses from this endpoint will be retuned in JSON format only.
 
 ### Energy Account
-Energy Account as a resource represents following information
+Energy account as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Account number of the account is considered as the unique identifier |
-| holderName | string | `Returned always`. Name of the account holder if available. |
-| status | string | `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`.|
-| type | string | `Returned always`. Type of the account, this will be always Energy. |
-| subType | string | `Returned always`. Subtype of the account, this will be Electricity, Gas or Dual. |
-| responsibilityType | string | `Returned always`. Responsibility type of the account if available. | 
-| balance | string | `Returned always`. Balance of the account if available. |
-| balanceType | string | `Returned always`. Type of account balance if available, it can be either "in credit" or "in debit". |
-| tariff | string | `Returned always`. Tariff id associated to the account if available. |
-| fixedDirectDebit | string | `Returned always`. to associate energy-accounts resource to fixed direct-debit. It is a combination of account number and payment type code. |
-| variableDirectDebit | string | `Returned always`. to associate energy-accounts resource to variable direct-debit. It is a combination of account number and payment type code. |
-| paymentType | string | `Returned always`. Payment type description of the account if available. |
-| contractEndDate | string | `Returned always`. End date of contract associated to the account if available, in dd/MM/yyyy format |
-| supplyAddress | Address | `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
-| jointInvoiceDetails | object | `Returned always`. Holds details of the merge related information only if the account was merged previously. |
-| registeredPaperlessBillingOn | string | `Returned always`. Represents the date when Paperless billing was opted in for this account. |
-| paperlessBilling | boolean | `Returned always`. `true` if account is opted into paperless billing, `false` otherwise. |
-| jointInvoiced | boolean | `Returned always`. `true` if the account is a Joint Invoiced account. `false` otherwise. |
-| energyInsight | String | `Returned always`. Holds id details of energyInsight object. |
-| nextBillDate | string | `Returned always`. Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed. |
-| numberOfEstimatedBills | int | `Returned always`. The total number of estimated bills so far for the account when the meter read window is open, else it will be zero. |
-| smartCard | String | `Returned always`. Refers to the `SmartCard` resource |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :------------------ | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` |  Account number of the account is considered as the unique identifier |
+| holderName | string | `Not Applicable` | `Returned always` |  Name of the account holder if available. |
+| status | string | `Not Applicable` | `Returned always` |  Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`.|
+| type | string | `Not Applicable` | `Returned always` |  Type of the account, this will be always Energy. |
+| subType | string | `Not Applicable` | `Returned always` |  Subtype of the account, this will be Electricity, Gas or Dual. |
+| responsibilityType | string | `Not Applicable` | `Returned always` |  Responsibility type of the account if available. | 
+| balance | string | `Not Applicable` | `Returned always` |  Balance of the account if available. |
+| balanceType | string | `Not Applicable` | `Returned always` |  Type of account balance if available, it can be either "in credit" or "in debit". |
+| tariff | string | `Not Applicable` | `Returned always` |  Tariff id associated to the account if available. |
+| fixedDirectDebit | string | `Not Applicable` | `Returned always` |  to associate energy-accounts resource to fixed direct-debit. It is a combination of account number and payment type code. |
+| variableDirectDebit | string | `Not Applicable` | `Returned always` |  to associate energy-accounts resource to variable direct-debit. It is a combination of account number and payment type code. |
+| paymentType | string | `Not Applicable` | `Returned always` |  Payment type description of the account if available. |
+| contractEndDate | string | `Not Applicable` | `Returned always` |  End date of contract associated to the account if available, in dd/MM/yyyy format |
+| supplyAddress | Address | `Not Applicable` | `Returned always` |  Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
+| jointInvoiceDetails | object | `Not Applicable` | `Returned always` |  Holds details of the merge related information only if the account was merged previously. |
+| registeredPaperlessBillingOn | string | `Not Applicable` | `Returned always` |  Represents the date when Paperless billing was opted in for this account. |
+| paperlessBilling | boolean | `Not Applicable` | `Returned always` |  `true` if account is opted into paperless billing, `false` otherwise. |
+| jointInvoiced | boolean | `Not Applicable` | `Returned always` |  `true` if the account is a Joint Invoiced account. `false` otherwise. |
+| energyInsight | string | `Not Applicable` | `Returned always` |  Holds id details of energy insight object. |
+| nextBillDate | string | `Not Applicable` | `Returned always` |  Next bill date (in UTC format) only when meter read window is open. This value will be null, if the meter read window is closed. |
+| numberOfEstimatedBills | integer | `Not Applicable` | `Returned always` |  The total number of estimated bills so far for the account when the meter read window is open, else it will be zero. |
+| smartCard | string | `Not Applicable` | `Returned always` |  Refers to the `SmartCard` resource |
 
 #### Energy Insights
 
@@ -432,21 +432,7 @@ Energy Account as a resource represents following information
                 "meta": {}
             }
         
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "energyAccounts",
-                        "message": "error.accounts.notFound"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
@@ -459,7 +445,7 @@ Energy Account as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve specific Energy account with energy insights sideloaded [GET /energy-accounts/{id}?include=energy-insights]
 + Parameters
 
@@ -647,15 +633,15 @@ Energy Account as a resource represents following information
                 "meta": {}
             }
         
-+ Response 404 (application/json)
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "energyAccounts",
-                        "message": "error.accounts.notFound"
+                        "code": "account",
+                        "message": "error.client.account.invalid"
                     }
                 ],
                 "meta": {}
@@ -763,9 +749,9 @@ Energy Account as a resource represents following information
             }
             
 ### Modify Energy Account [PUT /energy-accounts/{accountNumber}]
-Modifying energy account: It is possible to modify an energy account but the modification supports only few possibilities. As of today, the api's supports a tariff change only. A typical request to modify the account is as shown below.
+Modifying energy account: It is possible to modify an energy account but the modification supports only few possibilities. As of today, this endpoint supports a tariff change only. A typical request to modify the account is as shown below.
 
->`Note:` You need additional meta data for this modification. This meta information must be provided as shown below. OrderPayload used here is the encrypted payload provided by QuoteAPI.
+>`Note:` You need additional meta data for this modification. This meta information must be provided as shown below. OrderPayload used here is the encrypted payload provided by quotes endpoint.
 
 + Parameters
 
