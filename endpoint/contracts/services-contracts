@@ -1,30 +1,29 @@
 ## Group Contracts
 
 ## Services-Contracts Collection [/services-contracts]
-Services Contract API allows you to create the Services contract in SAP. Customer direct debit payment details & marketing consent details provided during the journey would be captured and posted to SAP for creating a contract. After creating a contract, this api will also trigger the confirmation email to customer with the customer & product details captured. Responses from this API will be returned in JSON format only.
+Services contracts endpoint allows you to create the services contract in SAP. Customer direct debit payment details & marketing consent details provided during the journey would be captured and posted to SAP for creating a contract. After creating a contract, this endpoint will also trigger the confirmation email to customer with the customer & product details captured. Responses from this endpoint will be returned in JSON format only.
 
->`Note:` Services Contract API will be able to handle only either a bundle product or an individual product at a time.
+>`Note:` Services contracts endpoint will be able to handle only either a bundle product or an individual product at a time.
 
-#### Services Contract
-Services Contract as an entity represents following attributes.
+### Services contract
+Services contract as a resource represents following attributes.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| id | string | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
-| title | string | `Mandatory` | `Returned always` | Title of customer. |
-| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
-| lastName | string | `Mandatory`| `Returned always` | LastName of customer. |
-| emailAddress | string | `Mandatory` | `Returned always` | Email address of customer |
-| telephoneNumber | string | `Mandatory`| `Returned always` | Phone number of customer |
-| bothAddressSame | boolean | `Optional` | `Returned always` | Should be `true` if both billing address & supply address are same. |
-| supplyAddress | Address | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
-| billingAddress | Address | `Optional` | `Returned always` | Billing address of customer. Value will not be available in response if billing address is not passed. |
-| directDebitDetails | DirectDebit | `Mandatory` | `Returned always` | Direct debit details of customer.  |
-| marketingConsentDetails | MarketingConsent | `Optional` | `Returned always` | Marketting consent details which customer choose. |
+| id | String | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
+| title | String | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | String | `Mandatory` | `Returned always` | First name of customer. |
+| lastName | String | `Mandatory`| `Returned always` | LastName of customer. |
+| emailAddress | String | `Mandatory` | `Returned always` | Email address of customer |
+| telephoneNumber | String | `Mandatory`| `Returned always` | Phone number of customer |
+| supplyAddress | [Address](/api-reference/addresses.md#addresses) | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
+| billingAddress | [Address](/api-reference/addresses.md#addresses) | `Optional` | `Not returned always` | Billing address of customer. |
+| directDebitDetails | [DirectDebit](/api-reference/services-contracts.md#DirectDebit) | `Mandatory` | `Returned always` | Direct debit details of customer.  |
+| marketingConsentDetails | [MarketingConsent](/api-reference/services-contracts.md#MarketingConsent) | `Optional` | `Not returned always` | Marketing consent details which customer choose. |
 | jci | boolean | `Optional` | `Returned always` | Status based on whether JCI was offered to customer or not. |
-| legacyAccountNumber | string | `Optional` | `Returned always` | Value will be populated based on the legacy account number returned from the service contract response. |
-| transactionId | string | `Optional` | `Returned always` | Should be the value which we received in the Create Quote API response in transaction id tag |
-| productFeatures | string[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
+| legacyAccountNumber | String | `Optional` | `Returned always` | Value will be populated based on the legacy account number returned from the service contract response. |
+| transaction | String | `Mandatory` | `Returned always` | Sales order number created in SAP CRM system. |
+| productFeatures | String[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
 
 #### DirectDebit
 | Property | Type | As request | As response |Description |
@@ -33,7 +32,7 @@ Services Contract as an entity represents following attributes.
 | bankAccountNumber | String | `Mandatory` | `Returned always` | Should contain the bank account number. |
 | sortCode | String | `Mandatory` | `Returned always` | Should contain the bank sort code without any hyphen like '208111'. |
 | accountHolderName | String | `Mandatory` | `Returned always` | Should contain the bank account holder name. |
-| preferredPaymentDay | int | `Mandatory` | `Returned always` | Should contain the preferred payment day selected by customer. |
+| preferredPaymentDay | Integer | `Mandatory` | `Returned always` | Should contain the preferred payment day selected by customer. |
 
 #### MarketingConsent
 | Property | Type | As request | As response |Description |
@@ -59,13 +58,12 @@ Services Contract as an entity represents following attributes.
             {
                 "servicesContract": {
                     "id": null,
-                    "transactionId": "2002756497",
+                    "transaction": "2002756497",
                     "title": "Mr",
                     "firstName": "test",
                     "lastName": "test",
                     "emailAddress": "viki@cen.com",
                     "telephoneNumber": "07467665766",
-                    "bothAddressSame": true,
                     "supplyAddress": {
                         "flatNumber": null,
                         "houseNumber": "1",
@@ -74,8 +72,7 @@ Services Contract as an entity represents following attributes.
                         "addressLine2": null,
                         "postalTown": "COBHAM",
                         "county": "Surrey",
-                        "postcode": "KT11 2BB",
-                        "country": null
+                        "postcode": "KT11 2BB"
                     },
                     "jci": false,
                     "directDebitDetails": {
@@ -99,7 +96,7 @@ Services Contract as an entity represents following attributes.
                     ]
                 }
             }
-    
+            
 + Response 201 (application/json)
 
             {
@@ -113,6 +110,7 @@ Services Contract as an entity represents following attributes.
                         "emailAddress": "viki@cen.com",
                         "telephoneNumber": "07467665766",
                         "supplyAddress": {
+                            "address": null,
                             "flatNumber": null,
                             "houseNumber": "1",
                             "houseName": null,
@@ -120,10 +118,11 @@ Services Contract as an entity represents following attributes.
                             "addressLine2": null,
                             "postalTown": "COBHAM",
                             "county": "Surrey",
-                            "postcode": "KT11 2BB"
+                            "postcode": "KT11 2BB",
+                            "MPAN": null,
+                            "MPRN": null
                         },
                         "billingAddress": null,
-                        "bothAddressSame": true,
                         "marketingConsentDetails": {
                             "letterOpted": true,
                             "emailOpted": false,
@@ -138,21 +137,20 @@ Services Contract as an entity represents following attributes.
                             "bankAccountNumber": "uh3Jj9APtv3G2ZurAmH8PA==",
                             "sortCode": "y/Q4ZcRF8Esjyvw4zx63wg==",
                             "accountHolderName": "viki",
-                            "preferredPaymentDay": "11"
+                            "preferredPaymentDay": 11
                         },
                         "jci": false,
                         "productFeatures": [
                             "NA|GAK|1S|WAW|ADD"
                         ],
-                        "productConfigurations": null,
-                        "transactionId": "2002756497",
+                        "transaction": "2002756497",
                         "legacyAccountNumber": "22185986L257382"
                     }
                 },
                 "errors": [],
                 "meta": {}
             }
-        
+
 + Response 400 (application/json)
         
             {
@@ -160,9 +158,38 @@ Services Contract as an entity represents following attributes.
                 "data": {},
                 "errors": [
                     {
-                        "code": "feature",
+                        "code": "firstName",
+                        "message": "error.client.firstName.blank"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+        
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productfeature",
                         "message": "error.client.feature.invalid"
                     }
                 ],
                 "meta": {}
             }
+            
++ Response 500 (application/json)
+        
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
+            
