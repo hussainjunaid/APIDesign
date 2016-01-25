@@ -1,16 +1,16 @@
 ## Dyno Appointment Slots [/dyno-appointment-slots]
-Dyno Appointment Slots resource allows you to retrieve slots to book an appointment for a fault that is associated to plumbing and drains product. Response from this end point will be in JSON format only.
+Dyno appointment slots endpoint allows you to retrieve appointment slots to book an appointment for a fault that is associated to plumbing and drains product. Response from this endpoint will be in JSON format only.
 
 #### Dyno Appointment Slot
-Dyno Appointment Slot as a resource represents following information:
+Dyno appointment slot as a resource represents following information:
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :---------- | :---------- | :------------------------------------------------------------ |
-| id | String | Not Applicable | `Returned always` | Unique Id that is returned from backend for each slot. |
-| variant | String | Not applicable | `Returned always` | It will represent the time variant of slots. Possible [variants](/api-reference/dyno-appointment-slots.md#variant) for DYNO slots are described in the below table |
-| startTime | String | Not applicable | `Returned always` | Start time of the appointment slot. |
-| endTime | String | Not applicable | `Returned always` | End time of the appointment slot. |
-| available | boolean | Not applicable | `Returned always` | Status of the appointment slot. |
+| id | String | `Not Applicable` | `Returned always` | Unique Id that is returned from backend for each slot. |
+| variant | String | `Not applicable` | `Returned always` | It will represent the time variant of slots. Possible [variants](/api-reference/dyno-appointment-slots.md#variant) for DYNO slots are described in the below table |
+| startTime | String | `Not applicable` | `Returned always` | Start time of the appointment slot. |
+| endTime | String | `Not applicable` | `Returned always` | End time of the appointment slot. |
+| available | boolean | `Not applicable` | `Returned always` | Status of the appointment slot. |
 
 >`Note` : `range` - Currently slots for the range of 14 days(maximum) is returned from DYNO. Even if we request for range more than 14, DYNO returns back slots for 14 days only.
 
