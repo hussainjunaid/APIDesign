@@ -1,7 +1,7 @@
 ## Group Estimate Energy
 
 ## Estimate Energy collection [/estimate/energy]
-Consumption estimation endpoint for Energy allows you to estimate gas and electricity consumption based on few input parameters.
+Consumption estimation endpoint for Energy allows you to estimate `gas` and `electricity` consumption based on few input parameters
 
 Following items are required in the payload:
 
