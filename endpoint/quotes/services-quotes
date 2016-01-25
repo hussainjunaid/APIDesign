@@ -1,43 +1,40 @@
 ## Services-Quotes Collection [/services-quotes]
 
-Services Quote endpoint allows you to create the Services sales order in SAP. Responses from this API will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to SAP which will then create an real time service contract. 
+Services quotes endpoint allows you to create a services sales order in SAP. Responses from this endpoint will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to SAP which will then create an real time services contract. 
 
->`Note:` Services Quote API will be able to handle only either a bundle product or an individual product at a time.
+>`Note:` Services quotes endpoint will be able to handle only either a bundle product or an individual product at a time.
 
-#### Services Quote
-Services Quote as an entity represents following attributes.
+#### Services quote
+Services quote as a resource represents following attributes.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| id | string | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When the actual services lead is created, the response will have the `id` populated.|
-| title | string | `Mandatory` | `Returned always` | Title of customer. |
-| firstName | string | `Mandatory` | `Returned always` | First name of customer. |
-| lastName | string | `Mandatory`| `Returned always` | LastName of customer. |
-| emailAddress | string | `Mandatory` | `Returned always` | Email address of customer |
-| telephoneNumber | string | `Mandatory`| `Returned always` | Phone number of customer |
-| premiseID | string | `Optional` | `Returned always` | Will always be null. |
-| bothAddressSame | boolean | `Optional` | `Returned always` | Should be `true` if both billing address & supply address are same. |
-| supplyAddress | Address | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
-| billingAddress | Address | `Optional` | `Returned always` | Billing address of customer. Value will not be available in response if billing address is not passed. |
-| paymentMethod | string | `Mandatory` | `Returned always` | Payment method which customer choose.  |
+| id | String | `Optional` | `Returned always` | When an request is sent, the `id` attribute is unknown and hence it must be null. When an actual services quote is created, the response will have the `id` populated.|
+| title | String | `Mandatory` | `Returned always` | Title of customer. |
+| firstName | String | `Mandatory` | `Returned always` | First name of customer. |
+| lastName | String | `Mandatory`| `Returned always` | LastName of customer. |
+| emailAddress | String | `Mandatory` | `Returned always` | Email address of customer |
+| telephoneNumber | String | `Mandatory`| `Returned always` | Phone number of customer |
+| premise | String | `Optional` | `Not returned always` | Premise id of an address. |
+| supplyAddress | [Address](/api-reference/addresses.md#addresses) | `Mandatory` | `Returned always` | Supply address of customer. Any one of the following - house number, flat number, house name and postal town and postcode are mandatory. Other address attributes must be passed if available.  |
+| billingAddress | [Address](/api-reference/addresses.md#addresses) | `Optional` | `Returned always` | Billing address of customer. If `billingAddress` is not sent in the request `supplyAddress` is taken as `billingAddress` and will return the same. |
+| paymentMethod | String | `Mandatory` | `Returned always` | Payment method which customer choose.  |
 | jci | boolean | `Optional` | `Returned always` | Status based on whether JCI was offered to customer or not. |
-| status | string | `Optional` | `Returned always` | This value will always be null and is used in controller endpoint |
-| servicesAccountNumber | string | `Optional` | `Returned always` | This value will always be null and is used in controller endpoint |
-| productFeatures | string[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
-| productConfigurations | ProductConfigurations[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
+| productFeatures | String[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
+| productConfigurations | [ProductConfigurations](/api-reference/services-quotes.md#ProductConfigurations)[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
 
 ##### ProductConfigurations 
 | Property | Type | As request | As response |Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| productFeature | string | `Mandatory` | `Returned always` | Product feature id for which the appliances details to be provided. |
-| productAppliances | ProductAppliances[] | `Mandatory` | `Returned always` | Appliances details of a product with appliance type, make, model and age information. |
+| productFeature | String | `Mandatory` | `Returned always` | Product feature id for which the appliances details to be provided. |
+| productAppliances | [ProductAppliances](/api-reference/services-quotes.md#ProductAppliances)[] | `Mandatory` | `Returned always` | Appliances details of a product with appliance type, make, model and age information. |
 
 ##### ProductAppliances 
 | Property | Type | As request | As response |Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
-| applianceId | string | `Mandatory` | `Returned always` | Appliance id of a product which customer choosen. |
-| makeId | string| `Optional` | `Returned always` | If customer choose any make the value can be passed. If value is not passed it is defaulted to value `Default`.|
-| modelId | string | `Optional` | `Returned always` | If customer choose any model the value can be passed. If value is not passed it is defaulted to value `Default`.|
+| appliance | String | `Mandatory` | `Returned always` | Appliance id of a product which customer choosen. |
+| make | String| `Optional` | `Not returned always` | If customer choose any make the value can be passed. If value is not passed it is defaulted to value `Default` when sending it to backend.|
+| model | String | `Optional` | `Not returned always` | If customer choose any model, the value can be passed. If value is not passed it is defaulted to value `Default` when sending it to backend.|
 | age | Integer | `Optional` | `Returned always` | If customer choose any age the value can be passed. If value is not passed it is defaulted to value `5`.|
 
 
@@ -59,8 +56,7 @@ Services Quote as an entity represents following attributes.
                     "lastName": "Kumar",
                     "emailAddress": "ravi.kumar@britfss.co.uk",
                     "telephoneNumber": "07738998190",
-                    "premiseID": null,
-                    "bothAddressSame": false,
+                    "premise": null,
                     "supplyAddress": {
                         "flatNumber": 14,
                         "houseNumber": null,
@@ -69,8 +65,7 @@ Services Quote as an entity represents following attributes.
                         "addressLine2": null,
                         "postalTown": "Staines",
                         "county": "Middlesex",
-                        "postcode": "TW183EZ",
-                        "country": null
+                        "postcode": "TW183EZ"
                     },
                     "billingAddress": {
                         "flatNumber": 17,
@@ -80,13 +75,10 @@ Services Quote as an entity represents following attributes.
                         "addressLine2": null,
                         "postalTown": "Staines",
                         "county": "Middlesex",
-                        "postcode": "TW183EZ",
-                        "country": null
+                        "postcode": "TW183EZ"
                     },
                     "paymentMethod": "MDD",
                     "jci": false,
-                    "status": null,
-                    "servicesAccountNumber": null,
                     "productFeatures": [
                         "HC4|HC4-CH|CNI2|CHB|MDD",
                         "HC4|HC4-PD|DNI2|PLDR|MDD",
@@ -97,10 +89,10 @@ Services Quote as an entity represents following attributes.
                             "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD",
                             "productAppliances": [
                                 {
-                                    "applianceId": "CHB",
-                                    "makeId": "QUdBLS0tQUdDIEhlYXRpbmc",
-                                    "modelId": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
-                                    "age": "5"
+                                    "appliance": "CHB",
+                                    "make": "QUdBLS0tQUdDIEhlYXRpbmc",
+                                    "model": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
+                                    "age": 5
                                 }
                             ]
                         },
@@ -108,9 +100,9 @@ Services Quote as an entity represents following attributes.
                             "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD",
                             "productAppliances": [
                                 {
-                                    "applianceId": "PLDR",
-                                    "makeId": null,
-                                    "modelId": null,
+                                    "appliance": "PLDR",
+                                    "make": null,
+                                    "model": null,
                                     "age": null
                                 }
                             ]
@@ -119,9 +111,9 @@ Services Quote as an entity represents following attributes.
                             "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD",
                             "productAppliances": [
                                 {
-                                    "applianceId": "EWR",
-                                    "makeId": null,
-                                    "modelId": null,
+                                    "appliance": "EWR",
+                                    "make": null,
+                                    "model": null,
                                     "age": null
                                 }
                             ]
@@ -142,9 +134,9 @@ Services Quote as an entity represents following attributes.
                         "lastName": "Kumar",
                         "emailAddress": "ravi.kumar@britfss.co.uk",
                         "telephoneNumber": "07738998190",
-                        "premiseID": null,
-                        "bothAddressSame": false,
+                        "premise": null,
                         "supplyAddress": {
+                            "address": null,
                             "flatNumber": 14,
                             "houseNumber": null,
                             "houseName": "The Rushes",
@@ -153,9 +145,11 @@ Services Quote as an entity represents following attributes.
                             "postalTown": "Staines",
                             "county": "Middlesex",
                             "postcode": "TW183EZ",
-                            "country": null
+                            "MPAN": null,
+                            "MPRN": null
                         },
                         "billingAddress": {
+                            "address": null,
                             "flatNumber": 17,
                             "houseNumber": null,
                             "houseName": "The Rushes",
@@ -164,12 +158,11 @@ Services Quote as an entity represents following attributes.
                             "postalTown": "Staines",
                             "county": "Middlesex",
                             "postcode": "TW183EZ",
-                            "country": null
+                            "MPAN": null,
+                            "MPRN": null
                         },
                         "paymentMethod": "MDD",
                         "jci": false,
-                        "status": null,
-                        "servicesAccountNumber": null,
                         "productFeatures": [
                             "HC4|HC4-CH|CNI2|CHB|MDD",
                             "HC4|HC4-PD|DNI2|PLDR|MDD",
@@ -180,10 +173,10 @@ Services Quote as an entity represents following attributes.
                                 "productFeature": "HC4|HC4-CH|CNI2|CHB|MDD",
                                 "productAppliances": [
                                     {
-                                        "applianceId": "CHB",
-                                        "makeId": "QUdBLS0tQUdDIEhlYXRpbmc",
-                                        "modelId": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
-                                        "age": "5"
+                                        "appliance": "CHB",
+                                        "make": "QUdBLS0tQUdDIEhlYXRpbmc",
+                                        "model": "QUdBLS0tQUdDIEhlYXRpbmctLS1TTTYw",
+                                        "age": 5
                                     }
                                 ]
                             },
@@ -191,10 +184,10 @@ Services Quote as an entity represents following attributes.
                                 "productFeature": "HC4|HC4-PD|DNI2|PLDR|MDD",
                                 "productAppliances": [
                                     {
-                                        "applianceId": "PLDR",
-                                        "makeId": null,
-                                        "modelId": null,
-                                        "age": null
+                                        "appliance": "PLDR",
+                                        "make": null,
+                                        "model": null,
+                                        "age": 5
                                     }
                                 ]
                             },
@@ -202,10 +195,10 @@ Services Quote as an entity represents following attributes.
                                 "productFeature": "HC4|HC4-HEC|HNI2|EWR|MDD",
                                 "productAppliances": [
                                     {
-                                        "applianceId": "EWR",
-                                        "makeId": null,
-                                        "modelId": null,
-                                        "age": null
+                                        "appliance": "EWR",
+                                        "make": null,
+                                        "model": null,
+                                        "age": 5
                                     }
                                 ]
                             }
@@ -215,7 +208,7 @@ Services Quote as an entity represents following attributes.
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 400 (application/json)
 
             {
@@ -229,6 +222,76 @@ Services Quote as an entity represents following attributes.
                 ],
                 "meta": {}
             }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "paymentMethod",
+                        "message": "error.client.paymentMethod.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productConfigurations",
+                        "message": "error.client.productConfigurations.productFeature.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.appliance.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "productAppliances",
+                        "message": "error.client.productAppliances.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "server.error.internal",
+                        "message": "An internal error while processing request."
+                    }
+                ],
+                "meta": {}
+            }
         
 ### Retrieve the status of a services quote [GET /services-quotes/{id}/status]
 
@@ -236,7 +299,7 @@ Services Quote as an entity represents following attributes.
 
     + id (required, string) -  transactionId which is returned in Create services quote response
 
-+ Request
++ Request When quote creation is successful
 
     + Headers
 
@@ -247,20 +310,26 @@ Services Quote as an entity represents following attributes.
             {
                 "status": "SUCCESS",
                 "data": {
-                    "transactionId": "23431234",
                     "status": "Checked-out",
                     "servicesAccountNumber": "911000626630"
                 },
                 "errors": {},
                 "meta": {}
             }
+
++ Request When quote creation is in progress
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
         
 + Response 200 (application/json)
 
             {
                 "status": "SUCCESS",
                 "data": {
-                    "transactionId": "23431234",
+                    "transaction": "23431234",
                     "status": "In Progress",
                     "servicesAccountNumber": ""
                 },
@@ -275,65 +344,9 @@ Services Quote as an entity represents following attributes.
               "data": {},
               "errors": [
                 {
-                  "code": "service",
-                  "message": "error.create.quote.cancelled"
+                  "code": "server.error.internal",
+                  "message": "An internal error while processing request."
                 }
               ],
               "meta": {}
-            }
-        
-+ Response 400 (application/json)
-        
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "paymentMethod",
-                        "message": "error.client.paymentMethod.notMatching"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "productConfigurations",
-                        "message": "error.client.productConfigurations.productFeature.notMatching"
-                    }
-                ],
-                "meta": {}
-            }
-        
-+ Response 400 (application/json)
-        
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "productAppliances",
-                        "message": "error.client.productAppliances.applianceId.notMatching"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "productAppliances",
-                        "message": "error.client.productAppliances.notValid"
-                    }
-                ],
-                "meta": {}
             }
