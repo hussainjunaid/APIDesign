@@ -10,10 +10,6 @@ Priority question as an entity represents the following attributes:
 | description | String | `Not applicable` | `Returned always` | Description of the question. |
 | priorityAnswers | Array of String | `Not applicable` | `Returned always` | Returns the ids of [priority answer](api-reference/priority-questions.md#priority-answer) associated with a question. |
 
-> `Note` : This endpoint returns only one level of questions as per current implementation. In future following enhancement would be done
-   * `questionLevel` attribute to fetch the required levels of questions and answers for a given fault.
-   * `hasContract` attribute to differentiate existing/new services contracts.
-   
 #### Priority Answer
 Priority answer as an entity represents the following attributes:
 
@@ -25,6 +21,10 @@ Priority answer as an entity represents the following attributes:
 | serviceArea | String | `Not applicable` | `Not returned always` | This indicates the nature of the service to be provided. |
 | priorityQuestion | String | `Not applicable` | `Not returned always` | Question id to get the current question level. |
 | nextPriorityQuestion | String | `Not applicable` | `Not returned always` | Question id to get the next level of questions. |
+
+> `Note` : This endpoint returns only one level of questions as per current implementation. In future following enhancement would be done
+   * `questionLevel` attribute to fetch the required levels of questions and answers for a given fault.
+   * `hasContract` attribute to differentiate existing/new services contracts.
 
 ### Retrieve priority questions for a specific fault [GET /priority-questions{?fault}]
 + Parameters
@@ -45,11 +45,13 @@ Priority answer as an entity represents the following attributes:
                 "data": {
                     "priorityQuestions": [
                         {
-                            "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
-                            "description": "Is there raw sewage backing up into the property?",
+                            "id": "ZGJlMzRjOGEtOGQ4My1lNTExLWE4N2QtMDA1MDU2OTgyMjg4fFE",
+                            "description": "What is the issue?",
                             "priorityAnswers": [
-                                "7f076500-5d5d-e511-ae27-005056984a95",
-                                "9e076500-5d5d-e511-ae27-005056984a95"
+                                "7783bb2a-8f83-e511-aeef-005056980393",
+                                "576d06cf-9083-e511-aeef-005056980393",
+                                "2f34345e-8d83-e511-a87d-005056982288",
+                                "9f8a015b-9183-e511-a87d-005056982288"
                             ]
                         }
                     ]
@@ -57,7 +59,7 @@ Priority answer as an entity represents the following attributes:
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
@@ -131,32 +133,50 @@ Priority answer as an entity represents the following attributes:
             {
                 "status": "SUCCESS",
                 "data": {
-                    "priorityQuestions": [
-                        {
-                            "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
-                            "description": "Is there raw sewage backing up into the property?",
-                            "priorityAnswers": [
-                                "7f076500-5d5d-e511-ae27-005056984a95",
-                                "9e076500-5d5d-e511-ae27-005056984a95"
-                            ]
-                        }
-                    ],
                     "priorityAnswers": [
                         {
-                            "id": "7f076500-5d5d-e511-ae27-005056984a95",
-                            "description": "No",
-                            "workType": null,
+                            "id": "7783bb2a-8f83-e511-aeef-005056980393",
+                            "description": "Leaking valve or pipe",
                             "serviceArea": null,
-                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
-                            "nextPriorityQuestion": "N2YwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE"
+                            "workType": null,
+                            "priorityQuestion": "ZGJlMzRjOGEtOGQ4My1lNTExLWE4N2QtMDA1MDU2OTgyMjg4fFE",
+                            "nextPriorityQuestion": "Nzc4M2JiMmEtOGY4My1lNTExLWFlZWYtMDA1MDU2OTgwMzkzfFE"
                         },
                         {
-                            "id": "9e076500-5d5d-e511-ae27-005056984a95",
-                            "description": "Yes",
-                            "workType": "100",
-                            "serviceArea": "11",
-                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "id": "576d06cf-9083-e511-aeef-005056980393",
+                            "description": "Not Working",
+                            "serviceArea": "21",
+                            "workType": "3",
+                            "priorityQuestion": "ZGJlMzRjOGEtOGQ4My1lNTExLWE4N2QtMDA1MDU2OTgyMjg4fFE",
                             "nextPriorityQuestion": null
+                        },
+                        {
+                            "id": "2f34345e-8d83-e511-a87d-005056982288",
+                            "description": "Boiler Installation",
+                            "serviceArea": "27",
+                            "workType": "116",
+                            "priorityQuestion": "ZGJlMzRjOGEtOGQ4My1lNTExLWE4N2QtMDA1MDU2OTgyMjg4fFE",
+                            "nextPriorityQuestion": null
+                        },
+                        {
+                            "id": "9f8a015b-9183-e511-a87d-005056982288",
+                            "description": "Radiator Installation",
+                            "serviceArea": "21",
+                            "workType": "41",
+                            "priorityQuestion": "ZGJlMzRjOGEtOGQ4My1lNTExLWE4N2QtMDA1MDU2OTgyMjg4fFE",
+                            "nextPriorityQuestion": null
+                        }
+                    ],
+                    "priorityQuestions": [
+                        {
+                            "id": "ZGJlMzRjOGEtOGQ4My1lNTExLWE4N2QtMDA1MDU2OTgyMjg4fFE",
+                            "description": "What is the issue?",
+                            "priorityAnswers": [
+                                "7783bb2a-8f83-e511-aeef-005056980393",
+                                "576d06cf-9083-e511-aeef-005056980393",
+                                "2f34345e-8d83-e511-a87d-005056982288",
+                                "9f8a015b-9183-e511-a87d-005056982288"
+                            ]
                         }
                     ]
                 },
@@ -238,18 +258,19 @@ Priority answer as an entity represents the following attributes:
                 "status": "SUCCESS",
                 "data": {
                     "priorityQuestion": {
-                        "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
-                        "description": "Is there raw sewage backing up into the property?",
+                        "id": "Nzc4OGM4NmQtOGU4My1lNTExLWFlZWYtMDA1MDU2OTgwMzkzfFE",
+                        "description": "Is the leak containable?",
                         "priorityAnswers": [
-                            "7f076500-5d5d-e511-ae27-005056984a95",
-                            "9e076500-5d5d-e511-ae27-005056984a95"
+                            "9faccffa-8f83-e511-aeef-005056980393",
+                            "979ba679-9283-e511-aeef-005056980393",
+                            "67925707-9383-e511-a87d-005056982288"
                         ]
                     }
                 },
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
@@ -310,28 +331,37 @@ Priority answer as an entity represents the following attributes:
                 "status": "SUCCESS",
                 "data": {
                     "priorityQuestion": {
-                        "id": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
-                        "description": "Is there raw sewage backing up into the property?",
+                        "id": "Nzc4OGM4NmQtOGU4My1lNTExLWFlZWYtMDA1MDU2OTgwMzkzfFE",
+                        "description": "Is the leak containable?",
                         "priorityAnswers": [
-                            "7f076500-5d5d-e511-ae27-005056984a95",
-                            "9e076500-5d5d-e511-ae27-005056984a95"
+                            "9faccffa-8f83-e511-aeef-005056980393",
+                            "979ba679-9283-e511-aeef-005056980393",
+                            "67925707-9383-e511-a87d-005056982288"
                         ]
                     },
                     "priorityAnswers": [
                         {
-                            "id": "7f076500-5d5d-e511-ae27-005056984a95",
+                            "id": "9faccffa-8f83-e511-aeef-005056980393",
                             "description": "No",
-                            "workType": null,
-                            "serviceArea": null,
-                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
-                            "nextPriorityQuestion": "N2YwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE"
+                            "serviceArea": "16",
+                            "workType": "111",
+                            "priorityQuestion": "Nzc4OGM4NmQtOGU4My1lNTExLWFlZWYtMDA1MDU2OTgwMzkzfFE",
+                            "nextPriorityQuestion": null
                         },
                         {
-                            "id": "9e076500-5d5d-e511-ae27-005056984a95",
+                            "id": "979ba679-9283-e511-aeef-005056980393",
+                            "description": "Yes – turned water off",
+                            "serviceArea": "16",
+                            "workType": "113",
+                            "priorityQuestion": "Nzc4OGM4NmQtOGU4My1lNTExLWFlZWYtMDA1MDU2OTgwMzkzfFE",
+                            "nextPriorityQuestion": null
+                        },
+                        {
+                            "id": "67925707-9383-e511-a87d-005056982288",
                             "description": "Yes",
-                            "workType": "100",
-                            "serviceArea": "11",
-                            "priorityQuestion": "NmIwNzY1MDAtNWQ1ZC1lNTExLWFlMjctMDA1MDU2OTg0YTk1fFE",
+                            "serviceArea": "16",
+                            "workType": "37",
+                            "priorityQuestion": "Nzc4OGM4NmQtOGU4My1lNTExLWFlZWYtMDA1MDU2OTgwMzkzfFE",
                             "nextPriorityQuestion": null
                         }
                     ]
@@ -339,7 +369,7 @@ Priority answer as an entity represents the following attributes:
                 "errors": [],
                 "meta": {}
             }
-
+            
 + Response 401 (application/json)
 
             {
