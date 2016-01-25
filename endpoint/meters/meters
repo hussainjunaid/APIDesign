@@ -7,39 +7,39 @@ Meters endpoint allows you to list / view all the meters of the logged in custom
 #### Meter
 Meter as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. It is a combination of account number, contract number and encoded serial number of the meter, is considered as the unique identifier. |
-| numberOfRegisters | number | `Returned always`. Indicates the number of registers available for the meter. |
-| meterPointId | string | `Returned always`. Meter point identifier (MPRN or MPAN) of the meter, if available. |
-| assetNumber | string | `Returned always`. Asset number of the meter, if available. |
-| serialNumber | string | `Returned always`. Serial number of the meter, if available. |
-| meterId | string | `Returned always`. Meter identifier of the meter, if available. |
-| meterType | string | `Returned always`. Meter type can be gas, elecsr, elec2r or elecTou. |
-| account | string | `Returned always`. Account number to which the meter is linked, if available. | 
-| contractType | string | `Returned always`. Contract type can be either Gas or Electricity. |
-| contractNumber | String | `Returned always`. Contract number to which the meter is linked, if available. |
-| complexityCode | String | `Returned always`. Complexity code of the meter, if available. |
-| smartMeter | boolean | `Returned always`. Indicates the meter as a smart meter if the value is true. |
-| complexMeter | boolean | `Returned always`. Indicates the meter as a complex meter if the value is true. |
-| registers | Array of Register | `Returned always`. Registers associated with the meter. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` |  It is a combination of account number, contract number and encoded serial number of the meter, is considered as the unique identifier. |
+| numberOfRegisters | number | `Not Applicable` | `Returned always` |  Indicates the number of registers available for the meter. |
+| meterPointId | string | `Not Applicable` | `Returned always` |  Meter point identifier (MPRN or MPAN) of the meter, if available. |
+| assetNumber | string | `Not Applicable` | `Returned always` |  Asset number of the meter, if available. |
+| serialNumber | string | `Not Applicable` | `Returned always` |  Serial number of the meter, if available. |
+| meterId | string | `Not Applicable` | `Returned always` |  Meter identifier of the meter, if available. |
+| meterType | string | `Not Applicable` | `Returned always` |  Meter type can be gas, elecsr, elec2r or elecTou. |
+| account | string | `Not Applicable` | `Returned always` |  Account number to which the meter is linked, if available. | 
+| contractType | string | `Not Applicable` | `Returned always` |  Contract type can be either Gas or Electricity. |
+| contractNumber | String | `Not Applicable` | `Returned always` |  Contract number to which the meter is linked, if available. |
+| complexityCode | String | `Not Applicable` | `Returned always` |  Complexity code of the meter, if available. |
+| smartMeter | boolean | `Not Applicable` | `Returned always` |  Indicates the meter as a smart meter if the value is true. |
+| complexMeter | boolean | `Not Applicable` | `Returned always` |  Indicates the meter as a complex meter if the value is true. |
+| registers | Array of Register | `Not Applicable` | `Returned always` |  Registers associated with the meter. |
 
 #### Register
 Register as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Register number of the register, is considered as the unique identifier |
-| numberOfDials | number | `Returned always`. Indicates the number of dials available for the register. |
-| registerName | string | `Returned always`. Name of the register, if available. |
-| usageType | string | `Returned always`. Usage type of the register, if available. |
-| readingType | string | `Returned always`. Last reading type code, if available. |
-| readingDate | string | `Returned always`. Last reading date in dd/MM/yyyy format, if available. |
-| reading | string | `Returned always`. Last reading, if available. |
-| meterReadType | string | `Returned always`. Meter reading type description, if available. |
-| readingClassification | string | `Returned always`. Meter reading classification description, it mentions whether the reading is "Actual" or "Estimated", if available. |
-| nonCyclicToleranceFlag | string | `Returned always`. Non cyclic tolerance flag, if available. |
-| validationFailureCode | string | `Returned always`. Validation Failure Code, if available. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` |  Register number of the register, is considered as the unique identifier |
+| numberOfDials | number | `Not Applicable` | `Returned always` |  Indicates the number of dials available for the register. |
+| registerName | string | `Not Applicable` | `Returned always` |  Name of the register, if available. |
+| usageType | string | `Not Applicable` | `Returned always` |  Usage type of the register, if available. |
+| readingType | string | `Not Applicable` | `Returned always` |  Last reading type code, if available. |
+| readingDate | string | `Not Applicable` | `Returned always` |  Last reading date in dd/MM/yyyy format, if available. |
+| reading | string | `Not Applicable` | `Returned always` |  Last reading, if available. |
+| meterReadType | string | `Not Applicable` | `Returned always` |  Meter reading type description, if available. |
+| readingClassification | string | `Not Applicable` | `Returned always` |  Meter reading classification description, it mentions whether the reading is "Actual" or "Estimated", if available. |
+| nonCyclicToleranceFlag | string | `Not Applicable` | `Returned always` |  Non cyclic tolerance flag, if available. |
+| validationFailureCode | string | `Not Applicable` | `Returned always` |  Validation Failure Code, if available. |
 
 ### Retrieve All meters [GET /meters]
 
@@ -346,11 +346,11 @@ Register as a resource represents following information
               "meta": {}
           }
 
-### Retrieve meter using meter identifier [GET /meters/{meterIdentifier}]
+### Retrieve meter using meter identifier [GET /meters/{id}]
 
 + Parameters
 
-  + meterIdentifier (number) - This is the customers account number
+  + id (string,required) - This is the customers account number
 
 + Request (application/json)
 
@@ -441,11 +441,11 @@ Register as a resource represents following information
               "meta": {}
           }
 
-### Validate Meter read [GET /meters/{meterIdentifier}/reading/validation{?registerNumber,reading}]
+### Validate Meter read [GET /meters/{id}/reading/validation{?registerNumber,reading}]
 
 + Parameters
 
-  + meterIdentifier (string) - Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
+  + id (string,required) - Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
   + registerNumber (string) - Register number for which the reading is taken, Should not be null or empty
   + reading (string) - Should not be null or empty. Should be number and max 6 digits
 
