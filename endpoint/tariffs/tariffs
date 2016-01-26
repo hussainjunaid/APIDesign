@@ -1,44 +1,44 @@
 ## Group Tariff
 
 ## Tariff Collection [/tariffs]
-Tariff API allows you to list / view tariffs maintained by `Online`. Responses from this API will be retuned in JSON format only.
+Tariffs endpoint allows you to list / view tariffs maintained by `Online`. Responses from this API will be retuned in JSON format only.
 
-### Tariff
+#### Tariff
 Tariff as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| supplierName | string | `Returned always`. Specific the supplier name to which the tariff is associated to. This will mostly be a descriptive test of brand. Refer to [Branding](#branding) for more information. |
-| supportedFuels | List of string | `Returned always`. List of supported fuels. There are 3 variations of fuels possible. They are `gas`, `electricity` and `dual`. |
-| endDate | string | `Returned always`. Defines the end date of the tariff in dd/mm/yyyy format. If no end date is configured, "Not applicable" is returned. |
-| type | string | `Returned always`. Can be either `fixed` or `variable`. |
-| id | string | `Returned always`. Unique identification for the resource. This is directly mapped to `TariffName`. For more details please refer to [Tariff Identification](#tariff-identification) |
-| priceGuaranteedDate | string | `Returned always`. Represents price guaranteed date if applicable. Date is represented in mm/dd/yyyy format. If none defined, "Not applicable" is returned. |
-| displayName | string | `Returned always`. Represents a descriptive name that is understandable to users. |
-| onlineAccountMandatory | boolean | `Returned always`. `true` if customers needs a online profile to subscribe to this tariff. |
-| isTimeOfUseTariff | boolean | `Returned always`. `true` if tariff is a time of use tariff with multiple registers. |
-| isEnergySmartEligible | boolean | `Returned always`. `true` if tariff is capable of offering smart services to customer. |
-| isEnergyExtraEligible | boolean | `Returned always`. `true` if tariff is capable of hosting Energy Extra add on. |
-| cancellationCharge | string | `Returned always`. Refers to the amount the customer will have to pay if he/she opts out of tariff. |
-| paymentOptions | List of string | `Returned always`. Represents a list of payment options that a customer can opt with. Possible values are `mdd` (Monthly Direct Debit), `ppm` (Prepayment) and `qcc` (Quaterly cash/cheque). |
-| energySmartPaymentOptions | List of string | `Returned always`. Represents a list of payment options that a customer can opt with when he/she chooses `Energy Smart`. Possible values are `mdd` (Monthly Direct Debit), `ppm` (Prepayment) and `qcc` (Quaterly cash/cheque). |
-| discountRates | List of object | `Returned always`. Represents a list of discount rates applicable when customer opts with a specific combination of fuel types. |
-| gasAdditionalProducts | string | `Returned always`. Additional products offered by tariff for gas. |
-| electricityAdditionalProducts | string | `Returned always`. Additional products offered by tariff for electricity. |
-| gasDiscountDescription | string | `Returned always`. Descriptions of discounts applicable for Gas only customers. |
-| electricityDiscountDescription | string | `Returned always`. Descriptions of discounts applicable for Electricity only customers. |
-| dualGasDiscountDescription | string | `Returned always`. Descriptions of discounts applicable for Dual fuel on Gas component. |
-| dualElectricityDiscountDescription | string | `Returned always`. Descriptions of discounts applicable for Dual fuel on Electricity component. |
-| rates | collection of Rate | `Returned always`. All rates associated to the tariff. [Rate](#rate) describes the standing charges, unit rates and tariff comparison rate. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` |  `Returned always`| Unique identification for the resource. This is directly mapped to `TariffName`. For more details please refer to [Tariff Identification](#tariff-identification) |
+| supplierName | string | `Not Applicable` | `Returned always`|Specific the supplier name to which the tariff is associated to. This will mostly be a descriptive test of brand. Refer to [Branding](#branding) for more information. |
+| supportedFuels | List of string | `Not Applicable` | `Returned always`| List of supported fuels. There are 3 variations of fuels possible. They are `gas`, `electricity` and `dual`. |
+| endDate | string | `Not Applicable` | `Returned always`| Defines the end date of the tariff in dd/mm/yyyy format. If no end date is configured, "Not applicable" is returned. |
+| type | string | `Not Applicable` | `Returned always`| Can be either `fixed` or `variable`. |
+| priceGuaranteedDate | string | `Not Applicable` | `Returned always`| Represents price guaranteed date if applicable. Date is represented in mm/dd/yyyy format. If none defined, "Not applicable" is returned. |
+| displayName | string | `Not Applicable` | `Returned always`| Represents a descriptive name that is understandable to users. |
+| onlineAccountMandatory | boolean | `Not Applicable` | `Returned always`| `true` if customers needs a online profile to subscribe to this tariff. |
+| isTimeOfUseTariff | boolean | `Not Applicable` | `Returned always`| `true` if tariff is a time of use tariff with multiple registers. |
+| isEnergySmartEligible | boolean | `Not Applicable` | `Returned always`| `true` if tariff is capable of offering smart services to customer. |
+| isEnergyExtraEligible | boolean | `Not Applicable` | `Returned always`| `true` if tariff is capable of hosting Energy Extra add on. |
+| cancellationCharge | string | `Not Applicable` | `Returned always`| Refers to the amount the customer will have to pay if he/she opts out of tariff. |
+| paymentOptions | List of string | `Not Applicable` | `Returned always`| Represents a list of payment options that a customer can opt with. Possible values are `mdd` (Monthly Direct Debit), `ppm` (Prepayment) and `qcc` (Quaterly cash/cheque). |
+| energySmartPaymentOptions | List of string | `Not Applicable` | `Returned always`| Represents a list of payment options that a customer can opt with when he/she chooses `Energy Smart`. Possible values are `mdd` (Monthly Direct Debit), `ppm` (Prepayment) and `qcc` (Quaterly cash/cheque). |
+| discountRates | List of object | `Not Applicable` |  `Returned always`| Represents a list of discount rates applicable when customer opts with a specific combination of fuel types. |
+| gasAdditionalProducts | string | `Not Applicable` | `Returned always`| Additional products offered by tariff for gas. |
+| electricityAdditionalProducts | string | `Not Applicable` | `Returned always`| Additional products offered by tariff for electricity. |
+| gasDiscountDescription | string | `Not Applicable` | `Returned always`| Descriptions of discounts applicable for Gas only customers. |
+| electricityDiscountDescription | string | `Not Applicable` | `Returned always`| Descriptions of discounts applicable for Electricity only customers. |
+| dualGasDiscountDescription | string | `Not Applicable` | `Returned always`. Descriptions of discounts applicable for Dual fuel on Gas component. |
+| dualElectricityDiscountDescription | string | `Not Applicable` | `Returned always`| Descriptions of discounts applicable for Dual fuel on Electricity component. |
+| rates | collection of Rate |`Not Applicable` | `Returned always`| All rates associated to the tariff. [Rate](#rate) describes the standing charges, unit rates and tariff comparison rate. |
 
 #### Rate
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| fuel | string | `Returned always`. Either `gas` or `electricity`. |
-| standingCharges | number | `Returned always`. Standing charges that apply for current tariff. |
-| tariffComparisonRate | number | `Returned always`. Represents tariff comparison rate based on average consumption. |
-| registers | collection of Register | `Returned always`. All registers pertaining to tariff. Refer [Register](/api-reference/quotes.md#registers) |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| fuel | string | `Not Applicable` | `Returned always`| Either `gas` or `electricity`. |
+| standingCharges | number | `Not Applicable` | `Returned always`| Standing charges that apply for current tariff. |
+| tariffComparisonRate | number | `Not Applicable` | `Returned always`| Represents tariff comparison rate based on average consumption. |
+| registers | collection of Register | `Not Applicable` | `Returned always`| All registers pertaining to tariff. Refer [Register](/api-reference/quotes.md#registers) |
 
 Each discount rate object will be represented as shown below.
 ```json
@@ -58,10 +58,10 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
 
 `TariffCode` is a unique code assigned to a tariff by SAP. This will satisfy following regular expression format `^[A-Z]{1,2}[0-9]{2}$`.
 
-### Retrieve a specific tariff [GET /tariffs/{tariffIdentification}]
+### Retrieve a specific tariff [GET /tariffs/{id}]
 + Parameters
 
-    + tariffIdentification (string) - tariff identifation
+    + id (string) - tariff id
 
 + Request (application/json)
 
@@ -71,101 +71,114 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
 
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "tariff": {
-                        "supplierName": "British Gas",
-                        "gasAdditionalProducts": "Not applicable",
-                        "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                        "supportedFuels": [
-                            "gas",
-                            "electricity"
-                        ],
-                        "endDate": "Not applicable",
-                        "electricityAdditionalProducts": "Not applicable",
-                        "type": "variable",
-                        "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                        "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                        "energySmartPaymentOptions": [
-                            "mdd"
-                        ],
-                        "cancellationCharge": "Not applicable",
-                        "id": "standard",
-                        "isEnergyExtraEligible": false,
-                        "paymentOptions": [
-                            "mdd",
-                            "qcc",
-                            "ppm"
-                        ],
-                        "priceGuaranteedDate": "Not applicable",
-                        "isEnergySmartEligible": true,
-                        "discountRates": [
-                            {
-                                "rate": 0,
-                                "type": "gas"
-                            },
-                            {
-                                "rate": 0,
-                                "type": "electricity"
-                            },
-                            {
-                                "rate": 15,
-                                "type": "dual"
-                            }
-                        ],
-                        "onlineAccountMandatory": false,
-                        "displayName": "Standard",
-                        "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                        "isTimeOfUseTariff": false,
-                        "rates": [
-                            {
-                                "fuel": "gas",
-                                "standingCharges": 26,
-                                "registers": [
-                                    {
-                                        "id": "1",
-                                        "description": "Standard",
-                                        "unitRate": 3.83
-                                    }
-                                ],
-                                "tariffComparisonRate": 4.48
-                            },
-                            {
-                                "fuel": "electricity",
-                                "standingCharges": 26,
-                                "registers": [
-                                    {
-                                        "id": "1",
-                                        "description": "Day",
-                                        "unitRate": 10.46
-                                    },
-                                    {
-                                        "id": "2",
-                                        "description": "Night",
-                                        "unitRate": 2.45
-                                    }
-                                ],
-                                "tariffComparisonRate": 13.2
-                            }
-                        ]
-                    }
-                },
-                "errors": {},
-                "meta": {}
-            }
-            
+         {
+             "status": "SUCCESS",
+             "data": {
+                 "tariff": {
+                     "supplierName": "British Gas",
+                     "gasAdditionalProducts": "Not applicable",
+                     "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                     "supportedFuels": [
+                         "gas",
+                         "electricity"
+                     ],
+                     "endDate": "Not applicable",
+                     "electricityAdditionalProducts": "Not applicable",
+                     "type": "variable",
+                     "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                     "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                     "energySmartPaymentOptions": [
+                         "mdd"
+                     ],
+                     "cancellationCharge": "Not applicable",
+                     "id": "standard",
+                     "isEnergyExtraEligible": false,
+                     "paymentOptions": [
+                         "mdd",
+                         "qcc",
+                         "ppm"
+                     ],
+                     "priceGuaranteedDate": "Not applicable",
+                     "isEnergySmartEligible": true,
+                     "discountRates": [
+                         {
+                             "rate": 0,
+                             "type": "gas"
+                         },
+                         {
+                             "rate": 0,
+                             "type": "electricity"
+                         },
+                         {
+                             "rate": 15,
+                             "type": "dual"
+                         }
+                     ],
+                     "onlineAccountMandatory": false,
+                     "displayName": "Standard",
+                     "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                     "isTimeOfUseTariff": false,
+                     "rates": [
+                         {
+                             "fuel": "gas",
+                             "standingCharges": 26,
+                             "registers": [
+                                 {
+                                     "id": "1",
+                                     "description": "Standard",
+                                     "unitRate": 3.83
+                                 }
+                             ],
+                             "tariffComparisonRate": 4.48
+                         },
+                         {
+                             "fuel": "electricity",
+                             "standingCharges": 26,
+                             "registers": [
+                                 {
+                                     "id": "1",
+                                     "description": "Day",
+                                     "unitRate": 10.46
+                                 },
+                                 {
+                                     "id": "2",
+                                     "description": "Night",
+                                     "unitRate": 2.45
+                                 }
+                             ],
+                             "tariffComparisonRate": 13.2
+                         }
+                     ]
+                 }
+             },
+             "errors": {},
+             "meta": {}
+         } 
+         
 + Response 400 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": {
-                    "fault": "a fault has occurred"
+                     "code": "tariff",
+                    "message": "error.client.tariff.blank"
                 },
                 "meta": {}
             }
 
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                     "code": "account",
+                    "message": "error.client.account.invalid"
+                },
+                "meta": {}
+            }
+            
 ### Retrieve all on sale tariffs [GET /tariffs]
 
 + Request (application/json)
@@ -177,438 +190,438 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
 
 + Response 200 (application/json)
 
-            {
-                "status": "SUCCESS",
-                "data": {
-                    "tariffs": [
-                        {
-                            "supplierName": "British Gas",
-                            "gasAdditionalProducts": "Not applicable",
-                            "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "supportedFuels": [
-                                "gas",
-                                "electricity"
-                            ],
-                            "endDate": "Not applicable",
-                            "electricityAdditionalProducts": "Not applicable",
-                            "type": "variable",
-                            "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "energySmartPaymentOptions": [
-                                "mdd"
-                            ],
-                            "cancellationCharge": "Not applicable",
-                            "id": "standard",
-                            "isEnergyExtraEligible": false,
-                            "paymentOptions": [
-                                "mdd",
-                                "qcc",
-                                "ppm"
-                            ],
-                            "priceGuaranteedDate": "Not applicable",
-                            "isEnergySmartEligible": true,
-                            "discountRates": [
-                                {
-                                    "rate": 0,
-                                    "type": "gas"
-                                },
-                                {
-                                    "rate": 0,
-                                    "type": "electricity"
-                                },
-                                {
-                                    "rate": 15,
-                                    "type": "dual"
-                                }
-                            ],
-                            "onlineAccountMandatory": false,
-                            "displayName": "Standard",
-                            "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "isTimeOfUseTariff": false,
-                            "rates": [
-                                {
-                                    "fuel": "gas",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 3.83
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 4.48
-                                },
-                                {
-                                    "fuel": "electricity",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 10.46
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 13.2
-                                }
-                            ]
-                        },
-                        {
-                            "supplierName": "British Gas",
-                            "gasAdditionalProducts": "Not applicable",
-                            "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "supportedFuels": [
-                                "gas",
-                                "electricity"
-                            ],
-                            "endDate": "31/01/2017",
-                            "electricityAdditionalProducts": "Not applicable",
-                            "type": "fixed",
-                            "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "energySmartPaymentOptions": [
-                                "mdd"
-                            ],
-                            "cancellationCharge": "Â£50 per fuel",
-                            "id": "fixed-price-january-2017",
-                            "isEnergyExtraEligible": false,
-                            "paymentOptions": [
-                                "mdd",
-                                "qcc",
-                                "ppm"
-                            ],
-                            "priceGuaranteedDate": "31/01/2017",
-                            "isEnergySmartEligible": true,
-                            "discountRates": [
-                                {
-                                    "rate": 0,
-                                    "type": "gas"
-                                },
-                                {
-                                    "rate": 0,
-                                    "type": "electricity"
-                                },
-                                {
-                                    "rate": 15,
-                                    "type": "dual"
-                                }
-                            ],
-                            "onlineAccountMandatory": false,
-                            "displayName": "Fixed Price January 2017",
-                            "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "isTimeOfUseTariff": false,
-                            "rates": [
-                                {
-                                    "fuel": "gas",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 3.83
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 4.48
-                                },
-                                {
-                                    "fuel": "electricity",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 10.46
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 13.2
-                                }
-                            ]
-                        },
-                        {
-                            "supplierName": "British Gas",
-                            "gasAdditionalProducts": "Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.",
-                            "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "supportedFuels": [
-                                "dual",
-                                "gas",
-                                "electricity"
-                            ],
-                            "endDate": "30/09/2015",
-                            "electricityAdditionalProducts": "<p>- Smart Meter<br />- Smart energy monitor</p><p>Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.</p><p><a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/free-saturdays-sundays-september-2015/faqs.html'><span class=\"tertiary-link\">Click for FAQS and help with Free Sundays September 2015</span></a></p><strong>Information about your <a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/standard.html'>Standard gas</a> tariff.</strong>",
-                            "type": "fixed",
-                            "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "energySmartPaymentOptions": [],
-                            "cancellationCharge": "Â£30",
-                            "id": "free-sundays-september-2015",
-                            "isEnergyExtraEligible": false,
-                            "paymentOptions": [
-                                "mdd",
-                                "qcc"
-                            ],
-                            "priceGuaranteedDate": "30/09/2015",
-                            "isEnergySmartEligible": false,
-                            "discountRates": [
-                                {
-                                    "rate": 0,
-                                    "type": "gas"
-                                },
-                                {
-                                    "rate": 0,
-                                    "type": "electricity"
-                                },
-                                {
-                                    "rate": 15,
-                                    "type": "dual"
-                                }
-                            ],
-                            "onlineAccountMandatory": false,
-                            "displayName": "Free Sundays September 2015",
-                            "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "isTimeOfUseTariff": true,
-                            "rates": [
-                                {
-                                    "fuel": "gas",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 3.83
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 4.48
-                                },
-                                {
-                                    "fuel": "electricity",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 10.46
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 13.2
-                                }
-                            ]
-                        },
-                        {
-                            "supplierName": "British Gas",
-                            "gasAdditionalProducts": "Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.",
-                            "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "supportedFuels": [
-                                "dual",
-                                "gas",
-                                "electricity"
-                            ],
-                            "endDate": "30/09/2015",
-                            "electricityAdditionalProducts": "<p>- Smart Meter<br />- Smart energy monitor</p><p>Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.</p><p><a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/free-saturdays-sundays-september-2015/faqs.html'><span class=\"tertiary-link\">Click for FAQS and help with Free Saturdays September 2015</span></a></p><strong>Information about your <a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/standard.html'>Standard gas</a> tariff.</strong>",
-                            "type": "fixed",
-                            "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "energySmartPaymentOptions": [],
-                            "cancellationCharge": "Â£30",
-                            "id": "free-saturdays-september-2015",
-                            "isEnergyExtraEligible": false,
-                            "paymentOptions": [
-                                "mdd",
-                                "qcc"
-                            ],
-                            "priceGuaranteedDate": "30/09/2015",
-                            "isEnergySmartEligible": false,
-                            "discountRates": [
-                                {
-                                    "rate": 0,
-                                    "type": "gas"
-                                },
-                                {
-                                    "rate": 0,
-                                    "type": "electricity"
-                                },
-                                {
-                                    "rate": 15,
-                                    "type": "dual"
-                                }
-                            ],
-                            "onlineAccountMandatory": false,
-                            "displayName": "Free Saturdays September 2015",
-                            "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "isTimeOfUseTariff": true,
-                            "rates": [
-                                {
-                                    "fuel": "gas",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 3.83
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 4.48
-                                },
-                                {
-                                    "fuel": "electricity",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 10.46
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 13.2
-                                }
-                            ]
-                        },
-                        {
-                            "supplierName": "British Gas",
-                            "gasAdditionalProducts": "Not applicable<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
-                            "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "supportedFuels": [
-                                "dual",
-                                "gas",
-                                "electricity"
-                            ],
-                            "endDate": "30/11/2015",
-                            "electricityAdditionalProducts": "Not applicable<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
-                            "type": "fixed",
-                            "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "energySmartPaymentOptions": [
-                                "mdd"
-                            ],
-                            "cancellationCharge": "Â£30 per fuel",
-                            "id": "fixed-price-november-2015",
-                            "isEnergyExtraEligible": false,
-                            "paymentOptions": [
-                                "mdd"
-                            ],
-                            "priceGuaranteedDate": "30/11/2015",
-                            "isEnergySmartEligible": true,
-                            "discountRates": [
-                                {
-                                    "rate": 0,
-                                    "type": "gas"
-                                },
-                                {
-                                    "rate": 0,
-                                    "type": "electricity"
-                                },
-                                {
-                                    "rate": 15,
-                                    "type": "dual"
-                                }
-                            ],
-                            "onlineAccountMandatory": false,
-                            "displayName": "Fixed Price November 2015",
-                            "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "isTimeOfUseTariff": false,
-                            "rates": [
-                                {
-                                    "fuel": "gas",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 3.83
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 4.48
-                                },
-                                {
-                                    "fuel": "electricity",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 10.46
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 13.2
-                                }
-                            ]
-                        },
-                        {
-                            "supplierName": "British Gas",
-                            "gasAdditionalProducts": "Â£50 Gift Card<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
-                            "dualElectricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "supportedFuels": [
-                                "dual",
-                                "gas",
-                                "electricity"
-                            ],
-                            "endDate": "31/03/2016",
-                            "electricityAdditionalProducts": "Â£50 Gift Card<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
-                            "type": "fixed",
-                            "dualGasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "electricityDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "energySmartPaymentOptions": [
-                                "mdd"
-                            ],
-                            "cancellationCharge": "Â£30 per fuel",
-                            "id": "fix-and-reward-march-2016",
-                            "isEnergyExtraEligible": false,
-                            "paymentOptions": [
-                                "mdd",
-                                "qcc"
-                            ],
-                            "priceGuaranteedDate": "31/03/2016",
-                            "isEnergySmartEligible": true,
-                            "discountRates": [
-                                {
-                                    "rate": 0,
-                                    "type": "gas"
-                                },
-                                {
-                                    "rate": 0,
-                                    "type": "electricity"
-                                },
-                                {
-                                    "rate": 15,
-                                    "type": "dual"
-                                }
-                            ],
-                            "bundledText": " + Â£50 Gift Card",
-                            "onlineAccountMandatory": false,
-                            "displayName": "Fix & Reward March 2016",
-                            "gasDiscountDescription": "Â£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
-                            "isTimeOfUseTariff": false,
-                            "rates": [
-                                {
-                                    "fuel": "gas",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 3.83
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 4.48
-                                },
-                                {
-                                    "fuel": "electricity",
-                                    "standingCharges": 26,
-                                    "registers": [
-                                        {
-                                            "id": "1",
-                                            "description": "Standard",
-                                            "unitRate": 10.46
-                                        }
-                                    ],
-                                    "tariffComparisonRate": 13.2
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "errors": {},
-                "meta": {}
-            }
-            
+         {
+             "status": "SUCCESS",
+             "data": {
+                 "tariffs": [
+                     {
+                         "supplierName": "British Gas",
+                         "gasAdditionalProducts": "Not applicable",
+                         "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "supportedFuels": [
+                             "gas",
+                             "electricity"
+                         ],
+                         "endDate": "Not applicable",
+                         "electricityAdditionalProducts": "Not applicable",
+                         "type": "variable",
+                         "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "energySmartPaymentOptions": [
+                             "mdd"
+                         ],
+                         "cancellationCharge": "Not applicable",
+                         "id": "standard",
+                         "isEnergyExtraEligible": false,
+                         "paymentOptions": [
+                             "mdd",
+                             "qcc",
+                             "ppm"
+                         ],
+                         "priceGuaranteedDate": "Not applicable",
+                         "isEnergySmartEligible": true,
+                         "discountRates": [
+                             {
+                                 "rate": 0,
+                                 "type": "gas"
+                             },
+                             {
+                                 "rate": 0,
+                                 "type": "electricity"
+                             },
+                             {
+                                 "rate": 15,
+                                 "type": "dual"
+                             }
+                         ],
+                         "onlineAccountMandatory": false,
+                         "displayName": "Standard",
+                         "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "isTimeOfUseTariff": false,
+                         "rates": [
+                             {
+                                 "fuel": "gas",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 3.83
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 4.48
+                             },
+                             {
+                                 "fuel": "electricity",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 10.46
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 13.2
+                             }
+                         ]
+                     },
+                     {
+                         "supplierName": "British Gas",
+                         "gasAdditionalProducts": "Not applicable",
+                         "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "supportedFuels": [
+                             "gas",
+                             "electricity"
+                         ],
+                         "endDate": "31/01/2017",
+                         "electricityAdditionalProducts": "Not applicable",
+                         "type": "fixed",
+                         "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "energySmartPaymentOptions": [
+                             "mdd"
+                         ],
+                         "cancellationCharge": "£50 per fuel",
+                         "id": "fixed-price-january-2017",
+                         "isEnergyExtraEligible": false,
+                         "paymentOptions": [
+                             "mdd",
+                             "qcc",
+                             "ppm"
+                         ],
+                         "priceGuaranteedDate": "31/01/2017",
+                         "isEnergySmartEligible": true,
+                         "discountRates": [
+                             {
+                                 "rate": 0,
+                                 "type": "gas"
+                             },
+                             {
+                                 "rate": 0,
+                                 "type": "electricity"
+                             },
+                             {
+                                 "rate": 15,
+                                 "type": "dual"
+                             }
+                         ],
+                         "onlineAccountMandatory": false,
+                         "displayName": "Fixed Price January 2017",
+                         "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "isTimeOfUseTariff": false,
+                         "rates": [
+                             {
+                                 "fuel": "gas",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 3.83
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 4.48
+                             },
+                             {
+                                 "fuel": "electricity",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 10.46
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 13.2
+                             }
+                         ]
+                     },
+                     {
+                         "supplierName": "British Gas",
+                         "gasAdditionalProducts": "Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.",
+                         "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "supportedFuels": [
+                             "dual",
+                             "gas",
+                             "electricity"
+                         ],
+                         "endDate": "30/09/2015",
+                         "electricityAdditionalProducts": "<p>- Smart Meter<br />- Smart energy monitor</p><p>Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.</p><p><a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/free-saturdays-sundays-september-2015/faqs.html'><span class=\"tertiary-link\">Click for FAQS and help with Free Sundays September 2015</span></a></p><strong>Information about your <a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/standard.html'>Standard gas</a> tariff.</strong>",
+                         "type": "fixed",
+                         "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "energySmartPaymentOptions": [],
+                         "cancellationCharge": "£30",
+                         "id": "free-sundays-september-2015",
+                         "isEnergyExtraEligible": false,
+                         "paymentOptions": [
+                             "mdd",
+                             "qcc"
+                         ],
+                         "priceGuaranteedDate": "30/09/2015",
+                         "isEnergySmartEligible": false,
+                         "discountRates": [
+                             {
+                                 "rate": 0,
+                                 "type": "gas"
+                             },
+                             {
+                                 "rate": 0,
+                                 "type": "electricity"
+                             },
+                             {
+                                 "rate": 15,
+                                 "type": "dual"
+                             }
+                         ],
+                         "onlineAccountMandatory": false,
+                         "displayName": "Free Sundays September 2015",
+                         "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "isTimeOfUseTariff": true,
+                         "rates": [
+                             {
+                                 "fuel": "gas",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 3.83
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 4.48
+                             },
+                             {
+                                 "fuel": "electricity",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 10.46
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 13.2
+                             }
+                         ]
+                     },
+                     {
+                         "supplierName": "British Gas",
+                         "gasAdditionalProducts": "Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.",
+                         "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "supportedFuels": [
+                             "dual",
+                             "gas",
+                             "electricity"
+                         ],
+                         "endDate": "30/09/2015",
+                         "electricityAdditionalProducts": "<p>- Smart Meter<br />- Smart energy monitor</p><p>Other offers may be available with this tariff. For details of our full range of offers please visit <a href='/exclusiveoffers'><strong>britishgas.co.uk/exclusiveoffers</strong></a>.</p><p><a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/free-saturdays-sundays-september-2015/faqs.html'><span class=\"tertiary-link\">Click for FAQS and help with Free Saturdays September 2015</span></a></p><strong>Information about your <a href='/content/britishgas/products-and-services/gas-and-electricity/our-energy-tariffs/standard.html'>Standard gas</a> tariff.</strong>",
+                         "type": "fixed",
+                         "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "energySmartPaymentOptions": [],
+                         "cancellationCharge": "£30",
+                         "id": "free-saturdays-september-2015",
+                         "isEnergyExtraEligible": false,
+                         "paymentOptions": [
+                             "mdd",
+                             "qcc"
+                         ],
+                         "priceGuaranteedDate": "30/09/2015",
+                         "isEnergySmartEligible": false,
+                         "discountRates": [
+                             {
+                                 "rate": 0,
+                                 "type": "gas"
+                             },
+                             {
+                                 "rate": 0,
+                                 "type": "electricity"
+                             },
+                             {
+                                 "rate": 15,
+                                 "type": "dual"
+                             }
+                         ],
+                         "onlineAccountMandatory": false,
+                         "displayName": "Free Saturdays September 2015",
+                         "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "isTimeOfUseTariff": true,
+                         "rates": [
+                             {
+                                 "fuel": "gas",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 3.83
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 4.48
+                             },
+                             {
+                                 "fuel": "electricity",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 10.46
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 13.2
+                             }
+                         ]
+                     },
+                     {
+                         "supplierName": "British Gas",
+                         "gasAdditionalProducts": "Not applicable<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
+                         "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "supportedFuels": [
+                             "dual",
+                             "gas",
+                             "electricity"
+                         ],
+                         "endDate": "30/11/2015",
+                         "electricityAdditionalProducts": "Not applicable<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
+                         "type": "fixed",
+                         "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "energySmartPaymentOptions": [
+                             "mdd"
+                         ],
+                         "cancellationCharge": "£30 per fuel",
+                         "id": "fixed-price-november-2015",
+                         "isEnergyExtraEligible": false,
+                         "paymentOptions": [
+                             "mdd"
+                         ],
+                         "priceGuaranteedDate": "30/11/2015",
+                         "isEnergySmartEligible": true,
+                         "discountRates": [
+                             {
+                                 "rate": 0,
+                                 "type": "gas"
+                             },
+                             {
+                                 "rate": 0,
+                                 "type": "electricity"
+                             },
+                             {
+                                 "rate": 15,
+                                 "type": "dual"
+                             }
+                         ],
+                         "onlineAccountMandatory": false,
+                         "displayName": "Fixed Price November 2015",
+                         "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "isTimeOfUseTariff": false,
+                         "rates": [
+                             {
+                                 "fuel": "gas",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 3.83
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 4.48
+                             },
+                             {
+                                 "fuel": "electricity",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 10.46
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 13.2
+                             }
+                         ]
+                     },
+                     {
+                         "supplierName": "British Gas",
+                         "gasAdditionalProducts": "£50 Gift Card<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
+                         "dualElectricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "supportedFuels": [
+                             "dual",
+                             "gas",
+                             "electricity"
+                         ],
+                         "endDate": "31/03/2016",
+                         "electricityAdditionalProducts": "£50 Gift Card<br /><br />Other offers may be available with this tariff. For details of our full range of offers please visit <a href='http://www.britishgas.co.uk/'><strong>britishgas.co.uk</strong></a>.",
+                         "type": "fixed",
+                         "dualGasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "electricityDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "energySmartPaymentOptions": [
+                             "mdd"
+                         ],
+                         "cancellationCharge": "£30 per fuel",
+                         "id": "fix-and-reward-march-2016",
+                         "isEnergyExtraEligible": false,
+                         "paymentOptions": [
+                             "mdd",
+                             "qcc"
+                         ],
+                         "priceGuaranteedDate": "31/03/2016",
+                         "isEnergySmartEligible": true,
+                         "discountRates": [
+                             {
+                                 "rate": 0,
+                                 "type": "gas"
+                             },
+                             {
+                                 "rate": 0,
+                                 "type": "electricity"
+                             },
+                             {
+                                 "rate": 15,
+                                 "type": "dual"
+                             }
+                         ],
+                         "bundledText": " + £50 Gift Card",
+                         "onlineAccountMandatory": false,
+                         "displayName": "Fix & Reward March 2016",
+                         "gasDiscountDescription": "£15 annual discount when you have both gas and electricity with us<sup>[1]</sup>",
+                         "isTimeOfUseTariff": false,
+                         "rates": [
+                             {
+                                 "fuel": "gas",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 3.83
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 4.48
+                             },
+                             {
+                                 "fuel": "electricity",
+                                 "standingCharges": 26,
+                                 "registers": [
+                                     {
+                                         "id": "1",
+                                         "description": "Standard",
+                                         "unitRate": 10.46
+                                     }
+                                 ],
+                                 "tariffComparisonRate": 13.2
+                             }
+                         ]
+                     }
+                 ]
+             },
+             "errors": {},
+             "meta": {}
+         }
+
 + Response 401 (application/json)
 
             {
