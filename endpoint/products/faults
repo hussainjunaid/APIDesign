@@ -4,11 +4,11 @@ Faults resource allows you to retrieve the faults for a logged in customer based
 ### Fault
 Fault as a resource represents following information
 
-| Property | Type | Description | 
-| :--------- | :------------ | -----------------------------------------------------|
-| id | String | Id of the fault which is returned from SAP for each fault associated to services product. |
-| title | String | Title holds the brief notes of the fault. |
-| description | String | Description defines the exact problem statement of the fault. |
+| Property | Type | As request | As response | Description | 
+| :--------- | :------------ | :------------ | :------------ | -----------------------------------------------------|
+| id | String | `Not Applicable` | `Returned always` | Id of the fault which is returned from SAP for each fault associated to services product. |
+| title | String | `Not Applicable` | `Returned always` | Title holds the brief notes of the fault. |
+| description | String | `Not Applicable` | `Returned always` | Description defines the exact problem statement of the fault. |
 
 ### Retrieve faults [GET /faults{?account}]
 + Parameters
@@ -247,6 +247,24 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
++ Request No faults found for the request
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "faults": []
+                },
+                "errors": [],
+                "meta": {}
+            }
+            
 + Response 401 (application/json)
 
             {
@@ -303,20 +321,6 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "fault",
-                        "message": "error.client.fault.notFound"
-                   }
-                ],
-                "meta": {}
-            }
-            
 + Response 500 (application/json)
 
             {
