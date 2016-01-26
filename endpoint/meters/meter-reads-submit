@@ -1,30 +1,26 @@
 ## Meter reads [/meter-reads/submit]
-Meter reads endpoint allows you to submit meter reads for single/dual/joint invoice accounts. Responses from this API will be returned in JSON format only.
+Meter reads endpoint allows you to submit meter reads for single/dual/joint invoice accounts. Responses from this endpoint will be returned in JSON format only.
+Meter reads endpoint supports a controller alone now:
+* POST /meter-reads/submit
 
 #### Meter read
 Meter read as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. It is a concatenated value of meter read and date(time), separated by (-). |
-| reading | string | `Returned always`. Reading taken from the meter. |
-| classification | string | `Returned always`. Classification description, it mentions whether the reading is "Actual" or "Estimated", if available. |
-| register | string | `Returned always`. Register identifier, concatenated value of account number, contract number, meter serial number and register number separated by '-'. |
-| date | string | `Returned always`. Date on which the reading is taken, in dd/MM/yyyy format. |
-| status | string | `Returned always`. It will return any one of the following status `failed`, `stored`, `stored for next bill`, `implausible read`, `cancel rebill`, `sap down` or `unknown`. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Optional` | `Returned always` |  It is a concatenated value of meter read and date(time), separated by (-). |
+| reading | string | `Mandatory` | `Returned always` |  Reading taken from the meter. |
+| classification | string | `Optional` | `Returned always` |  Classification description, it mentions whether the reading is "Actual" or "Estimated", if available. |
+| register | string | `Mandatory` | `Returned always` |  Register identifier, concatenated value of account number, contract number, meter serial number and register number separated by '-'. |
+| date | string | `Optional` | `Returned always` |  Date on which the reading is taken, in dd/MM/yyyy format. |
+| status | string | `Optional` | `Returned always` |  It will return any one of the following status `failed`, `stored`, `stored for next bill`, `implausible read`, `cancel rebill`, `sap down` or `unknown`. |
 
 Submit meter read request mentions whether outOfTolerance can be overridden and sends all the meter reads to be submitted. 
 If `outOfToleranceOverride` is not send in the request, it will be defaulted to `false`, so that implausible reading is not allowed to submit.
 
 #### Meter Readings
 Readings associated to all the accounts available for the customer, can be send in request body
-Meter readings request should contain atleast one meter read. Each of the meter read will be validated as below:
-
-| Property | Type | Validation|
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| reading | string | `Mandatory`. Reading from the register, should be numeric with maximum 6 digits, should have same number of digits as the number of dials in the register. |
-| date | string | `Optional`. If input, then date should be in dd/MM/yyyy format. |
-| register | string | `Mandatory`. Register identifier, should contain all 4 segments. |
+Meter readings request should contain atleast one meter read. Each of the meter read will be validated.
 
 ### Submit Meter reads [POST /meter-reads/submit]
 + Request (application/json)
