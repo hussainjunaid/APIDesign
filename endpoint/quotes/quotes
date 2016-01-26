@@ -8,37 +8,37 @@ Quote as a resource is comprised of following information.
 
 | Property | Type | As request | As response | Description |
 | :---------- | :------ | -------- |---------|------------------------------------ |
-| id | string | NA |`Returned always`| Unique identification for the resource. Note that this is a generated resource and hence is not unique across all requests but is within the result-set returned by the service. It also signifies the order of quote based on cost to user (lower the number, cheaper the quote).  |
-| tariff | string | NA | `Returned always`| Represents a link to [Tariff](Tariff-API-Reference) resource. Quote is always linked to a tariff and this relationship is represented via this propery. |
-| gasRates | Rate | NA | `Presence depends on parameters`| Represents quote rates applicable for `gas`. |
-| electricityRates | Rate | NA | `Presence depends on parameters` | Represents quote rates applicable for `electricity`. |
-| orderPayload | string | NA |`Returned always`| Represents payload to use if switching to tariff quoted. |
+| id | string | `Not Applicable` |`Returned always`| Unique identification for the resource. Note that this is a generated resource and hence is not unique across all requests but is within the result-set returned by the service. It also signifies the order of quote based on cost to user (lower the number, cheaper the quote).  |
+| tariff | string | `Not Applicable` | `Returned always`| Represents a link to [Tariff](Tariff-API-Reference) resource. Quote is always linked to a tariff and this relationship is represented via this propery. |
+| gasRates | Rate | `Not Applicable` | `Presence depends on parameters`| Represents quote rates applicable for `gas`. |
+| electricityRates | Rate | `Not Applicable` | `Presence depends on parameters` | Represents quote rates applicable for `electricity`. |
+| orderPayload | string | `Not Applicable` |`Returned always`| Represents payload to use if switching to tariff quoted. |
 
->`Note:` orderPayload is just a temporary implementation. Will be revisited once Shop API is live.
+>`Note:` orderPayload is just a temporary implementation. Will be revisited once Shop endpoint is live.
 
-#### Rates
+#### Rate
 Rate is not an independent resource. It is however related to quote as it sheds more light on what rates apply for the quote requested. Instances of this object will always be related to a single fuel.
 
 | Property | Type | As request | As response | Description |
 | :---------- | :------ | -------- |---------|------------------------------------ |
-| standingCharges | double | NA | `Returned always` | Standing charges that apply for current instance of quote. |
-| personalProjection | double | NA |`Returned always`| Personalized projection value based on input parameters. |
-| consumption | double | NA |`Returned always`| Represents consumption value used for quote computation. |
-| estimatedAnnualConsumption | double | NA |  |Represents estimated annual consumption for current instance of quote. |
-| estimatedAnnualCost | double | NA | `Returned always`| Represents annual cost for current instance of quote. |
-| tariffComparisonRate | double | NA |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
-| registers | Register | NA | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
+| standingCharges | double | `Not Applicable` | `Returned always` | Standing charges that apply for current instance of quote. |
+| personalProjection | double | `Not Applicable` |`Returned always`| Personalized projection value based on input parameters. |
+| consumption | double | `Not Applicable` |`Returned always`| Represents consumption value used for quote computation. |
+| estimatedAnnualConsumption | double | `Not Applicable` |  |Represents estimated annual consumption for current instance of quote. |
+| estimatedAnnualCost | Double | `Not Applicable` | `Returned always`| Represents annual cost for current instance of quote. |
+| tariffComparisonRate | Double | `Not Applicable` |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
+| registers | Register | `Not Applicable` | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
 
 Note: `estimatedAnnualConsumption` is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. `estimatedAnnualCost` would be the annual cost assuming the user had the same consumption as `estimatedAnnualConsumption`. 
 
-#### Registers
+#### Register
 Register represents meter registers associated with a tariff. Properties of registers are listed below.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Unique id associated with current register. This is always unique per tariff. |
-| description | string | `Returned always`. Description of the register, also specifies the time period the register applies. |
-| unitRate | double | `Returned always`. Represents rate that is applicable per unit of fuel. |
+| Property | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| id | string | `Not Applicable` | `Returned always`| Unique id associated with current register. This is always unique per tariff. |
+| description | string | `Not Applicable` | `Returned always`| Description of the register, also specifies the time period the register applies. |
+| unitRate | double | `Not Applicable` | `Returned always`| Represents rate that is applicable per unit of fuel. |
 
 #### Meta Information
 Along with quote, you also get a mail payload with following properties returned. Should you need to send this payload to [Email API](Email-API-Reference), the client can do so.
@@ -49,7 +49,7 @@ Along with quote, you also get a mail payload with following properties returned
 | payload | string | `Returned always`. Represents encrypted payload. |
 | checksum | string | `Returned always`. Represents checksum value. |
 
-### Retrieve Quotes anonymously [GET /quotes?{type}&{apikey}&{fuel}&{paymentOption}&{postcode}&{gasConsumption}&{electricityConsumption}&{economyMeter}&{tariff}]
+### Retrieve Quotes anonymously [GET /quotes{?type,fuel,paymentOption,postcode,gasConsumption,electricityConsumption,economyMeter,tariff}]
 
 + Parameters
 
@@ -238,101 +238,12 @@ Along with quote, you also get a mail payload with following properties returned
                 "meta": {}
             }
             
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "postcode": "error.client.postcode.blank"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "fuel": "error.client.fuel.invalid"
-                },
-                "meta": {}
-            }
-            
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "fuel": "error.client.fuel.blank"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "paymentOption": "error.client.paymentOption.invalid"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "paymentOption": "error.client.paymentOption.blank"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "electricityConsumption": "error.client.electricityConsumption.invalid"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "gasConsumption": "error.client.gasConsumption.invalid"
-                },
-                "meta": {}
-            }
-
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "fault": "a fault has occurred"
-                },
-                "meta": {}
-            }
-
-
-### Retrieve logged in Quotes [GET /quotes?{type}&{accountNumber*}]
+### Retrieve logged in Quotes [GET /quotes{?type,accountNumber*}]
 
 + Parameters
 
-    + type (string) - Required. This must be oam in order to imply logged in quote.
-    + accountNumber (string[]) - Required. List of account numbers for which the quote is to be retrieved.
+    + type (string, required) - This must be oam in order to imply logged in quote.
+    + accountNumber (string[], required) - List of account numbers for which the quote is to be retrieved.
 
 + Request (application/json)
 
@@ -499,6 +410,18 @@ Along with quote, you also get a mail payload with following properties returned
               }
             }
 
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                            "code": "type",
+                            "message": "error.client.type.invalid"                
+                            },
+                "meta": {}
+            }
+            
 + Response 403 (application/json)
 
             {
@@ -518,7 +441,7 @@ Along with quote, you also get a mail payload with following properties returned
                 "data": {},
                 "errors": {
                             "code": "brand",
-                            "message": "error.client.brand.invalid"                            
+                            "message": "error.client.brand.incompatible"                            
                             },
                 "meta": {}
             }
