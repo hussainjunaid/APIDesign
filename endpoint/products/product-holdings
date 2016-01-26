@@ -4,60 +4,60 @@ Product Holdings endpoint allows you to list / view all the product holdings of 
 #### Energy product holding
 Energy product holding as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Combination of account number and product code is considered as the unique identifier. |
-| type | string | `Returned always`. Specifies which data model is supported by the resources, it will be EnergyProductHolding. |
-| moveInDate | string | `Returned always`. Date when the product is moved to the address, in dd/MM/yyyy format. |
-| moveOutDate | string | `Returned always`. Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999 |
-| productCode | string | `Returned always`. Product code, 1601 for gas and 1602 for electricity. |
-| tariff | string | `Returned always`. Identifies the tariff associated to the product, if available. |
-| productTypeDescription | string | `Returned always`. Product description of the product, if available. |
-| account | string | `Returned always`. Account number to which the product is linked, if available. | 
-| energyAccount | string | `Returned always`. Energy account number to which the product is linked, if available. | 
-| propositionId | string | `Returned always`. Proposition id for the product. |
-| tariffEnergySmart | boolean | `Returned always`. Indicates that the product has energy smart tariff if the value is true. |
-| monthlyBilling | boolean | `Returned always`. Indicates that the product is monthly billed if the value is true. |
-| smartMonthlyBilling | boolean | `Returned always`. Indicates that the product is smart monthly billed if the value is true. |
-| smartMeterProduct | boolean | `Returned always`. Indicates that the product is having a smart meter if the value is true. |
-| features | Array of string | `Returned always`. Mentions any specific features of the product |
-| monthlyBillingData | Complex type | `Returned always`. All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` | Combination of account number and product code is considered as the unique identifier. |
+| type | string | `Not Applicable` | `Returned always` | Specifies which data model is supported by the resources, it will be EnergyProductHolding. |
+| moveInDate | string | `Not Applicable` | `Returned always` | Date when the product is moved to the address, in dd/MM/yyyy format. |
+| moveOutDate | string | `Not Applicable` | `Returned always` | Date when the product will be moved out the address, in dd/MM/yyyy format, by default this is 31/12/9999 |
+| productCode | string | `Not Applicable` | `Returned always` | Product code, 1601 for gas and 1602 for electricity. |
+| tariff | string | `Not Applicable` | `Returned always` | Identifies the tariff associated to the product, if available. Tariff can be sideloaded upon request |
+| productTypeDescription | string | `Not Applicable` | `Returned always` | Product description of the product, if available. |
+| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. | 
+| energyAccount | string | `Not Applicable` | `Returned always` | Energy account number to which the product is linked, if available. | 
+| propositionId | string | `Not Applicable` | `Returned always` | Proposition id for the product. |
+| tariffEnergySmart | boolean | `Not Applicable` | `Returned always` | Indicates that the product has energy smart tariff if the value is true. |
+| monthlyBilling | boolean | `Not Applicable` | `Returned always` | Indicates that the product is monthly billed if the value is true. |
+| smartMonthlyBilling | boolean | `Not Applicable` | `Returned always` | Indicates that the product is smart monthly billed if the value is true. |
+| smartMeterProduct | boolean | `Not Applicable` | `Returned always` | Indicates that the product is having a smart meter if the value is true. |
+| features | Array of string | `Not Applicable` | `Returned always` | Mentions any specific features of the product |
+| monthlyBillingData | Complex type | `Not Applicable` | `Returned always` | All the monthly billing information which includes current bill day, estimated read counter, installment date, signup date, current proposition id and next bill date. |
 
-#### Services product holding
+### Services product holding
 Services product holding as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Combination of account number and product code is considered as the unique identifier. |
-| type | string | `Returned always`. Specifies which data model is supported by the resources, it will be ServicesProductHolding. |
-| productCode | string | `Returned always`. Product code of the product. |
-| customerId | string | `Returned always`. Customer id associated to the product, if available. |
-| productTypeDescription | string | `Returned always`. Product description of the product, if available. |
-| productName | string | `Returned always`. Name of the product, if available. |
-| account | string | `Returned always`. Account number to which the product is linked, if available. | 
-| servicesAccount | string | `Returned always`. Services account number to which the product is linked, if available. | 
-| propositionId | string | `Returned always`. Proposition id for the product. |
-| premiseId | string | `Returned always`. Premise id associated to the product, if available. |
-| plumbingAndDrains | boolean | `Returned always`. Indicates that the product has plumbing and drains, if the value is true. |
-| crossSellProduct | boolean | `Returned always`. Indicates that the product is a cross sell product, if the value is true. |
-| features | Array of string | `Returned always`. Mentions any specific features of the product. |
-| bundleProduct | boolean | `Returned always`. Indicates that the product is a bundle product, if the value is true. |
-| appliances | Array of string | `Returned always`. All the appliances associated to the product. |
-| excess | string | `Returned always`. Mentions the excess amount selected for services product. |
-| levelOfService | string | `Returned always`. Level of service associated for services product. |
-| product | string | `Returned always`. Product code mapped to level of service, this is the id to Product resource. |
-| bundleCode | string | `Returned always`. Bundle code mapped to level of service. |
-| asvAvailable | boolean | `Returned always`. Indicates that Annual Service Visit is applicable for this product, if the value is true. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` | Combination of account number and product code is considered as the unique identifier. |
+| type | string | `Not Applicable` | `Returned always` | Specifies which data model is supported by the resources, it will be ServicesProductHolding. |
+| productCode | string | `Not Applicable` | `Returned always` | Product code of the product. |
+| customerId | string | `Not Applicable` | `Returned always` | Customer id associated to the product, if available. |
+| productTypeDescription | string | `Not Applicable` | `Returned always` | Product description of the product, if available. |
+| productName | string | `Not Applicable` | `Returned always` | Name of the product, if available. |
+| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. | 
+| servicesAccount | string | `Not Applicable` | `Returned always` | Services account number to which the product is linked, if available. | 
+| propositionId | string | `Not Applicable` | `Returned always` | Proposition id for the product. |
+| premiseId | string | `Not Applicable` | `Returned always` | Premise id associated to the product, if available. |
+| plumbingAndDrains | boolean | `Not Applicable` | `Returned always` | Indicates that the product has plumbing and drains, if the value is true. |
+| crossSellProduct | boolean | `Not Applicable` | `Returned always` | Indicates that the product is a cross sell product, if the value is true. |
+| features | Array of string | `Not Applicable` | `Returned always` | Mentions any specific features of the product. |
+| bundleProduct | boolean | `Not Applicable` | `Returned always` | Indicates that the product is a bundle product, if the value is true. |
+| appliances | Array of string | `Not Applicable` | `Returned always` | All the appliances associated to the product. |
+| excess | string | `Not Applicable` | `Returned always` | Mentions the excess amount selected for services product. |
+| levelOfService | string | `Not Applicable` | `Returned always` | Level of service associated for services product. |
+| product | string | `Not Applicable` | `Returned always` | Product code mapped to level of service, this is the id to Product resource. |
+| bundleCode | string | `Not Applicable` | `Returned always` | Bundle code mapped to level of service. |
+| asvAvailable | boolean | `Not Applicable` | `Returned always` | Indicates that Annual Service Visit is applicable for this product, if the value is true. |
 
-#### Order product holding
+### Order product holding
 Order product holding as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Combination of order number and product code is considered as the unique identifier. |
-| type | string | `Returned always`. Specifies which data model is supported by the resources, it will be OrderProductHolding. |
-| productCode | string | `Returned always`. Product type, Gas for gas and Electricity for electricity. |
-| account | string | `Returned always`. Order number to which the product is linked, if available. | 
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` |  Combination of order number and product code is considered as the unique identifier. |
+| type | string | `Not Applicable` | `Returned always` |  Specifies which data model is supported by the resources, it will be OrderProductHolding. |
+| productCode | string | `Not Applicable` | `Returned always` |  Product type, Gas for gas and Electricity for electricity. |
+| account | string | `Not Applicable` | `Returned always` |  Order number to which the product is linked, if available. | 
 
 ### Retrieve all Product holdings [GET /product-holdings]
 + Request
@@ -359,10 +359,10 @@ Order product holding as a resource represents following information
                 "meta": {}
             }
 
-### Retrieve product holdings using product id [GET /product-holdings/{productId}]
+### Retrieve product holdings using product id [GET /product-holdings/{id}]
 + Parameters
 
-    + productId (string) - Product id
+    + id (string) - Product id
 
 + Request
 
