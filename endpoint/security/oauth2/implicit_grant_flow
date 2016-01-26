@@ -1,5 +1,26 @@
 ## Group OAuth 2.0
 
+## Client identification
+OAuth process requires you to identify the client. Implicit flow and password grant flow would make use of `Client ID` in different ways. For implicit authorization `client_id` is expected in the request used to invoke GET on `Authorize`. For password grant flow, `client_id` is used as `Basic token` in the request header.
+
+### Production configuration
+Following table lists the Client IDs configured in production.
+
+| Client ID | Description |
+| :-------------------- | ------------------------------------------------------------ |
+| 4d85090c-8b6d-4cba-9327-c024643be989 | Issued for Application clients hosted in www.britishgas.co.uk |
+| de1a4dd8-b6df-4739-a8b3-06c2bcc73bae | Issued for Application clients hosted in www.sainsburysenergy.com |
+
+### Test environment configuration
+Following table lists the Client IDs configured for test environments.
+
+| Client ID | Description |
+| :-------------------- | ------------------------------------------------------------ |
+| cbdcfa43-dd67-4c38-b418-83572a936fca | Issued for Application clients hosted in Test environments targeting www.britishgas.co.uk |
+| 492d2bb1-9c29-47d4-bc56-f6e5a7991627 | Issued for Application clients hosted in Test environments targeting www.sainsburysenergy.com |
+| 05e230bf-a9cf-4b31-bc54-d3a995f62526 | Issued for a developer desktop (Assumes a BG client) |
+| 65e240bf-a3cf-4b32-b234-d3a095f82723 | Issued for a developer desktop (Assumes a SE client) |
+
 ## Implicit Grant flow
 
 Implicit authorization from OAuth 2.0 allows a javascript application to generate a new token to access Online API. 
