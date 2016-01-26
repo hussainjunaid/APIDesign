@@ -69,7 +69,7 @@ This section explains the flow of `payment-transactions`.
    | :---------- | :---------- |
    | PaReq | The encoded PaReq to submit to the ACS. |
    | MD | The Merchant Data to submit to the ACS (this will contain the id of payment resource). |
-   | TermUrl | The API URL to which the ACS response is submitted (PARes). |
+   | TermUrl | The API endpoint(https://www.britishgas.co.uk/bank-payment-response/) to which the ACS response is submitted (PARes). |
 
 5. Once the POST operation is made to the ACS URL, bank merchant will take control and validate the information provided by the customer.
 6. Bank merchant will perform a POST on [`/bank-payment-response`](/api-reference/bank-payment-response.md#post-bank-payment-response) with the following fields. 
