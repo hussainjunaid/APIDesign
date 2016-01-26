@@ -20,41 +20,41 @@ Order as a resource represents several independent information that are processe
 | Meter details | captures metering information specific to requested supply address. |
 
 #### Quote information
-Quote information ideally associates itself with parameters captured when the user obtained a quote. This includes data from both the request sent to acquire the quote and information received in the response. Following list of parameters are part of this logical entitiy.
+Quote information ideally associates itself with parameters captured when the user obtained a quote. This includes data from both the request sent to acquire the quote and information received in the response. Following list of parameters are part of this logical resource.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| orderPayload | string | `Returned always`. orderPayload captured from quote response. Refer to Quote API to understand more on this payload. |
-| consumptionEstimated | boolean | `Returned always`. `true` if the energy consumption was estimate `false` otherwise. |
-| propertyType | string | `Optional`. Equivalent to `property-type` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| noOfBedrooms | string | `Optional`. Equivalent to `no-of-bedrooms` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| houseAge | string | `Optional`. Equivalent to `house-age` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| waterHeating | string | `Optional`. Equivalent to `water-heating` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| roomHeating | string | `Optional`. Equivalent to `room-heating` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| noOfPeople | string | `Optional`. Equivalent to `no-of-people` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| boilerType | string | `Optional`. Equivalent to `boiler-type` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| boilerAge | string | `Optional`. Equivalent to `boiler-age` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
-| electricityUsageType | string | `Optional`. Equivalent to `electricity-usage-type` in Energy Consumption Estimation API. Mandatory if `consumptionEstimated` is true. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| orderPayload | string  | `Required` | `Returned always` | orderPayload captured from quote response. Refer to Quote endpoint to understand more on this payload. |
+| consumptionEstimated | boolean | `Optional` | `Returned always` | `true` if the energy consumption was estimate `false` otherwise. |
+| propertyType | string |  `Optional` | `Optional` | Equivalent to `property-type` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| noOfBedrooms | string | `Optional` | `Optional` | Equivalent to `no-of-bedrooms` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| houseAge | string  | `Optional` | `Optional` | Equivalent to `house-age` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| waterHeating | string | `Optional` | `Optional` | Equivalent to `water-heating` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| roomHeating | string  | `Optional` | `Optional`| Equivalent to `room-heating` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| noOfPeople | string | `Optional` |`Optional`| Equivalent to `no-of-people` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| boilerType | string  | `Optional` | `Optional`| Equivalent to `boiler-type` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| boilerAge | string  | `Optional` | `Optional` | Equivalent to `boiler-age` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
+| electricityUsageType  | string | `Optional` | `Optional` | Equivalent to `electricity-usage-type` in Energy Consumption Estimation endpoint. Mandatory if `consumptionEstimated` is true. |
 
-> `Note:` Subtle deviations from Energy Consumption Estimation API is due to the fact that JSON does not allow attributes with a `-` in it.
+> `Note:` Subtle deviations from Energy Consumption Estimation endpoint is due to the fact that JSON does not allow attributes with a `-` in it.
 
 #### User information
 This section identifies generic customer related information in order to create a contract for the sale. Following information are part of this section.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Optional`. Unique identification for sales order. Not expected to be available prior to order creation. |
-| title | string | `Returned always`. Title of the customer procuring a sale. |
-| firstName | string | `Returned always`. First name of the customer procuring a sale. |
-| surname | string | `Returned always`. Surname of the customer procuring a sale. |
-| telephoneNumber | string | `Returned always`. Telephone number of the customer procuring a sale. |
-| dateOfBirth | string | `Returned always`. Date of birth of the customer procuring a sale.
-| emailAddress | string | `Returned always`. Email address of the customer procuring a sale.
-| smartMeterAvailableForGas | boolean | `Returned always`. `true` if the customer has a smart meter installed for `Gas`, `false` otherwise. |
-| smartMeterAvailableForElectricity | boolean | `Returned always`. `true` if the customer has a smart meter installed for `Electricity`, `false` otherwise. |
-| paperlessBillingOpted | boolean | `Returned always`. `true` if the customer has opted for paperless billing, `false` otherwise. |
-| consumptionEstimated | string | `Returned always`. `true` if the energy consumption was estimate `false` otherwise. |
-| specialNeeds | string[] | `Returned always`. List of special needs of the customer that a sales agent needs to be aware of. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| id | string | `Required` | `Optional` | Unique identification for sales order. Not expected to be available prior to order creation. |
+| title | string | `Required` | `Returned always` | Title of the customer procuring a sale. |
+| firstName | string | `Required` | `Returned always` | First name of the customer procuring a sale. |
+| surname | string | `Required` | `Returned always` | Surname of the customer procuring a sale. |
+| telephoneNumber | string | `Required` | `Returned always` | Telephone number of the customer procuring a sale. |
+| dateOfBirth | string |  `Optional` | `Returned always` | Date of birth of the customer procuring a sale.
+| emailAddress | string | `Required` | `Returned always` | Email address of the customer procuring a sale.
+| smartMeterAvailableForGas | boolean | `Optional` | `Returned always` | `true` if the customer has a smart meter installed for `Gas`, `false` otherwise. |
+| smartMeterAvailableForElectricity | boolean | `Optional` | `Returned always` | `true` if the customer has a smart meter installed for `Electricity`, `false` otherwise. |
+| paperlessBillingOpted | boolean | `Optional` | `Returned always` | `true` if the customer has opted for paperless billing, `false` otherwise. |
+| consumptionEstimated | string | `Optional` | `Returned always` | `true` if the energy consumption was estimate `false` otherwise. |
+| specialNeeds | string[] | `Optional` | `Returned always` | List of special needs of the customer that a sales agent needs to be aware of. |
 
 > `specialNeeds` will always be a list of strings and each element one of the following list.
 
@@ -85,64 +85,64 @@ Each address has following set of properties. Order as such uses these addresses
 
 > `Note:` There is one exception to the prefixes. Years and months of stay in current is represented as `currentAddressYears` & `currentAddressMonths` respectively whereas for previous address 1 & 2 those are previousAddress1Years, previousAddress2Years, previousAddress1Months & previousAddress2Months.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| FlatNumber | string | `Returned always`. Flat number of the address if available |
-| HouseNumber | string | `Returned always`. House number of the address if available. |
-| HouseName | string | `Returned always`. House name of the address if available. |
-| AddressLine1 | string | `Returned always`. Address line 1. Typically contains building name / street etc... |
-| AddressLine2 | string | `Returned always`. Address line 2. Typically contains street / avenues etc... |
-| PostalTown | string | `Returned always`. Postal town of the address. |
-| County | string | `Returned always`. County to which the address belongs. |
-| Postcode | string | `Returned always`. Postcode of the address |
-| Years | string | `Returned always`. No of years spent by the customer in address provided. |
-| Months | string | `Returned always`. No of months spent by the customer in address provided. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| FlatNumber | string | `Optional` | `Returned always` | Flat number of the address if available |
+| HouseNumber | string | `Required` | `Returned always` | House number of the address if available. |
+| HouseName | string | `Optional` | `Returned always` | House name of the address if available. |
+| AddressLine1 | string | `Optional` | `Returned always` | Address line 1. Typically contains building name / street etc... |
+| AddressLine2 | string | `Optional` | `Returned always` | Address line 2. Typically contains street / avenues etc... |
+| PostalTown | string | `Required` | `Returned always` | Postal town of the address. |
+| County | string | `Optional` | `Returned always` | County to which the address belongs. |
+| Postcode | string | `Required` | `Returned always` | Postcode of the address |
+| Years | string | `Required` | `Returned always` | No of years spent by the customer in address provided. |
+| Months | string | `Required` | `Returned always` | No of months spent by the customer in address provided. |
 
 #### Direct Debit details
-Direct Debit details represent user details required to setup a Direct Debit. Following information is represented by this logical entity.
+Direct Debit details represent user details required to setup a Direct Debit. Following information is represented by this logical resource.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| AccountNumber | string | `Returned always`. Bank account number of the customer to setup DD. |
-| SortCode | string | `Returned always`. Sortcode of the bank account supplied by the customer. |
-| AccountHolderName | string | `Returned always`. Account holder name of the bank account number supplied above. |
-| PaymentDay | string | `Returned always`. Day of the month when it is preferred to have the transaction performed. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| AccountNumber | string | `Required` | `Returned always` | Bank account number of the customer to setup DD. |
+| SortCode | string |  `Required` |`Returned always` | Sortcode of the bank account supplied by the customer. |
+| AccountHolderName | string |  `Required` |`Returned always` | Account holder name of the bank account number supplied above. |
+| PaymentDay | string |  `Required` |`Returned always` | Day of the month when it is preferred to have the transaction performed. |
 
 > `Note:` Please prefix `directDebit` before above mentioned properties while relating to `Order`. 
 
 #### Marketing preference
-Marketing preferences represent user consents to a marketing preference. Following information is represented by this logical entitiy.
+Marketing preferences represent user consents to a marketing preference. Following information is represented by this logical entity.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| ForLetter | boolean | `Returned always`. `true` if customers prefer to opt in this functionality, `false` otherwise. |
-| ForEmail | boolean | `Returned always`. `true` if customers prefer to opt in this functionality, `false` otherwise. |
-| ForLandline | boolean | `Returned always`. `true` if customers prefer to opt in this functionality, `false` otherwise. |
-| ForMobile | boolean | `Returned always`. `true` if customers prefer to opt in this functionality, `false` otherwise. |
-| ForSmsMms | boolean | `Returned always`. `true` if customers prefer to opt in this functionality, `false` otherwise. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| ForLetter | boolean | `Optional` | `Returned always` | `true` if customers prefer to opt in this functionality, `false` otherwise. |
+| ForEmail | boolean | `Optional` | `Returned always` | `true` if customers prefer to opt in this functionality, `false` otherwise. |
+| ForLandline | boolean | `Optional` | `Returned always` | `true` if customers prefer to opt in this functionality, `false` otherwise. |
+| ForMobile | boolean | `Optional` | `Returned always` | `true` if customers prefer to opt in this functionality, `false` otherwise. |
+| ForSmsMms | boolean | `Optional` | `Returned always` | `true` if customers prefer to opt in this functionality, `false` otherwise. |
 
 > `Note:` Please prefix `marketingPreference` before above mentioned properties while relating to `Order`.
  
 #### Loyalty details
 Loyalty details represent loyalty (nectar) card details & user option for loyalty association with the sales order.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| CardNumber | string | `Returned always`. Loyalty card number associated to the customer. |
-| RegistrationStatus | string | `Returned always`. Loyalty registration status preferred by the customer. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| CardNumber | string | `Required` | `Returned always` | Loyalty card number associated to the customer. |
+| RegistrationStatus | string | `Required` | `Returned always` | Loyalty registration status preferred by the customer. |
 
 > `Note:` Please prefix `loyalty` before above mentioned properties while relating to `Order`.
 
 #### Meter details
 Meter details represent metering information about the user.
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| gasMeterReference | string | `Optional`. Gas reference number for the supply address. |
-| electricityMeterReference | string | `Optional`. Electricity reference number for the supply address. |
-| gasMeterType | string | `Required`. Meter type for gas. This must be `CREDIT_METER` or `PREPAY_TOKEN` |
-| electricityMeterType | string | `Required`. Meter type for electricity. This can be one of either `CREDIT_METER` or `PREPAY_SMART_CARD` or `PREPAY_SMART_KEY` or `PREPAY_TOKEN`.| 
-| smartMeterReadFrequency | string | `Optional`. Allowed value can be half hourly, daily, monthly or null. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
+| gasMeterReference | string | `Optional` | `Returned always` | Gas reference number for the supply address. |
+| electricityMeterReference | string | `Required` | `Returned always` | Electricity reference number for the supply address. |
+| gasMeterType | string | `Required` | `Returned always` | Meter type for gas. This must be `CREDIT_METER` or `PREPAY_TOKEN` |
+| electricityMeterType | string | `Required` | `Returned always` | Meter type for electricity. This can be one of either `CREDIT_METER` or `PREPAY_SMART_CARD` or `PREPAY_SMART_KEY` or `PREPAY_TOKEN`.| 
+| smartMeterReadFrequency | string | `Optional` | `Returned always` | Allowed value can be half hourly, daily, monthly or null. |
 
 ### Create an Order [POST /orders]
 
@@ -324,8 +324,11 @@ Meter details represent metering information about the user.
                 "meta": {}
             }
             
-### Modify orders [PUT /orders]
-
+### Modify orders [PUT /orders/{id}]
++ Parameters
+   
+   + id (string,required) - Order id
+   
 + Request (application/json)
 
     + Headers
@@ -481,10 +484,25 @@ Meter details represent metering information about the user.
                     "boilerAge": "BOILER_AVG",
                     "electricityUsageType": "USG_EL_MED",
                     "loyaltyCardNumber": "11111111111",
-                    "loyaltyRegistrationStatus": "NECTAR_CARD_HELD"
+                    "loyaltyRegistrationStatus": "NECTAR_CARD_HELD",
+                     "smartMeterReadFrequency":null
                 }
             }
     
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "code": "tokenKey",
+                    "postcode": "error.client.token.invalid"
+                },
+                "meta": {}
+            }
+
++ Response 304 (application/json)
+
 + Response 400 (application/json)
 
             {
