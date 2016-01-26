@@ -3,33 +3,33 @@ Services Accounts endpoint allows you to list / view all the services accounts o
 
 Service Account as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Account number of the account is considered as the unique identifier |
-| customerId | string | `Returned always`. This is the legacy customer identification applicable for certain accounts. |
-| premiseId | string | `Returned always`. This is the legacy premise identification applicable for certain accounts. |
-| holderName | string | `Returned always`. Name of the account holder if available. |
-| status | string | `Returned always`. Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed` and `unknown`.|
-| type | string | `Returned always`. Type of the account, this will be always Services. |
-| subType | string | `Returned always`. Subtype of the account, this will be Home Services or Security. |
-| responsibilityType | string | `Returned always`. Responsibility type of the account if available. | 
-| legacyAccountNumber | string | `Returned always`. Legacy Account Number of the account if available. |
-| contractEndDate | string | `Returned always`. End date of contract associated to the account if available, in dd/MM/yyyy format |
-| nextServiceDate | string | `Returned always`. Next service visit date if available, in dd/MM/yyyy format |
-| multiPremiseLandlord| boolean | `Returned always`. Indicates the account as a multi premise landlord account, if the value is true |
-| bulkAccount | boolean | `Returned always`. Indicates the account as a bulk account, if the value is true |
-| landlord | boolean | `Returned always`. Indicates the account as a landlord account, if the value is true |
-| gasSafetyCertificateAvailable | boolean | `Returned always`. Indicates that the account holds a valid Gas Safety Certificate, if the value is true |
-| eligibleForFirstVisit | boolean | `Returned always`. Indicates that first visit can be booked for this account, if the value is true |
-| eligibleForInterimBreakdown | boolean | `Returned always`. Indicates that interim breakdown visit can be booked for this account, if the value is true |
-| eligibleForAnnualServiceVisit | boolean | `Returned always`. Indicates that annual service visit can be booked for this account, if the value is true |
-| eligibleForUpsell | boolean | `Returned always`. Indicates that the account can be upgraded, if the value is true |
-| supplyAddress | Address | `Returned always`. Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
-| contractRenewalDate | string | `Returned always`. Renewal date for the contract associated to the account if contract end date is available, in dd/MM/yyyy format |
-| contractStatus | string | `Returned always`. Status of the contract associated to the account if available. Possible values are `cancelled`, `prospect`, `ondemand`, `active`, `withdrawing`, `inactive`, `lapsed`, `waiting`, `renewal` and `unknown`.|
-| paperlessCommunication | Boolean | `Returned always`. Indicates that the account holds paperless communication, if the value is true, otherwise false. If SAP is down, the value will be null |
-| productHoldings | array of string | `Returned always`. All the product holdings associated to the account. |
-| paymentType | string | `Returned always`. Payment type description of the account if available. Possible values are `fixed-direct-debit`, `prepayment`, `cash-cheque`, `variable-direct-debit`, `fuel-direct`, `standing-order`, `pending-fuel-direct`, `magnetic-card`, `mag-card`, `cps-apt` and `cps-qep` |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` |  Account number of the account is considered as the unique identifier |
+| customerId | string | `Not Applicable` | `Returned always` |  This is the legacy customer identification applicable for certain accounts. |
+| premiseId | string | `Not Applicable` | `Returned always` |  This is the legacy premise identification applicable for certain accounts. |
+| holderName | string | `Not Applicable` | `Returned always` |  Name of the account holder if available. |
+| status | string | `Not Applicable` | `Returned always` |  Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed` and `unknown`.|
+| type | string | `Not Applicable` | `Returned always` |  Type of the account, this will be always Services. |
+| subType | string | `Not Applicable` | `Returned always` |  Subtype of the account, this will be Home Services or Security. |
+| responsibilityType | string | `Not Applicable` | `Returned always` |  Responsibility type of the account if available. | 
+| legacyAccountNumber | string | `Not Applicable` | `Returned always` |  Legacy Account Number of the account if available. |
+| contractEndDate | string | `Not Applicable` | `Returned always` |  End date of contract associated to the account if available, in dd/MM/yyyy format |
+| nextServiceDate | string | `Not Applicable` | `Returned always` |  Next service visit date if available, in dd/MM/yyyy format |
+| multiPremiseLandlord| boolean | `Not Applicable` | `Returned always` |  Indicates the account as a multi premise landlord account, if the value is true |
+| bulkAccount | boolean | `Not Applicable` | `Returned always` |  Indicates the account as a bulk account, if the value is true |
+| landlord | boolean | `Not Applicable` | `Returned always` |  Indicates the account as a landlord account, if the value is true |
+| gasSafetyCertificateAvailable | boolean | `Not Applicable` | `Returned always` |  Indicates that the account holds a valid Gas Safety Certificate, if the value is true |
+| eligibleForFirstVisit | boolean | `Not Applicable` | `Returned always` |  Indicates that first visit can be booked for this account, if the value is true |
+| eligibleForInterimBreakdown | boolean | `Not Applicable` | `Returned always` |  Indicates that interim breakdown visit can be booked for this account, if the value is true |
+| eligibleForAnnualServiceVisit | boolean | `Not Applicable` | `Returned always` |  Indicates that annual service visit can be booked for this account, if the value is true |
+| eligibleForUpsell | boolean | `Not Applicable` | `Returned always` |  Indicates that the account can be upgraded, if the value is true |
+| supplyAddress | Address | `Not Applicable` | `Returned always` |  Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
+| contractRenewalDate | string | `Not Applicable` | `Returned always` |  Renewal date for the contract associated to the account if contract end date is available, in dd/MM/yyyy format |
+| contractStatus | string | `Not Applicable` | `Returned always` |  Status of the contract associated to the account if available. Possible values are `cancelled`, `prospect`, `ondemand`, `active`, `withdrawing`, `inactive`, `lapsed`, `waiting`, `renewal` and `unknown`.|
+| paperlessCommunication | Boolean | `Mandatory` | `Returned always` |  Indicates that the account holds paperless communication, if the value is true, otherwise false. If SAP is down, the value will be null |
+| productHoldings | array of string | `Not Applicable` | `Returned always` |  All the product holdings associated to the account. |
+| paymentType | string | `Not Applicable` | `Returned always` |  Payment type description of the account if available. Possible values are `fixed-direct-debit`, `prepayment`, `cash-cheque`, `variable-direct-debit`, `fuel-direct`, `standing-order`, `pending-fuel-direct`, `magnetic-card`, `mag-card`, `cps-apt` and `cps-qep` |
 
 ### Retrieve all service accounts [GET /service-accounts]
 + Request
@@ -321,14 +321,14 @@ Service Account as a resource represents following information
                 "meta": {}
             }
 
-+ Response 404 (application/json)
++ Response 403 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
                 "errors": {
-                    "code": "authorize",
-                    "message": "access_denied"
+                    "code": "account",
+                    "message": "error.client.account.invalid"
                 },
                 "meta": {}
             }
@@ -365,70 +365,6 @@ Service Account as a resource represents following information
                 "errors": {
                     "code": "correspondence",
                     "message": "error.client.correspondenceUpdate.failed"
-                },
-                "meta": {}
-            }
-            
-### Services Contract Check [POST /services-accounts/contract-check]
-+ Request
-
-    + Headers
-
-            Authorization: Bearer accesstoken
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
-    + Body
-    
-            {
-                "serviceArea": "Drains",
-                "workType": "Toilet blocked - other toilet available",
-                "accountNumber": "911237650986"
-            }
-
-+ Response 200 (application/json)
-
-            {
-                "status": "SUCCESS",
-                "contractCheck": {
-                    "contractAvailable ": true
-                },
-                "meta": {
-                    "contractVerificationToken": "aergrtgfhe8r7tytrhsjfhswdufwe0="
-                },
-                "errors": []
-            }
-
-+ Response 401 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": {
-                    "code": "authorize",
-                    "message": "access_denied"
-                },
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "code": "accountNumber",
-                    "message": "error.client.accountNumber.blank"                },
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
-
-            {
-                "status": "ERROR",
-                "data": {},
-                "errors": {
-                    "code": "contract",
-                    "message": "error.client.contract.notfound"
                 },
                 "meta": {}
             }
