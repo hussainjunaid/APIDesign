@@ -7,27 +7,25 @@ If the classification value sent as part of the request is 'CHI', then the custo
 
 #### Prospect
 
-Prospect as a resource represent the following information
-
 | Name | Type | As request | As response | Description |
 | :---------- | :------ | -------- |---------|------------------------------------ |
-| id | string | not passed on POST | `Returned always` | Encrypted UCRN value is set as an id for the classfication 'smart'. Memcache Token key will be set as an id for the classification 'chi' |
-| title | string | `mandatory` | `Returned always` | Title of the customer. |
-| firstName | string | `mandatory` | `Returned always` |  First name of the customer. |
-| surname | string | `mandatory` | `Returned always` |  Surname of the customer. |
-| emailAddress | string | `mandatory` | `Returned always` |  Email address of the customer. |
-| primaryTelephoneNumber | TelephoneNumber | `mandatory` | `Returned always` |  primary telephone number of the customer. |
-| postcode | string | `mandatory` | `Returned always` |  Postcode of cusstomer's address. |
-| correspondenceAddress | [Address](/api-reference/addresses.md#addresses) | `mandatory` | `Returned always` |  Address details of the customer. |
+| id | string | `Optional` | `Returned always` | Encrypted UCRN value is set as id.Memcache Token key will be set as an id for the classification 'chi' |
+| title | string | `Mandatory` | `Returned always` | Title of the customer. |
+| firstName | string | `Mandatory` | `Returned always` |  First name of the customer. |
+| surname | string | `Mandatory` | `Returned always` |  Surname of the customer. |
+| emailAddress | string | `Mandatory` | `Returned always` |  Email address of the customer. |
+| primaryTelephoneNumber | TelephoneNumber | `Mandatory` | `Returned always` |  Primary telephone number of the customer. |
+| postcode | string | `Mandatory` | `Returned always` |  Postcode of customer's address. |
+| correspondenceAddress | [Address](/api-reference/addresses.md#addresses) | `Mandatory` | `Returned always` |  Address details of the customer. |
+| smartMeterInterest | Boolean | `Mandatory` | `Returned always` |  While creating a prospect the value should be false. This will be updated accordingly on /PUT operation |
 | classification | string | `mandatory` | `Returned always` |classification value will be sent either as 'smart' or 'chi' depending on the targeted back end system.|
-| smartMeterInterest | Boolean | `optional` | `Returned always` |  This value will be sent only when the classification value is been sent as 'Smart'. While creating a prospect for Smart customers the value should be false. This will be updated accordingly on /PUT operation.|
 
 #### TelephoneNumber
 
-| Name | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| number | string | 'mandatory'. Valid Telephone number applicable. |
-| type | string | 'optional' Telephone number type, it can be `home`, `work`, `mobile`|
+| Name | Type | As request | As response | Description |
+| :---------- | :------ | -------- |---------|------------------------------------ |
+| number | string | `Mandatory`| `Returned always` | Valid Telephone number applicable. |
+| type | string | `Optional` | `Returned always` |Telephone number type, it can be `home`, `work`, `mobile`|
 
 ### Create prospect [POST /prospects]
 This controller service is used to create or retrieve the existing UCRN and Busines Partner (BP) in SAP for the anonymous customer. UI needs to give the following information as a request. The request body of this post must be a JSON object with properties listed below.
@@ -187,8 +185,8 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "data": {},
                 "errors": [
                     {
-                        "code": "surname",
-                        "message": "error.client.surname.blank"
+                        "code": "firstName",
+                        "message": "error.client.firstName.blank"
                     }
                 ],
                 "meta": {}
@@ -280,31 +278,48 @@ This controller service is used to create or retrieve the existing UCRN and Busi
 + Response 200 (application/json)
 
             {
-                "prospect": {
-                    "title": "Mr",
-                    "firstName": "Pentwazz Stavea",
-                    "surname": "Kenj",
-                    "email": "sakthi@bgdigitaltest.co.uk",
-                    "smartMeterInterest": "true",
-                    "classification": "smart",
-                    "primaryTelephoneNumber": {
-                        "number": "07404669698"
-                    },
-                    "correspondenceAddress": {
-                        "houseNumber": "67",
-                        "flatNumber": null,
-                        "houseName": null,
-                        "addressLine1": "Beresford Avenue",
-                        "addressLine2": null,
-                        "postalTown": "Surbiton",
-                        "county": "SURREY",
-                        "postcode": "KT5 9LH"
-                    }
-                },
-                "errors": [],
-                "meta": {}
+            	"status": "SUCCESS",
+            	"data": {
+            		"prospect": {
+            			"id": "8fbe249f-09b3-5649-b512-08bd3fa3fc56",
+            			"title": "Mr",
+            			"firstName": "Pentwazz Stavea",
+            			"surname": "Kenj",
+            			"email": "sakthi@bgdigitaltest.co.uk",
+            			"smartMeterInterest": "true",
+            			"classification": "smart",
+            			"primaryTelephoneNumber": {
+            				"number": "07404669698"
+            			},
+            			"correspondenceAddress": {
+            				"houseNumber": "67",
+            				"flatNumber": null,
+            				"houseName": null,
+            				"addressLine1": "Beresford Avenue",
+            				"addressLine2": null,
+            				"postalTown": "Surbiton",
+            				"county": "SURREY",
+            				"postcode": "KT5 9LH"
+            			}
+            		},
+            		"errors": [],
+            		"meta": {}
             }
             
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                		"code": "meta",
+                		"message": "error.prospectinfo.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
 + Response 403 (application/json)
 
             {
@@ -312,13 +327,13 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "data": {},
                 "errors": [
                     {
-                        "code": "tokenKey",
-                        "message": "error.client.token.invalid"
+                		"code": "tokenKey",
+                		"message": "error.client.token.invalid"
                     }
                 ],
                 "meta": {}
             }
-
+            
 + Response 304 (application/json)
 
 + Response 400 (application/json)
@@ -328,8 +343,8 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "data": {},
                 "errors": [
                     {
-                        "code": "customer",
-                        "message": "error.client.customer.modificationNotAllowed"
+                        "code": "prospect",
+                        "message": "error.client.prospect.modificationNotAllowed"
                     }
                 ],
                 "meta": {}
@@ -363,6 +378,20 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
             
++ Response 403 (application/json)            
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "prospect",
+                        "message": "error.server.prospectId.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
 + Response 403 (application/json)            
             
             {
