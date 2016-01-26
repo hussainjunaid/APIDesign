@@ -2,66 +2,66 @@
 
 ## Homemove Leads [/home-move-leads]
 
-Home move leads API allows you to retrieve, create and update homemove lead. Responses from this API will be returned in JSON format only.
->`Note:` The payload should be of `JSON` format for this API. This API accepts requests only if the content-type is `application/json`.
+Home move leads endpoint allows you to retrieve, create and update homemove lead. Responses from this endpoint will be returned in JSON format only.
+>`Note:` The payload should be of `JSON` format for this endpoint. This endpoint accepts requests only if the content-type is `application/json`.
 
 >`Note:` There is a business requirement to take services customer through new experience and new experience emails need to be send in this scenario. API will use CQ feature management to get the products configured for new experience and send new experience email to the customer.
  
 #### Home move lead
 Home move lead as a resource represents following information. 
  
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Lead ID created in Online DB and submitted to Kana Queue. |
-| accountNumbers | array of string | `Returned always`. Account numbers associated with the address which is selected for home move. |
-| mobileNumber | string | `Returned always`. Mobile number of the customer, if available. |
-| moveOutDate | string | `Returned always`. Date when the customer have moved out of the address, in dd/MM/yyyy format. |
-| moveOutGasReading | string | `Returned always`. Gas meter reading taken at the moved out address. |
-| moveOutElectricityDayReading | string | `Returned always`. Electricity day meter reading taken at the moved out address. |
-| moveOutElectricityNightReading | string | `Returned always`. Electricity night meter reading taken at the moved out address. |
-| moveInDate | string | `Returned always`. Date when the customer is moving in to the new address, in dd/MM/yyyy format. |
-| moveInBillResponsible | boolean | `Returned always`. Sets to true if customer is responsible for the bill at the moving in address, else this value is set to false. |
-| optOutReasonForEnergy | string | `Returned always`. Reason given by customer when they are not taking both Gas and electricity account to the new address. |
-| moveInGasReading | string | `Returned always`. Gas meter reading taken at the moving in address. |
-| moveInElectricityDayReading | string | `Returned always`. Electricity day meter reading taken at the moving in address. |
-| moveInElectricityNightReading | string | `Returned always`. Electricity night meter reading taken at the moving in address. |
-| moveInGasAccount | boolean | `Returned always`. Set to true if the gas account is moved to the new address. |
-| moveInElectricityAccount| boolean | `Returned always`. Set to true if the electricity account is moved to the new address. |
-| moveInHomeServiceAccount | boolean | `Returned always`. Set to true if the services account is moved to the new address. |
-| moveInFlatNumber | string | `Returned always`. Flat number of the moving in address, if available. |
-| moveInHouseNumber | string | `Returned always`. House number of the moving in address, if available. |
-| moveInHouseName | string | `Returned always`. House name of the moving in address, if available. |
-| moveInAddressLine1 | string | `Returned always`. Moving in address line 1. Typically contains building name / street etc... |
-| moveInAddressLine2 | string | `Returned always`. Moving in address line 2. Typically contains street / avenues etc... |
-| moveInPostalTown | string | `Returned always`. Postal town of the moving in address. |
-| moveInCounty | string | `Returned always`. County to which the moving in address belongs. |
-| moveInPostcode | string | `Returned always`. Postcode of the moving in address. |
-| moveInMpan | string | `Returned always`. MPAN of the moving in address. |
-| moveInMprn | string | `Returned always`. MPRN of the moving in address. |
-| selectedProposition | string | `Returned always`. The proposition selected by the customer, currently supports `GAK`, `CI`, `ECO`, `None` and blank. |
-| status | string | `Returned always`. The status of the lead, currently supports `Complete`, `All Reading Pending`, `Move Out Reading Pending`, `Move In Reading Pending` and blank. |
-| expiryDate | string | `Returned always`. The expiry date of the lead, in dd/MM/yyyy format. |
-| createdDate | string | `Returned always`. The date of creation of the lead, in dd/MM/yyyy format. |
-| moveOutEconomySevenMeter | boolean | `Returned always`. Value will be `true` if the electricity meter is economy seven in move out address, else value will be `false`. |
-| moveInEconomySevenMeter | boolean | `Returned always`. Value will be `true` if the electricity meter is economy seven in move in address, else value will be `false`. |
-| category | string | `Returned always`. Category can have values - `expired`, `processed`, `in-flight`, `submitted` or `unknown`. |
-| gasDirectDebitAmount | number | `Returned always`. Gas Direct Debit amount to be set for the new property. |
-| electricityDirectDebitAmount | number | `Returned always`. Electricity Direct Debit amount to be set for the new property. |
-| propertyType | string | `Returned always`. Property type used for consumption calculation for new property . |
-| noOfBedrooms | string | `Returned always`. Number of bedrooms used for consumption calculation for new property . |
-| noOfPeople | string | `Returned always`. Number of people used for consumption calculation for new property . |
-| electricityUsageType | string | `Returned always`. Electricity usage type used for consumption calculation for new property . |
-| houseAge | string | `Returned always`. House age used for consumption calculation for new property . |
-| roomHeating | string | `Returned always`. Room heating method used for consumption calculation for new property . |
-| boilerType | string | `Returned always`. Boiler type used for consumption calculation for new property . |
-| waterHeating | string | `Returned always`. Water heating method used for consumption calculation for new property . |
-| boilerAge | string | `Returned always`. Boiler age used for consumption calculation for new property . |
-| consumptionEstimated | boolean | `Returned always`. `true` if consumption calculated for new property else `false`. |
-| gasConsumptionValue | number | `Returned always`. Gas consumption value calculated for new property . |
-| electricityConsumptionValue | number | `Returned always`. Electricity consumption value calculated for new property . |
-| gasTariff | string | `Returned always`. Gas tariff selected for new property . |
-| electricityTariff | string | `Returned always`. Electricity tariff selected for new property . |
-| optOutReasonForHomeServices | string | `Returned always`. Reason given by customer when they are not taking home services account to the new address. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :------------------- | ------------------------------------------------------------ |
+| id | string | `Optional` | `Returned always` |  Lead ID created in Online DB and submitted to Kana Queue. |
+| accountNumbers | array of string | `Mandatory` | `Returned always` |  Account numbers associated with the address which is selected for home move. |
+| mobileNumber | string | `Optional` | `Returned always` |  Mobile number of the customer, if available. |
+| moveOutDate | string | `Mandatory` | `Returned always` |  Date when the customer have moved out of the address, in dd/MM/yyyy format. |
+| moveOutGasReading | string | `Optional` | `Returned always` |  Gas meter reading taken at the moved out address. |
+| moveOutElectricityDayReading | string | `Optional` | `Returned always` |  Electricity day meter reading taken at the moved out address. |
+| moveOutElectricityNightReading | string | `Optional` | `Returned always` |  Electricity night meter reading taken at the moved out address. |
+| moveInDate | string | `Mandatory` | `Returned always` |  Date when the customer is moving in to the new address, in dd/MM/yyyy format. |
+| moveInBillResponsible | boolean | `Optional` | `Returned always` |  Sets to true if customer is responsible for the bill at the moving in address, else this value is set to false. |
+| optOutReasonForEnergy | string | `Mandatory` when cancel all energy product | `Returned always` |  Reason given by customer when they are not taking both Gas and electricity account to the new address. |
+| moveInGasReading | string | `Optional` | `Returned always` |  Gas meter reading taken at the moving in address. |
+| moveInElectricityDayReading | string | `Optional` | `Returned always` |  Electricity day meter reading taken at the moving in address. |
+| moveInElectricityNightReading | string | `Optional` | `Returned always` |  Electricity night meter reading taken at the moving in address. |
+| moveInGasAccount | boolean | `Optional` | `Returned always` |  Set to true if the gas account is moved to the new address. |
+| moveInElectricityAccount| boolean | `Optional` | `Returned always` |  Set to true if the electricity account is moved to the new address. |
+| moveInHomeServiceAccount | boolean | `Optional` | `Returned always` |  Set to true if the services account is moved to the new address. |
+| moveInFlatNumber | string | `Mandatory` when house number and house name | `Returned always` |  Flat number of the moving in address, if available. |
+| moveInHouseNumber | string | `Mandatory` when flat number and house name| `Returned always` |  House number of the moving in address, if available. |
+| moveInHouseName | string | `Mandatory` when house number and flat number | `Returned always` |  House name of the moving in address, if available. |
+| moveInAddressLine1 | string | `Optional` | `Returned always` |  Moving in address line 1. Typically contains building name / street etc... |
+| moveInAddressLine2 | string | `Optional` | `Returned always` |  Moving in address line 2. Typically contains street / avenues etc... |
+| moveInPostalTown | string | `Mandatory` | `Returned always` |  Postal town of the moving in address. |
+| moveInCounty | string | `Optional` | `Returned always` |  County to which the moving in address belongs. |
+| moveInPostcode | string | `Mandatory` | `Returned always` |  Postcode of the moving in address. |
+| moveInMpan | string | `Optional` | `Returned always` |  MPAN of the moving in address. |
+| moveInMprn | string | `Optional` | `Returned always` |  MPRN of the moving in address. |
+| selectedProposition | string | `Optional` | `Returned always` |  The proposition selected by the customer, currently supports `GAK`, `CI`, `ECO`, `None` and blank. |
+| status | string | `Not required` | `Returned always` |  The status of the lead, currently supports `Complete`, `All Reading Pending`, `Move Out Reading Pending`, `Move In Reading Pending` and blank. |
+| expiryDate | string | `Not required` | `Returned always` |  The expiry date of the lead, in dd/MM/yyyy format. |
+| createdDate | string | `Not required` | `Returned always` |  The date of creation of the lead, in dd/MM/yyyy format. |
+| moveOutEconomySevenMeter | boolean | `Optional` | `Returned always` |  Value will be `true` if the electricity meter is economy seven in move out address, else value will be `false`. |
+| moveInEconomySevenMeter | boolean | `Optional` | `Returned always` |  Value will be `true` if the electricity meter is economy seven in move in address, else value will be `false`. |
+| category | string | `Not required` | `Returned always` |  Category can have values - `expired`, `processed`, `in-flight`, `submitted` or `unknown`. |
+| gasDirectDebitAmount | number | `Optional` | `Returned always` |  Gas Direct Debit amount to be set for the new property. |
+| electricityDirectDebitAmount | number | `Optional` | `Returned always` |  Electricity Direct Debit amount to be set for the new property. |
+| propertyType | string | `Mandatory` when consumption estimated | `Returned always` |  Property type used for consumption calculation for new property . |
+| noOfBedrooms | string | `Mandatory` when consumption estimated | `Returned always` |  Number of bedrooms used for consumption calculation for new property . |
+| noOfPeople | string | `Mandatory` when consumption estimated | `Returned always` |  Number of people used for consumption calculation for new property . |
+| electricityUsageType | string | `Optional` | `Returned always` |  Electricity usage type used for consumption calculation for new property . |
+| houseAge | string | `Optional` | `Returned always` |  House age used for consumption calculation for new property . |
+| roomHeating | string | `Optional` | `Returned always` |  Room heating method used for consumption calculation for new property . |
+| boilerType | string | `Optional` | `Returned always` |  Boiler type used for consumption calculation for new property . |
+| waterHeating | string | `Optional` | `Returned always` |  Water heating method used for consumption calculation for new property . |
+| boilerAge | string | `Optional` | `Returned always` |  Boiler age used for consumption calculation for new property . |
+| consumptionEstimated | boolean | `Optional` | `Returned always` |  `true` if consumption calculated for new property else `false`. |
+| gasConsumptionValue | number | `Mandatory` when consumption estimated | `Returned always` |  Gas consumption value calculated for new property . |
+| electricityConsumptionValue | number | `Mandatory` when consumption estimated | `Returned always` |  Electricity consumption value calculated for new property . |
+| gasTariff | string | `Optional` | `Returned always` |  Gas tariff selected for new property . |
+| electricityTariff | string | `Optional` | `Returned always` |  Electricity tariff selected for new property . |
+| optOutReasonForHomeServices | string | `Mandatory` when cancel home services product | `Returned always` |  Reason given by customer when they are not taking home services account to the new address. |
 
 #### Validations
 
@@ -395,11 +395,11 @@ Following validations apply on individual attributes
                 "meta": {}
             }
             
-### Retrieve lead [GET /leads/{leadId}]
+### Retrieve lead [GET /leads/{id}]
 
 + Parameters
     
-    + leadId (string) - Lead id to be retrieved
+    + id (string) - Lead id to be retrieved
 
 + Request (application/json)
 
