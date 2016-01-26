@@ -25,6 +25,8 @@ Flow is explained below.
  6. Now the user is provided an opportunity to enter his password. 
  7. When the user clicks on submit, app will use a PUT on /userinfo/temporary-profile to create an actual account at online. Till this point, the user is not considered registered.
 
+`temporaryProfile` as such just represents a disposable user profile at online. However, its `id` is mapped to a token that expires post 1 hour. If `temporaryProfile` is not upgraded within this time slot, it will be disposed.
+To retrieve information about such a token and few information it is mapped to, `/userinfo/temporary-profiles/token-info` helps.
 
 #### Temporary profile
 As a resource, following properties define a Temporary profile.
