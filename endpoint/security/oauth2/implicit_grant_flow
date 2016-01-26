@@ -1,1 +1,164 @@
+## Group OAuth 2.0
 
+## Implicit Grant flow
+
+Implicit authorization from OAuth 2.0 allows a javascript application to generate a new token to access Online API. 
+
+Overall process for OAuth 2.0 implicit flow is as detailed in the diagram below.
+
+![implicit_flow](https://cloud.githubusercontent.com/assets/8318644/5143669/593e01e4-718a-11e4-8a27-a54c8e1cfe5d.png)
+
+Following steps details implicit authorization grant.
+
+## Step 1: Client to Online [/authorize]
+
+Request for authorize must be initiated under following circumstances.
+  1. When the client knows that the current session is not authorized.
+  2. When the client receives a 401 for any Online API that needs a valid access token.
+
+### Authorization [GET /authorize{?response_type,client_id,state,redirect_uri,scope,secondary_redirect}]
++ Parameters
+
+    + response_type (string, required) - Value MUST be set to "token"
+    + client_id (string, required) - Client identifier registered at Online.
+    + state (string, optional) - 'Recommended' Arbitrary value to maintain state between request and callback by the client.
+    + redirect_uri (string, required) - Must be a valid redirect URI that is registered at Online.
+    + scope (string, Optional) - Scope of the access request
+    + secondary_redirect (string, required) - Must be a URI within the same domain as in redirect uri
+
++ Request
+
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "unauthorized_client"
+                },
+                "meta": {}
+            }
+
+## Step 2: Resource owner to Online [/]
+This step is executed if `authorize` identifies that the user is not yet authenticated by Online. 
+
+User agent will be redirected to Login page (either at www.britishgas.co.uk/Login/Login-Verify/ or at www.sainsburysenergy.com/Login/Login-Verify/) and the user will be forced to log into Online.
+
+As soon as the user logs in and authorizes the request, Online redirects to `authorize` again to fetch the access token.
+
+### Not Applicable [GET]
++ Request
+
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+            
+
+## Step 3: Online to Client [/redirect_uri]
+
+During this step, `authorize` redirects user agent to the redirect URI and appends following information in URI fragment as shown below
+
+### Redirect [GET /redirect_uri{?access_token,token_type,scope,state,secondary_redirect,expires_in}]
+
++ Parameters
+
+    + access_token (string, required) - `Returned always` The access token issued by the authorization server.
+    + token_type (string, required) - `Returned always`. The type of the token issued. Online currently supports only 'Bearer' access token.
+    + expires_in (string, required) -  `Returned always`. The lifetime in seconds for the issued access token. |
+    + secondary_redirect (string, required) - `Returned always`. This is the same as passed through from the client in Step 1.
+    + scope (string, Optional) - All requests are now with default scopes and hence will be skipped.
+    + state (string, Optional) - Arbitrary value to maintain state between request and callback by the client.
+
+
++ Request
+
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+## Step 4: Client to Online [/tokeninfo]
+
+Though the client has the access_token from `authorize` at this point, it is still expected to validate the token and verify if it was issued to the same client using the `tokeninfo` endpoint.
+
+Typical request to `tokeninfo` resembles following.
+
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| access_token | string | `Required`. The access token issued by the authorization server. |
+
+#### Validation Errors
+
+Following table details more information about each field.
+
+| Property | Type | Description |
+| :-------------------- | :---------- | ------------------------------------------------------------ |
+| audience | string | `Returned always`. Cleint identifier that is the intended target for the access_token. |
+| scope | string | `Returned always`. List of space-delimited scope the user consented to. Will be empty at Online as it does not define a particular scope. |
+| userid | string | `Returned always`. Identifier for the logged-in user at Online. |
+| expires_in | string | `Returned always`. The lifetime of access_token issued. |
+
+### Retrieve Tokeninfo [GET]
++ Request
+
+    + Headers
+    
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "scope": "",
+                "audience": "05e230bf-a9cf-4b31-bc54-d3a995f62526",
+                "userid": "barclay@bgtest.co.uk",
+                "expires_in": 3468
+            }
+
++ Response 400 (application/json)
+
+            {
+                "error": "invalid_token"
+            }
+
+## Step 5: Token validation [/tokenvalidation]
+
+Tokens received on the fragment MUST be explicitly validated. Failure to verify tokens acquired this way makes your application more vulnerable to the [confused deputy problem](http://en.wikipedia.org/wiki/Confused_deputy_problem).
+
+### Not Applicable [GET]
++ Request
+
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+## Step 6: Access API with access token [/customers]
+
+Tokens received on the fragment MUST be explicitly validated. Failure to verify tokens acquired this way makes your application more vulnerable to the [confused deputy problem](http://en.wikipedia.org/wiki/Confused_deputy_problem).
+
+### If supplied acces_token is no longer valid [GET]
++ Request
+
+    + Headers
+            
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": {
+                    "authorize": "invalid_request"
+                },
+                "meta": {}
+            }
