@@ -12,7 +12,7 @@ Service Account as a resource represents following information
 | status | string | `Not Applicable` | `Returned always` |  Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed` and `unknown`.|
 | type | string | `Not Applicable` | `Returned always` |  Type of the account, this will be always Services. |
 | subType | string | `Not Applicable` | `Returned always` |  Subtype of the account, this will be Home Services or Security. |
-| responsibilityType | string | `Not Applicable` | `Returned always` |  Responsibility type of the account if available. | 
+| responsibilityType | string | `Not Applicable` | `Returned always` |  Responsibility type of the account if available. |
 | legacyAccountNumber | string | `Not Applicable` | `Returned always` |  Legacy Account Number of the account if available. |
 | contractEndDate | string | `Not Applicable` | `Returned always` |  End date of contract associated to the account if available, in dd/MM/yyyy format |
 | nextServiceDate | string | `Not Applicable` | `Returned always` |  Next service visit date if available, in dd/MM/yyyy format |
@@ -32,13 +32,13 @@ Service Account as a resource represents following information
 | paymentType | string | `Not Applicable` | `Returned always` |  Payment type description of the account if available. Possible values are `fixed-direct-debit`, `prepayment`, `cash-cheque`, `variable-direct-debit`, `fuel-direct`, `standing-order`, `pending-fuel-direct`, `magnetic-card`, `mag-card`, `cps-apt` and `cps-qep` |
 
 ### Retrieve all service accounts [GET /service-accounts]
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -91,37 +91,55 @@ Service Account as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [
+                {
                     "code": "authorize",
                     "message": "access_denied"
-                },
+                }
+                ],
                 "meta": {}
             }
+
++ Request 'No services accounts available'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [
+                {
                     "code": "serviceAccounts",
                     "message": "error.accounts.notFound"
-                },
+                }
+                ],
                 "meta": {}
             }
 
 ### Retrieve a specific service account [GET /service-accounts/{id}]
 + Parameters
 
-    + id (string) - This is the customers account number
-        
-+ Request
+    + id: 12345678 (string) - This is the customers account number
+
++ Request 'SUCCESS'
 
     + Headers
 
@@ -178,46 +196,64 @@ Service Account as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [
+                {
                     "code": "authorize",
                     "message": "access_denied"
-                },
+                }
+                ],
                 "meta": {}
             }
+
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
+                "errors": [
+                {
                     "code": "accountNumber",
                     "message": "error.account.notFound"
-                },
+                }
+                ],
                 "meta": {}
             }
-            
+
 ### Modify a specific service account [PUT /service-accounts/{id}]
 
 + Parameters
 
-    + id (number) ...This is the customers account number
-        
-+ Request
+    + id: 12345678 (string) - This is the customers account number
+
++ Request 'Success'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
     + Body
-  
+
             {
                 "servicesAccount": {
                     "landlord": false,
@@ -308,63 +344,108 @@ Service Account as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-             
+
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [
+                {
                     "code": "authorize",
                     "message": "access_denied"
-                },
+                }
+                ],
                 "meta": {}
             }
+
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                    "code": "account",
-                    "message": "error.client.account.invalid"
-                },
+                "errors": [
+                  {
+                      "code": "account",
+                      "message": "error.client.account.invalid"
+                  }
+                ],
                 "meta": {}
             }
+
++ Request 'Correspondence preference is not updated for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                    "code": "correspondence",
-                    "message": "error.client.corespondence.notModified"
-                },
+                "errors": [
+                  {
+                      "code": "correspondence",
+                      "message": "error.client.corespondence.notModified"
+                  }
+                ],
                 "meta": {}
             }
+
++ Request 'Incompatible services accounts payload provided'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                    "code": "correspondence",
-                    "message": "error.client.corespondence.changeNotSupported"
-                },
+                "errors": [
+                  {
+                      "code": "correspondence",
+                      "message": "error.client.corespondence.changeNotSupported"
+                  }
+                ],
                 "meta": {}
             }
-            
+
++ Request 'When the correspondence service call failed'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
-                "errors": {
-                    "code": "correspondence",
-                    "message": "error.client.correspondenceUpdate.failed"
-                },
+                "errors": [
+                  {
+                      "code": "correspondence",
+                      "message": "error.client.correspondenceUpdate.failed"
+                  }
+                ],
                 "meta": {}
             }

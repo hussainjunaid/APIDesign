@@ -14,18 +14,18 @@ Account as a resource represents following information
 | status | string | `Not applicable` | `Returned always` | Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`.|
 | type | string | `Not applicable` | `Returned always` | Type of the account, this will be Energy, Services or Order. |
 | subType | string | `Not applicable` | `Returned always` | Subtype of the account, this will be Electricity, Gas or Dual for Energy accounts and Sales orders, Home Services or Security for Services account. |
-| responsibilityType | string | `Not applicable` | `Returned always` | Responsibility type of the account if available. Possible values are `Legal Payer`, `Contract Owner` and `Other Contract Owner`. | 
+| responsibilityType | string | `Not applicable` | `Returned always` | Responsibility type of the account if available. Possible values are `Legal Payer`, `Contract Owner` and `Other Contract Owner`. |
 | supplyAddress | Address | `Not applicable` | `Returned always` | Address of the customer if available. MPAN and MPRN is null, as these values are not available for the address in backend. |
 
-####Address 
+####Address
 [click here](/api-reference/addresses.md#address) to refer address resource details.
 
 ### Retrieve a specific Account [GET /accounts/{id}]
 + Parameters
 
-    + id (string, required) - Account number or Sales Order number of the account is considered as the unique identifier
+    + id: 12345678 (string, required) - Account number or Sales Order number of the account is considered as the unique identifier
 
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -62,7 +62,14 @@ Account as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Issued token is not valid'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -74,7 +81,14 @@ Account as a resource represents following information
                 }],
                 "meta": {}
             }
-            
+
++ Request 'Valid token without 'Bearer' key'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -85,7 +99,14 @@ Account as a resource represents following information
                     "message": "access_denied"
                 }],
                 "meta": {}
-            }            
+            }
+
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -97,17 +118,17 @@ Account as a resource represents following information
                     "message": "error.client.account.notfound"
                 }],
                 "meta": {}
-            } 
+            }
 
 ### Retrieve all Accounts [GET /accounts]
 
-+ Request
++ Request 'Success'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -161,7 +182,14 @@ Account as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Issued token is not valid'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -173,7 +201,14 @@ Account as a resource represents following information
                 }],
                 "meta": {}
             }
-            
+
++ Request 'Valid token without 'Bearer' key'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -184,16 +219,4 @@ Account as a resource represents following information
                     "message": "access_denied"
                 }],
                 "meta": {}
-            }            
-
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [{
-                    "code": "accountNumber",
-                    "message": "error.client.account.notfound"
-                }],
-                "meta": {}
-            } 
+            }

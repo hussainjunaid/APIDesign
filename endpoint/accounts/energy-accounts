@@ -11,7 +11,7 @@ Energy account as a resource represents following information
 | status | string | `Not Applicable` | `Returned always` |  Status of the account if available. Possible values are `open`, `pending`, `closed`, `submitted`, `cancelled`, `complete`, `incomplete`, `locked`, `deactive`, `inprogress`, `new`, `processed`, `wafer` and `unknown`.|
 | type | string | `Not Applicable` | `Returned always` |  Type of the account, this will be always Energy. |
 | subType | string | `Not Applicable` | `Returned always` |  Subtype of the account, this will be Electricity, Gas or Dual. |
-| responsibilityType | string | `Not Applicable` | `Returned always` |  Responsibility type of the account if available. | 
+| responsibilityType | string | `Not Applicable` | `Returned always` |  Responsibility type of the account if available. |
 | balance | string | `Not Applicable` | `Returned always` |  Balance of the account if available. |
 | balanceType | string | `Not Applicable` | `Returned always` |  Type of account balance if available, it can be either "in credit" or "in debit". |
 | tariff | string | `Not Applicable` | `Returned always` |  Tariff id associated to the account if available. |
@@ -33,12 +33,12 @@ Energy account as a resource represents following information
 
 [click here](/api-reference/energy-insights.md#energy-insights) to refer energy insight details
 
-#### Smart Card 
+#### Smart Card
 
 [click here](/api-reference/smart-card.md#smart-card) to refer smart card details
 
 ### Retrieve all energy accounts [GET /energy-accounts]
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -136,9 +136,9 @@ Energy account as a resource represents following information
 ### Retrieve a specific Account using Account Number [GET /energy-accounts{?accountNumber*}]
 + Parameters
 
-    + accountNumber (string) - This is the customers account number
-        
-+ Request
+    + accountNumber: 12345678 (string) - This is the customers account number
+
++ Request 'SUCCESS'
 
     + Headers
 
@@ -236,9 +236,9 @@ Energy account as a resource represents following information
 ### Retrieve a specific Account using id [GET /energy-accounts/{id}]
 + Parameters
 
-    + id (string) - This is the customers account number
-        
-+ Request
+    + id: 12345678 (string) - This is the customers account number
+
++ Request 'SUCCESS'
 
     + Headers
 
@@ -293,9 +293,9 @@ Energy account as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
 ### Retrieve all Energy accounts with energy insights sideloaded [GET /energy-accounts?include=energyInsights]
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -402,6 +402,13 @@ Energy account as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -415,7 +422,35 @@ Energy account as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'No energy accounts available'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "energyAccounts",
+                        "message": "error.accounts.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Request 'Account not associated with logged in customer'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -433,9 +468,9 @@ Energy account as a resource represents following information
 ### Retrieve specific Energy account with energy insights sideloaded [GET /energy-accounts/{id}?include=energyInsights]
 + Parameters
 
-    + id (string) - This is the customers account number
+    + id: 12345678 (string) - This is the customers account number
 
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -501,6 +536,14 @@ Energy account as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
 + Response 401 (application/json)
 
             {
@@ -514,23 +557,32 @@ Energy account as a resource represents following information
                 ],
                 "meta": {}
             }
-        
-+ Response 404 (application/json)
+
+
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "authorize",
-                        "message": "access_denied"
+                        "code": "account",
+                        "message": "error.client.account.invalid"
                     }
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve all Energy accounts with smartCard sideloaded [GET /energy-accounts?include=smartCard]
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -600,6 +652,13 @@ Energy account as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -613,8 +672,15 @@ Energy account as a resource represents following information
                 ],
                 "meta": {}
             }
-        
-+ Response 403 (application/json)
+
++ Request 'No energy accounts available'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
@@ -627,13 +693,13 @@ Energy account as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve specific Energy account with smartCard sideloaded [GET /energy-accounts/{id}?include=smartCard]
 + Parameters
 
-    + id (string) - This is the customers account number
-    
-+ Request
+    + id: 12345678 (string) - This is the customers account number
+
++ Request 'SUCCESS'
 
     + Headers
 
@@ -701,6 +767,13 @@ Energy account as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -714,8 +787,15 @@ Energy account as a resource represents following information
                 ],
                 "meta": {}
             }
-        
-+ Response 404 (application/json)
+
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
@@ -728,7 +808,7 @@ Energy account as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
 ### Modify Energy Account [PUT /energy-accounts/{accountNumber}]
 Modifying energy account: It is possible to modify an energy account but the modification supports only few possibilities. As of today, this endpoint supports a tariff change only. A typical request to modify the account is as shown below.
 
@@ -736,9 +816,9 @@ Modifying energy account: It is possible to modify an energy account but the mod
 
 + Parameters
 
-    + accountNumber (string) - This is the customers account number
-        
-+ Request
+    + accountNumber: 12345678 (string) - This is the customers account number
+
++ Request 'SUCCESS'
 
     + Headers
 
@@ -746,7 +826,7 @@ Modifying energy account: It is possible to modify an energy account but the mod
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "energyAccount": {
                     "jointInvoiceDetails": {
@@ -839,6 +919,13 @@ Modifying energy account: It is possible to modify an energy account but the mod
                 }
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -852,7 +939,14 @@ Modifying energy account: It is possible to modify an energy account but the mod
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Incompatible order payload provided'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
