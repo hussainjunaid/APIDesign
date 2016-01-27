@@ -25,6 +25,9 @@ endpoint/leads/home-move-leads
 endpoint/leads/services-leads
 endpoint/loyalties/loyalties
 endpoint/meters/meters
+endpoint/payments/payments
+endpoint/payments/payment-transactions
+endpoint/payments/bank-payment-response
 endpoint/meters/meter-reads-submit
 endpoint/orders/orders
 endpoint/orders/service-orders
