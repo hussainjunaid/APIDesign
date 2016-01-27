@@ -43,3 +43,4 @@ endpoint/products/prices
 endpoint/quotes/quotes
 endpoint/quotes/services-quotes
 endpoint/smart-cards/smart-cards
+endpoint/surveys/survey-responses
