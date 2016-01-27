@@ -9,3 +9,4 @@ endpoint/appointments/appointments
 endpoint/appointments/appointment-slots
 endpoint/bills/simulated-bills
 endpoint/contracts/services-contracts
+endpoint/correspondences/correspondences
