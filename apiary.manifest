@@ -3,3 +3,4 @@ endpoint/accounts/accounts
 endpoint/accounts/energy-accounts
 endpoint/accounts/services-accounts
 endpoint/addresses/addresses
+endpoint/api-management/heartbeat
