@@ -278,32 +278,33 @@ This controller service is used to create or retrieve the existing UCRN and Busi
 + Response 200 (application/json)
 
             {
-            	"status": "SUCCESS",
-            	"data": {
-            		"prospect": {
-            			"id": "8fbe249f-09b3-5649-b512-08bd3fa3fc56",
-            			"title": "Mr",
-            			"firstName": "Pentwazz Stavea",
-            			"surname": "Kenj",
-            			"email": "sakthi@bgdigitaltest.co.uk",
-            			"smartMeterInterest": "true",
-            			"classification": "smart",
-            			"primaryTelephoneNumber": {
-            				"number": "07404669698"
-            			},
-            			"correspondenceAddress": {
-            				"houseNumber": "67",
-            				"flatNumber": null,
-            				"houseName": null,
-            				"addressLine1": "Beresford Avenue",
-            				"addressLine2": null,
-            				"postalTown": "Surbiton",
-            				"county": "SURREY",
-            				"postcode": "KT5 9LH"
-            			}
-            		},
-            		"errors": [],
-            		"meta": {}
+                "status": "SUCCESS",
+                "data": {
+                    "prospect": {
+                        "id": "8fbe249f-09b3-5649-b512-08bd3fa3fc56",
+                        "title": "Mr",
+                        "firstName": "Pentwazz Stavea",
+                        "surname": "Kenj",
+                        "email": "sakthi@bgdigitaltest.co.uk",
+                        "smartMeterInterest": "true",
+                        "classification": "smart",
+                        "primaryTelephoneNumber": {
+                            "number": "07404669698"
+                        },
+                        "correspondenceAddress": {
+                            "houseNumber": "67",
+                            "flatNumber": null,
+                            "houseName": null,
+                            "addressLine1": "Beresford Avenue",
+                            "addressLine2": null,
+                            "postalTown": "Surbiton",
+                            "county": "SURREY",
+                            "postcode": "KT5 9LH"
+                        }
+                    },
+                    "errors": [],
+                    "meta": {}
+                }
             }
             
 + Response 400 (application/json)
@@ -313,13 +314,13 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "data": {},
                 "errors": [
                     {
-                		"code": "meta",
-                		"message": "error.prospectinfo.invalid"
+                        "code": "meta",
+                        "message": "error.prospectinfo.invalid"
                     }
                 ],
                 "meta": {}
             }
-
+            
 + Response 403 (application/json)
 
             {
@@ -327,8 +328,8 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "data": {},
                 "errors": [
                     {
-                		"code": "tokenKey",
-                		"message": "error.client.token.invalid"
+                        "code": "tokenKey",
+                        "message": "error.client.token.invalid"
                     }
                 ],
                 "meta": {}
