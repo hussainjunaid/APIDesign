@@ -15,3 +15,6 @@ endpoint/direct-debits/direct-debits
 endpoint/direct-debits/direct-debit-summaries
 endpoint/direct-debits/fixed-direct-debits
 endpoint/direct-debits/variable-direct-debits
+endpoint/dyno/dyno-appointments
+endpoint/dyno/dyno-appointment-slots
+endpoint/dyno/priority-questions
