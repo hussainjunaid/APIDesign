@@ -23,3 +23,6 @@ endpoint/energy-estimate/energyestimate
 endpoint/energy-insights/energy-insights
 endpoint/leads/home-move-leads
 endpoint/leads/services-leads
+endpoint/loyalties/loyalties
+endpoint/meters/meters
+endpoint/meters/meter-reads-submit
