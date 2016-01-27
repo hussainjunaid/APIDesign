@@ -1,3 +1,6 @@
+## Group Addresses
+Addresses endpoint allows you to list / view addresses for a given postcode using `QAS`. Responses from this endpoint will be retuned in JSON format only.
+
 ## Addresses Collection [/addresses]
 
 Addresses endpoint allows you to list / view addresses for a given postcode using QAS. Responses from this endpoint will be retuned in JSON format only.
