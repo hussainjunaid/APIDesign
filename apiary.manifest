@@ -48,3 +48,4 @@ endpoint/tariffs/tariffs
 endpoint/userinfo/userinfo
 endpoint/userinfo/temporary-profiles
 endpoint/userinfo/reset-password-requests
+endpoint/prospects/prospects
