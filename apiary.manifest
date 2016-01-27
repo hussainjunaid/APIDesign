@@ -11,3 +11,7 @@ endpoint/bills/simulated-bills
 endpoint/contracts/services-contracts
 endpoint/correspondences/correspondences
 endpoint/customers/customers
+endpoint/direct-debits/direct-debits
+endpoint/direct-debits/direct-debit-summaries
+endpoint/direct-debits/fixed-direct-debits
+endpoint/direct-debits/variable-direct-debits
