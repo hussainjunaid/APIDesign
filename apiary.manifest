@@ -26,3 +26,5 @@ endpoint/leads/services-leads
 endpoint/loyalties/loyalties
 endpoint/meters/meters
 endpoint/meters/meter-reads-submit
+endpoint/orders/orders
+endpoint/orders/service-orders
