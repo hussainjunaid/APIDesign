@@ -1,22 +1,22 @@
 ## Group Correspondences
 
 ## Correspondences [/correspondences]
-correspondences endpoint allows you to list / view correspondences for a given account number and query type using `ICV`. 
+Correspondences endpoint allows you to list / view correspondences for a given account number and query type using `ICV`. 
 
 #### Correspondence
 Correspondence as a resource represents following information
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Mandatory` | `Returned always` | Unique Id to represent the document with pattern of document type, account number and document id. |
-| date | string | `Optional` | `Returned always` | Date of the document generated. |
-| subject | string | `Optional` | `Returned always` | Subject of the document. |
-| read | boolean | `Optional` | `Returned always` | Read status of the document, will be used for view correspondences.  |
-| fuel | string | `Optional` | `Returned always` | Fuel type of the document, will be used for Annual summary. |
-| description | string | `Optional` | `Returned always` | Correspondence description of the document, will be used for view CP12 certificates. |
-| links | Array of object | `Optional` | `Returned always` | Download link for the correspondence if it's eligible for download. |
-| energyAccount | string | `Optional` | `Returned always` | Energy account number to which the document is linked, if available. |
-| servicesAccount | string | `Optional` | `Returned always` | Services account number to which the document is linked, if available. |
+| id | string | `Not Applicable` | `Returned always` | Unique Id to represent the document with pattern of document type, account number and document id. |
+| date | string | `Not Applicable` | `Returned always` | Date of the document generated. |
+| subject | string | `Not Applicable` | `Returned always` | Subject of the document. |
+| read | boolean | `Not Applicable` | `Returned always` | Read status of the document, will be used for view correspondences.  |
+| fuel | string | `Not Applicable` | `Returned always` | Fuel type of the document, will be used for Annual summary. |
+| description | string | `Not Applicable` | `Returned always` | Correspondence description of the document, will be used for view CP12 certificates. |
+| links | Array of object | `Not Applicable` | `Returned always` | Download link for the correspondence if it's eligible for download. |
+| energyAccount | string | `Not Applicable` | `Returned always` | Energy account number to which the document is linked, if available. |
+| servicesAccount | string | `Not Applicable` | `Returned always` | Services account number to which the document is linked, if available. |
 
 
 
@@ -91,8 +91,8 @@ Correspondence as a resource represents following information
                 "data": {},
                 "errors": [
                     {
-                        "code": "identifier",
-                        "message": "error.client.identifier.invalid"
+                        "code": "documentType",
+                        "message": "error.client.documentType.invalid"
                     }
                 ],
                 "meta": {}
