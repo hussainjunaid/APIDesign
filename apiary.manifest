@@ -20,3 +20,6 @@ endpoint/dyno/dyno-appointment-slots
 endpoint/dyno/priority-questions
 endpoint/emails/email
 endpoint/energy-estimate/energyestimate
+endpoint/energy-insights/energy-insights
+endpoint/leads/home-move-leads
+endpoint/leads/services-leads
