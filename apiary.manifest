@@ -43,6 +43,8 @@ endpoint/products/prices
 endpoint/prospects/prospects
 endpoint/quotes/quotes
 endpoint/quotes/services-quotes
+endpoint/smart/smart-cards
+endpoint/smart/smart-consumptions
 endpoint/surveys/survey-responses
 endpoint/tariffs/tariffs
 endpoint/userinfo/userinfo
