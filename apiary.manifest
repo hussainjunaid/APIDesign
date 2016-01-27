@@ -31,3 +31,12 @@ endpoint/orders/service-orders
 endpoint/payments/payments
 endpoint/payments/payment-transactions
 endpoint/payments/bank-payment-response
+endpoint/premises/premises
+endpoint/products/products
+endpoint/products/product-holdings
+endpoint/products/energy-product-holdings
+endpoint/products/services-product-holdings
+endpoint/products/product-features
+endpoint/products/product-bundles
+endpoint/products/faults
+endpoint/products/prices
