@@ -1,4 +1,4 @@
-## Group Smart Cards
+## Group Smart
 
 ## Smart Cards Collection [/smart-cards]
 Smart card endpoint is used to retrieve the smart card and balance details for the smart prepay energy accounts. Responses from this end point will be retuned in JSON format only.
