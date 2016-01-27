@@ -18,3 +18,5 @@ endpoint/direct-debits/variable-direct-debits
 endpoint/dyno/dyno-appointments
 endpoint/dyno/dyno-appointment-slots
 endpoint/dyno/priority-questions
+endpoint/emails/email
+endpoint/energy-estimate/energyestimate
