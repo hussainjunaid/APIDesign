@@ -1,0 +1,222 @@
+## Smart Consumption [/smart-consumptions]
+The smart consumptions endpoint is used to retrieve consumption details of the smart customer. Responses from this endpoint will be returned in PDF format for successful response.
+
+This endpoint returns eligible preference list for the given account number. The values of this list will be either one of the below options.
+ * `daily`, `weekly`, `monthly` and `yearly`.
+ * `monthly` and `yearly`.
+ * `total-usage` for no dropdown options.
+
+### Retrieve smart consumption for an account  [GET /smart-consumptions/eligible-preferences{?account}]
++ Parameters
+
+    + account (string,required) - Account Number
+    
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/json)
+
+            {
+                "status": "SUCCESS",
+                "data": {
+                    "eligiblePreferences": [
+                        "daily",
+                        "weekly",
+                        "monthly",
+                        "yearly"
+                    ]
+                },
+                "errors": {},
+                "meta": {}
+            }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"                    
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                   }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "smartConsumption",
+                        "message": "error.server.smartMeterAccount.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+
+### Retrieve smart consumption for an account with view preference  [GET /smart-consumptions/eligible-preferences{?account,viewPreference}]
+
++ Parameters
+
+    + account (string,required) - Account Number
+    + viewPreference (string,required) -  eligible preference - Retrieve consumption details of the given smart meter customer up to 24 months in PDF format.
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 200 (application/pdf)
+
+            {
+            }
+            
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"                    
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+            
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 403 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "account",
+                        "message": "error.client.account.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "smartConsumption",
+                        "message": "error.server.smartMeterAccount.notFound"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "smartConsumption",
+                        "message": "error.client.viewPreference.invalid"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 400 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "smartConsumption",
+                        "message": "error.server.closedAccount.notSupported"
+                    }
+                ],
+                "meta": {}
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "smartConsumption",
+                        "message": "error.server.mdus.failed"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Response 500 (application/json)
+
+            {
+                "status": "ERROR",
+                "data": {}
+                "errors": [
+                    {
+                        "code": "system",
+                        "message": "error.system.unexpected.error"
+                    }
+                ],
+                "meta": {}
+            }            
