@@ -499,6 +499,7 @@ The possible response status codes are as follows:
 | 0xRM91 | Customer found |
 | 0xWTAB | Customer found for postcode but email not matching |
 | 0xTXE0 | Customer not found |
+| 0xYS23 | Customer found with no email |
 
 >`Note`: matchToken will be returned for status `0xRM91`.
 
