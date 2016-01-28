@@ -16,7 +16,7 @@ Meter as a resource represents following information
 | serialNumber | string | `Not Applicable` | `Returned always` |  Serial number of the meter, if available. |
 | meterId | string | `Not Applicable` | `Returned always` |  Meter identifier of the meter, if available. |
 | meterType | string | `Not Applicable` | `Returned always` |  Meter type can be gas, elecsr, elec2r or elecTou. |
-| account | string | `Not Applicable` | `Returned always` |  Account number to which the meter is linked, if available. | 
+| account | string | `Not Applicable` | `Returned always` |  Account number to which the meter is linked, if available. |
 | contractType | string | `Not Applicable` | `Returned always` |  Contract type can be either Gas or Electricity. |
 | contractNumber | String | `Not Applicable` | `Returned always` |  Contract number to which the meter is linked, if available. |
 | complexityCode | String | `Not Applicable` | `Returned always` |  Complexity code of the meter, if available. |
@@ -43,7 +43,7 @@ Register as a resource represents following information
 
 ### Retrieve All meters [GET /meters]
 
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -122,6 +122,13 @@ Register as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -139,9 +146,9 @@ Register as a resource represents following information
 ### Retrieve meter for specific accounts [GET /meters{?accountNumber*}]
 + Parameters
 
-  + accountNumber (number) - This is the customers account number
+  + accountNumber: 123456 (number) - This is the customers account number
 
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -220,6 +227,13 @@ Register as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
           {
@@ -234,6 +248,13 @@ Register as a resource represents following information
               "meta": {}
           }
 
++ Request 'AccountNumber is invalid'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
           {
@@ -247,6 +268,13 @@ Register as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -266,9 +294,9 @@ Register as a resource represents following information
 ### Retrieve meters using MPXN [GET /meters{?meterPointId*}]
 + Parameters
 
-  + meterPointId (string) - Meter point identifier of the meter, if available.
+  + meterPointId: 1234 (string, required) - Meter point identifier of the meter, if available.
 
-+ Request
++ Request 'SUCCESS'
 
     + Headers
 
@@ -317,6 +345,13 @@ Register as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
           {
@@ -330,6 +365,13 @@ Register as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Meter is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -350,9 +392,9 @@ Register as a resource represents following information
 
 + Parameters
 
-  + id (string,required) - This is the customers account number
+  + id: 123 (string,required) - This is the customers account number
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -399,6 +441,13 @@ Register as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
           {
@@ -413,6 +462,13 @@ Register as a resource represents following information
               "meta": {}
           }
 
++ Request 'Meter Identifier is an invalid input' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
           {
@@ -426,6 +482,13 @@ Register as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Meter is not available for the customer' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -445,11 +508,11 @@ Register as a resource represents following information
 
 + Parameters
 
-  + id (string,required) - Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
-  + registerNumber (string) - Register number for which the reading is taken, Should not be null or empty
-  + reading (string) - Should not be null or empty. Should be number and max 6 digits
+  + id: 123 (string,required) - Concatenated account number, contract number and encoded serial number of the meter which the reading is taken, Should not be null or empty.
+  + registerNumber: 001 (string, required) - Register number for which the reading is taken, Should not be null or empty
+  + reading: 000034 (string, required) - Should not be null or empty. Should be number and max 6 digits
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -468,6 +531,13 @@ Register as a resource represents following information
               "meta": {}
           }
 
++ Request 'Customer is not authenticated' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
           {
@@ -481,6 +551,13 @@ Register as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Account is not available for the customer' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -496,6 +573,13 @@ Register as a resource represents following information
               "meta": {}
           }
 
++ Request 'Could not identify a meter for the customer' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
           {
@@ -510,6 +594,13 @@ Register as a resource represents following information
               "meta": {}
           }
 
++ Request 'Invalid inputs' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
           {
@@ -523,6 +614,13 @@ Register as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Could not return a valid response due to backend failure.' (application/json)
+
+  + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -540,7 +638,7 @@ Register as a resource represents following information
 
 ### Check Meter ownership [POST /meters/ownership-check]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -564,6 +662,12 @@ Register as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Meter point identifier is not send' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
           {
@@ -578,6 +682,12 @@ Register as a resource represents following information
               "meta": {}
           }
 
++ Request 'Meter information is not available in the database' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
           {
@@ -591,6 +701,12 @@ Register as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Not able to fetch the meter information from the database' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
