@@ -1,5 +1,5 @@
 ## Service Orders [/service-orders]
-Service Order represents information about the smart meter installation for the premises and appointment details.  
+Service Order represents information about the smart meter installation for the premises and appointment details.
 
 #### Service Order
 
@@ -24,16 +24,17 @@ Service order as a resource has the following attributes:
 Service Order allows the client to create and modify an appointment for a smart meter exchange
 
 ### Retrieve service orders anonymously [GET /service-orders?{prospectToken}]
+
 + Parameters
 
-    + prospectToken (string) - Prospect token for the anonymous customer
-    
-+ Request
+    + prospectToken: qwew-23424 (string, required) - Prospect token for the anonymous customer
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -74,13 +75,14 @@ Service Order allows the client to create and modify an appointment for a smart 
             }
 
 ### Retrieve service orders for logged in customer [GET /service-orders]
-+ Request
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -120,8 +122,14 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "meta": {}
             }
 
++ Request 'Prospect token is blank or empty (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -134,8 +142,14 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "meta": {}
             }
 
++ Request 'Unable to get service order' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -152,15 +166,15 @@ Service Order allows the client to create and modify an appointment for a smart 
 
 + Parameters
 
-    + id (string,required) - Service order id
-        
-+ Request
+    + id: 1234 (string,required) - Service order id
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -197,9 +211,16 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -212,8 +233,15 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "meta": {}
             }
 
++ Request 'Service order not found' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -225,9 +253,16 @@ Service Order allows the client to create and modify an appointment for a smart 
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Unable to get service order' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -244,15 +279,15 @@ Service Order allows the client to create and modify an appointment for a smart 
 
 + Parameters
 
-    + id (string,required) - Service order id
-    + token (string,required) - prospect token
-        
-+ Request
+    + id: 1234(string,required) - Service order id
+    + token: qwe3-24324 (string,required) - prospect token
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
-    
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -289,9 +324,15 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Prospect token is blank or empty (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -304,8 +345,14 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "meta": {}
             }
 
++ Request 'Service order not found' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -317,9 +364,15 @@ Service Order allows the client to create and modify an appointment for a smart 
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Unable to get service order' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -331,9 +384,10 @@ Service Order allows the client to create and modify an appointment for a smart 
                 ],
                 "meta": {}
             }
-            
+
 ### Create a service order [POST /service-orders]
-+ Request
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -409,6 +463,12 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "meta": {}
             }
 
++ Request 'Input validation' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
         {
@@ -423,8 +483,14 @@ Service Order allows the client to create and modify an appointment for a smart 
             "meta": {}
         }
 
++ Request 'Unable to create a service order' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-            
+
             {
                 "status": "ERROR",
                 "data": {},
@@ -436,13 +502,14 @@ Service Order allows the client to create and modify an appointment for a smart 
                 ],
                 "meta": {}
             }
-            
+
 ### Modify service order anonymously [PUT /service-orders/{serviceOrderId}]
+
 + Parameters
 
-    + serviceOrderId (string) - Id of Service Order to be modified 
-    
-+ Request
+    + serviceOrderId: 1234 (string, required) - Id of Service Order to be modified
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -521,6 +588,12 @@ Service Order allows the client to create and modify an appointment for a smart 
                 "meta": {}
             }
 
++ Request 'Service order id is blank or empty' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
         {
@@ -534,6 +607,52 @@ Service Order allows the client to create and modify an appointment for a smart 
             ],
             "meta": {}
         }
+
++ Request ' Service order id in request does not match with the one in URL' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceorder",
+                    "message": "error.server.serviceorder.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Request 'appointmentSlot sent in the request is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {}
+            "errors": [
+                {
+                    "code": "serviceorder",
+                    "message": "error.server.serviceorder.isEmpty"
+                }
+            ],
+            "meta": {}
+        }
+
++ Request 'Unable to update service order' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
