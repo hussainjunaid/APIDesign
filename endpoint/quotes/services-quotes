@@ -329,7 +329,6 @@ Services quote as a resource represents following attributes.
             {
                 "status": "SUCCESS",
                 "data": {
-                    "transaction": "23431234",
                     "status": "In Progress",
                     "servicesAccountNumber": ""
                 },
