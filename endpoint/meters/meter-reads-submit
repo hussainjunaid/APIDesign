@@ -15,7 +15,7 @@ Meter read as a resource represents following information
 | date | string | `Optional` | `Returned always` |  Date on which the reading is taken, in dd/MM/yyyy format. |
 | status | string | `Optional` | `Returned always` |  It will return any one of the following status `failed`, `stored`, `stored for next bill`, `implausible read`, `cancel rebill`, `sap down` or `unknown`. |
 
-Submit meter read request mentions whether outOfTolerance can be overridden and sends all the meter reads to be submitted. 
+Submit meter read request mentions whether outOfTolerance can be overridden and sends all the meter reads to be submitted.
 If `outOfToleranceOverride` is not send in the request, it will be defaulted to `false`, so that implausible reading is not allowed to submit.
 
 #### Meter Readings
@@ -23,12 +23,12 @@ Readings associated to all the accounts available for the customer, can be send 
 Meter readings request should contain atleast one meter read. Each of the meter read will be validated.
 
 ### Submit Meter reads [POST /meter-reads/submit]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-             Authorization: Bearer {accesstoken}
+            Authorization: Bearer {accesstoken}
 
   + Body
 
@@ -67,6 +67,13 @@ Meter readings request should contain atleast one meter read. Each of the meter 
                 }
             }
 
++ Request 'Invalid access token used for submitting meter reads' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 401 (application/json)
 
           {
@@ -80,6 +87,13 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
+
++ Request 'Invalid request' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
 
 + Response 400 (application/json)
 
@@ -95,6 +109,13 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               "meta": {}
           }
 
++ Request 'Invalid meter reads' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 400 (application/json)
 
           {
@@ -108,6 +129,13 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
+
++ Request 'Invalid account number' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
 
 + Response 400 (application/json)
 
@@ -123,6 +151,13 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               "meta": {}
           }
 
++ Request 'Account number not associated to logged in customer' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 403 (application/json)
 
           {
@@ -136,7 +171,14 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
-          
+
++ Request 'No matching meters found' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 404 (application/json)
 
           {
@@ -151,6 +193,13 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               "meta": {}
           }
 
++ Request 'No matching registers found' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 404 (application/json)
 
           {
@@ -164,7 +213,14 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
- 
+
++ Request 'Out of tolerance reading' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 400 (application/json)
 
           {
@@ -178,7 +234,14 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
-          
+
++ Request 'More than 3 meter reads submitted on a day' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 400 (application/json)
 
           {
@@ -192,7 +255,14 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
-          
+
++ Request 'Incomplete reading' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 400 (application/json)
 
           {
@@ -206,7 +276,14 @@ Meter readings request should contain atleast one meter read. Each of the meter 
               ],
               "meta": {}
           }
-          
+
++ Request 'Error from back end systems' (application/json)
+
+  + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer {accesstoken}
+
 + Response 500 (application/json)
 
           {
