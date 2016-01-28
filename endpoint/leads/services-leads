@@ -24,7 +24,7 @@ Services lead as a resource represents following attributes.
 | productConfigurations | [ProductConfigurations](/api-reference/services-quotes.md#ProductConfigurations)[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
 
 ### Post services sales data to Uddingston [POST /services-leads]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -119,7 +119,7 @@ Services lead as a resource represents following attributes.
                     ]
                 }
             }
-            
+
 + Response 201 (application/json)
 
             {
@@ -221,8 +221,14 @@ Services lead as a resource represents following attributes.
                 "meta": {}
             }
 
++ Request 'Input validations' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -234,7 +240,13 @@ Services lead as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Payment method not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -248,7 +260,13 @@ Services lead as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Product feature not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -262,9 +280,15 @@ Services lead as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Appliance id not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -276,9 +300,15 @@ Services lead as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Product appliances invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
