@@ -191,7 +191,7 @@ Order product holding as a resource represents following information
                         }
                     ]
                 },
-                "errors": {},
+                "errors": [],
                 "meta": {}
             }
 
@@ -297,7 +297,7 @@ Order product holding as a resource represents following information
                         }
                     ]
                 },
-                "errors": {},
+                "errors": [],
                 "meta": {}
             }
 
@@ -404,7 +404,7 @@ Order product holding as a resource represents following information
                         "bundleProduct": true
                     }
                 },
-                "errors": {},
+                "errors": [],
                 "meta": {}
             }
 
