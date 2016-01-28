@@ -2,16 +2,17 @@
 
 ## Direct Debits collection [/directdebits]
 
-Direct debits endpoint allows you to list / view all the direct debit information of the logged in customer. Responses from this API will be returned in JSON format only. This end point is deprecated.
+Direct debits endpoint allows you to list / view all the direct debit information of the logged in customer. Responses from this endpoint will be returned in JSON format only.
+This end point is deprecated.
 
 ### Direct Debit
 Direct debit as a resource represents following information
 
-| Property | Type | Description |
-| :-------------------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Returned always`. Account number of the direct debit contract is considered as the unique identifier |
-| account | string | `Returned always`. Account number of the direct debit contract, to establish relationship with account |
-| type | string | `Returned always`. type of the direct debit contract, values will be `fixed` or `variable`. |
+| Property | Type | As request | As response | Description |
+| :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
+| id | string | `Not Applicable` | `Returned always` |  Account number of the direct debit contract is considered as the unique identifier |
+| account | string | `Not Applicable` | `Returned always` |  Account number of the direct debit contract, to establish relationship with account |
+| type | string | `Not Applicable` | `Returned always` |  type of the direct debit contract, values will be `fixed` or `variable`. |
 
 ### Retrieve all direct debits [GET]
 + Request
@@ -90,7 +91,21 @@ Direct debit as a resource represents following information
             ],
             "meta": {}
         }
-   
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "accountNumber",
+                    "message": "error.client.accountNumber.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
 + Response 403 (application/json)
 
         {
