@@ -232,9 +232,12 @@ Along with quote, you also get a mail payload with following properties returned
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
-                    "postcode": "error.client.postcode.invalid"
-                },
+                "errors": [
+                {
+                    "code": "postcode",
+                    "message": "error.client.postcode.invalid"
+                }
+                ],
                 "meta": {}
             }
             
@@ -400,7 +403,7 @@ Along with quote, you also get a mail payload with following properties returned
                   }
                 ]
               },
-              "errors": {},
+              "errors": [],
               "meta": {
                 "mail": {
                   "timestamp": "LPnGH7BI/sikSiBj2Onvgg==",
@@ -415,10 +418,10 @@ Along with quote, you also get a mail payload with following properties returned
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [{
                             "code": "type",
                             "message": "error.client.type.invalid"                
-                            },
+                            }],
                 "meta": {}
             }
             
@@ -427,10 +430,10 @@ Along with quote, you also get a mail payload with following properties returned
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [{
                             "code": "account",
                             "message": "error.client.account.invalid"                
-                            },
+                            }],
                 "meta": {}
             }
 
@@ -439,9 +442,9 @@ Along with quote, you also get a mail payload with following properties returned
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [{
                             "code": "brand",
                             "message": "error.client.brand.incompatible"                            
-                            },
+                            }],
                 "meta": {}
             }
