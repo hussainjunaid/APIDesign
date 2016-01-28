@@ -93,9 +93,12 @@ Loyalty as a resource represents following information. This is equivalent of a 
               {
                   "status": "FAIL",
                   "data": {},
-                  "errors": {
-                      "postcode": "error.client.postcode.invalid"
-                  },
+                  "errors": [
+                     {
+                         "code": "postcode",
+                         "message": "error.client.postcode.invalid"
+                     }
+                  ],
                   "meta": {}
               }
 
