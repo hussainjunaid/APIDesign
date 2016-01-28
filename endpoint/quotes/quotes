@@ -25,8 +25,8 @@ Rate is not an independent resource. It is however related to quote as it sheds 
 | personalProjection | double | `Not Applicable` |`Returned always`| Personalized projection value based on input parameters. |
 | consumption | double | `Not Applicable` |`Returned always`| Represents consumption value used for quote computation. |
 | estimatedAnnualConsumption | double | `Not Applicable` |  |Represents estimated annual consumption for current instance of quote. |
-| estimatedAnnualCost | Double | `Not Applicable` | `Returned always`| Represents annual cost for current instance of quote. |
-| tariffComparisonRate | Double | `Not Applicable` |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
+| estimatedAnnualCost | Double | `Not Applicable` | `Returned always`| Represents annual cost for current instance of quote. When `economyMeter` is true, the value of `estimatedAnnualCost` is returned as null for `electricityRates` in the response. |
+| tariffComparisonRate | Double | `Not Applicable` |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. When `economyMeter` is true, the value of `tariffComparisonRate` is returned as null for `electricityRates` in the response. |
 | registers | Register | `Not Applicable` | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
 
 Note: `estimatedAnnualConsumption` is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. `estimatedAnnualCost` would be the annual cost assuming the user had the same consumption as `estimatedAnnualConsumption`. 
