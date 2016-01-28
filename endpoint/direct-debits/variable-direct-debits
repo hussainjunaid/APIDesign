@@ -137,7 +137,28 @@ Variable direct debit as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Invalid account number' (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "accountNumber",
+                    "message": "error.client.accountNumber.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
 + Request 'Account is not available for the customer' (application/json)
 
     + Headers
@@ -145,7 +166,7 @@ Variable direct debit as a resource represents following information
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
             
-+ Response 401 (application/json)
++ Response 403 (application/json)
 
             {
                 "status": "FAIL",
@@ -166,7 +187,7 @@ Variable direct debit as a resource represents following information
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
             
-+ Response 401 (application/json)
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
@@ -255,6 +276,27 @@ Variable direct debit as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Invalid account number' (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
+
+        {
+            "status": "FAIL",
+            "data": {},
+            "errors": [
+                {
+                    "code": "accountNumber",
+                    "message": "error.client.accountNumber.invalid"
+                }
+            ],
+            "meta": {}
+        }
+        
 + Request 'Account is not available for the customer' (application/json)
 
     + Headers
@@ -305,7 +347,7 @@ Variable direct debit as a resource represents following information
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 
-+ Response 400 (application/json)            
++ Response 404 (application/json)            
 
             {
                 "status": "FAIL",
