@@ -383,7 +383,7 @@ Installment represents following information
                "meta": {}
            }
 
-+ Request 'Account is not available for the customer'
++ Request 'Account number is not valid'
 
     + Headers
 
@@ -397,8 +397,8 @@ Installment represents following information
                "data": {},
                "errors": [
                    {
-                       "code": "account",
-                       "message": "error.client.account.invalid"
+                       "code": "accountNumber",
+                       "message": "error.client.accountNumber.invalid"
                    }
                ],
                "meta": {}
@@ -692,19 +692,26 @@ Installment represents following information
                 "meta": {}
             }
 
++ Request 'Account number is not valid'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            
 + Response 403 (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "account",
-                        "message": "error.client.account.invalid"
-                    }
-                ],
-                "meta": {}
-            }
+           {
+               "status": "FAIL",
+               "data": {},
+               "errors": [
+                   {
+                       "code": "accountNumber",
+                       "message": "error.client.accountNumber.invalid"
+                   }
+               ],
+               "meta": {}
+           }
 
 + Response 404 (application/json)
 
@@ -720,29 +727,29 @@ Installment represents following information
                 "meta": {}
             }
 
-+ Response 400 (application/json)
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "fixedDirectDebit",
-                        "message": "error.client.id.invalid"                    
+                        "code": "directdebit",
+                        "message": "error.client.account.notFound"                    
             }
                 ],
                 "meta": {}
             }
 
-+ Response 500 (application/json)
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "fixedDirectDebit",
-                        "message": "error.server.paymentLine.failed"                    
+                        "code": "directdebit",
+                        "message": "error.client.directdebit.notFound"                  
             }
                 ],
                 "meta": {}
