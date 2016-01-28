@@ -151,7 +151,7 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
                      ]
                  }
              },
-             "errors": {},
+             "errors": [],
              "meta": {}
          } 
          
@@ -160,10 +160,10 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [{
                      "code": "tariff",
                     "message": "error.client.tariff.blank"
-                },
+                }],
                 "meta": {}
             }
 
@@ -172,10 +172,10 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [{
                      "code": "account",
                     "message": "error.client.account.invalid"
-                },
+                }],
                 "meta": {}
             }
             
@@ -618,7 +618,7 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
                      }
                  ]
              },
-             "errors": {},
+             "errors": []},
              "meta": {}
          }
 
@@ -627,8 +627,8 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": {
+                "errors": [{
                     "fault": "a fault has occurred"
-                },
+                }],
                 "meta": {}
             }
