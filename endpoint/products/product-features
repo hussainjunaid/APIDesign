@@ -16,17 +16,17 @@ Product feature as a resource represents following information:
 >`Note:` Format of the product feature id will be `BundleCode|ProductCode|LosCode|ApplianceType|PaymentMethod`. If the product is `individual`, then BundleCode will be `NA`.
 
 
-### Retrieve the level of service for a specific configuration of a product [GET /product-features{?product, excess, annualServiceVisit, applianceType*, paymentMethod}]
+### Retrieve the level of service for a specific configuration of a product [GET /product-features{?product,excess,annualServiceVisit,applianceType*,paymentMethod}]
 
 + Parameters
 
-    + product (required, string) - Product id. Represents a link to Product resource.
-    + excess (optional, string) - If not passed, Default excess level is taken based on product.
-    + annualServiceVisit (optional, string) - If not passed, Default value will be false. Products for which ASV is mandatory, then true has to be passed.
+    + product: abcxsd (required, string) - Product id. Represents a link to Product resource.
+    + excess: 0 (optional, string) - If not passed, Default excess level is taken based on product.
+    + annualServiceVisit: true (optional, boolean) - If not passed, Default value will be false. Products for which ASV is mandatory, then true has to be passed.
     + applianceType (optional, string) - If not passed, Default appliance type is taken based on product.Multiple appliance types can be passed as parameter based on number of appliances supported by the product.
     + paymentMethod (optional, string) - If not passed, payment method is taken based on product.
 
-+ Request Individual products
++ Request 'Individual products' (application/json)
 
     + Headers
 
@@ -52,12 +52,12 @@ Product feature as a resource represents following information:
                 "meta": {}
             }
 
-+ Request Bundle products
++ Request 'Bundle products' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-        
+
 + Response 200 (application/json)
 
             {
@@ -78,6 +78,12 @@ Product feature as a resource represents following information:
                 "meta": {}
             }
 
++ Request 'Product is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -91,6 +97,12 @@ Product feature as a resource represents following information:
                 ]
                 "meta": {}
             }
+
++ Request 'Excess is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -106,7 +118,13 @@ Product feature as a resource represents following information:
                 "meta": {}
             }
 
-+ Response 400 (application/json) 
++ Request 'Appliance type is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
 
         {
             "status": "FAIL",
@@ -119,7 +137,13 @@ Product feature as a resource represents following information:
             ],
             "meta": {}
         }
-        
+
++ Request 'Payment method is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
         {
@@ -133,7 +157,13 @@ Product feature as a resource represents following information:
             ],
             "meta": {}
         }
-        
+
++ Request 'Annual service visit is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
         {
