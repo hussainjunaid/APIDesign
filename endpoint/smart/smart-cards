@@ -15,7 +15,7 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
 ### Retrieve a specific smart card using energy account [GET /smart-cards?{energyAccount*}]
 + Parameters
 
-    + energyAccount (string) - This is the energy account number
+    + energyAccount: 123456 (string, required) - This is the energy account number
 
 + Request 'SUCCESS' (application/json)
 
@@ -171,7 +171,7 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
 ### Retrieve a specific smart card using id [GET /smart-cards/{id}]
 + Parameters
 
-    + id (string) - Smart card id
+    + id: 1234 (string, required) - Smart card id
 
 + Request 'SUCCESS' (application/json)
 
