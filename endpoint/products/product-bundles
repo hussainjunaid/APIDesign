@@ -1,5 +1,5 @@
 ## Product Bundles collection [/product-bundles]
-Product bundles endpoint allows you to list the information about the product bundle. Responses from this endpoint will be retuned in JSON format only. Information about the constituent products that form a bundle will be side-loaded which will internally side load the product feature.  
+Product bundles endpoint allows you to list the information about the product bundle. Responses from this endpoint will be retuned in JSON format only. Information about the constituent products that form a bundle will be side-loaded which will internally side load the product feature.
 
 ### Product bundle
 Product bundle as a resource represents following information:
@@ -13,13 +13,13 @@ Product bundle as a resource represents following information:
 | paymentMethods | Array of PaymentMethods | `Not applicable` | `Returned always` | Applicable [payment methods](/api-reference/products.md#PaymentMethods) for the bundle. |
 | products | Array of product | `Not applicable` | `Returned always` | [Product](/api-reference/products.md#product) information of all products which make a bundle. |
 
-### Retrieve all Product Bundles [GET /product-bundles] 
-+ Request
+### Retrieve all Product Bundles [GET /product-bundles]
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -476,6 +476,12 @@ Product bundle as a resource represents following information:
                 "meta": {}
             }
 
++ Request 'Bundle products not found' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -490,18 +496,18 @@ Product bundle as a resource represents following information:
                 "meta": {}
             }
 
-### Retrieve Product Bundle Information Based on an ID [GET /product-bundles{id}] 
+### Retrieve Product Bundle Information Based on an ID [GET /product-bundles{id}]
 
 + Parameters
 
-    + id (required, string) - Product bundle id
+    + id: 1234 (required, string) - Product bundle id
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -714,9 +720,15 @@ Product bundle as a resource represents following information:
                 "errors": [],
                 "meta": {}
             }
-        
+
++ Request 'Product bundle is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
-        
+
             {
                 "status": "ERROR",
                 "data": {},
@@ -728,6 +740,12 @@ Product bundle as a resource represents following information:
                 ],
                 "meta": {}
             }
+
++ Request 'Products not found for the bundle product' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
