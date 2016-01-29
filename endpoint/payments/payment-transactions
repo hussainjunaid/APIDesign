@@ -12,17 +12,17 @@ Payment transaction as a resource represents following information
 | transactionType | String | `Optional` | `Returned always` |  Defines the type of transaction, it will be any one the following `charges`, `miscellaneous-adjustment`, `reversal`, `payment`, `failed-payment`, `non-energy-related-charge`, `amount-written-off`, `amount-transferred`, `migrated-item`, `payment-request`, `migrated-payment`, `final-statement`, `annual-statement`, `prompt-pay-discount`, `miscellaneous-charge`, `amount-refunded`, `miscellaneous`, `conversion-document`,`other-charges`, `cp-conversion-payment` and `charges reversed`. |
 | credit | double | `Optional` | `Returned always` | Credit balance associated with the transaction. |
 | debit | double | `Optional` | `Returned always` | Debit balance associated with the transaction. |
-| balance | double | `Optional` | `Returned always` | Final balance after the transaction. | 
+| balance | double | `Optional` | `Returned always` | Final balance after the transaction. |
 | billId | String | `Optional` | `Returned always` | Bill Identifier, if transaction is a bill generation. |
 | links | Array of object | `Optional` | `Returned always` | Download link for the bill if the transaction is eligible for download. |
 | energyAccount | String | `Required` | `Returned always`| Represents the relationship with energy account of the customer |
 
 
 ### Retrieve all payment transactions [GET /payment-transactions]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
@@ -62,6 +62,13 @@ Payment transaction as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -75,7 +82,15 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
+
++ Request 'Account number input is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -89,7 +104,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Account not available for customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -103,7 +125,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
- 
+
++ Request 'No transaction available for the account' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -117,7 +146,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -135,12 +171,12 @@ Payment transaction as a resource represents following information
 ### Retrieve specific payment transactions [GET /payment-transactions/{transactionId}]
 + Parameters
 
-    + transactionId (string) - Payment transaction id
-    
-+ Request
+    + transactionId: 1234 (string, required) - Payment transaction id
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
@@ -164,7 +200,14 @@ Payment transaction as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-        
+
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -178,7 +221,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Account number input is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -192,7 +242,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Account not available for customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -206,7 +263,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
- 
+
++ Request 'No transaction available for the account' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -220,7 +284,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -239,12 +310,12 @@ Payment transaction as a resource represents following information
 ### Retrieve payment transactions for specific account [GET /payment-transactions?accountNumber={accountNumber}]
 + Parameters
 
-    + accountNumber (string) - Account number for which the payment transactions are required
-    
-+ Request
+    + accountNumber: 1234567 (string, Optional) - Account number for which the payment transactions are required
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
@@ -283,7 +354,14 @@ Payment transaction as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-        
+
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -297,7 +375,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Account number input is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -311,7 +396,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Account not available for customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -325,7 +417,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
- 
+
++ Request 'No transaction available for the payment transaction identifier' (application/json)
+
+  + Headers
+
+          Authorization: Bearer {accessToken}
+          cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -339,7 +438,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -357,16 +463,23 @@ Payment transaction as a resource represents following information
 ### Download specific payment transactions [GET /payment-transactions/{id}/download]
 + Parameters
 
-    + id (string,required) - payment transaction id
-    
-+ Request
+    + id: 1234 (string,required) - payment transaction id
+
++ Request 'SUCCESS'
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/pdf)
+
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 401 (application/json)
 
@@ -381,7 +494,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Input validations'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -395,7 +515,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'No transaction available for the payment transaction identifier'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -409,7 +536,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
- 
+
++ Request 'SUCCESS'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -424,6 +558,13 @@ Payment transaction as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Payment transaction identifier is not eligible for download'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -437,7 +578,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from backend'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -452,17 +600,17 @@ Payment transaction as a resource represents following information
                 "meta": {}
             }
 
-            
+
 ### Post payment transactions [POST /payment-transactions]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "paymentTransaction": {
                     "id": null,
@@ -502,6 +650,13 @@ Payment transaction as a resource represents following information
                 }
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -516,6 +671,13 @@ Payment transaction as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Account number input is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -529,7 +691,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Invalid payment field in meta' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -543,7 +712,14 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
- 
+
++ Request 'Error from back end systems' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -557,4 +733,3 @@ Payment transaction as a resource represents following information
                 ],
                 "meta": {}
             }
-
