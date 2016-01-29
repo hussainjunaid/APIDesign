@@ -13,7 +13,7 @@ Tariff as a resource represents following information
 | supportedFuels | List of string | `Not Applicable` | `Returned always`| List of supported fuels. There are 3 variations of fuels possible. They are `gas`, `electricity` and `dual`. |
 | endDate | string | `Not Applicable` | `Returned always`| Defines the end date of the tariff in dd/mm/yyyy format. If no end date is configured, "Not applicable" is returned. |
 | type | string | `Not Applicable` | `Returned always`| Can be either `fixed` or `variable`. |
-| priceGuaranteedDate | string | `Not Applicable` | `Returned always`| Represents price guaranteed date if applicable. Date is represented in mm/dd/yyyy format. If none defined, "Not applicable" is returned. |
+| priceGuaranteedDate | string | `Not Applicable` | `Returned always`| Represents price guaranteed date if applicable. Date is represented in mm/dd/yyyy format. If none defined, `Not applicable` is returned. |
 | displayName | string | `Not Applicable` | `Returned always`| Represents a descriptive name that is understandable to users. |
 | onlineAccountMandatory | boolean | `Not Applicable` | `Returned always`| `true` if customers needs a online profile to subscribe to this tariff. |
 | isTimeOfUseTariff | boolean | `Not Applicable` | `Returned always`| `true` if tariff is a time of use tariff with multiple registers. |
@@ -157,9 +157,9 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
 
 + Request 'Blank tariff value' (application/json)
 
-   + Headers
+    + Headers
 
-           cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -635,9 +635,9 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
 
 + Request 'Any failure occured' (application/json)
 
-   + Headers
+    + Headers
 
-           cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 401 (application/json)
 
