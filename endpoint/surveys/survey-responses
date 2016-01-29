@@ -22,7 +22,7 @@ Survey Responses allow us to save the survey information into SAP system using c
 | question5 |  Do you already have a smart meter at the property? |
 
 
-#### Smart prepay question description 
+#### Smart prepay question description
 
 
 | Question ID | Question description |
@@ -35,14 +35,14 @@ Survey Responses allow us to save the survey information into SAP system using c
 
 
 ### Submit survey responses [POST /survey-responses]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-        
+
             {
                 "surveyResponse": {
                     "id": null,
@@ -77,17 +77,23 @@ Survey Responses allow us to save the survey information into SAP system using c
                     "prospectToken": "cfd7b00c-7c28-5167-a24f-2498f91f26e2"
                 }
             }
-            
+
 + Response 200 (application/json)
 
             {
                 "status": "SUCCESS",
                 "data": {
-                    "Status": "success" 
+                    "Status": "success"
                 },
                 "errors": [],
                 "meta": {}
             }
+
++ Request 'Create survey responses failed' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -102,6 +108,12 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }
+
++ Request 'SUCCESS' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -119,7 +131,7 @@ Survey Responses allow us to save the survey information into SAP system using c
 
 ### Retrieve survey responses [GET /survey-responses]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -171,7 +183,14 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Valid token without Bearer key' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer accesstoken
+
 + Response 401 (application/json)
 
             {
@@ -184,7 +203,14 @@ Survey Responses allow us to save the survey information into SAP system using c
                     }
                 ],
                 "meta": {}
-            }     
+            }
+
++ Request 'SAP down' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer accesstoken
 
 + Response 500 (application/json)
 
@@ -203,9 +229,9 @@ Survey Responses allow us to save the survey information into SAP system using c
 ### Retrieve responses for a specific survey [GET /survey-responses/{surveyId}]
 + Parameters
 
-    + surveyId (string) - Survey Id
-    
-+ Request (application/json)
+    + surveyId: 1234 (string, required) - Survey Id
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -237,6 +263,13 @@ Survey Responses allow us to save the survey information into SAP system using c
                 }
             }
 
++ Request 'Valid token without Bearer key' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer accesstoken
+
 + Response 401 (application/json)
 
             {
@@ -250,7 +283,14 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }
-            
+
++ Request 'SAP down' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer accesstoken
+
 + Response 500 (application/json)
 
             {
@@ -265,6 +305,13 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "meta": {}
             }
 
++ Request 'Survey not found' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            Authorization: Bearer accesstoken
+
 + Response 404 (application/json)
 
             {
@@ -278,20 +325,20 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }
-            
+
 ### Modify survey responses [PUT /survey-responses/{id}]
 + Parameters
 
-    + id (string) - Survey Id
-    
-+ Request (application/json)
+    + id: 1234 (string,required) - Survey Id
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-        
+
             {
                 "surveyResponse": {
                     "id": "OVh4NnpZUEdNNUxwZTBWRDI5czIxZz09_NjM4MDE2MTky",
@@ -323,7 +370,7 @@ Survey Responses allow us to save the survey information into SAP system using c
                     ]
                 }
             }
-            
+
 + Response 200 (application/json)
 
             {
@@ -362,7 +409,13 @@ Survey Responses allow us to save the survey information into SAP system using c
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Valid token without Bearer key' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -376,7 +429,13 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Update survey responses failed' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -390,8 +449,20 @@ Survey Responses allow us to save the survey information into SAP system using c
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Resource not modified' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 304 (application/json)
+
++ Request 'Modification not allowed' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
