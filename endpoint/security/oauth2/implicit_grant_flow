@@ -23,7 +23,7 @@ Following table lists the Client IDs configured for test environments.
 
 ## Implicit Grant flow
 
-Implicit authorization from OAuth 2.0 allows a javascript application to generate a new token to access Online API. 
+Implicit authorization from OAuth 2.0 allows a javascript application to generate a new token to access Online API.
 
 Overall process for OAuth 2.0 implicit flow is as detailed in the diagram below.
 
@@ -40,17 +40,17 @@ Request for authorize must be initiated under following circumstances.
 ### Authorization [GET /authorize{?response_type,client_id,state,redirect_uri,scope,secondary_redirect}]
 + Parameters
 
-    + response_type (string, required) - Value MUST be set to "token"
-    + client_id (string, required) - Client identifier registered at Online.
-    + state (string, optional) - 'Recommended' Arbitrary value to maintain state between request and callback by the client.
-    + redirect_uri (string, required) - Must be a valid redirect URI that is registered at Online.
-    + scope (string, Optional) - Scope of the access request
-    + secondary_redirect (string, required) - Must be a URI within the same domain as in redirect uri
+    + response_type: token (string, required) - Value MUST be set to "token"
+    + client_id: clientId (string, required) - Client identifier registered at Online.
+    + state: state (string, optional) - 'Recommended' Arbitrary value to maintain state between request and callback by the client.
+    + redirect_uri: requestURI (string, required) - Must be a valid redirect URI that is registered at Online.
+    + scope: scope (string, Optional) - Scope of the access request
+    + secondary_redirect: secondaryRedirect (string, required) - Must be a URI within the same domain as in redirect uri
 
-+ Request
++ Request 'Validation errors' (application/json)
 
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
@@ -65,21 +65,21 @@ Request for authorize must be initiated under following circumstances.
             }
 
 ## Step 2: Resource owner to Online [/]
-This step is executed if `authorize` identifies that the user is not yet authenticated by Online. 
+This step is executed if `authorize` identifies that the user is not yet authenticated by Online.
 
 User agent will be redirected to Login page (either at www.britishgas.co.uk/Login/Login-Verify/ or at www.sainsburysenergy.com/Login/Login-Verify/) and the user will be forced to log into Online.
 
 As soon as the user logs in and authorizes the request, Online redirects to `authorize` again to fetch the access token.
 
 ### Not Applicable [GET]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
-            
+
 
 ## Step 3: Online to Client [/redirect_uri]
 
@@ -89,18 +89,18 @@ During this step, `authorize` redirects user agent to the redirect URI and appen
 
 + Parameters
 
-    + access_token (string, required) - `Returned always` The access token issued by the authorization server.
-    + token_type (string, required) - `Returned always`. The type of the token issued. Online currently supports only 'Bearer' access token.
-    + expires_in (string, required) -  `Returned always`. The lifetime in seconds for the issued access token. |
-    + secondary_redirect (string, required) - `Returned always`. This is the same as passed through from the client in Step 1.
-    + scope (string, Optional) - All requests are now with default scopes and hence will be skipped.
-    + state (string, Optional) - Arbitrary value to maintain state between request and callback by the client.
+    + access_token: accessToken (string, required) - `Returned always` The access token issued by the authorization server.
+    + token_type: tokenType (string, required) - `Returned always`. The type of the token issued. Online currently supports only 'Bearer' access token.
+    + expires_in: expiresIn (string, required) -  `Returned always`. The lifetime in seconds for the issued access token. |
+    + secondary_redirect: secondaryRedirect (string, required) - `Returned always`. This is the same as passed through from the client in Step 1.
+    + scope: scope (string, Optional) - All requests are now with default scopes and hence will be skipped.
+    + state: state (string, Optional) - Arbitrary value to maintain state between request and callback by the client.
 
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -127,10 +127,10 @@ Following table details more information about each field.
 | expires_in | string | `Returned always`. The lifetime of access_token issued. |
 
 ### Retrieve Tokeninfo [GET]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
@@ -143,6 +143,12 @@ Following table details more information about each field.
                 "expires_in": 3468
             }
 
++ Request 'Validation errors' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -154,10 +160,10 @@ Following table details more information about each field.
 Tokens received on the fragment MUST be explicitly validated. Failure to verify tokens acquired this way makes your application more vulnerable to the [confused deputy problem](http://en.wikipedia.org/wiki/Confused_deputy_problem).
 
 ### Not Applicable [GET]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -167,10 +173,10 @@ Tokens received on the fragment MUST be explicitly validated. Failure to verify 
 Tokens received on the fragment MUST be explicitly validated. Failure to verify tokens acquired this way makes your application more vulnerable to the [confused deputy problem](http://en.wikipedia.org/wiki/Confused_deputy_problem).
 
 ### If supplied acces_token is no longer valid [GET]
-+ Request
++ Request 'Accessing API with access token' (application/json)
 
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 401 (application/json)
