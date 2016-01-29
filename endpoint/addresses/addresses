@@ -25,10 +25,10 @@ Address as a resource represents following information
 | MPAN | string | `Optional` | `Returned always` | Meter point administration number for the address. Typically used for electricity. |
 | address | string | `Optional` | `Returned always` | Single line representation of the entire address. |
 
-### Retrieve all addresses [GET /addresses{?postcode,house_no, validateServiceArea}]
+### Retrieve all addresses [GET /addresses{?postcode,house_no,validateServiceArea}]
 + Parameters
 
-    + postcode (string,required) - A valid UK postcode
+    + postcode: TW18 3AR (string,required) - A valid UK postcode
     + house_no (string, optional) - House number to restrict the search for
     + validateServiceArea (Boolean, optional) - If this value is input as true then BG serviceability check is done prior to retrieving the addresses.
 
@@ -336,6 +336,13 @@ Address as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Blank Postcode' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
 + Response 400 (application/json)
 
             {
@@ -348,6 +355,12 @@ Address as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Invalid Postcode' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -359,7 +372,14 @@ Address as a resource represents following information
                 }],
                 "meta": {}
             }
-            
+
++ Request 'Not in BritishGas serviceable area' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
 + Response 400 (application/json)
 
             {
@@ -394,11 +414,11 @@ This service checks whether BritishGas supply products (Energy or Service) in an
     + houseName (string, optional) - house name of the selected address, if available. Atleast one of flat number, house number and house name need to be available for identifying a premise
     + addressLine1 (string, optional) - street of the selected address, if available.
     + addressLine2 (string, optional) - locality of the selected address, if available.
-    + postalTown (string, required) - town or city of the selected address, if available.
+    + postalTown: Staines (string, required) - town or city of the selected address, if available.
     + county (string, optional) - county of the selected address, if available.
     + postCode (string, optional) - post code of the selected address, if available.
 
-+ Request (application/json)
++ Request 'Success' (application/json)
 
     + Headers
 
@@ -415,17 +435,11 @@ This service checks whether BritishGas supply products (Energy or Service) in an
                 "meta": {}
             }
 
-+ Response 400 (application/json)
++ Request 'Could not return a valid response due to mandatory fields not been sent across to backend' (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [{
-                    "code": "postcode",
-                    "message": "error.client.postcode.blank"
-                }],
-                "meta": {}
-            }
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -440,6 +454,12 @@ This service checks whether BritishGas supply products (Energy or Service) in an
                 ],
                 "meta": {}
             }
+
++ Request 'Multiple premises found for an address' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
