@@ -4,7 +4,7 @@
 Premises endpoint allows you to retrieve customer account information based on their premises. In order to retrieve the account information based on premises, client should have valid authorization access token.
 
 #### Premise
- 
+
 Premise as a resource represents following information
 
 | Name | Type | As request | As response |Description |
@@ -36,11 +36,11 @@ Premise as a resource represents following information
 ####Smart InEligible Reasons
 | Name | Type | As request | As response |Description |
 | :-------------------- | :---------- |:---------- |:---------- | ------------------------------------------------------------ |
-| reasonCode  | `Not applicable`  | `Returned always` |  Reason code for ineligible. | 
-| reasonText  | `Not applicable`  | `Returned always` |  Reason text or description for ineligible. | 
+| reasonCode  | `Not applicable`  | `Returned always` |  Reason code for ineligible. |
+| reasonText  | `Not applicable`  | `Returned always` |  Reason text or description for ineligible. |
 
 ### Retrieve all premises [GET /premises]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -143,7 +143,7 @@ Premise as a resource represents following information
                 "meta": {}
             }
 
-+ Request When smart eligibility PI call returns an error with BP code 5 (application/json)
++ Request 'When smart eligibility PI call returns an error with BP code 5' (application/json)
 
   + Headers
 
@@ -189,7 +189,7 @@ Premise as a resource represents following information
                             "houseName": "",
                             "addressLine1": "Consfield Avenue",
                             "addressLine2": "",
-                            "postalTown": "New Malden",
+                            "postalTown": "   New Malden",
                             "county": "SURREY",
                             "postcode": "KT3 6HD",
                             "MPAN": "1200039598850",
@@ -200,6 +200,13 @@ Premise as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
+
++ Request 'Issued token is not valid' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 401 (application/json)
 
@@ -215,6 +222,13 @@ Premise as a resource represents following information
               "meta": {}
           }
 
++ Request 'Valid token without 'Bearer' key' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
           {
@@ -228,6 +242,13 @@ Premise as a resource represents following information
               ],
               "meta": {}
           }
+
++ Request 'Error from back end system' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
