@@ -25,11 +25,11 @@ Rate is not an independent resource. It is however related to quote as it sheds 
 | personalProjection | double | `Not Applicable` |`Returned always`| Personalized projection value based on input parameters. |
 | consumption | double | `Not Applicable` |`Returned always`| Represents consumption value used for quote computation. |
 | estimatedAnnualConsumption | double | `Not Applicable` |  |Represents estimated annual consumption for current instance of quote. |
-| estimatedAnnualCost | Double | `Not Applicable` | `Returned always`| Represents annual cost for current instance of quote. When `economyMeter` is true, the value of `estimatedAnnualCost` is returned as null for `electricityRates` in the response. |
-| tariffComparisonRate | Double | `Not Applicable` |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. When `economyMeter` is true, the value of `tariffComparisonRate` is returned as null for `electricityRates` in the response. |
+| estimatedAnnualCost | Double | `Not Applicable` | `Returned always`| Represents annual cost for current instance of quote. |
+| tariffComparisonRate | Double | `Not Applicable` |`Returned always`| Represents tariff comparison rate based on average consumption for current quote. |
 | registers | Register | `Not Applicable` | `Returned always`| List of registers pertaining to tariff linked with current instance of quote. |
 
-Note: `estimatedAnnualConsumption` is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. `estimatedAnnualCost` would be the annual cost assuming the user had the same consumption as `estimatedAnnualConsumption`. 
+Note: `estimatedAnnualConsumption` is the consumption used to derieve the given TCR (Currently for Gas it is 13500 and for electricity it is 3200). It has no relation to user's projection. `estimatedAnnualCost` would be the annual cost assuming the user had the same consumption as `estimatedAnnualConsumption`.
 
 #### Register
 Register represents meter registers associated with a tariff. Properties of registers are listed below.
@@ -53,17 +53,16 @@ Along with quote, you also get a mail payload with following properties returned
 
 + Parameters
 
-    + type (string,Optional) - Can be non-oam for anonymous quote. This is implied and hence can be omitted.
-    + apikey (string,Required) - Key that identifies client to API.
-    + fuel (string,Required) - Fuel type for which quote is requested for. Possible values include gas, electricity and dual.
-    + paymentOption (string,Required) - Payment option preferred by customer. Possible values include 'mdd' i.e. Monthly direct debit, 'qcc' i.e. Quarterly cash cheque and 'ppm' i.e. Prepayment
-    + postcode (string,Required) - Postcode for which the quote is requested. Quoted amount varies based on region.
-    + gasConsumption (string,Optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is electricity.
-    + electricityConsumption (string,Optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is gas.
-    + economyMeter (boolean,Optional) - Must be true if used has a Economy meter.
-    + tariff (string,Optional) - Tariff name if filtering required.
+    + type: anonymouss (string,optional) - Can be non-oam for anonymous quote. This is implied and hence can be omitted.
+    + fuel: gas (string,Required) - Fuel type for which quote is requested for. Possible values include gas, electricity and dual.
+    + paymentOption: mdd (string,Required) - Payment option preferred by customer. Possible values include 'mdd' i.e. Monthly direct debit, 'qcc' i.e. Quarterly cash cheque and 'ppm' i.e. Prepayment
+    + postcode: TW18 3HE (string,Required) - Postcode for which the quote is requested. Quoted amount varies based on region.
+    + gasConsumption: 123 (string,optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is electricity.
+    + electricityConsumption: 234 (string,optional) - based on fuel. User entered / estimated consumption for which quote is required. Ignored if fuel is gas.
+    + economyMeter: true (boolean,optional) - Must be true if used has a Economy meter.
+    + tariff: standard (string,optional) - Tariff name if filtering required.
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -226,32 +225,35 @@ Along with quote, you also get a mail payload with following properties returned
                     }
                 }
             }
-            
+
++ Request 'Invalid postcode supplied' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [
-                {
-                    "code": "postcode",
-                    "message": "error.client.postcode.invalid"
-                }
-                ],
+                "errors": {
+                    "postcode": "error.client.postcode.invalid"
+                },
                 "meta": {}
             }
-            
+
 ### Retrieve logged in Quotes [GET /quotes{?type,accountNumber*}]
 
 + Parameters
 
-    + type (string, required) - This must be oam in order to imply logged in quote.
-    + accountNumber (string[], required) - List of account numbers for which the quote is to be retrieved.
+    + type: oam (string, required) - This must be oam in order to imply logged in quote.
+    + accountNumber: 123456 (string[], required) - List of account numbers for which the quote is to be retrieved.
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
@@ -403,7 +405,7 @@ Along with quote, you also get a mail payload with following properties returned
                   }
                 ]
               },
-              "errors": [],
+              "errors": {},
               "meta": {
                 "mail": {
                   "timestamp": "LPnGH7BI/sikSiBj2Onvgg==",
@@ -413,38 +415,59 @@ Along with quote, you also get a mail payload with following properties returned
               }
             }
 
++ Request 'Invalid type' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
+                "errors": {
                             "code": "type",
-                            "message": "error.client.type.invalid"                
-                            }],
+                            "message": "error.client.type.invalid"
+                            },
                 "meta": {}
             }
-            
+
++ Request 'Invalid account number' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
+                "errors": {
                             "code": "account",
-                            "message": "error.client.account.invalid"                
-                            }],
+                            "message": "error.client.account.invalid"
+                            },
                 "meta": {}
             }
+
++ Request 'Brand not matching with cid header' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
+                "errors": {
                             "code": "brand",
-                            "message": "error.client.brand.incompatible"                            
-                            }],
+                            "message": "error.client.brand.incompatible"
+                            },
                 "meta": {}
             }
