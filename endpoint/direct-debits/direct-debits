@@ -43,11 +43,11 @@ Direct debit as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
 ### Retrieve all direct debits for specific accounts [GET /directdebits{?accountNumber}]
 + Parameters
 
-    + accountNumber (string) - Multiple account numbers each one a seperate accountNumber
+    + accountNumber: 12345678 (string) - Multiple account numbers each one a seperate accountNumber
 
 + Request
 
@@ -78,6 +78,13 @@ Direct debit as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
         {
@@ -92,33 +99,33 @@ Direct debit as a resource represents following information
             "meta": {}
         }
 
-+ Response 400 (application/json)
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 401 (application/json)
 
         {
             "status": "FAIL",
             "data": {},
             "errors": [
                 {
-                    "code": "accountNumber",
-                    "message": "error.client.accountNumber.invalid"
+                    "code": "authorize",
+                    "message": "access_denied"
                 }
             ],
             "meta": {}
         }
-        
-+ Response 403 (application/json)
 
-        {
-            "status": "FAIL",
-            "data": {},
-            "errors": [
-                {
-                    "code": "account",
-                    "message": "error.client.account.invalid"
-                }
-            ],
-            "meta": {}
-        }
++ Request 'Direct debit Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 

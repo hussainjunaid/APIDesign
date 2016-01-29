@@ -51,7 +51,7 @@ Possible values and mapped descriptions is listed below for reference.
 
 | Value | Description |
 | :-------------------- | ----------------------------------------------------------- |
-| BUILT_A1 | Pre-1919 | 
+| BUILT_A1 | Pre-1919 |
 | BUILT_A3 | 1919-1995 |
 | BUILT_A5 | 1995+ |
 | DONT_KNOW | Don't know |
@@ -75,7 +75,7 @@ Possible values and mapped descriptions is listed below for reference.
 | RH_ELC_STRG_HEAT | Electric storage heater |
 | RH_ELC_UNDR_HEAT | Electric underfloor |
 | RH_GAS_CENTRAL | Gas central heating |
-| RH_GAS_ROOM_HEAT | Gas room heating | 
+| RH_GAS_ROOM_HEAT | Gas room heating |
 | &#95;NONE&#95; | Oil/Other |
 | DONT_KNOW | Don't know |
 
@@ -85,7 +85,7 @@ Possible values and mapped descriptions is listed below for reference.
 | Value | Description |
 | :-------------------- | ----------------------------------------------------------- |
 | 1 | exactly 1 person |
-| 2 | exactly 2 members | 
+| 2 | exactly 2 members |
 | 3 | exactly 3 members |
 | 4 | exactly 4 members |
 | 5 | exactly 5 members |
@@ -132,7 +132,7 @@ Possible values and mapped descriptions is listed below for reference.
 + Request
 
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -149,8 +149,14 @@ Possible values and mapped descriptions is listed below for reference.
                 "meta": {}
             }
 
-+ Response 400 (application/json)            
-            
++ Request 'Invalid postcode'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
+
             {
                 "status": "FAIL",
                 "data": {},

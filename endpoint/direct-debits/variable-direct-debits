@@ -20,9 +20,9 @@ Variable direct debit as a resource represents following information
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -50,8 +50,8 @@ Variable direct debit as a resource represents following information
 ### Retrieve all variable direct debits for accounts [GET /variable-direct-debits?{accountNumber*}]
 
 + Parameters
-    
-    + accountNumber (string) - Account number for which the variable dd is required
+
+    + accountNumber: 12345678 (string) - Account number for which the variable dd is required
 
 + Request (application/json)
 
@@ -59,7 +59,7 @@ Variable direct debit as a resource represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -90,7 +90,7 @@ Variable direct debit as a resource represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -123,7 +123,7 @@ Variable direct debit as a resource represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
             {
@@ -158,14 +158,14 @@ Variable direct debit as a resource represents following information
             ],
             "meta": {}
         }
-        
+
 + Request 'Account is not available for the customer' (application/json)
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 403 (application/json)
 
             {
@@ -186,7 +186,7 @@ Variable direct debit as a resource represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
             {
@@ -200,12 +200,12 @@ Variable direct debit as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve specific variable direct debits [GET /variable-direct-debits/{id}]
 
 + Parameters
 
-    + id (string) - Direct debit id
+    + id: 12345678 (string) - Direct debit id
 
 + Request (application/json)
 
@@ -238,8 +238,8 @@ Variable direct debit as a resource represents following information
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-+ Response 200 (application/json)             
-            
++ Response 200 (application/json)
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -253,7 +253,7 @@ Variable direct debit as a resource represents following information
                 },
                 "errors": [],
                 "meta": {}
-            }      
+            }
 
 + Request 'Customer not authenticated' (application/json)
 
@@ -261,7 +261,7 @@ Variable direct debit as a resource represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
             {
@@ -296,7 +296,7 @@ Variable direct debit as a resource represents following information
             ],
             "meta": {}
         }
-        
+
 + Request 'Account is not available for the customer' (application/json)
 
     + Headers
@@ -326,7 +326,7 @@ Variable direct debit as a resource represents following information
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -347,7 +347,7 @@ Variable direct debit as a resource represents following information
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 
-+ Response 404 (application/json)            
++ Response 404 (application/json)
 
             {
                 "status": "FAIL",
@@ -360,4 +360,3 @@ Variable direct debit as a resource represents following information
                 ],
                 "meta": {}
             }
-

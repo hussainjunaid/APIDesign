@@ -13,7 +13,7 @@ Customers endpoint also supports following controllers.
 
 #### Customer
 
-Customer as a resource identifies current logged in user. 
+Customer as a resource identifies current logged in user.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :------------------ | :------------------ | ------------------------------------------------------------ |
@@ -77,6 +77,13 @@ Customer as a resource identifies current logged in user.
                 "meta": {}
             }
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -90,6 +97,13 @@ Customer as a resource identifies current logged in user.
                 ],
                 "meta": {}
             }
+
++ Request 'Customer not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -106,6 +120,10 @@ Customer as a resource identifies current logged in user.
             }
 
 ### Modify customers [PUT /customers/{id}]
++ Parameters
+
+    + id: 12345678 (string,required) - Customer id
+    
 + Request (application/json)
 
     + Headers
@@ -197,7 +215,7 @@ Customer as a resource identifies current logged in user.
                 ],
                 "meta": {}
             }
-            
+
 + Response 304 (application/json)
 
 + Response 400 (application/json)
@@ -311,7 +329,7 @@ Customer as a resource identifies current logged in user.
                 ],
                 "meta": {}
             }
-            
+
 ## Customers Match by account info [/customers/match-by-account-info]
 This is a controller service which allows to find out whether a customer with matching account number, home care number or sales order number, is available in backend system.
 
@@ -366,6 +384,22 @@ The possible response status codes are as follows:
                   "meta": {}
             }
 
++ Request 'Input validation' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "",
+                "customerReference": "851001347680",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
+            }
+
 + Response 400 (application/json)
 
             {
@@ -378,6 +412,22 @@ The possible response status codes are as follows:
                     }
                 ],
                 "meta": {}
+            }
+
++ Request 'Occupier customer' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "Kenj",
+                "customerReference": "851001347680",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
             }
 
 + Response 400 (application/json)
@@ -450,6 +500,23 @@ The possible response status codes are as follows:
                   "meta": {}
             }
 
++ Request 'Input validation' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "",
+                "postcode": "TW18 4ND",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk",
+                "directDebitNumber": "1234"
+            }
+
 + Response 400 (application/json)
 
             {
@@ -462,6 +529,23 @@ The possible response status codes are as follows:
                     }
                 ],
                 "meta": {}
+            }
+
++ Request 'Occupier customer' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "Kenj",
+                "postcode": "TW18 4ND",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk",
+                "directDebitNumber": "1234"
             }
 
 + Response 400 (application/json)
@@ -477,7 +561,7 @@ The possible response status codes are as follows:
             ],
             "meta": {}
         }
-        
+
 ## Customers Match by postcode [/customers/match-by-postcode]
 
 This is a controller service which allows to find out whether a customer with matching postcode and email address, is available in backend system.
@@ -535,6 +619,22 @@ The possible response status codes are as follows:
                   "meta": {}
             }
 
++ Request 'Input validation' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "",
+                "postcode": "TW18 4ND",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
+            }
+
 + Response 400 (application/json)
 
             {
@@ -548,7 +648,23 @@ The possible response status codes are as follows:
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Customer occupier' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "Pentwazz Stavea",
+                "surname": "Kenj",
+                "postcode": "TW18 4ND",
+                "email": "Haneesa.Abdulhakkim@bgdigitaltest.co.uk"
+            }
+
 + Response 400 (application/json)
 
             {
@@ -557,7 +673,7 @@ The possible response status codes are as follows:
                 "errors": [
                     {
                         "code": "customer",
-                        "message": "error.customer.occupier"                    
+                        "message": "error.customer.occupier"
                     }
                 ],
                 "meta": {}
@@ -595,6 +711,18 @@ This is a controller service allows you to identify what type of accounts `custo
                   "meta": {}
             }
 
++ Request 'Invalid match token' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "matchToken": "0f35b369-ee56-52d8-911d-16fc6d73e70b"
+            }
+
 + Response 403 (application/json)
 
             {
@@ -608,9 +736,9 @@ This is a controller service allows you to identify what type of accounts `custo
                 ],
                 "meta": {}
             }
-            
+
 ## Create Prospect [/customers/create-prospect]
-This controller service is used to create or retrieve the existing  `Busines Partner` (BP) in SAP for the anonymous customer. UI needs to pass following information in request. 
+This controller service is used to create or retrieve the existing  `Busines Partner` (BP) in SAP for the anonymous customer. UI needs to pass following information in request.
 The request body of this post must be a JSON object with properties listed below.
 
 ### Create Prospect [POST]
@@ -653,7 +781,35 @@ The request body of this post must be a JSON object with properties listed below
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Input validation' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "sakthi",
+                "surname": "",
+                "telephoneDetails": {
+                    "number": "07404669698"
+                },
+                "email": "sakthi@bgdigitaltest.co.uk",
+                "addressDetails": {
+                    "houseName": "Wendover court",
+                    "houseNumber": "110",
+                    "flatNumber": "2",
+                    "addressLine1": "wendover raod",
+                    "addressLine2": "Staines",
+                    "postalTown": "surrey",
+                    "county": "Middlesex",
+                    "postcode": " TW183DQ"
+                }
+            }
+
 + Response 400 (application/json)
 
             {
@@ -667,7 +823,35 @@ The request body of this post must be a JSON object with properties listed below
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Invalid response, BP number not created in SAP' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "title": "Mr",
+                "firstName": "sakthi",
+                "surname": "vel",
+                "telephoneDetails": {
+                    "number": "07404669698"
+                },
+                "email": "sakthi@bgdigitaltest.co.uk",
+                "addressDetails": {
+                    "houseName": "Wendover court",
+                    "houseNumber": "110",
+                    "flatNumber": "2",
+                    "addressLine1": "wendover raod",
+                    "addressLine2": "Staines",
+                    "postalTown": "surrey",
+                    "county": "Middlesex",
+                    "postcode": " TW183DQ"
+                }
+            }
+
 + Response 403 (application/json)
 
             {

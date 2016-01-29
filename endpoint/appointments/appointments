@@ -15,7 +15,7 @@ Appointment as a resource represents following information
 | trackable | boolean | `Optional` | `Returned always` | It is used to determine whether the job tracking can be displayed. |
 | reschedulable | boolean | `Optional` | `Returned always` | It is used to identify reschedule option for the appointment. |
 | cancellable | boolean | `Optional` | `Returned always` | It is used to identify cancel option for the appointment. |
-| combinable | boolean | `Optional` | `Returned always` | It is used to specify the appointment can be combined for the new jobs. | 
+| combinable | boolean | `Optional` | `Returned always` | It is used to specify the appointment can be combined for the new jobs. |
 | telephoneNumber | String | `Optional` | `Returned always` | It is the contact number for the appointment. Telephone number value will be sent only when the jobType value is sent as `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib`. |
 | appointmentSlot | String | `Required` | `Returned always` | It represents the [appointment slot](/api-reference/appointment-slots.md#appointment-slot) mapped to this appointment. |
 | priority | boolean | `Optional` | `Returned always` | It represents the priority of the appointment. Default value is false. |
@@ -65,10 +65,13 @@ This section explains the flow of `appointments`.
 1. GET operation on [`/services-accounts`](/api-reference/services-accounts.md#get-services-accounts) [`Secured by OAuth`] with a specific account number, returns the services account with the eligibility status of booking a breakdown (`eligibleForInterimBreakdown`), first vist (`eligibleForFirstVisit`) and annual service visit (`eligibleForAnnualServiceVisit`).
 2. GET operation on [`/faults`](/api-reference/faults.md#get-faultsaccountaccountservicesproductholdingservicesproductholding) [`Secured by OAuth`] with account number and services product holding, returns the list of faults available for the services product. Customer can select a fault to book an engineer and fix the same.
 3. GET operation on [`/appointment-slots`](/api-reference/appointment-slots.md#get-appointment-slots) [`Secured by OAuth`] with account number and parameters like jobType, selected fault(s) and the priority of the appointment, returns the available slots to book an engineer. Also, if the new appointment is combinable with an exsiting available appointment, then the existing appointment is returned as part of meta.
-4. GET operation on [`/appointments`](#get-appointmentsid) [`Secured by OAuth`] with the appointment id(obtained in the meta of appointment slots), returns the appointment that can be merged with new appointment. 
+4. GET operation on [`/appointments`](#get-appointmentsid) [`Secured by OAuth`] with the appointment id(obtained in the meta of appointment slots), returns the appointment that can be merged with new appointment.
 5. The appointment returned in the GET [`/appointments`](#get-appointmentsid) can be updated with the selected fault and the appointment slot using PUT [`/appointments`](#put-appointmentsid) [`Secured by OAuth`].
 
 `Note`: When the jobType in the request been sent as 'chi', prospect in the meta needs to be populated with the value that has been sent as part of prospect resource response in the id tag also appointmentPayload is the meta tag value returned in the appointment-slots resource's response.
+
+`Note`: When the error code returned from the sales force system while confirming the CHI appointment details is either of 1,2,3 and 9 values error code 500 will be returned from the endpoint.
+
 
 ### Retrieve appointments [GET /appointments]
 + Request
@@ -77,7 +80,7 @@ This section explains the flow of `appointments`.
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
             {
@@ -135,19 +138,19 @@ This section explains the flow of `appointments`.
                 "errors": [],
                 "meta": {}
             }
-            
-### Retrieve specific appointment [GET /appointments/{appointmentId}]
+
+### Retrieve specific appointment [GET /appointments/{id}]
 + Parameters
 
-    + appointmentId (string) - Appointment Id
-    
+    + id: 12345678 (string) - Appointment Id
+
 + Request
 
     + Headers
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
             {
@@ -174,18 +177,18 @@ This section explains the flow of `appointments`.
               "meta": {}
             }
 
-### Retrieve specific appointment with slots and faults sideloaded [GET /appointments/{appointmentId}?include=appointmentSlot&include=fault]
+### Retrieve specific appointment with slots and faults sideloaded [GET /appointments/{id}?include=appointmentSlot&include=fault]
 + Parameters
 
-    + appointmentId (string) - Appointment Id
-    
+    + id:12345678 (string) - Appointment Id
+
 + Request
 
     + Headers
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
             {
@@ -231,8 +234,36 @@ This section explains the flow of `appointments`.
               "meta": {}
             }
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Request 'Appointment not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -244,9 +275,16 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from SAP'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-            
+
             {
                 "status": "ERROR",
                 "data": {},
@@ -258,7 +296,7 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve all appointments with Slots and Faults sideloaded [GET /appointments?include=appointmentSlot&include=fault]
 + Request
 
@@ -266,7 +304,7 @@ This section explains the flow of `appointments`.
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
             {
@@ -364,9 +402,16 @@ This section explains the flow of `appointments`.
               "errors": [],
               "meta": {}
             }
-            
+
++ Request 'Customer not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -379,8 +424,15 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Appointment not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -392,6 +444,13 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
+
++ Request 'Error from SAP'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -410,15 +469,15 @@ This section explains the flow of `appointments`.
 ### Retrieve all appointments for specific account numbers [GET /appointments?{accountNumber*}]
 + Parameters
 
-    + accountNumber (string) - Account number for which the appointments are required
-    
+    + accountNumber: 12345678 (string) - Account number for which the appointments are required
+
 + Request
 
     + Headers
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
             {
@@ -465,15 +524,15 @@ This section explains the flow of `appointments`.
 ### Retrieve all appointments for specific account numbers with slots and faults sideloaded [GET /appointments?include=appointmentSlot&include=fault&{accountNumber*}]
 + Parameters
 
-    + accountNumber (string) - Account number for which the appointments are required
-    
+    + accountNumber: 12345678 (string) - Account number for which the appointments are required
+
 + Request
 
     + Headers
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 200 (application/json)
 
             {
@@ -545,6 +604,13 @@ This section explains the flow of `appointments`.
               "meta": {}
             }
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -557,8 +623,15 @@ This section explains the flow of `appointments`.
                     }
                 ],
                 "meta": {}
-            }          
-            
+            }
+
++ Request 'Account Number invalid'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -572,7 +645,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Account not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -586,7 +666,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Appointment not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -600,8 +687,15 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
-+ Response 500 (application/json)            
+
++ Request 'Error from SAP'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 500 (application/json)
 
             {
                 "status": "ERROR",
@@ -624,7 +718,7 @@ This section explains the flow of `appointments`.
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "appointment": {
                     "servicesAccount": "919918239012",
@@ -636,9 +730,9 @@ This section explains the flow of `appointments`.
                     "appointmentPayload": "srx7t/fT2CajwcGXZ30kz/M3RyEs5RuelZ+qxavAbNokWG94AK8M2vmxjn7WAOhhE3CTTPMj/f7a8LF/DFv+Xw=="
                 }
             }
-            
+
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -662,7 +756,7 @@ This section explains the flow of `appointments`.
                 "errors": [],
                 "meta": {}
             }
-            
+
 + Request CHI Appointment
 
     + Headers
@@ -671,7 +765,7 @@ This section explains the flow of `appointments`.
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "appointment": {
                     "jobType": "chi",
@@ -684,7 +778,7 @@ This section explains the flow of `appointments`.
             }
 
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -706,6 +800,13 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -719,7 +820,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Input Validations'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -734,8 +842,15 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Account is not available for the customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -748,8 +863,15 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Unable to confirm the appointment'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 409 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -762,8 +884,15 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Appointment already exists'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -776,8 +905,15 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Unable to create an appointment'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -790,12 +926,10 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
-`Note`: When the error code returned from the sales force system while confirming the CHI appointment details is either of 1,2,3 and 9 values the above error message will be returned from the endpoint.
-
-### Modify an appointment [PUT /appointments/{appointmentId}]
+### Modify an appointment [PUT /appointments/{id}]
 + Parameters
 
-    + appointmentId (string) - Appointment Id
+    + id: 12345678 (string) - Appointment Id
 
 + Request
 
@@ -805,7 +939,7 @@ This section explains the flow of `appointments`.
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "appointment": {
                     "id": "567891011",
@@ -829,7 +963,7 @@ This section explains the flow of `appointments`.
             }
 
 + Response 200 (application/json)
-            
+
             {
                 "status": "SUCCESS",
                 "data": {
@@ -853,7 +987,14 @@ This section explains the flow of `appointments`.
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -867,7 +1008,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Input validations'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -882,20 +1030,13 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
-+ Response 400 (application/json)
++ Request 'Appointment not found'
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "id",
-                        "message": "error.client.id.invalid"
-                    }
-                ],
-                "meta": {}
-            }   
-            
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -909,8 +1050,22 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Appointment not modified'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 304 (application/json)
+
++ Request 'Invalid modification on appointment resource'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -925,7 +1080,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Invalid job type'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -939,7 +1101,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Unable to modify appointment'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -953,11 +1122,11 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
-### Delete an appointment [DELETE /appointments/{appointmentId}]
+
+### Delete an appointment [DELETE /appointments/{id}]
 + Parameters
 
-    + appointmentId (string) - The appointment id that you want to cancel
+    + id: 12345678 (string) - The appointment id that you want to cancel
 
 + Request
 
@@ -965,8 +1134,15 @@ This section explains the flow of `appointments`.
 
             Authorization: Bearer {accesstoken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-    
+
 + Response 204 (application/json)
+
++ Request 'Appointment not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -982,6 +1158,13 @@ This section explains the flow of `appointments`.
                 "meta": {}
             }
 
++ Request 'Appointment id invalid'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -995,7 +1178,14 @@ This section explains the flow of `appointments`.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from SAP'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
         {
@@ -1004,7 +1194,7 @@ This section explains the flow of `appointments`.
             "errors": [
                 {
                     "code": "system",
-                    "message": "error.system.unexpected.error"                
+                    "message": "error.system.unexpected.error"
                 }
             ],
             "meta": {}

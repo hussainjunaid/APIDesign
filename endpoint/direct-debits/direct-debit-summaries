@@ -2,13 +2,13 @@
 
 Direct debit summaries endpoint allows you to list / view all the customer payment scheme explanation information of the logged in fixed direct debit customer. Responses from this endpoint will be returned in JSON format only.
 
-#### Direct debit summary 
+#### Direct debit summary
 Direct debit summary as a resource represents following information
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
-| id | string | `Not Applicable` | `Returned always` |  Account number of the direct debit contract, to establish relationship with account | 
-| account | string | `Not Applicable` | `Returned always` |  Account number of the direct debit contract, to establish relationship with account |  
+| id | string | `Not Applicable` | `Returned always` |  Account number of the direct debit contract, to establish relationship with account |
+| account | string | `Not Applicable` | `Returned always` |  Account number of the direct debit contract, to establish relationship with account |
 | eventType| string | `Not Applicable` | `Returned always` |  An Integer is returned to indicate the event type. `1- Set up`, `2- interim`, `3-Rapid`, `4-Simulation Interim`, `5 - Periodic` |
 | newInstalmentAmount | double | `Not Applicable` | `Returned always` |  Variable to store customer's installment amount after re-assessment |
 | oldInstalmentAmount | double | `Not Applicable` | `Returned always` |  Variable to store customer's installment amount before re-assessment |
@@ -29,7 +29,7 @@ Contract is represented as follows
 | :-------------------- | :---------- | :---------- | :---------- | ------------------------------------------------------------ |
 | contractId | string | `Not Applicable` | `Returned always` |  Installment date in `dd/MM/yyyy` format |
 | instalmentChangeHonoured | boolean | `Not Applicable` | `Returned always` |  The customer’s choice of payment for the installment has been honored or not in contract level. |
-| amountChanged | boolean | `Not Applicable` | `Returned always` |  Indicates if the amount has changed after re-assessment.  | 
+| amountChanged | boolean | `Not Applicable` | `Returned always` |  Indicates if the amount has changed after re-assessment.  |
 | proposedAmount | double | `Not Applicable` | `Returned if the contract is honored` | Amount recommended after re-assessment. |
 | adoptedAmount | double | `Not Applicable` | `Returned if the contract is honored` | Amount used to honor the previous change |
 
@@ -68,12 +68,12 @@ Contract is represented as follows
                 "errors": [],
                 "meta": {}
             }
-            
+
 ### GET Direct debit summaries for specific accounts [GET /direct-debit-summaries{?accountNumber*}]
 + Parameters
 
-    + accountNumber (string) - Account number for which the direct debit summary is required
-    
+    + accountNumber: 12345678 (string) - Account number for which the direct debit summary is required
+
 + Request
 
     + Headers
@@ -114,7 +114,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
             {
@@ -135,7 +135,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
             {
@@ -156,7 +156,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 403 (application/json)
 
             {
@@ -170,14 +170,14 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-            
+
 + Request 'Fixed direct debit account is not available for the customer'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
             {
@@ -191,14 +191,14 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-            
+
 + Request 'If any of the CPS Summary and CPS Installment services are down'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 500 (application/json)
 
             {
@@ -219,7 +219,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
             {
@@ -233,12 +233,12 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-            
+
 ### GET specific Direct debit summary using id  [GET /direct-debit-summaries/{id}]
 + Parameters
 
-    + id (string) - id for which the direct debit summary is required
-    
+    + id: 12345678 (string) - id for which the direct debit summary is required
+
 + Request
 
     + Headers
@@ -279,7 +279,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
             {
@@ -300,7 +300,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
             {
@@ -321,7 +321,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 403 (application/json)
 
             {
@@ -335,14 +335,14 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-            
+
 + Request 'Invalid direct debit summary id'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
             {
@@ -356,14 +356,14 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-            
+
 + Request 'Fixed direct debit account is not available for the customer'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
             {
@@ -384,7 +384,7 @@ Contract is represented as follows
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 500 (application/json)
 
             {
@@ -398,14 +398,14 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-            
+
 + Request 'If any of the service results for CPS Summary and CPS Installment are not returned'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
             {
@@ -419,4 +419,3 @@ Contract is represented as follows
                 ],
                 "meta": {}
             }
-

@@ -27,7 +27,7 @@ Installment represents following information
 | date | string | `Not Applicable` | `Returned always` | Installment date in `dd/MM/yyyy` format. |
 | status | string | `Not Applicable` | `Returned always` | Installment status, values will be `paid`, `pending`, `in-process` or `missed`. |
 | gasAmount | number | `Not Applicable` | `Returned always` | Installment amount for gas contract.  |
-| electricityAmount | number | `Not Applicable` | `Returned always` | Installment amount for electricity contract.  | 
+| electricityAmount | number | `Not Applicable` | `Returned always` | Installment amount for electricity contract.  |
 | totalAmount | number | `Not Applicable` | `Returned always` | Total installment amount. |
 
 ### Retrieve all fixed direct debits [GET /fixed-direct-debits]
@@ -38,7 +38,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -147,7 +147,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
            {
@@ -257,7 +257,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
            {
@@ -368,7 +368,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 401 (application/json)
 
            {
@@ -389,7 +389,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 403 (application/json)
 
            {
@@ -403,14 +403,14 @@ Installment represents following information
                ],
                "meta": {}
            }
-   
+
 + Request 'Fixed direct debit Account is not available for the customer'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
                {
@@ -423,15 +423,15 @@ Installment represents following information
                        }
                    ],
                    "meta": {}
-               }   
-   
+               }
+
 + Request 'Payment line service is failed for the customer'
 
     + Headers
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 404 (application/json)
 
                {
@@ -445,12 +445,12 @@ Installment represents following information
                    ],
                    "meta": {}
                }
-   
+
 ### Retrieve all fixed direct debits for specific accounts [GET /fixed-direct-debits?{accountNumber*}]
 
 + Parameters
-    
-    + accountNumber (string) - Account number
+
+    + accountNumber: 12345678 (string) - Account number
 
 + Request
 
@@ -458,7 +458,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -567,7 +567,7 @@ Installment represents following information
 
 + Parameters
 
-    + id (string) - Direct debit id
+    + id: 12345678 (string) - Direct debit id
 
 + Request (application/json)
 
@@ -678,6 +678,13 @@ Installment represents following information
               "meta": {}
             }
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -698,7 +705,7 @@ Installment represents following information
 
             Authorization: Bearer accesstoken
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 403 (application/json)
 
            {
@@ -712,6 +719,13 @@ Installment represents following information
                ],
                "meta": {}
            }
+
++ Request 'Fixed Direct Debit Account is not available for the customer'
+
+      + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -727,34 +741,6 @@ Installment represents following information
                 "meta": {}
             }
 
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "directdebit",
-                        "message": "error.client.account.notFound"                    
-            }
-                ],
-                "meta": {}
-            }
-
-+ Response 404 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "directdebit",
-                        "message": "error.client.directdebit.notFound"                  
-            }
-                ],
-                "meta": {}
-            }
-            
 + Request End of plan balance is not available for the customer (application/json)
 
     + Headers

@@ -30,10 +30,10 @@ Dyno appointment slot as a resource represents following information:
 + Parameters
 
     + range (int, optional) - Number of days for which the slots is to be retrieved starting from the current date. By default backend would return slots for 14 days.
-    + showUnavailableSlots (boolean, optional) - Used to filter the unavailable slots from the appointment response. Defaulted to `true`
-    + servicesAccount (string, required) - Used to fetch services contract number through which DYNO slots are retrieved
-    + serviceArea (string, required) - This value is fetched from the priority-questions end point
-    + workType (string, required) -  This value is fetched from the priority-questions end point
+    + showUnavailableSlots: true (boolean, optional) - Used to filter the unavailable slots from the appointment response. Defaulted to `true`
+    + servicesAccount: 12345678 (string, required) - Used to fetch services contract number through which DYNO slots are retrieved
+    + serviceArea: 21 (string, required) - This value is fetched from the priority-questions end point
+    + workType: 111 (string, required) -  This value is fetched from the priority-questions end point
 
 + Request
 
@@ -75,6 +75,13 @@ Dyno appointment slot as a resource represents following information:
                 "meta": {}
             }
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -89,19 +96,12 @@ Dyno appointment slot as a resource represents following information:
                 "meta": {}
             }
 
-+ Response 400 (application/json)
++ Request 'Input validations'
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "servicesAccount",
-                        "message": "error.client.servicesAccount.blank"
-                    }
-                ],
-                "meta": {}
-            }
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -110,42 +110,21 @@ Dyno appointment slot as a resource represents following information:
                 "data": {},
                 "errors": [
                     {
-                        "code": "serviceArea",
-                        "message": "error.client.serviceArea.invalid"
+                        "code": "accountNumber",
+                        "message": "error.client.accountNumber.blank"
                     }
                 ],
                 "meta": {}
             }
+
++ Request 'Service account number is not associated to customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "workType",
-                        "message": "error.client.workType.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 400 (application/json)
-
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "servicesAccount",
-                        "message": "error.client.servicesAccount.invalid"
-                    }
-                ],
-                "meta": {}
-            }
-
-+ Response 403 (application/json)
 
             {
                 "status": "FAIL",
@@ -159,19 +138,34 @@ Dyno appointment slot as a resource represents following information:
                 "meta": {}
             }
 
-+ Response 403 (application/json)
++ Request 'Contract not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
                 "errors": [
                     {
-                        "code": "account",
-                        "message": "error.client.account.invalid"
+                        "code": "contract",
+                        "message": "error.client.contract.unavailable"
                     }
                 ],
                 "meta": {}
             }
+
++ Request 'Any back end error'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 
 + Response 500 (application/json)
 

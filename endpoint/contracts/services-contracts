@@ -52,7 +52,7 @@ Services contract as a resource represents following attributes.
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
     + Body
 
             {
@@ -96,7 +96,7 @@ Services contract as a resource represents following attributes.
                     ]
                 }
             }
-            
+
 + Response 201 (application/json)
 
             {
@@ -151,8 +151,58 @@ Services contract as a resource represents following attributes.
                 "meta": {}
             }
 
++ Request 'Input Validations'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "servicesContract": {
+                    "id": null,
+                    "transaction": "2002756497",
+                    "title": "Mr",
+                    "firstName": "",
+                    "lastName": "test",
+                    "emailAddress": "viki@cen.com",
+                    "telephoneNumber": "07467665766",
+                    "supplyAddress": {
+                        "flatNumber": null,
+                        "houseNumber": "1",
+                        "houseName": null,
+                        "addressLine1": "Canada Road",
+                        "addressLine2": null,
+                        "postalTown": "COBHAM",
+                        "county": "Surrey",
+                        "postcode": "KT11 2BB"
+                    },
+                    "jci": false,
+                    "directDebitDetails": {
+                        "paymentMethod": "ADD",
+                        "bankAccountNumber": "78987987",
+                        "sortCode": "787867",
+                        "accountHolderName": "viki",
+                        "preferredPaymentDay": 11
+                    },
+                    "marketingConsentDetails": {
+                        "letterOpted": true,
+                        "emailOpted": false,
+                        "landlineOpted": false,
+                        "mobileOpted": false,
+                        "smsMmsOpted": false,
+                        "facetoFaceOpted": false,
+                        "ivmOpted": false
+                    },
+                    "productFeatures": [
+                        "NA|GAK|1S|WAW|ADD"
+                    ]
+                }
+            }
+
 + Response 400 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -164,9 +214,15 @@ Services contract as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Product feature invalid'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -178,9 +234,15 @@ Services contract as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Backend system error'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -192,4 +254,3 @@ Services contract as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            

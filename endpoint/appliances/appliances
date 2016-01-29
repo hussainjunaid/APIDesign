@@ -1,9 +1,9 @@
 ## Group Appliances
 
 ## Appliances [/appliances/{id}]
-Appliances endpoint allows you to list the details of appliances with type, makes and models. Responses from this endpoint will be returned in JSON format only. 
+Appliances endpoint allows you to list the details of appliances with type, makes and models. Responses from this endpoint will be returned in JSON format only.
 
-Appliance as a resource represents following information. 
+Appliance as a resource represents following information.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
@@ -15,20 +15,20 @@ Appliance as a resource represents following information.
 
 + Parameters
 
-    + id (string) - Appliance id
+    + id: 12345678 (string) - Appliance id
 
-+ Request
++ Request 'Success'
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
                 "status": "SUCCESS",
                 "data": {
-                    "appliance": 
+                    "appliance":
                         {
                             "id": "AGA",
                             "description": "Combined Boiler And Cooker",
@@ -39,9 +39,15 @@ Appliance as a resource represents following information.
                 },
                 "errors": [],
                 "meta": {}
-            } 
-            
-+ Response 500 (application/json)
+            }
+
++ Request 'Appliance type not found'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 404 (application/json)
 
             {
                 "status": "ERROR",
@@ -52,10 +58,10 @@ Appliance as a resource represents following information.
                 }],
                 "meta": {}
             }
-        
+
 ## Makes [/appliances/{id}/makes]
 
-Make as a resource represents following information. 
+Make as a resource represents following information.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
@@ -67,14 +73,14 @@ Make as a resource represents following information.
 ### Retrieve make details for a specific appliance [GET]
 + Parameters
 
-    + id (string) - Appliance id
-    
-+ Request
+    + id: 12345678 (string) - Appliance id
+
++ Request 'Success'
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -100,7 +106,13 @@ Make as a resource represents following information.
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Appliance id blank'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -112,9 +124,16 @@ Make as a resource represents following information.
                 }],
                 "meta": {}
             }
-        
+
++ Request 'Appliance makes not found'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+
 + Response 404 (application/json)
-        
+
             {
                 "status": "ERROR",
                 "data": {},
@@ -124,10 +143,10 @@ Make as a resource represents following information.
                 }],
                 "meta": {}
             }
-            
+
 #### Models [/appliances/{applianceId}/makes/{makeId}/models]
 
-Model as a resource represents following information. 
+Model as a resource represents following information.
 
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :----------| :---------- | ------------------------------------------------------------ |
@@ -139,15 +158,15 @@ Model as a resource represents following information.
 ### Retrieve all Appliance Model Details for a specific Appliance Make [GET]
 + Parameters
 
-    + applianceId (string) - Appliance id
-    + makeId (string) - appliance make id
-    
+    + applianceId: 12345678 (string) - Appliance id
+    + makeId: 12345678 (string) - appliance make id
+
 + Request
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-            
+
 + Response 200 (application/json)
 
             {
@@ -180,9 +199,14 @@ Model as a resource represents following information.
                 "meta": {}
             }
 
-        
++ Request 'Appliance id blank'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-        
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -192,6 +216,12 @@ Model as a resource represents following information.
                 }],
                 "meta": {}
             }
+
++ Request 'Appliance make id blank'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -205,8 +235,14 @@ Model as a resource represents following information.
                 "meta": {}
             }
 
-+ Response 404 (application/json)            
-            
++ Request 'Appliance models not found'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 404 (application/json)
+
             {
                 "status": "ERROR",
                 "data": {},
@@ -216,4 +252,3 @@ Model as a resource represents following information.
                 }],
                 "meta": {}
             }
-        

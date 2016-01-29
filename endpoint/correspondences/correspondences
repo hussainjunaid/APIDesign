@@ -1,7 +1,7 @@
 ## Group Correspondences
 
 ## Correspondences [/correspondences]
-Correspondences endpoint allows you to list / view correspondences for a given account number and query type using `ICV`. 
+Correspondences endpoint allows you to list / view correspondences for a given account number and query type using `ICV`.
 
 #### Correspondence
 Correspondence as a resource represents following information
@@ -24,8 +24,8 @@ Correspondence as a resource represents following information
 
 + Parameters
 
-    + account (string,required) - Account Number
-    + documentType (string,required) - Query type of the documents to be retrieved. values will be `landlord-gas-safety-certificate`, `service-correspondence`.
+    + account: 12345678 (string,required) - Account Number
+    + documentType: service-correspondence (string,required) - Query type of the documents to be retrieved. values will be `landlord-gas-safety-certificate`, `service-correspondence`.
 
 + Request
 
@@ -69,7 +69,14 @@ Correspondence as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -78,14 +85,21 @@ Correspondence as a resource represents following information
                 "errors": [
                     {
                         "code": "authorize",
-                        "message": "access_denied"                    
+                        "message": "access_denied"
                     }
                 ],
                 "meta": {}
             }
 
++ Request 'Input validation'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -97,6 +111,13 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Account number not associated to logged in customer'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -112,6 +133,13 @@ Correspondence as a resource represents following information
                 "meta": {}
             }
 
++ Request 'No correspondence available for the account'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -125,7 +153,14 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from backend'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -144,7 +179,7 @@ Correspondence as a resource represents following information
 
 + Parameters
 
-    + id (string,required) - Correspondence id
+    + id: 12345678 (string,required) - Correspondence id
 
 + Request
 
@@ -176,7 +211,14 @@ Correspondence as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -185,14 +227,21 @@ Correspondence as a resource represents following information
                 "errors": [
                     {
                         "code": "authorize",
-                        "message": "access_denied"                    
+                        "message": "access_denied"
                     }
                 ],
                 "meta": {}
             }
 
++ Request 'Input validation'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -204,6 +253,13 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Account not available for customer'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -219,6 +275,13 @@ Correspondence as a resource represents following information
                 "meta": {}
             }
 
++ Request 'No correspondence available for the correspondence identifier'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -232,7 +295,14 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error form backend'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -246,12 +316,12 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
 ### Download specific correspondence  [GET /correspondences/{id}/download]
 
 + Parameters
 
-    + id (string,required) - Correspondence id
+    + id: 12345678 (string,required) - Correspondence id
 
 + Request
 
@@ -262,6 +332,13 @@ Correspondence as a resource represents following information
 
 + Response 200 (application/pdf)
 
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -270,14 +347,21 @@ Correspondence as a resource represents following information
                 "errors": [
                     {
                         "code": "authorize",
-                        "message": "access_denied"                    
+                        "message": "access_denied"
                     }
                 ],
                 "meta": {}
             }
 
++ Request 'Input validation'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -289,6 +373,13 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Account not available for customer'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -304,6 +395,13 @@ Correspondence as a resource represents following information
                 "meta": {}
             }
 
++ Request 'No correspondence available for the correspondence identifier'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -317,7 +415,14 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Error from backend'
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -331,4 +436,3 @@ Correspondence as a resource represents following information
                 ],
                 "meta": {}
             }
-

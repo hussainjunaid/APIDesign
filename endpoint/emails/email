@@ -16,13 +16,13 @@ Email payload requires following items:
 ### Send Email [POST]
 
 + Request (application/x-www-form-urlencoded)
-    
+
     + Headers
-            
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "payload":"",
                 "timestamp":"",
@@ -31,12 +31,27 @@ Email payload requires following items:
             }
 
 + Response 200 (application/json)
-        
+
             {
                 "status": "SUCCESS",
                 "data": {},
                 "errors": [],
                 "meta": {}
+            }
+
++ Request 'Expired timestamp' (application/x-www-form-urlencoded)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "payload":"",
+                "timestamp":"",
+                "checksum":"",
+                "to":""
             }
 
 + Response 400 (application/json)
@@ -52,7 +67,22 @@ Email payload requires following items:
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Checksum expired' (application/x-www-form-urlencoded)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "payload":"",
+                "timestamp":"",
+                "checksum":"",
+                "to":""
+            }
+
 + Response 400 (application/json)
 
             {
@@ -66,7 +96,22 @@ Email payload requires following items:
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Unable to send email' (application/x-www-form-urlencoded)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "payload":"",
+                "timestamp":"",
+                "checksum":"",
+                "to":""
+            }
+
 + Response 500 (application/json)
 
             {

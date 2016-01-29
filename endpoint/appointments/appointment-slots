@@ -18,14 +18,14 @@ Appointment Slot as a resource will be represented as below:
 ##### variant
 Variant is used to highlight the slot type of the appointment slots. If slot type is not returned from back end it will tell us the the time diference between the `startTime` and `endTime`.
 
-###### Job type as `smart` and `chi` 
+###### Job type as `smart` and `chi`
 The time difference between `startTime` and `endTime`. For example, start time is `08:00` and end time is `12:00`, the variant would be `4`.
 
 ###### Job type as `services`
 
 ###### For preference slots:
 
-| Variant | Duration | 
+| Variant | Duration |
 | :------------ | :----------------------- |
 |  AM |  08:00 to 13:00 |
 |  FF |  10:00 to 14:00 |
@@ -46,23 +46,23 @@ The time difference between `startTime` and `endTime`. For example, start time i
 
 > `Note`: Authorization is not required when slots are requested for the job type `smart` and `chi`
 
-> `Note`: For `chi` job type the `priority` of receiving the appointment slots is based on the current working state of the boiler. If the current working state of boiler is chosen as `Yes` by the customer, then the priority value will be sent as `false` and vice versa. 
+> `Note`: For `chi` job type the `priority` of receiving the appointment slots is based on the current working state of the boiler. If the current working state of boiler is chosen as `Yes` by the customer, then the priority value will be sent as `false` and vice versa.
 
-> `Note`: The above appointment slots are returned for a new appointment. If the new appointment is combinable with an existing appointment, the existing appointment will be returned as part of meta. In this case, where an existing appointment is available, the flow of combining appointment with an existing is explained in [appointment use case](/api-reference/appointments.md#use-case-for-combine-breakdown-appointment-with-existing-appointment). 
+> `Note`: The above appointment slots are returned for a new appointment. If the new appointment is combinable with an existing appointment, the existing appointment will be returned as part of meta. In this case, where an existing appointment is available, the flow of combining appointment with an existing is explained in [appointment use case](/api-reference/appointments.md#use-case-for-combine-breakdown-appointment-with-existing-appointment).
 
 ### Retrieve Smart appointment-slots [GET /appointment-slots{?jobType,dateStartFrom,range,showUnavailableSlot,serviceOrder}]
 + Parameters
 
-    + jobType (string,required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
-    + dateStartFrom (integer,Optional) - Number of days added to the current to set the start date of appointment
-    + range (integer,Optional) - Number of days added to the start date  to set the end date of appointment
-    + showUnavailableSlot (boolean,Optional) - default value is `true`. Used to filter unavailable slots from the appointment slots response
+    + jobType: smart (string,required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
+    + dateStartFrom (integer,optional) - Number of days added to the current to set the start date of appointment
+    + range (integer,optional) - Number of days added to the start date  to set the end date of appointment
+    + showUnavailableSlot: true (boolean,optional) - default value is `true`. Used to filter unavailable slots from the appointment slots response
     + serviceOrder (string,optional) - Required for the type `smart`. 64-bit encrypted service order number
 
 + Request When jobType value sent as `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
 
     + Headers
-    
+
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 200 (application/json)
@@ -106,17 +106,17 @@ The time difference between `startTime` and `endTime`. For example, start time i
                     "appointmentPayload": "srx7t/fT2CajwcGXZ30kz/M3RyEs5RuelZ+qxavAbNokWG94AK8M2vmxjn7WAOhhE3CTTPMj/f7a8LF/DFv+Xw=="
                 }
             }
-            
+
 ### Retrieve Services appointment-slots [GET /appointment-slots{?jobType,showUnavailableSlot,servicesAccount,appointment,priority,fault*}]
 
 + Parameters
 
-    + jobType (string,required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib` and `chi`
-    + servicesAccount (string,Optional) - `Required` for the types `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`. Service account of the customer which has the appointment to be rescheduled. 
-    + appointment (string,Optional) - `Required` while rescheduling an existing appointment. Id of the appointment to be rescheduled.
-    + priority (boolean, Optional) - default value is `false`. Priority of the appointment to be rescheduled or to retrieve the CHI slots.
-    + fault  (String, Optional) - `Required` for type `ib`, `asv-and-ib` and `fv-and-ib`. Multiple faults can be passed as a query parameter to get the appointment slots to book an engineer
-    + showUnavailableSlot (boolean, Optional) - default value is `false`. Used to filter unavailable slots from the appointment slots response. Currently not supported for type `chi`
+    + jobType: ib (string,required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib` and `chi`
+    + servicesAccount (string,optional) - `Required` for the types `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`. Service account of the customer which has the appointment to be rescheduled.
+    + appointment (string,optional) - `Required` while rescheduling an existing appointment. Id of the appointment to be rescheduled.
+    + priority: false (boolean, optional) - default value is `false`. Priority of the appointment to be rescheduled or to retrieve the CHI slots.
+    + fault  (String, optional) - `Required` for type `ib`, `asv-and-ib` and `fv-and-ib`. Multiple faults can be passed as a query parameter to get the appointment slots to book an engineer
+    + showUnavailableSlot: false (boolean, optional) - default value is `false`. Used to filter unavailable slots from the appointment slots response. Currently not supported for type `chi`
 
 + Request When jobType value sent as `smart`, `asv`, `fv`, `ib`, `asv-and-ib` and `fv-and-ib`
 
@@ -170,11 +170,11 @@ The time difference between `startTime` and `endTime`. For example, start time i
 ### Retrieve CHI appointment-slots [GET /appointment-slots{?jobType,dateStartFrom,range,postcode,priority}]
 + Parameters
 
-    + jobType (String, required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib` and `chi`.
-    + dateStartFrom (integer, Optional) - Number of days added to the current to set the start date of appointment.
-    + range (integer, Optional) - Number of days added to the start date  to set the end date of appointment.
-    + priority (boolean, Optional) - default value is `false`. Priority of the appointment to be rescheduled or to retrieve the CHI slots.
-    + postcode (string, required) - for the type `chi`. Postcode which customer entered.
+    + jobType: chi (String, required) - Type of job for which slots are requested. Job types are `smart`, `asv`, `fv`, `ib`, `asv-and-ib`, `fv-and-ib` and `chi`.
+    + dateStartFrom (integer, optional) - Number of days added to the current to set the start date of appointment.
+    + range (integer, optional) - Number of days added to the start date  to set the end date of appointment.
+    + priority: false (boolean, optional) - default value is `false`. Priority of the appointment to be rescheduled or to retrieve the CHI slots.
+    + postcode: TW18 3AR (string, required) - for the type `chi`. Postcode which customer entered.
 
 + Request
 
@@ -222,9 +222,9 @@ The time difference between `startTime` and `endTime`. For example, start time i
                 "meta": {
                     "appointmentPayload": "TTZ3ZUxXNmRUY0FEYXYxVWJVZlUvVWlqUEFEeUJ6a0pPbW1tZ0NhKzNEeFJWQmw0Uy92cVo3dUx6SGVaVDF1cjFFVlFVN1Fhd2IzRAo3MGVGdStXVHFrTCt0aW80MkFyU2J1eFcvUnlPd3Rqc2U3R2pRVHM3bTh0RGx3Mm5wL0trcVhGL3VQK3F5ZXlXVEtTdC82eE1Qdz09"
                 }
-            } 
+            }
 
-+ Request - No appointment slots found
++ Request 'No appointment slots found'
 
     + Headers
 
@@ -240,7 +240,13 @@ The time difference between `startTime` and `endTime`. For example, start time i
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Input Validations'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -255,8 +261,14 @@ The time difference between `startTime` and `endTime`. For example, start time i
                 "meta": {}
             }
 
++ Request 'Services Account not associated with the customer'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -268,6 +280,12 @@ The time difference between `startTime` and `endTime`. For example, start time i
                 ],
                 "meta": {}
             }
+
++ Request 'Postcode sector not available'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -282,7 +300,13 @@ The time difference between `startTime` and `endTime`. For example, start time i
                 ],
                 "meta": {}
             }
-            
+
++ Request 'SAP Down'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {

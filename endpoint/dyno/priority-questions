@@ -29,8 +29,8 @@ Priority answer as an entity represents the following attributes:
 ### Retrieve priority questions for a specific fault [GET /priority-questions{?fault}]
 + Parameters
 
-    + fault (string, required) - Fault id of a fault which customer choose
-    
+    + fault: 12345678 (string, required) - Fault id of a fault which customer choose
+
 + Request
 
     + Headers
@@ -59,7 +59,14 @@ Priority answer as an entity represents the following attributes:
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -73,6 +80,13 @@ Priority answer as an entity represents the following attributes:
                 ],
                 "meta": {}
             }
+
++ Request 'Fault is blank'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -88,6 +102,13 @@ Priority answer as an entity represents the following attributes:
                 "meta": {}
             }
 
++ Request 'Fault is invalid'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -101,6 +122,13 @@ Priority answer as an entity represents the following attributes:
                 ],
                 "meta": {}
             }
+
++ Request 'Dyno service down'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -119,8 +147,8 @@ Priority answer as an entity represents the following attributes:
 ### Retrieve priority questions for a specific fault with answers sideloaded [GET /priority-questions{?fault}&include=priorityAnswers]
 + Parameters
 
-    + fault (string, required) - Fault id of a fault which customer choose
-    
+    + fault: 12345678 (string, required) - Fault id of a fault which customer choose
+
 + Request
 
     + Headers
@@ -184,6 +212,20 @@ Priority answer as an entity represents the following attributes:
                 "meta": {}
             }
 
+            + Request
+
+                + Headers
+
+                        Authorization: Bearer {accesstoken}
+                        cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -197,6 +239,13 @@ Priority answer as an entity represents the following attributes:
                 ],
                 "meta": {}
             }
+
++ Request 'Fault is blank'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -212,6 +261,13 @@ Priority answer as an entity represents the following attributes:
                 "meta": {}
             }
 
++ Request 'Fault is invalid'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -225,6 +281,13 @@ Priority answer as an entity represents the following attributes:
                 ],
                 "meta": {}
             }
+
++ Request 'Dyno service down'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -243,8 +306,8 @@ Priority answer as an entity represents the following attributes:
 ### Retrieve specific priority question [GET /priority-questions/{id}]
 + Parameters
 
-    + id (string, required) - Id of the priority question
-    
+    + id: 12345678 (string, required) - Id of the priority question
+
 + Request
 
     + Headers
@@ -270,7 +333,14 @@ Priority answer as an entity represents the following attributes:
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -285,6 +355,13 @@ Priority answer as an entity represents the following attributes:
                 "meta": {}
             }
 
++ Request 'Input validations'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -298,6 +375,13 @@ Priority answer as an entity represents the following attributes:
                 ],
                 "meta": {}
             }
+
++ Request 'Dyno service down'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -316,8 +400,8 @@ Priority answer as an entity represents the following attributes:
 ### Retrieve specific priority question with answers sideloaded [GET /priority-questions/{id}?include=priorityAnswers]
 + Parameters
 
-    + id (string, required) - Id of the priority question
-    
+    + id: 12345678 (string, required) - Id of the priority question
+
 + Request
 
     + Headers
@@ -369,7 +453,14 @@ Priority answer as an entity represents the following attributes:
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -384,6 +475,13 @@ Priority answer as an entity represents the following attributes:
                 "meta": {}
             }
 
++ Request 'Input vaildation'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -397,6 +495,13 @@ Priority answer as an entity represents the following attributes:
                 ],
                 "meta": {}
             }
+
++ Request 'Dyno service down'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 

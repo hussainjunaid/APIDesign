@@ -26,7 +26,7 @@ Dyno appointment as a resource represents following information:
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "dynoAppointment": {
                     "id": null,
@@ -38,7 +38,7 @@ Dyno appointment as a resource represents following information:
                     "comments": "water leakage in toilet"
                 }
             }
-            
+
 + Response 200 (application/json)
 
             {
@@ -57,7 +57,28 @@ Dyno appointment as a resource represents following information:
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer not authenticated'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "dynoAppointment": {
+                    "id": null,
+                    "servicesAccount": "911000031855",
+                    "telephoneNumber": "0738123456",
+                    "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                    "serviceArea": "11",
+                    "workType": "100",
+                    "comments": "water leakage in toilet"
+                }
+            }
+
 + Response 401 (application/json)
 
             {
@@ -70,6 +91,27 @@ Dyno appointment as a resource represents following information:
                     }
                 ],
                 "meta": {}
+            }
+
++ Request 'Account number invalid'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "dynoAppointment": {
+                    "id": null,
+                    "servicesAccount": "911000031855",
+                    "telephoneNumber": "0738123456",
+                    "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                    "serviceArea": "11",
+                    "workType": "100",
+                    "comments": "water leakage in toilet"
+                }
             }
 
 + Response 400 (application/json)
@@ -86,6 +128,27 @@ Dyno appointment as a resource represents following information:
                 "meta": {}
             }
 
++ Request 'Service account number is not associated to customer'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "dynoAppointment": {
+                    "id": null,
+                    "servicesAccount": "911000031855",
+                    "telephoneNumber": "0738123456",
+                    "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                    "serviceArea": "11",
+                    "workType": "100",
+                    "comments": "water leakage in toilet"
+                }
+            }
+
 + Response 403 (application/json)
 
             {
@@ -100,6 +163,27 @@ Dyno appointment as a resource represents following information:
                 "meta": {}
             }
 
++ Request 'Contract not found'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "dynoAppointment": {
+                    "id": null,
+                    "servicesAccount": "911000031855",
+                    "telephoneNumber": "0738123456",
+                    "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                    "serviceArea": "11",
+                    "workType": "100",
+                    "comments": "water leakage in toilet"
+                }
+            }
+
 + Response 400 (application/json)
 
             {
@@ -112,6 +196,27 @@ Dyno appointment as a resource represents following information:
                     }
                 ],
                 "meta": {}
+            }
+
++ Request 'Backend error'
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
+    + Body
+
+            {
+                "dynoAppointment": {
+                    "id": null,
+                    "servicesAccount": "911000031855",
+                    "telephoneNumber": "0738123456",
+                    "dynoAppointmentSlot": "MTR8dHJ1ZXwzZDJmNTRjYi1hYzk5LWU1MTEtYWVlZi0wMDUwNTY5ODAzOTM",
+                    "serviceArea": "11",
+                    "workType": "100",
+                    "comments": "water leakage in toilet"
+                }
             }
 
 + Response 500 (application/json)
