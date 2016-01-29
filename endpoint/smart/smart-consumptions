@@ -9,9 +9,9 @@ This endpoint returns eligible preference list for the given account number. The
 ### Retrieve smart consumption for an account  [GET /smart-consumptions/eligible-preferences{?account}]
 + Parameters
 
-    + account (string,required) - Account Number
-    
-+ Request
+    + account: 123456 (string,required) - Account Number
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -33,7 +33,14 @@ This endpoint returns eligible preference list for the given account number. The
                 "errors": {},
                 "meta": {}
             }
-            
+
++ Request 'Invalid access token used for geting eligible preference list' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -42,14 +49,21 @@ This endpoint returns eligible preference list for the given account number. The
                 "errors": [
                     {
                         "code": "authorize",
-                        "message": "access_denied"                    
+                        "message": "access_denied"
                     }
                 ],
                 "meta": {}
             }
 
++ Request 'Invalid account number' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -61,6 +75,13 @@ This endpoint returns eligible preference list for the given account number. The
                 ],
                 "meta": {}
             }
+
++ Request 'Account number not associated to logged in customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -75,6 +96,13 @@ This endpoint returns eligible preference list for the given account number. The
                 ],
                 "meta": {}
             }
+
++ Request 'Non smart meter account accessed' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -94,10 +122,10 @@ This endpoint returns eligible preference list for the given account number. The
 
 + Parameters
 
-    + account (string,required) - Account Number
-    + viewPreference (string,required) -  eligible preference - Retrieve consumption details of the given smart meter customer up to 24 months in PDF format.
+    + account: 123456 (string,required) - Account Number
+    + viewPreference: daily (string,required) -  eligible preference - Retrieve consumption details of the given smart meter customer up to 24 months in PDF format.
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -108,7 +136,14 @@ This endpoint returns eligible preference list for the given account number. The
 
             {
             }
-            
+
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -117,14 +152,21 @@ This endpoint returns eligible preference list for the given account number. The
                 "errors": [
                     {
                         "code": "authorize",
-                        "message": "access_denied"                    
+                        "message": "access_denied"
                     }
                 ],
                 "meta": {}
             }
 
++ Request 'Invalid account number' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -136,6 +178,13 @@ This endpoint returns eligible preference list for the given account number. The
                 ],
                 "meta": {}
             }
+
++ Request 'Account number not associated to logged in customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -151,6 +200,13 @@ This endpoint returns eligible preference list for the given account number. The
                 "meta": {}
             }
 
++ Request 'Non smart meter account accessed' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -164,6 +220,13 @@ This endpoint returns eligible preference list for the given account number. The
                 ],
                 "meta": {}
             }
+
++ Request 'Invalid view preference' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -179,6 +242,13 @@ This endpoint returns eligible preference list for the given account number. The
                 "meta": {}
             }
 
++ Request 'Closed account customer accessed this endpoint' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -192,7 +262,14 @@ This endpoint returns eligible preference list for the given account number. The
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Get last meter or MDUS service failed' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -207,6 +284,13 @@ This endpoint returns eligible preference list for the given account number. The
                 "meta": {}
             }
 
++ Request 'Error from back end systems' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -219,4 +303,4 @@ This endpoint returns eligible preference list for the given account number. The
                     }
                 ],
                 "meta": {}
-            }            
+            }
