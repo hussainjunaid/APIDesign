@@ -4,7 +4,7 @@ Faults resource allows you to retrieve the faults for a logged in customer based
 ### Fault
 Fault as a resource represents following information
 
-| Property | Type | As request | As response | Description | 
+| Property | Type | As request | As response | Description |
 | :--------- | :------------ | :------------ | :------------ | -----------------------------------------------------|
 | id | String | `Not Applicable` | `Returned always` | Id of the fault which is returned from SAP for each fault associated to services product. |
 | title | String | `Not Applicable` | `Returned always` | Title holds the brief notes of the fault. |
@@ -13,9 +13,9 @@ Fault as a resource represents following information
 ### Retrieve faults [GET /faults{?account}]
 + Parameters
 
-    + account (string, required) - Account number of the customer. List of faults will be returned for the account.
-    
-+ Request
+    + account: 123456 (string, required) - Account number of the customer. List of faults will be returned for the account.
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -54,6 +54,13 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -67,6 +74,13 @@ Fault as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'AccountNumber is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -82,6 +96,13 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Account is not associated to the customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -96,34 +117,13 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
-+ Response 403 (application/json)
++ Request 'Unable to retrieve faults from back end' (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "productHolding",
-                        "message": "error.client.productHolding.invalid"
-                   }
-                ],
-                "meta": {}
-            }
+    + Headers
 
-+ Response 404 (application/json)
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "fault",
-                        "message": "error.client.fault.notFound"
-                   }
-                ],
-                "meta": {}
-            }
-            
 + Response 500 (application/json)
 
             {
@@ -141,9 +141,9 @@ Fault as a resource represents following information
 ### Retrieve specific faults [GET /faults/{id}]
 + Parameters
 
-    + id (string, required) - Fault id
-    
-+ Request
+    + id: 1234 (string, required) - Fault id
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -165,6 +165,13 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -179,6 +186,13 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Fault not found' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -192,6 +206,13 @@ Fault as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Unable to retrieve faults from back end' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -210,10 +231,10 @@ Fault as a resource represents following information
 ### Retrieve faults for specific products [GET /faults{?account,servicesProductHolding*}]
 + Parameters
 
-    + account (string, required) - Account number of the customer. List of faults will be returned for the account.
-    + servicesProductHolding (array of strings, optional) - Ids of the services product for the customer. List of faults will be returned for all services products if the product holding is empty
-    
-+ Request
+    + account: 123456 (string, required) - Account number of the customer. List of faults will be returned for the account.
+    + servicesProductHolding: 123456-asd (string, optional) - Ids of the services product for the customer. List of faults will be returned for all services products if the product holding is empty
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -247,7 +268,7 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
-+ Request No faults found for the request
++ Request 'No faults found for the request' (application/json)
 
     + Headers
 
@@ -264,7 +285,14 @@ Fault as a resource represents following information
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -278,6 +306,13 @@ Fault as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'AccountNumber is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -293,6 +328,13 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Account is not associated to the customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -307,19 +349,12 @@ Fault as a resource represents following information
                 "meta": {}
             }
 
-+ Response 403 (application/json)
++ Request 'Unable to retrieve faults from back end' (application/json)
 
-            {
-                "status": "FAIL",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "productHolding",
-                        "message": "error.client.productHolding.invalid"
-                   }
-                ],
-                "meta": {}
-            }
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
