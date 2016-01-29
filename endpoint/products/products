@@ -25,9 +25,9 @@ Product as a resource represents following information:
 
 + Parameters
 
-    + id (required, string) - Id of the product
+    + id: 1234 (required, string) - Id of the product
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -204,6 +204,12 @@ Product as a resource represents following information:
                 "meta": {}
             }
 
++ Request 'Product code is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -217,6 +223,12 @@ Product as a resource represents following information:
                 ]
                 "meta": {}
             }
+
++ Request 'If product does not have any mandatory properties' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
