@@ -12,8 +12,8 @@ Services product holding as a resource represents following information
 | customerId | string | `Not Applicable` | `Returned always` | Customer id associated to the product, if available. |
 | productTypeDescription | string | `Not Applicable` | `Returned always` | Product description of the product, if available. |
 | productName | string | `Not Applicable` | `Returned always` | Name of the product, if available. |
-| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. | 
-| servicesAccount | string | `Not Applicable` | `Returned always` | Services account number to which the product is linked, if available. | 
+| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. |
+| servicesAccount | string | `Not Applicable` | `Returned always` | Services account number to which the product is linked, if available. |
 | propositionId | string | `Not Applicable` | `Returned always` | Proposition id for the product. |
 | premiseId | string | `Not Applicable` | `Returned always` | Premise id associated to the product, if available. |
 | plumbingAndDrains | boolean | `Not Applicable` | `Returned always` | Indicates that the product has plumbing and drains, if the value is true. |
@@ -28,7 +28,7 @@ Services product holding as a resource represents following information
 | asvAvailable | boolean | `Not Applicable` | `Returned always` | Indicates that Annual Service Visit is applicable for this product, if the value is true. |
 
 ### Retrieve services product holdings [GET /services-product-holdings]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -103,6 +103,13 @@ Services product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -116,6 +123,13 @@ Services product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Unable to get services product holding data from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -134,9 +148,9 @@ Services product holding as a resource represents following information
 ### Retrieve energy product holdings for specific accounts [GET /services-product-holdings{?accountNumber*}]
 + Parameters
 
-    + accountNumber (string) - This is the customers account number
+    + accountNumber: 123456 (string, optional) - This is the customers account number
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -211,6 +225,12 @@ Services product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 401 (application/json)
 
@@ -226,6 +246,13 @@ Services product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Account number is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -240,6 +267,12 @@ Services product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Account is not available for the customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -254,6 +287,13 @@ Services product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Unable to get services product holding data from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -272,9 +312,9 @@ Services product holding as a resource represents following information
 ### Retrieve product holdings using product id [GET /services-product-holdings/{productId}]
 + Parameters
 
-    + productId (string) - Product id
+    + productId: 1234 (string, required) - Product id
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -318,6 +358,13 @@ Services product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -332,6 +379,12 @@ Services product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Services product holding is not available for the customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -346,6 +399,13 @@ Services product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Product Id is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
