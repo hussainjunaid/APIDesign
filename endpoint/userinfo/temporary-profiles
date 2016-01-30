@@ -22,7 +22,7 @@ Flow is explained below.
  3. Online server finds the information is valid and triggers an email with a token in the link to a new web app.
  4. User clicks on the link in email. This will take the user to a new application on the web browser. In this situation, we might want to show some information about the user (Probably his email address)
  5. In order to fetch some use information, the App in web browser will use a GET on /userinfo/temporary-profile/token-info to retrieve more information mapped to given token.
- 6. Now the user is provided an opportunity to enter his password. 
+ 6. Now the user is provided an opportunity to enter his password.
  7. When the user clicks on submit, app will use a PUT on /userinfo/temporary-profile to create an actual account at online. Till this point, the user is not considered registered.
 
 `temporaryProfile` as such just represents a disposable user profile at online. However, its `id` is mapped to a token that expires post 1 hour. If `temporaryProfile` is not upgraded within this time slot, it will be disposed.
@@ -41,7 +41,7 @@ As a resource, following properties define a Temporary profile.
 
 >`Note`: When a temporary profile is updated with a validated token, it is upgraded to a full customer profile.
 
-In order to create a temporary profile, you would need a valid match token. Kindly refer to Customer's api in order to understand how to get one. 
+In order to create a temporary profile, you would need a valid match token. Kindly refer to Customer's api in order to understand how to get one.
 
 When a temporary profile is created, `matchToken` is validated against inputs provided as `temporaryProfile` and if every input is matching the data used to fetch a `matchToken` a `temporaryProfile` will be created.
 
@@ -55,7 +55,7 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
 
 
 ### Create temporary profile [POST]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -92,6 +92,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                   "meta": {}
             }
 
++ Request 'Match token is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -105,6 +111,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                   ],
                   "meta": {}
             }
+
++ Request 'If any of attributes of temporaryProfile is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -122,7 +134,7 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
 
 ### Update temporary profile [PUT]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -152,6 +164,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                       "meta": {}
             }
 
++ Request 'Temporary Profile is not found' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -165,6 +183,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                   ],
                   "meta": {}
             }
+
++ Request 'User already exists' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -180,6 +204,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                   "meta": {}
             }
 
++ Request 'If any of attributes of temporaryProfile is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -193,6 +223,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                   ],
                   "meta": {}
             }
+
++ Request 'If password supplied in Meta input is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -215,7 +251,7 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
     + token: 5aa6a106-c6d5-52c4-af9d-a3d0b361dffa (mandatory, string)
 
 ### Retrieve tokeninfo for password reset [GET]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -230,6 +266,12 @@ Also note that `id` of `temporaryProfile` will be sent along with an email as sh
                   "surname": "Street",
                   "firstName": "M"
             }
+
++ Request 'Token temporaryProfile id is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
