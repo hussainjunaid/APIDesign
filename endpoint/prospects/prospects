@@ -30,7 +30,7 @@ If the classification value sent as part of the request is 'CHI', then the custo
 ### Create prospect [POST /prospects]
 This controller service is used to create or retrieve the existing UCRN and Busines Partner (BP) in SAP for the anonymous customer. UI needs to give the following information as a request. The request body of this post must be a JSON object with properties listed below.
 
-+ Request Case 1:  When the classification value been sent as 'smart' (application/json)
++ Request 'classification value been sent as smart' (application/json)
 
     + Headers
 
@@ -73,7 +73,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "prospectToken": "6997bc57-4f6a-543d-96ba-8eacb65400f7"
                 }
             }
-            
+
 + Response 200 (application/json)
 
             {
@@ -111,7 +111,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 }
             }
 
-+ Request Case 2:  When the classification value been sent as 'chi' (application/json)
++ Request 'classification value been sent as chi' (application/json)
 
     + Headers
 
@@ -141,7 +141,7 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     }
                 }
             }
-            
+
 + Response 200 (application/json)
 
             {
@@ -178,6 +178,12 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
 
++ Request 'Invalid request' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -192,6 +198,12 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
 
++ Request 'Prospect creation error' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -205,9 +217,15 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Classification is empty' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -219,9 +237,15 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Classification is invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
-            
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -238,16 +262,16 @@ This controller service is used to create or retrieve the existing UCRN and Busi
 
 + Parameters
 
- + id (string) - Prospect id
+ + id: 1234 (string, required) - Prospect id
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-    
+
             {
                 "prospect": {
                     "title": "Mr",
@@ -273,8 +297,8 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {
                     "prospectToken": "a1045c92-3828-5619-b845-145904e0768b"
                 }
-            }   
-            
+            }
+
 + Response 200 (application/json)
 
             {
@@ -306,7 +330,13 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                     "meta": {}
                 }
             }
-            
+
++ Request 'Prospect token is null' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -320,7 +350,13 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Invalid prospect token' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -334,8 +370,20 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Resource not modified' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 304 (application/json)
+
++ Request 'Modification not allowed' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -351,8 +399,14 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
 
-+ Response 400 (application/json)            
-            
++ Request 'Prospect Id blank' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -364,9 +418,15 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
-            
-+ Response 400 (application/json)            
-            
+
++ Request 'Prospect Id not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 400 (application/json)
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -378,9 +438,15 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 ],
                 "meta": {}
             }
-            
-+ Response 403 (application/json)            
-            
+
++ Request 'Prospect Id invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
+
             {
                 "status": "FAIL",
                 "data": {},
@@ -393,8 +459,14 @@ This controller service is used to create or retrieve the existing UCRN and Busi
                 "meta": {}
             }
 
-+ Response 403 (application/json)            
-            
++ Request 'When invalid classification value is sent as part of the request to update the details' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
+
             {
                 "status": "FAIL",
                 "data": {},

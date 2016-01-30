@@ -1,6 +1,6 @@
 ## Services-Quotes Collection [/services-quotes]
 
-Services quotes endpoint allows you to create a services sales order in SAP. Responses from this endpoint will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to SAP which will then create an real time services contract. 
+Services quotes endpoint allows you to create a services sales order in SAP. Responses from this endpoint will be retuned in JSON format only. All the customer & product details provided during services sales journey would be captured and posted to SAP which will then create an real time services contract.
 
 >`Note:` Services quotes endpoint will be able to handle only either a bundle product or an individual product at a time.
 
@@ -23,13 +23,13 @@ Services quote as a resource represents following attributes.
 | productFeatures | String[] | `Mandatory` | `Returned always` | List of product features for which the quote is to be created. |
 | productConfigurations | [ProductConfigurations](/api-reference/services-quotes.md#ProductConfigurations)[] | `Optional` | `Returned always` | List of product configurations for which the quote is to be created. |
 
-##### ProductConfigurations 
+##### ProductConfigurations
 | Property | Type | As request | As response |Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
 | productFeature | String | `Mandatory` | `Returned always` | Product feature id for which the appliances details to be provided. |
 | productAppliances | [ProductAppliances](/api-reference/services-quotes.md#ProductAppliances)[] | `Mandatory` | `Returned always` | Appliances details of a product with appliance type, make, model and age information. |
 
-##### ProductAppliances 
+##### ProductAppliances
 | Property | Type | As request | As response |Description |
 | :-------------------- | :---------- | :----------  | :---------- | ------------------------------------------------------------ |
 | appliance | String | `Mandatory` | `Returned always` | Appliance id of a product which customer choosen. |
@@ -40,7 +40,7 @@ Services quote as a resource represents following attributes.
 
 ### Post a services quote to the backend systems [POST /services-quotes]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -208,7 +208,13 @@ Services quote as a resource represents following attributes.
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Input validations' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -222,7 +228,13 @@ Services quote as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Payment method not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -236,7 +248,13 @@ Services quote as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Product feature not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -250,7 +268,13 @@ Services quote as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Appliance id not matching' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -264,7 +288,13 @@ Services quote as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Product appliances invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -278,7 +308,13 @@ Services quote as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Any back end system error' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -292,14 +328,14 @@ Services quote as a resource represents following attributes.
                 ],
                 "meta": {}
             }
-        
+
 ### Retrieve the status of a services quote [GET /services-quotes/{id}/status]
 
 + Parameters
 
-    + id (required, string) -  transactionId which is returned in Create services quote response
+    + id: 1234 (required, string) -  transactionId which is returned in Create services quote response
 
-+ Request When quote creation is successful
++ Request 'When quote creation is successful'
 
     + Headers
 
@@ -317,24 +353,31 @@ Services quote as a resource represents following attributes.
                 "meta": {}
             }
 
-+ Request When quote creation is in progress
++ Request 'When quote creation is in progress'
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
-        
+
 + Response 200 (application/json)
 
             {
                 "status": "SUCCESS",
                 "data": {
+                    "transaction": "23431234",
                     "status": "In Progress",
                     "servicesAccountNumber": ""
                 },
                 "errors": {},
                 "meta": {}
             }
+
++ Request 'Any back end system error'
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 

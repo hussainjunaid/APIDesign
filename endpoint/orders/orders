@@ -4,7 +4,7 @@
 Orders API allows you to create and update a sales order at Online. A sales order can be classified as a premature account at onine. Responses from this API will be retuned in JSON format only.
 >`Note:` The payload should be of `JSON` format for this API. This API accepts requests only if the content-type is `application/json`.
 
-#### Order
+### Order
 Order as a resource represents several independent information that are processed in a single transaction. Logically an Order consists of following grouped constructs.
 
 | Logical construct |  Description |
@@ -81,7 +81,7 @@ This section identifies generic customer related information in order to create 
     * Wheelchair
 
 #### Current address, Previous address 1 & Previous address 2
-Each address has following set of properties. Order as such uses these addresses prefixed with current, previousAddress1 & previousAddress2 respectively. 
+Each address has following set of properties. Order as such uses these addresses prefixed with current, previousAddress1 & previousAddress2 respectively.
 
 > `Note:` There is one exception to the prefixes. Years and months of stay in current is represented as `currentAddressYears` & `currentAddressMonths` respectively whereas for previous address 1 & 2 those are previousAddress1Years, previousAddress2Years, previousAddress1Months & previousAddress2Months.
 
@@ -108,7 +108,7 @@ Direct Debit details represent user details required to setup a Direct Debit. Fo
 | AccountHolderName | string |  `Required` |`Returned always` | Account holder name of the bank account number supplied above. |
 | PaymentDay | string |  `Required` |`Returned always` | Day of the month when it is preferred to have the transaction performed. |
 
-> `Note:` Please prefix `directDebit` before above mentioned properties while relating to `Order`. 
+> `Note:` Please prefix `directDebit` before above mentioned properties while relating to `Order`.
 
 #### Marketing preference
 Marketing preferences represent user consents to a marketing preference. Following information is represented by this logical entity.
@@ -122,7 +122,7 @@ Marketing preferences represent user consents to a marketing preference. Followi
 | ForSmsMms | boolean | `Optional` | `Returned always` | `true` if customers prefer to opt in this functionality, `false` otherwise. |
 
 > `Note:` Please prefix `marketingPreference` before above mentioned properties while relating to `Order`.
- 
+
 #### Loyalty details
 Loyalty details represent loyalty (nectar) card details & user option for loyalty association with the sales order.
 
@@ -141,12 +141,12 @@ Meter details represent metering information about the user.
 | gasMeterReference | string | `Optional` | `Returned always` | Gas reference number for the supply address. |
 | electricityMeterReference | string | `Required` | `Returned always` | Electricity reference number for the supply address. |
 | gasMeterType | string | `Required` | `Returned always` | Meter type for gas. This must be `CREDIT_METER` or `PREPAY_TOKEN` |
-| electricityMeterType | string | `Required` | `Returned always` | Meter type for electricity. This can be one of either `CREDIT_METER` or `PREPAY_SMART_CARD` or `PREPAY_SMART_KEY` or `PREPAY_TOKEN`.| 
+| electricityMeterType | string | `Required` | `Returned always` | Meter type for electricity. This can be one of either `CREDIT_METER` or `PREPAY_SMART_CARD` or `PREPAY_SMART_KEY` or `PREPAY_TOKEN`.|
 | smartMeterReadFrequency | string | `Optional` | `Returned always` | Allowed value can be half hourly, daily, monthly or null. |
 
 ### Create an Order [POST /orders]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -229,82 +229,83 @@ Meter details represent metering information about the user.
 + Response 200 (application/json)
 
             {
-                "status": "SUCCESS",
-                "data": {
-                    "order": {
-                        "id": "33551552-33551553-33551543",
-                        "orderPayload": "d2JoQ1pCMDFMTFh3aEx6dnNVR01weGZyWWZxMEdLeDF6aURxQzZrb0NWVkR2SUYyUEhHQXI0Y1NwbUpJSGJZYUhSOHF2OTlIT3cwSAp1Wk96UTRhWDNHZjhYcDA1NjhraG0rN0kreml3UTRTRFdUWjVPcWlJTFVudUxKeEVSSlhvaU5UVlptaGhPM3ZLTjJKejdKMmJIWEhiCkw4TEJhTWVwOTd5SWdzUXVUWFJNYnJVd0V4eUxwdkZyRU95dTZmb1Rkd3lMc2dZd0t6a1FEdXB6VFdZMUNsR0ZGc0FYM3UwcDNSbmkKbU9NSk9jdlFxNUl0aG9pSG1rVzc0c2EySXhYVktYSWdGWStYd3lQenFBb3lsRmxtdHQ4NGRMKzFYWHNDNzUxa2d4bmQrUnNvaXc3TQorVUZCM2dMSDJESHhwSWR2",
-                        "title": "Mr",
-                        "firstName": "Test",
-                        "surname": "Ignore",
-                        "dateOfBirth": "01/01/1990",
-                        "telephoneNumber": "07404174600",
-                        "emailAddress": "test@bgdigitaltest.co.uk",
-                        "gasMeterReference": null,
-                        "gasMeterType": "CREDIT_METER",
-                        "electricityMeterType": "CREDIT_METER",
-                        "currentPostalTown": "STAINES-UPON-THAMES",
-                        "currentHouseName": null,
-                        "currentCounty": "Middlesex",
-                        "electricityMeterReference": null,
-                        "currentHouseNumber": "9",
-                        "currentPostcode": "TW18 3HE",
-                        "currentAddressLine2": null,
-                        "currentAddressLine1": "Meadow Gardens",
-                        "currentFlatNumber": null,
-                        "currentAddressYears": "6",
-                        "currentAddressMonths": "0",
-                        "previousAddress1PostalTown": null,
-                        "previousAddress1HouseName": null,
-                        "previousAddress1County": null,
-                        "previousAddress1HouseNumber": null,
-                        "previousAddress1Postcode": null,
-                        "previousAddress1AddressLine2": null,
-                        "previousAddress1AddressLine1": null,
-                        "previousAddress1FlatNumber": null,
-                        "previousAddress1Years": "",
-                        "previousAddress1Months": "0",
-                        "previousAddress2PostalTown": null,
-                        "previousAddress2HouseName": null,
-                        "previousAddress2County": null,
-                        "previousAddress2HouseNumber": null,
-                        "previousAddress2Postcode": null,
-                        "previousAddress2AddressLine2": null,
-                        "previousAddress2AddressLine1": null,
-                        "previousAddress2FlatNumber": null,
-                        "previousAddress2Years": "",
-                        "previousAddress2Months": "0",
-                        "smartMeterAvailableForGas": false,
-                        "smartMeterAvailableForElectricity": false,
-                        "specialNeeds": [],
-                        "directDebitAccountNumber": "12121212",
-                        "directDebitSortCode": "12-12-12",
-                        "directDebitAccountHolderName": "Test",
-                        "directDebitPaymentDay": "1",
-                        "paperlessBillingOpted": true,
-                        "marketingPreferenceForLetter": null,
-                        "marketingPreferenceForEmail": null,
-                        "marketingPreferenceForLandline": null,
-                        "marketingPreferenceForMobile": null,
-                        "marketingPreferenceForSmsMms": "false",
-                        "consumptionEstimated": true,
-                        "propertyType": "PROP_FLAT",
-                        "noOfBedrooms": "2",
-                        "houseAge": "BUILT_A3",
-                        "waterHeating": "WATER_GS",
-                        "roomHeating": "RH_GAS_CENTRAL",
-                        "noOfPeople": "3",
-                        "boilerType": "BOILER_REG",
-                        "boilerAge": "BOILER_AVG",
-                        "electricityUsageType": "USG_EL_MED",
-                        "loyaltyCardNumber": "11111111111",
-                        "loyaltyRegistrationStatus": "NECTAR_CARD_HELD"
-                    }
-                },
-                "errors": [],
-                "meta": {}
-            }  
-            
+                "order": {
+                    "id": "33551552-33551553-33551543",
+                    "orderPayload": "d2JoQ1pCMDFMTFh3aEx6dnNVR01weGZyWWZxMEdLeDF6aURxQzZrb0NWVkR2SUYyUEhHQXI0Y1NwbUpJSGJZYUhSOHF2OTlIT3cwSAp1Wk96UTRhWDNHZjhYcDA1NjhraG0rN0kreml3UTRTRFdUWjVPcWlJTFVudUxKeEVSSlhvaU5UVlptaGhPM3ZLTjJKejdKMmJIWEhiCkw4TEJhTWVwOTd5SWdzUXVUWFJNYnJVd0V4eUxwdkZyRU95dTZmb1Rkd3lMc2dZd0t6a1FEdXB6VFdZMUNsR0ZGc0FYM3UwcDNSbmkKbU9NSk9jdlFxNUl0aG9pSG1rVzc0c2EySXhYVktYSWdGWStYd3lQenFBb3lsRmxtdHQ4NGRMKzFYWHNDNzUxa2d4bmQrUnNvaXc3TQorVUZCM2dMSDJESHhwSWR2",
+                    "title": "Mr",
+                    "firstName": "Test",
+                    "surname": "Ignore",
+                    "dateOfBirth": "01/01/1990",
+                    "telephoneNumber": "07404174600",
+                    "emailAddress": "test@bgdigitaltest.co.uk",
+                    "gasMeterReference": null,
+                    "gasMeterType": "CREDIT_METER",
+                    "electricityMeterType": "CREDIT_METER",
+                    "currentPostalTown": "STAINES-UPON-THAMES",
+                    "currentHouseName": null,
+                    "currentCounty": "Middlesex",
+                    "electricityMeterReference": null,
+                    "currentHouseNumber": "9",
+                    "currentPostcode": "TW18 3HE",
+                    "currentAddressLine2": null,
+                    "currentAddressLine1": "Meadow Gardens",
+                    "currentFlatNumber": null,
+                    "currentAddressYears": "6",
+                    "currentAddressMonths": "0",
+                    "previousAddress1PostalTown": null,
+                    "previousAddress1HouseName": null,
+                    "previousAddress1County": null,
+                    "previousAddress1HouseNumber": null,
+                    "previousAddress1Postcode": null,
+                    "previousAddress1AddressLine2": null,
+                    "previousAddress1AddressLine1": null,
+                    "previousAddress1FlatNumber": null,
+                    "previousAddress1Years": "",
+                    "previousAddress1Months": "0",
+                    "previousAddress2PostalTown": null,
+                    "previousAddress2HouseName": null,
+                    "previousAddress2County": null,
+                    "previousAddress2HouseNumber": null,
+                    "previousAddress2Postcode": null,
+                    "previousAddress2AddressLine2": null,
+                    "previousAddress2AddressLine1": null,
+                    "previousAddress2FlatNumber": null,
+                    "previousAddress2Years": "",
+                    "previousAddress2Months": "0",
+                    "smartMeterAvailableForGas": false,
+                    "smartMeterAvailableForElectricity": false,
+                    "specialNeeds": [],
+                    "directDebitAccountNumber": "12121212",
+                    "directDebitSortCode": "12-12-12",
+                    "directDebitAccountHolderName": "Test",
+                    "directDebitPaymentDay": "1",
+                    "paperlessBillingOpted": true,
+                    "marketingPreferenceForLetter": null,
+                    "marketingPreferenceForEmail": null,
+                    "marketingPreferenceForLandline": null,
+                    "marketingPreferenceForMobile": null,
+                    "marketingPreferenceForSmsMms": "false",
+                    "consumptionEstimated": true,
+                    "propertyType": "PROP_FLAT",
+                    "noOfBedrooms": "2",
+                    "houseAge": "BUILT_A3",
+                    "waterHeating": "WATER_GS",
+                    "roomHeating": "RH_GAS_CENTRAL",
+                    "noOfPeople": "3",
+                    "boilerType": "BOILER_REG",
+                    "boilerAge": "BOILER_AVG",
+                    "electricityUsageType": "USG_EL_MED",
+                    "loyaltyCardNumber": "11111111111",
+                    "loyaltyRegistrationStatus": "NECTAR_CARD_HELD"
+                }
+            }
+
++ Request 'Input validation' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -317,6 +318,12 @@ Meter details represent metering information about the user.
                 "meta": {}
             }
 
++ Request 'Brand not matching with cid header' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -328,13 +335,13 @@ Meter details represent metering information about the user.
                 },
                 "meta": {}
             }
-            
+
 ### Modify orders [PUT /orders/{id}]
 + Parameters
-   
-   + id (string,required) - Order id
-   
-+ Request (application/json)
+
+   + id: 1234 (string,required) - Order id
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -422,83 +429,85 @@ Meter details represent metering information about the user.
 + Response 200 (application/json)
 
             {
-                "status": "SUCCESS",
-                "data": {
-                    "order": {
-                        "id": "33551552-33551553-33551543",
-                        "orderPayload": "d2JoQ1pCMDFMTFh3aEx6dnNVR01weGZyWWZxMEdLeDF6aURxQzZrb0NWVkR2SUYyUEhHQXI0Y1NwbUpJSGJZYUhSOHF2OTlIT3cwSAp1Wk96UTRhWDNHZjhYcDA1NjhraG0rN0kreml3UTRTRFdUWjVPcWlJTFVudUxKeEVSSlhvaU5UVlptaGhPM3ZLTjJKejdKMmJIWEhiCkw4TEJhTWVwOTd5SWdzUXVUWFJNYnJVd0V4eUxwdkZyRU95dTZmb1Rkd3lMc2dZd0t6a1FEdXB6VFdZMUNsR0ZGc0FYM3UwcDNSbmkKbU9NSk9jdlFxNUl0aG9pSG1rVzc0c2EySXhYVktYSWdGWStYd3lQenFBb3lsRmxtdHQ4NGRMKzFYWHNDNzUxa2d4bmQrUnNvaXc3TQorVUZCM2dMSDJESHhwSWR2",
-                        "title": "Mr",
-                        "firstName": "Test",
-                        "surname": "Ignore",
-                        "dateOfBirth": "01/01/1990",
-                        "telephoneNumber": "07404174600",
-                        "emailAddress": "test@bgdigitaltest.co.uk",
-                        "gasMeterReference": null,
-                        "gasMeterType": "CREDIT_METER",
-                        "electricityMeterType": "CREDIT_METER",
-                        "currentPostalTown": "STAINES-UPON-THAMES",
-                        "currentHouseName": null,
-                        "currentCounty": "Middlesex",
-                        "electricityMeterReference": null,
-                        "currentHouseNumber": "9",
-                        "currentPostcode": "TW18 3HE",
-                        "currentAddressLine2": null,
-                        "currentAddressLine1": "Meadow Gardens",
-                        "currentFlatNumber": null,
-                        "currentAddressYears": "6",
-                        "currentAddressMonths": "0",
-                        "previousAddress1PostalTown": null,
-                        "previousAddress1HouseName": null,
-                        "previousAddress1County": null,
-                        "previousAddress1HouseNumber": null,
-                        "previousAddress1Postcode": null,
-                        "previousAddress1AddressLine2": null,
-                        "previousAddress1AddressLine1": null,
-                        "previousAddress1FlatNumber": null,
-                        "previousAddress1Years": "",
-                        "previousAddress1Months": "0",
-                        "previousAddress2PostalTown": null,
-                        "previousAddress2HouseName": null,
-                        "previousAddress2County": null,
-                        "previousAddress2HouseNumber": null,
-                        "previousAddress2Postcode": null,
-                        "previousAddress2AddressLine2": null,
-                        "previousAddress2AddressLine1": null,
-                        "previousAddress2FlatNumber": null,
-                        "previousAddress2Years": "",
-                        "previousAddress2Months": "0",
-                        "smartMeterAvailableForGas": false,
-                        "smartMeterAvailableForElectricity": false,
-                        "specialNeeds": [],
-                        "directDebitAccountNumber": "12121212",
-                        "directDebitSortCode": "12-12-12",
-                        "directDebitAccountHolderName": "Test",
-                        "directDebitPaymentDay": "1",
-                        "paperlessBillingOpted": true,
-                        "marketingPreferenceForLetter": null,
-                        "marketingPreferenceForEmail": null,
-                        "marketingPreferenceForLandline": null,
-                        "marketingPreferenceForMobile": null,
-                        "marketingPreferenceForSmsMms": "false",
-                        "consumptionEstimated": true,
-                        "propertyType": "PROP_FLAT",
-                        "noOfBedrooms": "2",
-                        "houseAge": "BUILT_A3",
-                        "waterHeating": "WATER_GS",
-                        "roomHeating": "RH_GAS_CENTRAL",
-                        "noOfPeople": "3",
-                        "boilerType": "BOILER_REG",
-                        "boilerAge": "BOILER_AVG",
-                        "electricityUsageType": "USG_EL_MED",
-                        "loyaltyCardNumber": "11111111111",
-                        "loyaltyRegistrationStatus": "NECTAR_CARD_HELD",
-                        "smartMeterReadFrequency": null
-                    }
-                },
-                "errors": [],
-                "meta": {}
+                "order": {
+                    "id": "33551552-33551553-33551543",
+                    "orderPayload": "d2JoQ1pCMDFMTFh3aEx6dnNVR01weGZyWWZxMEdLeDF6aURxQzZrb0NWVkR2SUYyUEhHQXI0Y1NwbUpJSGJZYUhSOHF2OTlIT3cwSAp1Wk96UTRhWDNHZjhYcDA1NjhraG0rN0kreml3UTRTRFdUWjVPcWlJTFVudUxKeEVSSlhvaU5UVlptaGhPM3ZLTjJKejdKMmJIWEhiCkw4TEJhTWVwOTd5SWdzUXVUWFJNYnJVd0V4eUxwdkZyRU95dTZmb1Rkd3lMc2dZd0t6a1FEdXB6VFdZMUNsR0ZGc0FYM3UwcDNSbmkKbU9NSk9jdlFxNUl0aG9pSG1rVzc0c2EySXhYVktYSWdGWStYd3lQenFBb3lsRmxtdHQ4NGRMKzFYWHNDNzUxa2d4bmQrUnNvaXc3TQorVUZCM2dMSDJESHhwSWR2",
+                    "title": "Mr",
+                    "firstName": "Test",
+                    "surname": "Ignore",
+                    "dateOfBirth": "01/01/1990",
+                    "telephoneNumber": "07404174600",
+                    "emailAddress": "test@bgdigitaltest.co.uk",
+                    "gasMeterReference": null,
+                    "gasMeterType": "CREDIT_METER",
+                    "electricityMeterType": "CREDIT_METER",
+                    "currentPostalTown": "STAINES-UPON-THAMES",
+                    "currentHouseName": null,
+                    "currentCounty": "Middlesex",
+                    "electricityMeterReference": null,
+                    "currentHouseNumber": "9",
+                    "currentPostcode": "TW18 3HE",
+                    "currentAddressLine2": null,
+                    "currentAddressLine1": "Meadow Gardens",
+                    "currentFlatNumber": null,
+                    "currentAddressYears": "6",
+                    "currentAddressMonths": "0",
+                    "previousAddress1PostalTown": null,
+                    "previousAddress1HouseName": null,
+                    "previousAddress1County": null,
+                    "previousAddress1HouseNumber": null,
+                    "previousAddress1Postcode": null,
+                    "previousAddress1AddressLine2": null,
+                    "previousAddress1AddressLine1": null,
+                    "previousAddress1FlatNumber": null,
+                    "previousAddress1Years": "",
+                    "previousAddress1Months": "0",
+                    "previousAddress2PostalTown": null,
+                    "previousAddress2HouseName": null,
+                    "previousAddress2County": null,
+                    "previousAddress2HouseNumber": null,
+                    "previousAddress2Postcode": null,
+                    "previousAddress2AddressLine2": null,
+                    "previousAddress2AddressLine1": null,
+                    "previousAddress2FlatNumber": null,
+                    "previousAddress2Years": "",
+                    "previousAddress2Months": "0",
+                    "smartMeterAvailableForGas": false,
+                    "smartMeterAvailableForElectricity": false,
+                    "specialNeeds": [],
+                    "directDebitAccountNumber": "12121212",
+                    "directDebitSortCode": "12-12-12",
+                    "directDebitAccountHolderName": "Test",
+                    "directDebitPaymentDay": "1",
+                    "paperlessBillingOpted": true,
+                    "marketingPreferenceForLetter": null,
+                    "marketingPreferenceForEmail": null,
+                    "marketingPreferenceForLandline": null,
+                    "marketingPreferenceForMobile": null,
+                    "marketingPreferenceForSmsMms": "false",
+                    "consumptionEstimated": true,
+                    "propertyType": "PROP_FLAT",
+                    "noOfBedrooms": "2",
+                    "houseAge": "BUILT_A3",
+                    "waterHeating": "WATER_GS",
+                    "roomHeating": "RH_GAS_CENTRAL",
+                    "noOfPeople": "3",
+                    "boilerType": "BOILER_REG",
+                    "boilerAge": "BOILER_AVG",
+                    "electricityUsageType": "USG_EL_MED",
+                    "loyaltyCardNumber": "11111111111",
+                    "loyaltyRegistrationStatus": "NECTAR_CARD_HELD",
+                     "smartMeterReadFrequency":null
+                }
             }
-            
+
++ Request 'Invalid meta token' (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f625
+
 + Response 403 (application/json)
 
             {
@@ -511,7 +520,21 @@ Meter details represent metering information about the user.
                 "meta": {}
             }
 
++ Request 'Resource not modified' (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f625
+
 + Response 304 (application/json)
+
++ Request 'Invalid post code' (application/json)
+
+    + Headers
+
+            Authorization: Bearer accesstoken
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f625
 
 + Response 400 (application/json)
 

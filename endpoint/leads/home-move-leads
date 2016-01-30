@@ -6,10 +6,10 @@ Home move leads endpoint allows you to retrieve, create and update homemove lead
 >`Note:` The payload should be of `JSON` format for this endpoint. This endpoint accepts requests only if the content-type is `application/json`.
 
 >`Note:` There is a business requirement to take services customer through new experience and new experience emails need to be send in this scenario. API will use CQ feature management to get the products configured for new experience and send new experience email to the customer.
- 
+
 #### Home move lead
-Home move lead as a resource represents following information. 
- 
+Home move lead as a resource represents following information.
+
 | Property | Type | As request | As response | Description |
 | :-------------------- | :---------- | :---------- | :------------------- | ------------------------------------------------------------ |
 | id | string | `Optional` | `Returned always` |  Lead ID created in Online DB and submitted to Kana Queue. |
@@ -134,12 +134,12 @@ Following validations apply on individual attributes
 | electricityConsumptionValue | Should have a value if consumption is estimated (consumptionEstimated = true)  |
 
 ### Retrieve all Homemove Leads for logged in customer [GET /home-move-leads]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
             Authorization: Bearer {accesstoken}
-            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+            cid: cbdcfa43-dd67-4c38-b418-83572a936fca
 
 + Response 200 (application/json)
 
@@ -262,12 +262,12 @@ Following validations apply on individual attributes
                 "meta": {}
             }
 
-### Retrieve all Homemove Leads for specific accounts [GET /home-move-leads?{accountNumber*}]
+### Retrieve all Homemove Leads for specific accounts [GET /home-move-leads{?accountNumber*}]
 + Parameters
-    
-    + accountNumber (string) - Account numbers for which the leads are required
 
-+ Request (application/json)
+    + accountNumber: 911234567890 (string) - Account numbers for which the leads are required
+
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -394,14 +394,14 @@ Following validations apply on individual attributes
                 "errors": [],
                 "meta": {}
             }
-            
+
 ### Retrieve lead [GET /leads/{id}]
 
 + Parameters
-    
-    + id (string) - Lead id to be retrieved
 
-+ Request (application/json)
+    + id: 911234567890 (string, required) - Lead id to be retrieved
+
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -475,7 +475,7 @@ Following validations apply on individual attributes
 
 ### Create a lead [POST]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -607,53 +607,64 @@ Following validations apply on individual attributes
                 "meta": {}
             }
 
++ Request 'Input validations' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": {
-                    "code": "postcode",
-                    "postcode": "error.client.postcode.invalid"
-              },
-              "meta": {}
-          }
-
-+ Response 401 (application/json)
-
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": {
-                    "code": "authorize",
-                    "authorize": "invalid_request"
-              },
-              "meta": {}
-          }
-
-+ Response 401 (application/json)
-
             {
-                "status": "ERROR",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
-                    }
-                ],
-                "meta": {}
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "postcode",
+                  "postcode": "error.client.postcode.invalid"
+                }
+              ],
+              "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
+
+            {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "authorize",
+                  "authorize": "invalid_request"
+                }
+              ],
+              "meta": {}
+            }
+
++ Request 'Invalid account number while retrieving leads for an account' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
                 "errors": [
                     {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
+                        "code": "account",
+                        "message": "error.client.account.invalid"
                     }
                 ],
                 "meta": {}
@@ -661,7 +672,7 @@ Following validations apply on individual attributes
 
 ### Update a lead [PUT]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
   + Headers
 
@@ -793,53 +804,64 @@ Following validations apply on individual attributes
                 "meta": {}
             }
 
++ Request 'Input validations' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": {
-                    "code": "postcode",
-                    "postcode": "error.client.postcode.invalid"
-              },
-              "meta": {}
-          }
-
-+ Response 401 (application/json)
-
-          {
-              "status": "FAIL",
-              "data": {},
-              "errors": {
-                    "code": "authorize",
-                    "authorize": "invalid_request"
-              },
-              "meta": {}
-          }
-
-+ Response 401 (application/json)
-
             {
-                "status": "ERROR",
-                "data": {},
-                "errors": [
-                    {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
-                    }
-                ],
-                "meta": {}
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "postcode",
+                  "postcode": "error.client.postcode.invalid"
+                }
+              ],
+              "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
+
+            {
+              "status": "FAIL",
+              "data": {},
+              "errors": [
+                {
+                  "code": "authorize",
+                  "authorize": "invalid_request"
+                }
+              ],
+              "meta": {}
+            }
+
++ Request 'Invalid account number while retrieving leads for an account' (application/json)
+
+  + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 403 (application/json)
 
             {
                 "status": "ERROR",
                 "data": {},
                 "errors": [
                     {
-                        "code": "accountNumber",
-                        "message": "error.client.accountNumber.invalid"
+                        "code": "account",
+                        "message": "error.client.account.invalid"
                     }
                 ],
                 "meta": {}

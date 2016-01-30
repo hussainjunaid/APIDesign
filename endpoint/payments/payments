@@ -8,7 +8,7 @@ The payments resource allows you to validate, [authenticate with 3D secure](../a
 Payment as a resource represents following information
 
 | Property | Type | As request | As response | Description |
-| :---------- | :---------- | :---------- | :---------- | :----------- | 
+| :---------- | :---------- | :---------- | :---------- | :----------- |
 | id | String | `Optional` | `Returned always` | Identifier for the payment. |
 | intent | String | `Required` | `Returned always` | Intent can be `payment-transaction`. |
 | energyAccount | String | `Required` | `Returned always` | Account number of the customer to make a payment. |
@@ -34,7 +34,7 @@ This section explains the flow of `payment-transactions`.
 
 #### Use case for `payment-transactions`
 ```
-+-------------------+                                               +-------------------+                              
++-------------------+                                               +-------------------+
 |                   |                                               |                   |
 |                  -+---(1)-- POST /payments ---------------------->|                   |
 |                   |                                               |                   |
@@ -72,27 +72,27 @@ This section explains the flow of `payment-transactions`.
    | TermUrl | The API endpoint(https://www.britishgas.co.uk/bank-payment-response/) to which the ACS response is submitted (PARes). |
 
 5. Once the POST operation is made to the ACS URL, bank merchant will take control and validate the information provided by the customer.
-6. Bank merchant will perform a POST on [`/bank-payment-response`](/api-reference/bank-payment-response.md#post-bank-payment-response) with the following fields. 
+6. Bank merchant will perform a POST on [`/bank-payment-response`](/api-reference/bank-payment-response.md#post-bank-payment-response) with the following fields.
 
    | FieldName | Description |
    | :---------- | :---------- |
    | PaRes | The encoded PaRes to submit to the Term URL (API URL). |
    | MD | The Merchant Data that was submitted in the ACS redirect request to the ACS (this will contain the id of payment resource). |
-   
+
    `paRes` returned from ACS will be validated by online server and redirected to intermediate page.
 7. Intermediate page URL is loaded with status of the response which is either `success` or `failed`. Once the intermediate page is redirected in the IFrame, client can close the IFrame window.
 8. Once all the payment related authentications are done, POST operation on [`/payment-transactions`](/api-reference/payment-transactions.md#post-payment-transactions) [`Secured by OAuth`] will post the payment to SAP system and respond with `paymentTransaction`.
 
 ### Make a payment [POST /payments]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
     + Body
-        
+
             {
                 "payment": {
                     "intent": "payment-transaction",
@@ -136,7 +136,14 @@ This section explains the flow of `payment-transactions`.
                 "errors": [],
                 "meta": {}
             }
-        
+
++ Request 'Invalid access token used for payment transactions' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -150,7 +157,14 @@ This section explains the flow of `payment-transactions`.
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Input validations' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
@@ -164,7 +178,14 @@ This section explains the flow of `payment-transactions`.
                 ],
                 "meta": {}
             }
-        
+
++ Request 'Payment is not acceptable' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 406 (application/json)
 
             {
@@ -178,16 +199,16 @@ This section explains the flow of `payment-transactions`.
                 ],
                 "meta": {}
             }
-            
+
 ### Verify Enrolment [POST /payments/{id}/verify-enrolment]
 + Parameters
 
-    + id (string) - Payment transaction id
+    + id: 1234 (string, required) - Payment transaction id
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {accessToken}
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
@@ -205,7 +226,35 @@ This section explains the flow of `payment-transactions`.
                 "errors": {},
                 "meta": {}
             }
-            
+
++ Request 'Invalid access token used for payment transactions' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
++ Response 401 (application/json)
+
+            {
+                "status": "FAIL",
+                "data": {},
+                "errors": [
+                    {
+                        "code": "authorize",
+                        "message": "access_denied"
+                    }
+                ],
+                "meta": {}
+            }
+
++ Request 'Invalid payment id' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -219,6 +268,13 @@ This section explains the flow of `payment-transactions`.
                 ],
                 "meta": {}
             }
+
++ Request 'Error from back end systems' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accessToken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 

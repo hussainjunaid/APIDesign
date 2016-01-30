@@ -13,8 +13,8 @@ Energy product holding as a resource represents following information
 | productCode | string | `Not Applicable` | `Returned always` | Product code, 1601 for gas and 1602 for electricity. |
 | tariff | string | `Not Applicable` | `Returned always` | Identifies the tariff associated to the product, if available. Tariff can be sideloaded upon request |
 | productTypeDescription | string | `Not Applicable` | `Returned always` | Product description of the product, if available. |
-| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. | 
-| energyAccount | string | `Not Applicable` | `Returned always` | Energy account number to which the product is linked, if available. | 
+| account | string | `Not Applicable` | `Returned always` | Account number to which the product is linked, if available. |
+| energyAccount | string | `Not Applicable` | `Returned always` | Energy account number to which the product is linked, if available. |
 | propositionId | string | `Not Applicable` | `Returned always` | Proposition id for the product. |
 | tariffEnergySmart | boolean | `Not Applicable` | `Returned always` | Indicates that the product has energy smart tariff if the value is true. |
 | monthlyBilling | boolean | `Not Applicable` | `Returned always` | Indicates that the product is monthly billed if the value is true. |
@@ -35,7 +35,7 @@ Energy product holding as a resource represents following information
 | nextBillDate | string | `Not Applicable` | `Returned always` | Next bill date for the product in `dd/MM/yyyy` format. |
 
 ### Retrieve energy product holdings [GET /energy-product-holdings]
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -108,6 +108,13 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -121,6 +128,13 @@ Energy product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Unable to get energy product holding data from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -136,8 +150,12 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
-### Retrieve energy product holdings with tariffs sideloaded [GET /energy-product-holdings?include=tariff]
-+ Request
+### Retrieve energy product holdings with tariffs sideloaded [GET /energy-product-holdings{?include}]
++ Parameters
+
+    + include: tariff (string, Optional) - Added tariffs results in the response
+
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -288,6 +306,13 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -302,6 +327,13 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Unable to get energy product holding data from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
             {
@@ -315,13 +347,13 @@ Energy product holding as a resource represents following information
                 ],
                 "meta": {}
             }
-            
+
 ### Retrieve energy product holdings for specific accounts [GET /energy-product-holdings{?accountNumber*}]
 + Parameters
 
-    + accountNumber (string) - This is the customers account number
+    + accountNumber: 123456 (string, optional) - This is the customers account number
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -395,6 +427,13 @@ Energy product holding as a resource represents following information
             }
 
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -408,6 +447,13 @@ Energy product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Account number is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 
@@ -423,6 +469,12 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Account is not available for the customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -437,6 +489,13 @@ Energy product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Unable to get energy product holding data from backend' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -455,9 +514,9 @@ Energy product holding as a resource represents following information
 ### Retrieve product holdings using product id [GET /energy-product-holdings/{productId}]
 + Parameters
 
-    + productId (string) - Product id
+    + productId: 12345-sfg (string, optional) - Product id
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -501,6 +560,13 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Customer is not authenticated' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -515,6 +581,12 @@ Energy product holding as a resource represents following information
                 "meta": {}
             }
 
++ Request 'Energy product holding is not available for the customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 404 (application/json)
 
@@ -529,6 +601,13 @@ Energy product holding as a resource represents following information
                 ],
                 "meta": {}
             }
+
++ Request 'Product Id is invalid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 400 (application/json)
 

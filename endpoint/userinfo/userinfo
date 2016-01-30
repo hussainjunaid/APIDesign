@@ -4,11 +4,11 @@ Resources related to UserInfo
 
 ## UserInfo [/userinfo]
 Userinfo represents information about the user profile maintained at online. Contrary to common belief, it doesn't not represent a customer's profile in SAP. Responses from this endpoint will be returned in JSON format.
- 
+
 Userinfo endpoint supports the below controllers:
 * POST /userinfo/profile-check
 * POST /userinfo/find-by-reference
- 
+
 Various operations supported by Userinfo are detailed below.
 
 ### Userinfo
@@ -25,7 +25,7 @@ Userinfo as an entity represents following attributes.
 | status | string | `Optional` | `Returned always` | `Returned always`. Represents current status of user profile. Can be `new`, `active` or `inactive`. |
 
 ### Retrieve logged in UserInfo details [GET]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -53,6 +53,13 @@ Userinfo as an entity represents following attributes.
               "meta": {}
             }
 
++ Request 'Issued token is not valid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
         {
@@ -67,10 +74,8 @@ Userinfo as an entity represents following attributes.
             "meta": {}
         }
 
-
-
 ### Create a new online profile [POST]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -111,6 +116,12 @@ Userinfo as an entity represents following attributes.
               "meta": {}
             }
 
++ Request 'User info exists' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
         {
@@ -124,6 +135,12 @@ Userinfo as an entity represents following attributes.
             ],
             "meta": {}
         }
+
++ Request 'Match token invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -139,6 +156,12 @@ Userinfo as an entity represents following attributes.
             "meta": {}
         }
 
++ Request 'Input validations' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
         {
@@ -153,7 +176,8 @@ Userinfo as an entity represents following attributes.
             "meta": {}
         }
 
-+ Request (application/json)
+### Creating userinfo for new to brand customer [POST]
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -194,6 +218,12 @@ Userinfo as an entity represents following attributes.
               "meta": {}
             }
 
++ Request 'User info exists' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f61234
+
 + Response 403 (application/json)
 
         {
@@ -208,6 +238,12 @@ Userinfo as an entity represents following attributes.
             "meta": {}
         }
 
++ Request 'Online sales order provided was invalid' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f61234
+
 + Response 404 (application/json)
 
         {
@@ -221,6 +257,12 @@ Userinfo as an entity represents following attributes.
             ],
             "meta": {}
         }
+
++ Request 'Input validations' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f61234
 
 + Response 400 (application/json)
 
@@ -251,7 +293,7 @@ The possible response status codes are as follows:
 | 0xTXE0 | Userinfo not found |
 
 ### Profile check [POST]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -276,6 +318,12 @@ The possible response status codes are as follows:
             "meta": {}
         }
 
++ Request 'Invalid request' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
         {
@@ -289,7 +337,13 @@ The possible response status codes are as follows:
             ],
             "meta": {}
         }
-        
+
++ Request 'Any system error' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
         {
@@ -317,7 +371,7 @@ The request body of this post must be a JSON object with properties listed below
 | customerReference | string | `Mandatory`. Can be energy account number (`85` followed by 10 digits), homecare number (`91` followed by 10 digits) or sales order number (`20` followed by 8 digits). |
 
 ### Retrieve userinfo by reference [POST]
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -344,6 +398,12 @@ The request body of this post must be a JSON object with properties listed below
                 "meta": {}
             }
 
++ Request 'Invalid request' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
         {
@@ -357,6 +417,12 @@ The request body of this post must be a JSON object with properties listed below
             ],
             "meta": {}
         }
+
++ Request 'Searching for userinfo for non existing customer' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -372,6 +438,12 @@ The request body of this post must be a JSON object with properties listed below
             "meta": {}
         }
 
++ Request 'User info not available in Online database' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
         {
@@ -385,7 +457,13 @@ The request body of this post must be a JSON object with properties listed below
             ],
             "meta": {}
         }
-        
+
++ Request 'Any system error' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 500 (application/json)
 
         {

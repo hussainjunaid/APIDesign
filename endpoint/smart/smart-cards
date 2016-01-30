@@ -15,9 +15,9 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
 ### Retrieve a specific smart card using energy account [GET /smart-cards?{energyAccount*}]
 + Parameters
 
-    + energyAccount (string) - This is the energy account number
+    + energyAccount: 123456 (string, required) - This is the energy account number
 
-+ Request
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -42,6 +42,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "meta": {}
             }
 
++ Request 'Issued token is not valid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -56,6 +63,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "meta": {}
             }
 
++ Request 'Valid token without Bearer key' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -69,7 +83,14 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Empty energy accounts' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 403 (application/json)
 
             {
@@ -83,6 +104,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 ],
                 "meta": {}
             }
+
++ Request 'Invalid energy accounts' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
@@ -98,6 +126,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "meta": {}
             }
 
++ Request 'Valid energy accounts of other customer' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -111,6 +146,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 ],
                 "meta": {}
             }
+
++ Request 'PI failure' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -129,9 +171,9 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
 ### Retrieve a specific smart card using id [GET /smart-cards/{id}]
 + Parameters
 
-    + id (string) - Smart card id
+    + id: 1234 (string, required) - Smart card id
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -153,7 +195,14 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "errors": [],
                 "meta": {}
             }
-            
+
++ Request 'Issued token is not valid' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -167,7 +216,14 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 ],
                 "meta": {}
             }
-            
+
++ Request 'Valid token without Bearer key' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 401 (application/json)
 
             {
@@ -181,6 +237,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 ],
                 "meta": {}
             }
+
++ Request 'PI failure' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 
@@ -196,6 +259,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 "meta": {}
             }
 
++ Request 'SCN empty' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 404 (application/json)
 
             {
@@ -209,6 +279,13 @@ Smart card endpoint is used to retrieve the smart card and balance details for t
                 ],
                 "meta": {}
             }
+
++ Request 'Invalid SCN' (application/json)
+
+    + Headers
+
+            Authorization: Bearer {accesstoken}
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 500 (application/json)
 

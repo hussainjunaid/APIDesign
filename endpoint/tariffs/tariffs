@@ -13,7 +13,7 @@ Tariff as a resource represents following information
 | supportedFuels | List of string | `Not Applicable` | `Returned always`| List of supported fuels. There are 3 variations of fuels possible. They are `gas`, `electricity` and `dual`. |
 | endDate | string | `Not Applicable` | `Returned always`| Defines the end date of the tariff in dd/mm/yyyy format. If no end date is configured, "Not applicable" is returned. |
 | type | string | `Not Applicable` | `Returned always`| Can be either `fixed` or `variable`. |
-| priceGuaranteedDate | string | `Not Applicable` | `Returned always`| Represents price guaranteed date if applicable. Date is represented in mm/dd/yyyy format. If none defined, "Not applicable" is returned. |
+| priceGuaranteedDate | string | `Not Applicable` | `Returned always`| Represents price guaranteed date if applicable. Date is represented in mm/dd/yyyy format. If none defined, `Not applicable` is returned. |
 | displayName | string | `Not Applicable` | `Returned always`| Represents a descriptive name that is understandable to users. |
 | onlineAccountMandatory | boolean | `Not Applicable` | `Returned always`| `true` if customers needs a online profile to subscribe to this tariff. |
 | isTimeOfUseTariff | boolean | `Not Applicable` | `Returned always`| `true` if tariff is a time of use tariff with multiple registers. |
@@ -52,18 +52,18 @@ rate - Numeric value representing the amount of discount eligible.
 type - Targeted fuel for which the discount is to be applied. Possible values are `gas`,  `electricity` & `dual`.
 
 ### Tariff identification
-Tariffs maintained at `Online` can be uniquely identified either using `TariffName` or `TariffCode`. 
+Tariffs maintained at `Online` can be uniquely identified either using `TariffName` or `TariffCode`.
 
-`TariffName` is the node name of a tariff maintained in Tariff configurator (TACO).  
+`TariffName` is the node name of a tariff maintained in Tariff configurator (TACO).
 
 `TariffCode` is a unique code assigned to a tariff by SAP. This will satisfy following regular expression format `^[A-Z]{1,2}[0-9]{2}$`.
 
 ### Retrieve a specific tariff [GET /tariffs/{id}]
 + Parameters
 
-    + id (string) - tariff id
+    + id: 1234 (string,required) - tariff id
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
@@ -151,42 +151,53 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
                      ]
                  }
              },
-             "errors": [],
+             "errors": {},
              "meta": {}
-         } 
-         
+         }
+
++ Request 'Blank tariff value' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
+
 + Response 400 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
+                "errors": {
                      "code": "tariff",
                     "message": "error.client.tariff.blank"
-                }],
+                },
                 "meta": {}
             }
+
++ Request 'Invalid account number' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 403 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
+                "errors": {
                      "code": "account",
                     "message": "error.client.account.invalid"
-                }],
+                },
                 "meta": {}
             }
-            
+
 ### Retrieve all on sale tariffs [GET /tariffs]
 
-+ Request (application/json)
++ Request 'SUCCESS' (application/json)
 
     + Headers
 
             cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
-
 
 + Response 200 (application/json)
 
@@ -618,17 +629,23 @@ Tariffs maintained at `Online` can be uniquely identified either using `TariffNa
                      }
                  ]
              },
-             "errors": []},
+             "errors": {},
              "meta": {}
          }
+
++ Request 'Any failure occured' (application/json)
+
+    + Headers
+
+            cid: 05e230bf-a9cf-4b31-bc54-d3a995f62526
 
 + Response 401 (application/json)
 
             {
                 "status": "FAIL",
                 "data": {},
-                "errors": [{
+                "errors": {
                     "fault": "a fault has occurred"
-                }],
+                },
                 "meta": {}
             }
