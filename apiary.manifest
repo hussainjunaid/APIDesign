@@ -43,3 +43,7 @@ blueprints/products/prices
 blueprints/prospects/prospects
 blueprints/quotes/quotes
 blueprints/quotes/services-quotes
+blueprints/smart/smart-cards
+blueprints/smart/smart-consumptions
+blueprints/surveys/survey-responses
+blueprints/tariffs/tariffs
