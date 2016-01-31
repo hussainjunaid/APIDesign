@@ -26,3 +26,8 @@ blueprints/leads/services-leads
 blueprints/loyalties/loyalties
 blueprints/meters/meters
 blueprints/meters/meter-reads-submit
+blueprints/orders/orders
+blueprints/orders/service-orders
+blueprints/payments/payments
+blueprints/payments/payment-transactions
+blueprints/payments/bank-payment-response
