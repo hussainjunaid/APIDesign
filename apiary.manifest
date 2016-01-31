@@ -40,3 +40,6 @@ blueprints/products/product-features
 blueprints/products/product-bundles
 blueprints/products/faults
 blueprints/products/prices
+blueprints/prospects/prospects
+blueprints/quotes/quotes
+blueprints/quotes/services-quotes
