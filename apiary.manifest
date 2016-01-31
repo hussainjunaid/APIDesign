@@ -50,3 +50,5 @@ blueprints/tariffs/tariffs
 blueprints/userinfo/userinfo
 blueprints/userinfo/temporary-profiles
 blueprints/userinfo/reset-password-requests
+blueprints/security/oauth2/implicit_grant_flow
+blueprints/security/oauth2/resource_owner_password_grant_flow
