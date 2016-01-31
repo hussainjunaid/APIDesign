@@ -47,3 +47,6 @@ blueprints/smart/smart-cards
 blueprints/smart/smart-consumptions
 blueprints/surveys/survey-responses
 blueprints/tariffs/tariffs
+blueprints/userinfo/userinfo
+blueprints/userinfo/temporary-profiles
+blueprints/userinfo/reset-password-requests
