@@ -23,3 +23,6 @@ blueprints/energy-estimate/energyestimate
 blueprints/energy-insights/energy-insights
 blueprints/leads/home-move-leads
 blueprints/leads/services-leads
+blueprints/loyalties/loyalties
+blueprints/meters/meters
+blueprints/meters/meter-reads-submit
