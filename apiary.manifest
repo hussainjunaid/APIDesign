@@ -31,3 +31,12 @@ blueprints/orders/service-orders
 blueprints/payments/payments
 blueprints/payments/payment-transactions
 blueprints/payments/bank-payment-response
+blueprints/premises/premises
+blueprints/products/products
+blueprints/products/product-holdings
+blueprints/products/energy-product-holdings
+blueprints/products/services-product-holdings
+blueprints/products/product-features
+blueprints/products/product-bundles
+blueprints/products/faults
+blueprints/products/prices
